@@ -59,6 +59,32 @@ body {
     }
 }
 
+object{
+    pointer-events: none;
+}
+
+.appsection {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.appbuttonplay {
+    max-width: 350px;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.appbuttonapple {
+    max-width: 310px;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .nav {
     position: fixed;
     bottom: 0;
