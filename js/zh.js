@@ -4243,6 +4243,13 @@ function getSongData() {
           "filename": "027.jpg"
       },
       {
+          "title": "At Calvary",
+          "book": "Higher Ground",
+          "bookShort": "HG",
+          "number": "67",
+          "filename": "067.jpg"
+      },
+      {
           "title": "The Cleansing Wave",
           "book": "Higher Ground",
           "bookShort": "HG",
