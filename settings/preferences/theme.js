@@ -1,5 +1,8 @@
-if(storage.getItem("songInverted") == "true")
+function ToggleSongInverted(element){
+    window.localStorage.setItem("songInverted", element.checked);
+}
+
+if(window.localStorage.getItem("songInverted") == "true")
     document.getElementById('songInverted').checked = true;
-    
-if(storage.getItem("songInverted") == "false")
+else
     document.getElementById('songInverted').checked = false;

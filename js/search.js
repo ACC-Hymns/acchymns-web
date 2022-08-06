@@ -1,5 +1,5 @@
 import { getClassFromBook, getFullBook } from "./sharedFunctions.js";
-import { getSongData } from "./zh.js";
+import { SONG_BOOKS } from "./books.js";
 
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
@@ -49,10 +49,8 @@ const displaySongList = (songs, listContainer) => {
         .join('');
 };
 
-const loadCharacters = async () => {
-    let bookData = getSongData();
-
-    for (const [bookName, book] of Object.entries(bookData)) {
+const loadSongs = async () => {
+    for (const [bookName, book] of Object.entries(SONG_BOOKS)) {
         for (const [songNum, song] of Object.entries(book.songs)) {
             songs.push({
                 title: song.title,
@@ -64,4 +62,4 @@ const loadCharacters = async () => {
     displaySongList([], songList)
 };
 
-loadCharacters();
+loadSongs();

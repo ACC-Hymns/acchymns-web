@@ -1,4 +1,4 @@
-import { getSongData } from "./zh.js";
+import { SONG_BOOKS } from "./books.js";
 
 function getFullBook(bookShort) {
     switch(bookShort) {
@@ -26,28 +26,26 @@ function getClassFromBook(bookShort) {
     }
 }
 
-const songView = document.getElementById('songview');
-const searchContent = document.getElementById('content');
-const backButton = document.getElementById('backButton');
-const songViewTitle = document.getElementById('titlenumber');
-const songViewImage = document.getElementById('songimage');
 
 function loadSong(songNumber, bookShort) {
-    searchContent.classList.add('hidden');
+    const songView = document.getElementById('songview');
     songView.classList.remove('hidden');
+    const searchContent = document.getElementById('content');
+    searchContent.classList.add('hidden');
+
+    const songViewTitle = document.getElementById('titlenumber');
     songViewTitle.innerHTML = "";
     const textNode = document.createTextNode(`#${songNumber}`);
     songViewTitle.appendChild(textNode);
-
+    
+    const songViewImage = document.getElementById('songimage');
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         if(window.localStorage.getItem("songInverted") == "true") {
-            console.log("should be inverted");
             songViewImage.style.filter = "invert(92%)";
         }
     }
-
-    const bookMetaData = getSongData();
-    let book = bookMetaData[bookShort]
+    
+    let book = SONG_BOOKS[bookShort]
     let song = book.songs[songNumber];
     let filename = String(songNumber).padStart(Number(book.numberLength), "0") + "." + book.fileExtension;
     songViewImage.setAttribute('src', `./songs/${bookShort}/${filename}`);
@@ -58,10 +56,8 @@ function loadSong(songNumber, bookShort) {
 }
 
 function addSongs(bookShort) {
-    const currentDiv = document.getElementById("songs");
-
     let btns = ""
-    let numOfSongsInBook = Object.keys(getSongData()[bookShort].songs).length // Change later to just a length check?
+    let numOfSongsInBook = Object.keys(SONG_BOOKS[bookShort].songs).length // Change later to just a length check?
     for(let songNum = 1; songNum <= numOfSongsInBook; songNum++) {
         btns += `
         <a onclick="loadSong(${songNum}, '${bookShort}')">
@@ -71,10 +67,20 @@ function addSongs(bookShort) {
         </a>
         `;
     }
-    currentDiv.innerHTML = btns
+    const songList = document.getElementById("songs");
+    songList.innerHTML = btns
 }
 
 window.loadSong = loadSong;
+
+// Change image dynamically if dark/light mode changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    const songViewImage = document.getElementById('songimage');
+    if(event.matches)
+        songViewImage.style.filter = "invert(92%)";
+    else
+        songViewImage.style.filter = "invert(0%)";
+});
 
 export {
     getFullBook,
