@@ -59,27 +59,25 @@ function loadSong(songNumber, bookShort) {
 
 function addSongs(bookShort) {
     const currentDiv = document.getElementById("songs");
+
+    let btns = ""
     let numOfSongsInBook = Object.keys(getSongData()[bookShort].songs).length // Change later to just a length check?
     for(let songNum = 1; songNum <= numOfSongsInBook; songNum++) {
-        const newButton = document.createElement("a");
-        newButton.addEventListener('click', (e) => loadSong(songNum, bookShort));
-        
-        const newDiv = document.createElement("div");
-        newDiv.classList.add("song-btn");
-        
-        const newContent = document.createTextNode(`${songNum}`);
-
-        newDiv.appendChild(newContent);
-        
-        newButton.appendChild(newDiv);
-
-        currentDiv.appendChild(newButton);
+        btns += `
+        <a onclick="loadSong(${songNum}, '${bookShort}')">
+            <div class="song-btn">
+            ${songNum}
+            </div>
+        </a>
+        `;
     }
+    currentDiv.innerHTML = btns
 }
+
+window.loadSong = loadSong;
 
 export {
     getFullBook,
     getClassFromBook,
-    loadSong,
     addSongs
 };
