@@ -289,13 +289,13 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', eve
         songViewImage.style.filter = "invert(0%)";
 });
 
-function loadSong(input, songBook) {
+function loadSong(songNumber, bookName) {
     scrollPos = window.scrollY;
     window.scrollTo(0,0);
     searchContent.classList.add('hidden');
     songView.classList.remove('hidden');
     songViewTitle.innerHTML = "";
-    const textNode = document.createTextNode(`#${input}`);
+    const textNode = document.createTextNode(`#${songNumber}`);
     songViewTitle.appendChild(textNode);
 
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -305,23 +305,21 @@ function loadSong(input, songBook) {
         }
     }
 
-    const songArray = getSongData();
+    const bookMetaData = getSongData();
+    let book = bookMetaData[bookName]
+    let song = book.songs[songNumber];
+    songNumber = String(songNumber)
+    console.log(songNumber, song)
+    let filename = songNumber.padStart(Number(book.numberLength), "0") + "." + book.fileExtension;
+    songViewImage.setAttribute('src', `./songs/${bookName}/${filename}`);
+    currentSongNumber = songNumber;
+    currentSongBookShort = bookName;
+    currentSongTitle = song.title;
 
-    for(var i = 0; i < songArray.length; i++) {
-        if(songArray[i].number == input && songArray[i].bookShort == songBook) {
-            songViewImage.setAttribute('src', `./songs/${songArray[i].bookShort}/${songArray[i].filename}`);
-            currentSongNumber = songArray[i].number;
-            currentSongBookShort = songArray[i].bookShort;
-            currentSongTitle = songArray[i].title;
-        }
-        else
-            continue;
-    }
-    var isBookmarked = getIsBookmarked(currentSongNumber, currentSongBookShort);
+    let isBookmarked = getIsBookmarked(currentSongNumber, currentSongBookShort);
     if(isBookmarked) {
         bookmarkIcon.setAttribute('name', "bookmark");
-    }
-    else {
+    } else {
         bookmarkIcon.setAttribute('name', "bookmark-outline");
     }
 }

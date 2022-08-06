@@ -1,3 +1,5 @@
+import "./sharedFunctions.js";
+
 const charactersList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
 let songs = [];
@@ -12,70 +14,38 @@ searchBar.addEventListener('keyup', (e) => {
         searchBar.blur();
         return;
     }
+
     const searchString = e.target.value.toLowerCase();
-    let filteredSongs;
-    if(!isNaN(searchString)) {
-        filteredSongs = songs.filter( song => {
-            return (song.number == searchString);
-        });
+
+    if (!searchString) {
+        displaySearchCharacters([]);
+        return;
     }
-    else {
-        filteredSongs = songs.filter( song => {
-            return ( song.title.toLowerCase().includes(searchString) ||
-            song.number.toLowerCase().includes(searchString) );
-        });
-    }
-    const noSongs = songs.filter( song => {
-        return ( song.title.toLowerCase().includes("asjfnnwfenow3w") ||
-        song.number.toLowerCase().includes("asjfnnwfenow3w") );
+
+    let filteredSongs = songs.filter(song => {
+        return song.title.toLowerCase().includes(searchString) ||
+            song.number.toLowerCase().includes(searchString);
     });
-    if(!!searchString) {
-        if(searchString.length < 2 && isNaN(searchString)) {
-            filteredSongs = songs.filter(song => {
-                return (song.title.toLowerCase().startsWith(searchString));
-            });
-            return displaySearchCharacters(filteredSongs);   
-        }
-        displaySearchCharacters(filteredSongs);
-    } else {
-        displaySearchCharacters(noSongs);
-    }
+
+    displaySearchCharacters(filteredSongs);
 });
-
-function pad(n, length) {
-    var len = length - (''+n).length;
-    return (len > 0 ? new Array(++len).join('0') : '') + n
-}
-
+ 
 const loadCharacters = async () => {
-    try {
-        songs = getSongData();
-    } catch (err) {
-        console.error(err);
+    let bookData = getSongData();
+
+    for (const [bookName, book] of Object.entries(bookData)) {
+        for (const [songNum, song] of Object.entries(book.songs)) {
+            songs.push({
+                title: song.title,
+                bookShort: bookName,
+                number: songNum
+            })
+        }
     }
 };
 
-function loadSong(input, songBook) {
-    window.scrollTo(0,0);
-    
-    searchContent.classList.add('hidden');
-    songView.classList.remove('hidden');
-    songViewTitle.innerHTML = "";
-    const textNode = document.createTextNode(`#${input}`);
-    songViewTitle.appendChild(textNode);
-
-    const songArray = getSongData();
-
-    for(var i = 0; i < songArray.length; i++) {
-        if(songArray[i].number == input && songArray[i].bookShort == songBook)
-            songViewImage.setAttribute('src', `./songs/${songArray[i].bookShort}/${songArray[i].filename}`);
-        else
-            continue;
-    }
-}
-
 function getClassFromBook(bookShort) {
-    switch(bookShort) {
+    switch (bookShort) {
         case "ZH":
             return "book-zionsharp";
         case "GH":
@@ -88,7 +58,7 @@ function getClassFromBook(bookShort) {
 }
 
 const displaySearchCharacters = (characters) => {
-    characters.sort((a,b) => a.title.localeCompare(b.title));
+    characters.sort((a, b) => a.title.localeCompare(b.title));
     const htmlString = characters
         .map((character) => {
             return `
@@ -96,7 +66,7 @@ const displaySearchCharacters = (characters) => {
                 <div class="${getClassFromBook(character.bookShort)}">
                     <div class="book-gospelhymns--left">
                         <div class="song__title">${character.title}</div>
-                        <div class="book__title">${character.book}</div>
+                        <div class="book__title">${getFullBook(character.bookShort)}</div>
                     </div>
                     <div class="booktext--right">
                         <div class="song__number">#${character.number}</div>
