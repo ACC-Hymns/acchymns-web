@@ -1,14 +1,11 @@
 import { getClassFromBook, getFullBook } from "./sharedFunctions.js";
+import { getSongData } from "./zh.js";
 
-const bookmarksList = document.getElementById('bookmarksList');
+const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
 let songs = [];
 
 searchBar.addEventListener('keyup', (e) => {
-    if (songs == null || songs.length == 0){
-        return;
-    }
-
     if (e.key === "Enter") {
         searchBar.blur();
         return;
@@ -16,7 +13,7 @@ searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(songs, bookmarksList);
+        displaySongList(songs, songList);
         return;
     }
 
@@ -24,13 +21,14 @@ searchBar.addEventListener('keyup', (e) => {
         return song.title.toLowerCase().includes(searchString) ||
         song.number.toLowerCase().includes(searchString);
     });
-    return displaySongList(filteredSongs, bookmarksList); 
+    return displaySongList(filteredSongs, songList); 
 });
 
 const displaySongList = (songs, listContainer) => {
-    if (songs == null || songs.length == 0){
+    if (listContainer == null){
         return;
     }
+    songs.sort((a, b) => a.title.localeCompare(b.title));
     listContainer.innerHTML = songs
         .map(song => {
             return `
@@ -51,10 +49,19 @@ const displaySongList = (songs, listContainer) => {
         .join('');
 };
 
-const loadBookmarkSongs = async () => {
-    songs = JSON.parse(window.localStorage.getItem("bookmarks"));
-    console.log(songs)
-    displaySongList(songs, bookmarksList);
+const loadCharacters = async () => {
+    let bookData = getSongData();
+
+    for (const [bookName, book] of Object.entries(bookData)) {
+        for (const [songNum, song] of Object.entries(book.songs)) {
+            songs.push({
+                title: song.title,
+                bookShort: bookName,
+                number: songNum
+            })
+        }
+    }
+    displaySongList([], songList)
 };
 
-loadBookmarkSongs();
+loadCharacters();

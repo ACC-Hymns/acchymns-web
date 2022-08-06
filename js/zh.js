@@ -4569,3 +4569,6 @@ function getSongData() {
     }
 }
 
+export {
+    getSongData
+};
