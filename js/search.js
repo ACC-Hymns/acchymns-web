@@ -1,4 +1,4 @@
-import { getClassFromBook, getFullBook } from "./sharedFunctions.js";
+import { getClassFromBook, getFullBook } from "./helpers.js";
 import { SONG_BOOKS } from "./books.js";
 
 const songList = document.getElementById('charactersList');

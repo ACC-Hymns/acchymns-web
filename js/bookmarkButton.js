@@ -1,4 +1,4 @@
-import { getFullBook } from "./sharedFunctions.js";
+import { getFullBook } from "./helpers.js";
 
 function isBookmarked(number, book) {
     let bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));

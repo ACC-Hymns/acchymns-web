@@ -1,4 +1,4 @@
-import { getClassFromBook, getFullBook } from "./sharedFunctions.js";
+import { getClassFromBook, getFullBook } from "./helpers.js";
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
