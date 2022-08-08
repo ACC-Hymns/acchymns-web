@@ -4546,7 +4546,7 @@ const SONG_BOOKS = {
                 "title": "O Holy Night"
             },
             "877": {
-                "title": "Hark!What Mean Those Holy Voices"
+                "title": "Hark! What Mean Those Holy Voices"
             },
             "878": {
                 "title": "Oh, Wondrous Name!"
