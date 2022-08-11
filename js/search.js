@@ -1,14 +1,11 @@
 import { getClassFromBook, getFullBook } from "./helpers.js";
+import { SONG_BOOKS } from "./books.js";
 
-const bookmarksList = document.getElementById('bookmarksList');
+const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
 let songs = [];
 
 searchBar.addEventListener('keyup', (e) => {
-    if (songs == null || songs.length == 0){
-        return;
-    }
-
     if (e.key === "Enter") {
         searchBar.blur();
         return;
@@ -16,7 +13,7 @@ searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(songs, bookmarksList);
+        displaySongList(songs, songList);
         return;
     }
 
@@ -24,25 +21,18 @@ searchBar.addEventListener('keyup', (e) => {
         return song.title.toLowerCase().includes(searchString) ||
         song.number.toLowerCase().includes(searchString);
     });
-    return displaySongList(filteredSongs, bookmarksList); 
+    return displaySongList(filteredSongs, songList); 
 });
 
 const displaySongList = (songs, listContainer) => {
-    if (songs == null || songs.length == 0){
+    if (listContainer == null){
         return;
     }
+    songs.sort((a, b) => a.title.localeCompare(b.title));
     listContainer.innerHTML = songs
         .map(song => {
             return `
-            <a onclick="bookName='${song.bookShort}';
-            let bookmarks = JSON.parse(window.localStorage.getItem('bookmarks'));
-            if (bookmarks == null)
-                bookmarks = [];
-            if(bookmarks.findIndex(bookmark => bookmark.number == ${song.number} && bookmark.bookShort == '${song.bookShort}') != -1) {
-                bookmarkIcon.setAttribute('name', 'bookmark');
-            } else {
-                bookmarkIcon.setAttribute('name', 'bookmark-outline');
-            }loadSong(${song.number}, '${song.bookShort}')">
+            <a onclick="loadSong(${song.number}, '${song.bookShort}')">
                 <div class="${getClassFromBook(song.bookShort)}">
                     <div class="book-gospelhymns--left">
                         <div class="song__title">${song.title}</div>
@@ -59,9 +49,17 @@ const displaySongList = (songs, listContainer) => {
         .join('');
 };
 
-const loadBookmarkSongs = async () => {
-    songs = JSON.parse(window.localStorage.getItem("bookmarks"));
-    displaySongList(songs, bookmarksList);
+const loadSongs = async () => {
+    for (const [bookName, book] of Object.entries(SONG_BOOKS)) {
+        for (const [songNum, song] of Object.entries(book.songs)) {
+            songs.push({
+                title: song.title,
+                bookShort: bookName,
+                number: songNum
+            })
+        }
+    }
+    displaySongList([], songList)
 };
 
-loadBookmarkSongs();
+loadSongs();
