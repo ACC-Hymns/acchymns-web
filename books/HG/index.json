@@ -4,6 +4,7 @@
         "medium": "Higher Ground",
         "long": "Higher Ground"
     },
+    "addOn": true,
     "fileExtension": "jpg",
     "numberLength": "3",
     "songs": {

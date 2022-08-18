@@ -4,6 +4,7 @@
         "medium": "ACC Hymnal",
         "long": "Apostolic Christian Church Hymnal"
     },
+    "addOn": false,
     "fileExtension": "jpg",
     "numberLength": "3",
     "songs": {

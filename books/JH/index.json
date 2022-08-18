@@ -4,6 +4,7 @@
         "medium": "Junior Hymnal",
         "long": "Junior Hymnal"
     },
+    "addOn": false,
     "fileExtension": "png",
     "numberLength": "3",
     "songs": {

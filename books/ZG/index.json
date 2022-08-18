@@ -4,6 +4,7 @@
         "medium": "Zbirka",
         "long": "Zbirka Slavopoja Gospodu Bogu"
     },
+    "addOn": true,
     "fileExtension": "png",
     "numberLength": "3",
     "songs": {

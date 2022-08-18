@@ -4,6 +4,7 @@
         "medium": "Gospel Hymns",
         "long": "Gospel Hymns"
     },
+    "addOn": false,
     "fileExtension": "png",
     "numberLength": "3",
     "songs": {
