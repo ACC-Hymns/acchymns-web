@@ -11,9 +11,9 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <div id="songview" class="songpage hidden">
             <div id="menu" class="menu">
                 <div class="title">
@@ -35,52 +35,14 @@
                 <svg viewBox="0 0 1024 1024"><path class="path1" d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path></svg>
                 </button>
             </form>
-            <!--
-            <h2 class="topicalindexheading">Topical Index</h2>
-            <div class="topicalindex">
-                <a href="#" class="topicalindexbutton">
-                    <div>🙌</div>
-                    <div>Praise</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>🙏</div>
-                    <div>Prayer</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>❤️</div>
-                    <div>Love</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>🕊️</div>
-                    <div>Peace</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>⛪</div>
-                    <div>Faith</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>📖</div>
-                    <div>Opening</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>👋</div>
-                    <div>Closing</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>🌟</div>
-                    <div>Christmas</div>
-                </a>
-                <a href="#" class="topicalindexbutton">
-                    <div>✝️</div>
-                    <div>Easter</div>
-                </a>
+
+            <div class="title">
+                <h2>Search Results</h2>
+                <a href="#"><ion-icon name="filter-outline"></ion-icon></a>
             </div>
--->
-            <h2>Search Results</h2>
-
             <ul id="charactersList"></ul>
-
-            <nav class="nav">
+        </div>
+        <nav class="nav">
             <a href="index.html" class="nav__link">
                 <ion-icon name="home-outline" class="nav__icon"></ion-icon>
                 <span class="nav__text">Home</span>
@@ -97,11 +59,9 @@
                 <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
                 <span class="nav__text">Settings</span>
             </a>
-            </nav>
-            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        
-        </div>
+        </nav>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script>const bookName = "GH"; var songNum = "0"; var songTitle = ""; </script>
         <script type="module" src="./js/search.js"></script>
         <script type="module" src="./js/song-loader.js"></script>
