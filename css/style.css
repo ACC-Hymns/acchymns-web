@@ -2,9 +2,7 @@ h1 {
     margin: 55px 20px 20px 30px;
 }
 
-
 .book {
-    /* background: linear-gradient(to bottom right, rgba(21,82,152,1), rgba(23,38,78,1)); */
     margin: 15px 20px 15px 20px;
     border-radius: 15px;
     height: 120px;
@@ -13,7 +11,7 @@ h1 {
 
 .book_title {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700; 
     position: absolute;
     margin: 0 0 20px 20px;

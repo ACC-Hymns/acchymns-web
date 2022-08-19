@@ -88,50 +88,6 @@ input {
     line-height: 1.7;
 }
 
-.book-zionsharp {
-    background: rgb(0,0,0);
-    background: linear-gradient(-47deg, rgba(0,0,0,1) 0%, rgb(73, 73, 73) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-gospelhymns {
-    background: rgb(172,32,36);
-    background: linear-gradient(47deg, rgba(172,32,36,1) 0%, rgba(90,18,17,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-higherground {
-    background: rgb(251,188,19);
-    background: linear-gradient(47deg, rgba(251,188,19,1) 0%, rgba(189,119,42,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-juniorhymnal {
-    background: rgb(21,82,152);
-    background: linear-gradient(47deg, rgba(21,82,152,1) 0%, rgba(23,38,78,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .book__title {
     color: #ffffff;
     font-size: 18px;
