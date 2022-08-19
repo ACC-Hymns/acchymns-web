@@ -5,6 +5,8 @@
         "long": "Zbirka Slavopoja Gospodu Bogu"
     },
     "addOn": true,
+    "primaryColor": "#CF0F17",
+    "secondaryColor": "#902024",
     "fileExtension": "png",
     "numberLength": "3",
     "songs": {

@@ -1,21 +1,13 @@
-import * as GH from "./GH/index.json";
-import * as HG from "./HG/index.json";
-import * as HZ from "./HZ/index.json";
-import * as JH from "./JH/index.json";
-import * as PC from "./PC/index.json";
-import * as ZG from "./ZG/index.json";
-import * as ZH from "./ZH/index.json";
-
-const SONG_BOOKS = [
-    GH,
-    ZH,
-    JH,
+const SONG_BOOKS = await Promise.all([
+    fetch("/books/GH/index.json").then(resp => resp.json()),
+    fetch("/books/ZH/index.json").then(resp => resp.json()),
+    fetch("/books/JH/index.json").then(resp => resp.json()),
     // Add-on books
-    HG,
-    HZ,
-    PC,
-    ZG
-]
+    fetch("/books/HG/index.json").then(resp => resp.json()),
+    fetch("/books/HZ/index.json").then(resp => resp.json()),
+    fetch("/books/PC/index.json").then(resp => resp.json()),
+    fetch("/books/ZG/index.json").then(resp => resp.json())
+]);
 
 export {
     SONG_BOOKS

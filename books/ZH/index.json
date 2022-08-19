@@ -5,6 +5,8 @@
         "long": "Apostolic Christian Church Hymnal"
     },
     "addOn": false,
+    "primaryColor": "#494949",
+    "secondaryColor": "#000000",
     "fileExtension": "jpg",
     "numberLength": "3",
     "songs": {

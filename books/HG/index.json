@@ -5,6 +5,8 @@
         "long": "Higher Ground"
     },
     "addOn": true,
+    "primaryColor": "#FBBC13",
+    "secondaryColor": "#BD772A",
     "fileExtension": "jpg",
     "numberLength": "3",
     "songs": {

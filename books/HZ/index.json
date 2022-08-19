@@ -5,6 +5,8 @@
         "long": "Hymns of Zion"
     },
     "addOn": true,
+    "primaryColor": "#773C00",
+    "secondaryColor": "#502500",
     "fileExtension": "png",
     "numberLength": "3",
     "songs": {
