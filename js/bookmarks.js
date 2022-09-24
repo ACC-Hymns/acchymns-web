@@ -16,23 +16,25 @@ searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(songs, bookmarksList);
+        displaySongList(bookmarks, bookmarksList);
         return;
     }
 
-    let filteredSongs = songs.filter(song => {
-        return song.title.toLowerCase().includes(searchString) ||
-        song.number.toLowerCase().includes(searchString);
+    const filteredSongs = bookmarks.filter(s => {
+        const book = SONG_BOOKS[s.book];
+        const song = book.songs[s.song];
+        var characterStrippedTitle = song.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+        var characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+
+        return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
+        s.song.toLowerCase().includes(characterStrippedSearchString);
     });
-    return displaySongList(filteredSongs, bookmarksList); 
+    displaySongList(filteredSongs, bookmarksList);
+    return;
 });
 
 const displaySongList = (songs, listContainer) => {
-    if (songs == null || songs.length == 0){
-        return;
-    }
 
-    
     listContainer.innerHTML = songs
         .map(song => {
             const book = SONG_BOOKS[song.book];
@@ -45,7 +47,7 @@ const displaySongList = (songs, listContainer) => {
                     </div>
                     <div class="booktext--right">
                         <div class="song__number">#${song.song}</div>
-                        <ion-icon name="ellipsis-vertical"></ion-icon>
+                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
                     </div>
                 </div>
             </a>

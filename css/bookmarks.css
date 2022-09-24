@@ -173,11 +173,7 @@ input {
     margin: env(safe-area-inset-top) 30px 0px 30px;
 }
 
-img {
-    padding-top: calc(env(safe-area-inset-top) + 40px);
-    padding-bottom: 100px;
-    width: 100%;
-    z-index: -1;
-    position: relative;
-    background-color: white;
+.ionicon {
+    filter: var(--svg-back-filter);
+    width: 25px;
 }

@@ -10,17 +10,17 @@
     }
 }
 
+h2 {
+    margin: 30px 0px 10px 0px;
+    font-size: 20px;
+}
+
 .pagetitle {
     margin: 55px 10px 20px 30px;
 }
 
 .topicalindexheading {
     margin: 30px 20px 0px 30px;
-    font-size: 20px;
-}
-
-h2 {
-    margin: 10px 20px 20px 30px;
     font-size: 20px;
 }
 
@@ -136,19 +136,20 @@ input {
     top: 0;
 }
 
+.book {
+    margin: 0px 20px 15px 20px;
+    padding: 15px 10px 15px 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
 .title {
     font-size: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: env(safe-area-inset-top) 30px 0px 30px;
-}
-
-img {
-    padding-top: calc(env(safe-area-inset-top) + 40px);
-    padding-bottom: 100px;
-    width: 100%;
-    z-index: -1;
-    position: relative;
-    background-color: white;
 }
