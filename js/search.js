@@ -1,4 +1,3 @@
-import { getClassFromBook, getFullBook } from "./helpers.js";
 import { SONG_BOOKS } from "./books.js";
 
 const songList = document.getElementById('charactersList');
@@ -33,7 +32,7 @@ const displaySongList = (songs, listContainer) => {
         .map(song => {
             return `
             <a onclick="loadSong(${song.number}, '${song.bookShort}')">
-                <div class="${getClassFromBook(song.bookShort)}">
+                <div class="book">
                     <div class="book-gospelhymns--left">
                         <div class="song__title">${song.title}</div>
                         <div class="book__title">${getFullBook(song.bookShort)}</div>

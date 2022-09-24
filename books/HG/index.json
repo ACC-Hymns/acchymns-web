@@ -1,0 +1,386 @@
+{
+    "name": {
+        "short": "HG",
+        "medium": "Higher Ground",
+        "long": "Higher Ground"
+    },
+    "addOn": true,
+    "primaryColor": "#FBBC13",
+    "secondaryColor": "#BD772A",
+    "fileExtension": "jpg",
+    "numberLength": "3",
+    "songs": {
+        "1": {
+            "title": "How Great Thou Art!"
+        },
+        "2": {
+            "title": "Because He Lives"
+        },
+        "3": {
+            "title": "O Worship the King"
+        },
+        "4": {
+            "title": "Our Great Savior"
+        },
+        "5": {
+            "title": "To God Be the Glory"
+        },
+        "6": {
+            "title": "How Firm a Foundation"
+        },
+        "7": {
+            "title": "The Solid Rock"
+        },
+        "8": {
+            "title": "My Tribute"
+        },
+        "9": {
+            "title": "Thou Art Worthy"
+        },
+        "10": {
+            "title": "Holy, Holy, Holy, Lord God Almighty"
+        },
+        "11": {
+            "title": "Arise, My Soul, Arise"
+        },
+        "12": {
+            "title": "Crown Him with Many Crowns"
+        },
+        "13": {
+            "title": "We Have Come into His House"
+        },
+        "14": {
+            "title": "I Have Decided to Follow Jesus"
+        },
+        "15": {
+            "title": "He Lives"
+        },
+        "16": {
+            "title": "Blessed Be the Name"
+        },
+        "17": {
+            "title": "And Can It Be That I Should Gain?"
+        },
+        "18": {
+            "title": "Lord, Lay Some Soul upon My Heart"
+        },
+        "19": {
+            "title": "O for a Thousand Toungues!"
+        },
+        "20": {
+            "title": "Where He Leads Me"
+        },
+        "21": {
+            "title": "Blessed Assurance"
+        },
+        "22": {
+            "title": "Jesus Is Lord"
+        },
+        "23": {
+            "title": "My Wonderful Lord"
+        },
+        "24": {
+            "title": "All That Thrills My Soul"
+        },
+        "25": {
+            "title": "His Name Is Wonderful"
+        },
+        "26": {
+            "title": "Great is Thy Faithfulness"
+        },
+        "27": {
+            "title": "The Church's One Foundation"
+        },
+        "28": {
+            "title": "The Bond of Love"
+        },
+        "29": {
+            "title": "We're Marching to Zion"
+        },
+        "30": {
+            "title": "It Is Truly Wonderful"
+        },
+        "31": {
+            "title": "He Took My Sins Away"
+        },
+        "32": {
+            "title": "Heaven Came Down"
+        },
+        "33": {
+            "title": "He Is Lord"
+        },
+        "34": {
+            "title": "The Longer I Serve Him"
+        },
+        "35": {
+            "title": "All Hail the Power"
+        },
+        "36": {
+            "title": "Victory in Jesus"
+        },
+        "37": {
+            "title": "Bless His Holy Name"
+        },
+        "38": {
+            "title": "Wonderful Grace of Jesus"
+        },
+        "39": {
+            "title": "He Keeps Me Singing"
+        },
+        "40": {
+            "title": "Saved, Saved!"
+        },
+        "41": {
+            "title": "He Bought Me Out"
+        },
+        "42": {
+            "title": "Love Lifted Me"
+        },
+        "43": {
+            "title": "He Hideth My Soul"
+        },
+        "44": {
+            "title": "Grace Greater than Our Sin"
+        },
+        "45": {
+            "title": "My Soul Is Filled with Glory"
+        },
+        "46": {
+            "title": "I Will Sing of My Redeemer"
+        },
+        "47": {
+            "title": "It's Just like His Great Love"
+        },
+        "48": {
+            "title": "Amazing Grace"
+        },
+        "49": {
+            "title": "Ho! Everyone That Is Thirsty"
+        },
+        "50": {
+            "title": "Satisfied"
+        },
+        "51": {
+            "title": "Covered by the Blood"
+        },
+        "52": {
+            "title": "Fill Me Now"
+        },
+        "53": {
+            "title": "The Old Account Settled"
+        },
+        "54": {
+            "title": "O How I Love Jesus"
+        },
+        "55": {
+            "title": "Wonderful"
+        },
+        "56": {
+            "title": "Where the Spirit of the Lord Is"
+        },
+        "57": {
+            "title": "Since Jesus Came into My Heart"
+        },
+        "58": {
+            "title": "Spirit of the Living God"
+        },
+        "59": {
+            "title": "Oh, How He Loves You and Me"
+        },
+        "60": {
+            "title": "Glory to His Name"
+        },
+        "61": {
+            "title": "Praise Him! Praise Him!"
+        },
+        "62": {
+            "title": "When I Survey"
+        },
+        "63": {
+            "title": "I Will Praise Him"
+        },
+        "64": {
+            "title": "There Is a Fountain"
+        },
+        "65": {
+            "title": "At the Cross"
+        },
+        "66": {
+            "title": "Such Love"
+        },
+        "67": {
+            "title": "At Calvary"
+        },
+        "68": {
+            "title": "The Cleansing Wave"
+        },
+        "69": {
+            "title": "The Blood Will Never Lose Its Power"
+        },
+        "70": {
+            "title": "There Is Power in the Blood"
+        },
+        "71": {
+            "title": "Holiness unto the Lord"
+        },
+        "72": {
+            "title": "Jesus Paid it All"
+        },
+        "73": {
+            "title": "Holy Spirit, Be My Guide"
+        },
+        "74": {
+            "title": "Come, Holy Spirit"
+        },
+        "75": {
+            "title": "The Comforter Has Come!"
+        },
+        "76": {
+            "title": "Have Thine Own Way, Lord"
+        },
+        "77": {
+            "title": "He Abides"
+        },
+        "78": {
+            "title": "Pass Me Not"
+        },
+        "79": {
+            "title": "Glorious Freedom"
+        },
+        "80": {
+            "title": "Love Divine, All Loves Excelling"
+        },
+        "81": {
+            "title": "Sanctifying Power"
+        },
+        "82": {
+            "title": "Cleanse Me"
+        },
+        "83": {
+            "title": "I Am Thine, O Lord"
+        },
+        "84": {
+            "title": "I'd Rather Have Jesus"
+        },
+        "85": {
+            "title": "I'll Go Where You Want Me to Go"
+        },
+        "86": {
+            "title": "Let the Beauty of Jesus Be Seen in Me"
+        },
+        "87": {
+            "title": "O to Be like Thee"
+        },
+        "88": {
+            "title": "I Want to Be like Jesus"
+        },
+        "89": {
+            "title": "Higher Ground"
+        },
+        "90": {
+            "title": "Deeper, Deeper"
+        },
+        "91": {
+            "title": "Sweeping This Way"
+        },
+        "92": {
+            "title": "There Shall Be Showers of Blessing"
+        },
+        "93": {
+            "title": "I Love to Tell the Story"
+        },
+        "94": {
+            "title": "Jesus Saves"
+        },
+        "95": {
+            "title": "We've a Story to Tell to the Nations"
+        },
+        "96": {
+            "title": "Send the Light"
+        },
+        "97": {
+            "title": "It Is Well with My Soul"
+        },
+        "98": {
+            "title": "I Will Serve Thee"
+        },
+        "99": {
+            "title": "God Leads Us Along"
+        },
+        "100": {
+            "title": "He Leadeth Me"
+        },
+        "101": {
+            "title": "He Giveth More Grace"
+        },
+        "102": {
+            "title": "The Family of God"
+        },
+        "103": {
+            "title": "His Grace Is Sufficient for Me"
+        },
+        "104": {
+            "title": "Faith in God Can Move a Mountain"
+        },
+        "105": {
+            "title": "The Love of God"
+        },
+        "106": {
+            "title": "Revive us Again"
+        },
+        "107": {
+            "title": "What a Friend We Have in Jesus"
+        },
+        "108": {
+            "title": "I Know Whom I Have Believed"
+        },
+        "109": {
+            "title": "Guide Me, O Thou Great Jehovah"
+        },
+        "110": {
+            "title": "A Glorious Church"
+        },
+        "111": {
+            "title": "Faith Is the Victory"
+        },
+        "112": {
+            "title": "Coming Again"
+        },
+        "113": {
+            "title": "When the Roll Is Called Up Yonder"
+        },
+        "114": {
+            "title": "'Tis So Sweet to Trust In Jesus"
+        },
+        "115": {
+            "title": "When We All Get to Heaven"
+        },
+        "116": {
+            "title": "Just as I Am"
+        },
+        "117": {
+            "title": "Blest Be the Tie That Binds"
+        },
+        "118": {
+            "title": "Room at the Cross for You"
+        },
+        "119": {
+            "title": "I Surrender All"
+        },
+        "120": {
+            "title": "Don't Turn Him Away"
+        },
+        "121": {
+            "title": "Softly and Tenderly"
+        },
+        "122": {
+            "title": "Is Your All on the Alter?"
+        },
+        "123": {
+            "title": "Whiter than Snow"
+        },
+        "124": {
+            "title": "Jesus, I Come"
+        }
+    }
+}

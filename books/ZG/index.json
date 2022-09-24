@@ -1,0 +1,1469 @@
+{
+    "name": {
+        "short": "ZG",
+        "medium": "Zbirka",
+        "long": "Zbirka Slavopoja Gospodu Bogu"
+    },
+    "addOn": true,
+    "primaryColor": "#CF0F17",
+    "secondaryColor": "#902024",
+    "fileExtension": "png",
+    "numberLength": "3",
+    "songs": {
+        "1": {
+            "title": "U tamnoj noći"
+        },
+        "2": {
+            "title": "Silni Bože"
+        },
+        "3": {
+            "title": "Gospodnja je zemlja"
+        },
+        "4": {
+            "title": "Slušao sam z sveti grad"
+        },
+        "5": {
+            "title": "O Jerusalime divni"
+        },
+        "6": {
+            "title": "O dušo proslavljaj Gospoda"
+        },
+        "7": {
+            "title": "Narode Božij, ustaj poj"
+        },
+        "8": {
+            "title": "O kličite Gospodu"
+        },
+        "9": {
+            "title": "Pojte Gospodu pesmu novu"
+        },
+        "10": {
+            "title": "Hvali Boga dušo moja"
+        },
+        "11": {
+            "title": "Harfe tvoje glas nek’ jekne"
+        },
+        "12": {
+            "title": "Slavi Boga dušo moja"
+        },
+        "13": {
+            "title": "Gospod je nama slavopoj"
+        },
+        "14": {
+            "title": "Dođite i kličite svi"
+        },
+        "15": {
+            "title": "Nebesa kazuju"
+        },
+        "16": {
+            "title": "Svet, svet, svet"
+        },
+        "17": {
+            "title": "O kako je neizmerno"
+        },
+        "18": {
+            "title": "Hval’te Boga"
+        },
+        "19": {
+            "title": "Ustajte narodi"
+        },
+        "20": {
+            "title": "Slava Hristu"
+        },
+        "21": {
+            "title": "Aliluja"
+        },
+        "22": {
+            "title": "Hvali Boga"
+        },
+        "23": {
+            "title": "Sav vasion"
+        },
+        "24": {
+            "title": "Prerodio si me"
+        },
+        "25": {
+            "title": "Hvala T’ za sve što učini"
+        },
+        "26": {
+            "title": "O divni dan"
+        },
+        "27": {
+            "title": "Jehova vlada"
+        },
+        "28": {
+            "title": "Hval’te nebesa"
+        },
+        "29": {
+            "title": "O hristjani ustanite"
+        },
+        "30": {
+            "title": "Hval’te Jehova"
+        },
+        "31": {
+            "title": "Dostojno je Jagnje Božje"
+        },
+        "32": {
+            "title": "Božji serafimi"
+        },
+        "33": {
+            "title": "O uzmi ruke moje"
+        },
+        "34": {
+            "title": "Velik je Bog"
+        },
+        "35": {
+            "title": "Kliči kćeri Sionska"
+        },
+        "36": {
+            "title": "Radujem se Gospodnjoj utehi"
+        },
+        "37": {
+            "title": "Znaš li ko te silno ljubi"
+        },
+        "38": {
+            "title": "Lepo je Gospode"
+        },
+        "39": {
+            "title": "Bogu sva čast"
+        },
+        "40": {
+            "title": "Neka prestane tamna noć"
+        },
+        "41": {
+            "title": "Radujte se"
+        },
+        "42": {
+            "title": "Čuj kako s’ noć razleže"
+        },
+        "43": {
+            "title": "Tiha noć"
+        },
+        "44": {
+            "title": "Radost, radost"
+        },
+        "45": {
+            "title": "Čuj s’ nebesa glas zvući"
+        },
+        "46": {
+            "title": "Mila deco"
+        },
+        "47": {
+            "title": "Koju radost i veselje"
+        },
+        "48": {
+            "title": "Slava Bogu u visini"
+        },
+        "49": {
+            "title": "Dostojni nismo"
+        },
+        "50": {
+            "title": "Koj’ dostojan"
+        },
+        "51": {
+            "title": "Tvoj sjaj svu tamu razbija"
+        },
+        "52": {
+            "title": "Kakav priatelj je Isus"
+        },
+        "53": {
+            "title": "U hladu drveta smokve"
+        },
+        "54": {
+            "title": "Kako tužan beše Gospod"
+        },
+        "55": {
+            "title": "Gledaj na zelenom polju"
+        },
+        "56": {
+            "title": "Galilejo"
+        },
+        "57": {
+            "title": "O ljubavi sjajna"
+        },
+        "58": {
+            "title": "Usta Gospod naš"
+        },
+        "59": {
+            "title": "Krvav je izvor potek’o"
+        },
+        "60": {
+            "title": "Jagnje krv proli za mene"
+        },
+        "61": {
+            "title": "Tamo gde Spas razapet bi"
+        },
+        "62": {
+            "title": "O kako bi gorko plak’o"
+        },
+        "63": {
+            "title": "Jedna ovca iz stada"
+        },
+        "64": {
+            "title": "Slušaj glas milosti"
+        },
+        "65": {
+            "title": "Suzne mi oči"
+        },
+        "66": {
+            "title": "Na nebu tam’"
+        },
+        "67": {
+            "title": "O moj Spase"
+        },
+        "68": {
+            "title": "Marija je gorko plakala"
+        },
+        "69": {
+            "title": "Slavite Gospoda"
+        },
+        "70": {
+            "title": "O nek Ti je slava, čast"
+        },
+        "71": {
+            "title": "Kamen spečatiše"
+        },
+        "72": {
+            "title": "A još pre zore"
+        },
+        "73": {
+            "title": "Pre rujne zore"
+        },
+        "74": {
+            "title": "On živ"
+        },
+        "75": {
+            "title": "Hval’te Boga što j’ Isus živ"
+        },
+        "76": {
+            "title": "Aliluja, Hristos šalje"
+        },
+        "77": {
+            "title": "Pogledajte deco Božja"
+        },
+        "78": {
+            "title": "Slava Gospoda u onaj dan"
+        },
+        "79": {
+            "title": "U dalekom svetu"
+        },
+        "80": {
+            "title": "Blagosloveni glasnici"
+        },
+        "81": {
+            "title": "Kad ovce odstupaju"
+        },
+        "82": {
+            "title": "Hitaj s’ ruba groba"
+        },
+        "83": {
+            "title": "Svud zvoni danas vest"
+        },
+        "84": {
+            "title": "Hodite Spasu"
+        },
+        "85": {
+            "title": "Ta zar milog Spasitelja"
+        },
+        "86": {
+            "title": "Pristupite svi narodi"
+        },
+        "87": {
+            "title": "Čuj Isus zove"
+        },
+        "88": {
+            "title": "Čuj grešniče"
+        },
+        "89": {
+            "title": "Čuj Spasitelja Reč pita"
+        },
+        "90": {
+            "title": "Dođi k’ i zvoru života"
+        },
+        "91": {
+            "title": "Hod’te i primate Reč"
+        },
+        "92": {
+            "title": "Čuj ko kuca na vrati"
+        },
+        "93": {
+            "title": "Gle, Isus stoji"
+        },
+        "94": {
+            "title": "Čuj kako Spasitelj poziva"
+        },
+        "95": {
+            "title": "Poznaješ li ono mesto"
+        },
+        "96": {
+            "title": "Tam’ u šumi"
+        },
+        "97": {
+            "title": "Veruj Boga"
+        },
+        "98": {
+            "title": "O domovini pojim"
+        },
+        "99": {
+            "title": "Ko Hrista veruje"
+        },
+        "100": {
+            "title": "Kaži zašto još čekaš"
+        },
+        "101": {
+            "title": "Šta me veseli"
+        },
+        "102": {
+            "title": "Što si tako tužan"
+        },
+        "103": {
+            "title": "O kako želim"
+        },
+        "104": {
+            "title": "Utri svoje suze"
+        },
+        "105": {
+            "title": "Kad je tužno srce"
+        },
+        "106": {
+            "title": "Dal’ si očišćen"
+        },
+        "107": {
+            "title": "Pomoz’te Sion zidati"
+        },
+        "108": {
+            "title": "Ja znam potok"
+        },
+        "109": {
+            "title": "Ja podižem oči svoje"
+        },
+        "110": {
+            "title": "Oče prizivam Te"
+        },
+        "111": {
+            "title": "Prigni nam’ se"
+        },
+        "112": {
+            "title": "K’o što jelen"
+        },
+        "113": {
+            "title": "Slatka srećo"
+        },
+        "114": {
+            "title": "O Oče čuj nas"
+        },
+        "115": {
+            "title": "Čuj nas, Bože Oče"
+        },
+        "116": {
+            "title": "Vodi me, Bože Jehova"
+        },
+        "117": {
+            "title": "Prinosimo Ti na žrtvu"
+        },
+        "118": {
+            "title": "Tvrdi kamen od ugla"
+        },
+        "119": {
+            "title": "Kakav sam bez opravdanja"
+        },
+        "120": {
+            "title": "Još jedno učini mi Gospode"
+        },
+        "121": {
+            "title": "O Gospode Bože naš"
+        },
+        "122": {
+            "title": "Dođi ja te zovem"
+        },
+        "123": {
+            "title": "Spase vodi mene Ti"
+        },
+        "124": {
+            "title": "Učini me krotkim tihim"
+        },
+        "125": {
+            "title": "Dođte mila bračo"
+        },
+        "126": {
+            "title": "Carstva vrata"
+        },
+        "127": {
+            "title": "Brate koj’ na bregu stojiš"
+        },
+        "128": {
+            "title": "Spasitelju približ’ se"
+        },
+        "129": {
+            "title": "Hriste Prijatelju moj"
+        },
+        "130": {
+            "title": "Hriste Prijatelju moj"
+        },
+        "131": {
+            "title": "Spasitelju večni"
+        },
+        "132": {
+            "title": "Moj uzdisaj"
+        },
+        "133": {
+            "title": "Vodi mene, vodi mene"
+        },
+        "134": {
+            "title": "Oče naš"
+        },
+        "135": {
+            "title": "Oče naš, koji jesi"
+        },
+        "136": {
+            "title": "Oče naš"
+        },
+        "137": {
+            "title": "Čas molitve"
+        },
+        "138": {
+            "title": "Spasitelju s’ hvalim mi"
+        },
+        "139": {
+            "title": "O dođite verni"
+        },
+        "140": {
+            "title": "Prolazi vreme"
+        },
+        "141": {
+            "title": "S’ nama budi Spase mili"
+        },
+        "142": {
+            "title": "Uči me verovat"
+        },
+        "143": {
+            "title": "Hval’te Boga vi mlada deco"
+        },
+        "144": {
+            "title": "Daj nam’ srca sam radosna"
+        },
+        "145": {
+            "title": "Svet je koj’ u meni živi"
+        },
+        "146": {
+            "title": "Radost neka vlada"
+        },
+        "147": {
+            "title": "Svršeno je sada"
+        },
+        "148": {
+            "title": "Gospodnja nam’ milost"
+        },
+        "149": {
+            "title": "Ko pođe sad"
+        },
+        "150": {
+            "title": "Kako brzo dani lete"
+        },
+        "151": {
+            "title": "Pođi k’ domu, o ti bludni sine"
+        },
+        "152": {
+            "title": "Ja idem sad"
+        },
+        "153": {
+            "title": "Reših se već ja"
+        },
+        "154": {
+            "title": "O kako da Te primim"
+        },
+        "155": {
+            "title": "Ko su oni pobednici"
+        },
+        "156": {
+            "title": "Radovah se"
+        },
+        "157": {
+            "title": "Blažen"
+        },
+        "158": {
+            "title": "Ljubim Te o, Hriste"
+        },
+        "159": {
+            "title": "Domu težim ja"
+        },
+        "160": {
+            "title": "Tebi vapijem Bože moj"
+        },
+        "161": {
+            "title": "O Isuse u Tebi spasenje"
+        },
+        "162": {
+            "title": "U Bogu sam našao mir"
+        },
+        "163": {
+            "title": "O Hriste okreni se k’nam’"
+        },
+        "164": {
+            "title": "Kako j’ mio Sion"
+        },
+        "165": {
+            "title": "Umoran sam tužna srca"
+        },
+        "166": {
+            "title": "Gospod je moja svetlost"
+        },
+        "167": {
+            "title": "Ja znam grad nebesni"
+        },
+        "168": {
+            "title": "Gospod mi je svetlost"
+        },
+        "169": {
+            "title": "Grad utočišta"
+        },
+        "170": {
+            "title": "Kada roblje iz okova"
+        },
+        "171": {
+            "title": "Neće nas On ostaviti"
+        },
+        "172": {
+            "title": "Ko su ti, o ko su ti"
+        },
+        "173": {
+            "title": "Evo ide Gospodnji strašni dan"
+        },
+        "174": {
+            "title": "Ah, šta sam učinio"
+        },
+        "175": {
+            "title": "Je li radost kakva"
+        },
+        "176": {
+            "title": "O brate što si nevoljan"
+        },
+        "177": {
+            "title": "O Isuse Spase"
+        },
+        "178": {
+            "title": "Vodi me k’svežem izvoru"
+        },
+        "179": {
+            "title": "Mir sami mir"
+        },
+        "180": {
+            "title": "Tamo gore u nebú"
+        },
+        "181": {
+            "title": "Moj život je pun pojanja"
+        },
+        "182": {
+            "title": "Kakva radost će bit’ tamo"
+        },
+        "183": {
+            "title": "Kako j’ sretno ono dete"
+        },
+        "184": {
+            "title": "Blagi Bože naš"
+        },
+        "185": {
+            "title": "Najlepše ruho"
+        },
+        "186": {
+            "title": "Tu mi srce"
+        },
+        "187": {
+            "title": "Ja znam moj Spas"
+        },
+        "188": {
+            "title": "Pod senom krila Njeg’vih"
+        },
+        "189": {
+            "title": "O večna nebesa"
+        },
+        "190": {
+            "title": "Ko milog našeg Cara zna"
+        },
+        "191": {
+            "title": "Najveći je darak ljubav"
+        },
+        "192": {
+            "title": "Samo si Ti ta prava ljubav"
+        },
+        "193": {
+            "title": "Bud’ stalan u borbi"
+        },
+        "194": {
+            "title": "Čitaj pismo"
+        },
+        "195": {
+            "title": "Veran budi do smrti"
+        },
+        "196": {
+            "title": "Bog je s’nama"
+        },
+        "197": {
+            "title": "Veruj tvrdo"
+        },
+        "198": {
+            "title": "Bud’te verni"
+        },
+        "199": {
+            "title": "Slušaj Gospoda"
+        },
+        "200": {
+            "title": "Svagda čini dobra dela"
+        },
+        "201": {
+            "title": "Uprav’ Spase pogled moj"
+        },
+        "202": {
+            "title": "Nemoj nikad"
+        },
+        "203": {
+            "title": "Ostavljaj sve jade"
+        },
+        "204": {
+            "title": "Iz daleka zemlja nam se sja"
+        },
+        "205": {
+            "title": "Ako sam dalek’ od doma"
+        },
+        "206": {
+            "title": "Pohitajte iskupljenici"
+        },
+        "207": {
+            "title": "Kako s’ težnjom"
+        },
+        "208": {
+            "title": "Ti drago mesto skupštino"
+        },
+        "209": {
+            "title": "Oko malog broda"
+        },
+        "210": {
+            "title": "Ljubi uvek Isus Hrista"
+        },
+        "211": {
+            "title": "Ustajte vi braćo"
+        },
+        "212": {
+            "title": "Ustajmo noć će doći"
+        },
+        "213": {
+            "title": "O braćo ne zastajmo"
+        },
+        "214": {
+            "title": "Jutrom rano seme svoje sej"
+        },
+        "215": {
+            "title": "Daleko lutah od Boga"
+        },
+        "216": {
+            "title": "Ustaj dušo želim javit’"
+        },
+        "217": {
+            "title": "Blaženo jemstvo"
+        },
+        "218": {
+            "title": "Zvezda koju gledam"
+        },
+        "219": {
+            "title": "Ne boj’mo se"
+        },
+        "220": {
+            "title": "Tam’ živim gde i ljubim"
+        },
+        "221": {
+            "title": "Ako si tužan"
+        },
+        "222": {
+            "title": "Moja j’ domovina tam’ gore"
+        },
+        "223": {
+            "title": "Tamo gde j’ žića drveće"
+        },
+        "224": {
+            "title": "Dođte deco svi ovamo"
+        },
+        "225": {
+            "title": "Zavičaju mirnom kraju"
+        },
+        "226": {
+            "title": "Tamo je grad radosti"
+        },
+        "227": {
+            "title": "Može l’ što lepše biti"
+        },
+        "228": {
+            "title": "Grad gde teče med i mleko"
+        },
+        "229": {
+            "title": "Tamo u zemlji večne radosti"
+        },
+        "230": {
+            "title": "O kako su blaženi oni"
+        },
+        "231": {
+            "title": "Tvorče i Bože moj"
+        },
+        "232": {
+            "title": "Žetva je već tu"
+        },
+        "233": {
+            "title": "O kad’ će moj put prestati"
+        },
+        "234": {
+            "title": "Kao što divne zvezde"
+        },
+        "235": {
+            "title": "S’ one strane tamnog groba"
+        },
+        "236": {
+            "title": "Sveta je krvca tekla"
+        },
+        "237": {
+            "title": "Spase Tebi živim"
+        },
+        "238": {
+            "title": "Kad jednom pređemo"
+        },
+        "239": {
+            "title": "Pazi i često padaj na molitvu"
+        },
+        "240": {
+            "title": "Narode Gospodnji sveti"
+        },
+        "241": {
+            "title": "Braćo i sestre"
+        },
+        "242": {
+            "title": "Na kristalnom moru"
+        },
+        "243": {
+            "title": "O Isuse Spase duše"
+        },
+        "244": {
+            "title": "Lako s’ spušta tiha noć"
+        },
+        "245": {
+            "title": "Samarjanka"
+        },
+        "246": {
+            "title": "Bogu i Isusu celi"
+        },
+        "247": {
+            "title": "Bože naš hvaljen budi"
+        },
+        "248": {
+            "title": "Blago tebi slugo verni"
+        },
+        "249": {
+            "title": "Da me ljubiš dobri Spase"
+        },
+        "250": {
+            "title": "Juče, danas i doveka"
+        },
+        "251": {
+            "title": "Nastupila tama"
+        },
+        "252": {
+            "title": "Najlepši Spase"
+        },
+        "253": {
+            "title": "Kako j’ milo tu dole"
+        },
+        "254": {
+            "title": "O, Spase Ti si vredan"
+        },
+        "255": {
+            "title": "Velik Emanuil"
+        },
+        "256": {
+            "title": "O kako sam u strahu"
+        },
+        "257": {
+            "title": "Umorno srce ti čekaj"
+        },
+        "258": {
+            "title": "Ostav’te me gresi sveta ovog"
+        },
+        "259": {
+            "title": "Kad sam ja kadgod žalostan"
+        },
+        "260": {
+            "title": "Bledi mesec"
+        },
+        "261": {
+            "title": "Krv Isusa Hrista"
+        },
+        "262": {
+            "title": "Gospod je ljubav"
+        },
+        "263": {
+            "title": "Nebeska srećo"
+        },
+        "264": {
+            "title": "Idem Bože k’ Tebi"
+        },
+        "265": {
+            "title": "Brod milosrđa plovi"
+        },
+        "266": {
+            "title": "Pripravite Sion harfe"
+        },
+        "267": {
+            "title": "Spasitelju i Pastire"
+        },
+        "268": {
+            "title": "Gospod reče svak’ nek’ čuje"
+        },
+        "269": {
+            "title": "U dom Gospodnji"
+        },
+        "270": {
+            "title": "Njegovo j’ srce milosno"
+        },
+        "271": {
+            "title": "Dok živi Isus Spas"
+        },
+        "272": {
+            "title": "Mile pesme sveti zvuci"
+        },
+        "273": {
+            "title": "Tam’ preko zvezdanog mora"
+        },
+        "274": {
+            "title": "O nebeskoj zemlji pevam"
+        },
+        "275": {
+            "title": "Bož’ja milost"
+        },
+        "276": {
+            "title": "Jerusalim"
+        },
+        "277": {
+            "title": "U tamničkim okovima"
+        },
+        "278": {
+            "title": "Prvog, sedmog dana"
+        },
+        "279": {
+            "title": "Mi izlazimo sada"
+        },
+        "280": {
+            "title": "O skupštino"
+        },
+        "281": {
+            "title": "Kaži brate kuda ideš ti"
+        },
+        "282": {
+            "title": "O kaži mi još jednom"
+        },
+        "283": {
+            "title": "Tamo svetlost divna"
+        },
+        "284": {
+            "title": "Znam da za večna vremena"
+        },
+        "285": {
+            "title": "Naš slavni lečnik"
+        },
+        "286": {
+            "title": "Ko su moja braća"
+        },
+        "287": {
+            "title": "Divno je u nebu gore"
+        },
+        "288": {
+            "title": "Raduj se Gospodu zemljo"
+        },
+        "289": {
+            "title": "Gle, devedesetdevet"
+        },
+        "290": {
+            "title": "Jedno mesto jako ljubim"
+        },
+        "291": {
+            "title": "Ja znam jedno mesto"
+        },
+        "292": {
+            "title": "Ja znam jednu reku"
+        },
+        "293": {
+            "title": "Zahvalnosti naše"
+        },
+        "294": {
+            "title": "Još malo majko"
+        },
+        "295": {
+            "title": "Srcem težim svagda"
+        },
+        "296": {
+            "title": "Hvala vama domaćini"
+        },
+        "297": {
+            "title": "Mali brod na obali"
+        },
+        "298": {
+            "title": "O kako duša brzo klone"
+        },
+        "299": {
+            "title": "Ja Ga ljubim"
+        },
+        "300": {
+            "title": "Ja vidim krasne anđele"
+        },
+        "301": {
+            "title": "Približi s’ kraj života"
+        },
+        "302": {
+            "title": "Rastanka čas"
+        },
+        "303": {
+            "title": "Umoran sam idem leć’"
+        },
+        "304": {
+            "title": "Rastanka braćo, prispe čas"
+        },
+        "305": {
+            "title": "Laku noć"
+        },
+        "306": {
+            "title": "Zbogom do se opet vidimo"
+        },
+        "307": {
+            "title": "Oče daj nam’ Tvoj blagoslov"
+        },
+        "308": {
+            "title": "Bože pošlji pre odmora"
+        },
+        "309": {
+            "title": "Našeg milog Isus Hrista"
+        },
+        "310": {
+            "title": "Kada posle tih patnji"
+        },
+        "311": {
+            "title": "Kako s’ divno ori slava"
+        },
+        "312": {
+            "title": "Pojaću Ti sa radosti"
+        },
+        "313": {
+            "title": "Pomoz Bože"
+        },
+        "314": {
+            "title": "Isus mene ljubi sam’"
+        },
+        "315": {
+            "title": "Javljajte s’ glasnim pojanjem"
+        },
+        "316": {
+            "title": "Ljubav nek’ ne prestaje"
+        },
+        "317": {
+            "title": "Isus ljubi nas male"
+        },
+        "318": {
+            "title": "A anđeo reče njima"
+        },
+        "319": {
+            "title": "Čuj anđelski hori poje"
+        },
+        "320": {
+            "title": "Čuj s’ anđelskih usta"
+        },
+        "321": {
+            "title": "Rado bih video"
+        },
+        "322": {
+            "title": "Božje čudo milosti"
+        },
+        "323": {
+            "title": "Vitlejem, Vitlejem"
+        },
+        "324": {
+            "title": "Hodite svi"
+        },
+        "325": {
+            "title": "Hodite ka meni"
+        },
+        "326": {
+            "title": "O, Isuse dođi"
+        },
+        "327": {
+            "title": "Vodi me dragi Oče"
+        },
+        "328": {
+            "title": "Primi mene slabog"
+        },
+        "329": {
+            "title": "Gospode Ti zastupaj"
+        },
+        "330": {
+            "title": "Bože moj"
+        },
+        "331": {
+            "title": "Kad u životnom tom moru"
+        },
+        "332": {
+            "title": "Svetlost se sija"
+        },
+        "333": {
+            "title": "Ja čujem glasa Tvog"
+        },
+        "334": {
+            "title": "Uđi o, Gospode"
+        },
+        "335": {
+            "title": "Obrati se"
+        },
+        "336": {
+            "title": "Obrat’ se Bogu"
+        },
+        "337": {
+            "title": "Prizovi me u nevolji"
+        },
+        "338": {
+            "title": "Ka Golgoti Isus te zove"
+        },
+        "339": {
+            "title": "Isus te nežno poziva"
+        },
+        "340": {
+            "title": "Hitaj spasi dušu svoju"
+        },
+        "341": {
+            "title": "Žuri i osnaži se"
+        },
+        "342": {
+            "title": "Uteši se mirom"
+        },
+        "343": {
+            "title": "Prolazi vreme sve brže"
+        },
+        "344": {
+            "title": "Gospodu Bogu pomoli se"
+        },
+        "345": {
+            "title": "Mnogo sam ja lutao"
+        },
+        "346": {
+            "title": "Ostan’ sa mnom"
+        },
+        "347": {
+            "title": "U Isusu ću umret’ mome"
+        },
+        "348": {
+            "title": "Bog me vodi"
+        },
+        "349": {
+            "title": "Svuda sa Isusom"
+        },
+        "350": {
+            "title": "S’ verom gledam na Tebe"
+        },
+        "351": {
+            "title": "Isuse Spase"
+        },
+        "352": {
+            "title": "Isuse Spase"
+        },
+        "353": {
+            "title": "Istina divna"
+        },
+        "354": {
+            "title": "Duša moja teži k’ domovini gore"
+        },
+        "355": {
+            "title": "O divni dan"
+        },
+        "356": {
+            "title": "Aliluja spašen sam ja"
+        },
+        "357": {
+            "title": "Sve Isusu ja predajem"
+        },
+        "358": {
+            "title": "Dugo lutah nevoljan"
+        },
+        "359": {
+            "title": "Ja znam jednu silnu Reč"
+        },
+        "360": {
+            "title": "Dal’ i zbog mene Gospod"
+        },
+        "361": {
+            "title": "O Gospode, Ti nam dođe"
+        },
+        "362": {
+            "title": "Bledog lica, sav ponizan"
+        },
+        "363": {
+            "title": "Spas usta iz mrtvih"
+        },
+        "364": {
+            "title": "Ja znam za izvor"
+        },
+        "365": {
+            "title": "Spasitelj, Gospod naš vaskrse"
+        },
+        "366": {
+            "title": "Cele noći te"
+        },
+        "367": {
+            "title": "O nek Ti je slava, čast"
+        },
+        "368": {
+            "title": "Nebesa hvale"
+        },
+        "369": {
+            "title": "Hvali Boga moja dušo"
+        },
+        "370": {
+            "title": "Nebesa kazuju"
+        },
+        "371": {
+            "title": "Ko iz stene izvor lep"
+        },
+        "372": {
+            "title": "Kličite Gospodu"
+        },
+        "373": {
+            "title": "Slava Bogu na nebu"
+        },
+        "374": {
+            "title": "Koji živi u zaklonu"
+        },
+        "375": {
+            "title": "Kad Bože o Tvojoj moći"
+        },
+        "376": {
+            "title": "O Bože moj"
+        },
+        "377": {
+            "title": "Kad je Gospod kuš’o Avrama"
+        },
+        "378": {
+            "title": "Navuhodonosor"
+        },
+        "379": {
+            "title": "Kad života bure besne"
+        },
+        "380": {
+            "title": "Učitelju bura s’ diže"
+        },
+        "381": {
+            "title": "U mlade dane"
+        },
+        "382": {
+            "title": "Bože od iskona"
+        },
+        "383": {
+            "title": "Apostol Jovan"
+        },
+        "384": {
+            "title": "Aliluja"
+        },
+        "385": {
+            "title": "Jehova"
+        },
+        "386": {
+            "title": "Gospod je štit"
+        },
+        "387": {
+            "title": "Ah, da ne beše s’nama Bog"
+        },
+        "388": {
+            "title": "Pogledajmo braćo"
+        },
+        "389": {
+            "title": "Teškim putem"
+        },
+        "390": {
+            "title": "Dolinom idemo"
+        },
+        "391": {
+            "title": "Idem Bože k’ Tebi"
+        },
+        "392": {
+            "title": "Prolazni moj put"
+        },
+        "393": {
+            "title": "Braćo složno, jednodušno"
+        },
+        "394": {
+            "title": "Tebe ljubim o Spase"
+        },
+        "395": {
+            "title": "Blažena nam sveza"
+        },
+        "396": {
+            "title": "O kako je to krasno"
+        },
+        "397": {
+            "title": "Želja mi j’ u zavičaj"
+        },
+        "398": {
+            "title": "Gospode Bože"
+        },
+        "399": {
+            "title": "U nebesnoj daljini"
+        },
+        "400": {
+            "title": "O kako je ljubav jaka"
+        },
+        "401": {
+            "title": "To je mog Oca svet"
+        },
+        "402": {
+            "title": "Često se ja sećam toga"
+        },
+        "403": {
+            "title": "Kad se setim onih dana"
+        },
+        "404": {
+            "title": "Uveče kad se mesec"
+        },
+        "405": {
+            "title": "Glasno zvuči reč"
+        },
+        "406": {
+            "title": "Gospod je moj pastir"
+        },
+        "407": {
+            "title": "Svet je Bog, Gospod"
+        },
+        "408": {
+            "title": "Svet je naš Gospod"
+        },
+        "409": {
+            "title": "Glas radosti i spasenja"
+        },
+        "410": {
+            "title": "Bor’se u kušanju"
+        },
+        "411": {
+            "title": "Tešite narod moj"
+        },
+        "412": {
+            "title": "Nad moj na Spasa"
+        },
+        "413": {
+            "title": "Na mom poslu"
+        },
+        "414": {
+            "title": "Kako me je večna sreća"
+        },
+        "415": {
+            "title": "Nas čeka jedan dom"
+        },
+        "416": {
+            "title": "O braćo i sestre"
+        },
+        "417": {
+            "title": "Bog još zove"
+        },
+        "418": {
+            "title": "U svakome času"
+        },
+        "419": {
+            "title": "Od kad poznah milog Spasa"
+        },
+        "420": {
+            "title": "Isuse Hriste Ti upravljaš"
+        },
+        "421": {
+            "title": "Gospod mi je svetlost"
+        },
+        "422": {
+            "title": "Ti putuješ"
+        },
+        "423": {
+            "title": "Velik je Bog"
+        },
+        "424": {
+            "title": "Večni i savršeni Spas"
+        },
+        "425": {
+            "title": "Jedino je od potrebe"
+        },
+        "426": {
+            "title": "Čeznem da sam sličan Hristu"
+        },
+        "427": {
+            "title": "Pođi u vinograd"
+        },
+        "428": {
+            "title": "Želiš li radost"
+        },
+        "429": {
+            "title": "Tebi Jehova pojat želim"
+        },
+        "430": {
+            "title": "Pojte Bogu"
+        },
+        "431": {
+            "title": "Ja neznam kakav tal"
+        },
+        "432": {
+            "title": "Hod’te, čujte glas Gospodnji"
+        },
+        "433": {
+            "title": "Veličinu Ti"
+        },
+        "434": {
+            "title": "Krasni dome blaženstva"
+        },
+        "435": {
+            "title": "Dva su srca sad pred Bogom"
+        },
+        "436": {
+            "title": "Hristos u Kani Galilejskoj"
+        },
+        "437": {
+            "title": "Tamo gde teče reka žića"
+        },
+        "438": {
+            "title": "Blago tom koj’ ne ide"
+        },
+        "439": {
+            "title": "Blaženo, blaženoj’"
+        },
+        "440": {
+            "title": "Gle, u pustinji traži"
+        },
+        "441": {
+            "title": "S’ obale preko mora tam’"
+        },
+        "442": {
+            "title": "O kakvu radost"
+        },
+        "443": {
+            "title": "Moj nad ima temelj"
+        },
+        "444": {
+            "title": "Da imam hiljadu jezika"
+        },
+        "445": {
+            "title": "Odlučio sam"
+        },
+        "446": {
+            "title": "Ja podižem oči svoje"
+        },
+        "447": {
+            "title": "Lepo li je Gospoda hvaliti"
+        },
+        "448": {
+            "title": "Rado, rado slavimo Te"
+        },
+        "449": {
+            "title": "Kao slavna reka"
+        },
+        "450": {
+            "title": "O večni dome u nebu"
+        },
+        "451": {
+            "title": "Kad u tugu srce ti se zavije"
+        },
+        "452": {
+            "title": "Ja Te ljubim"
+        },
+        "453": {
+            "title": "Evo nas k’ Tebi Oče"
+        },
+        "454": {
+            "title": "Male oči pazite"
+        },
+        "455": {
+            "title": "Jutro se budi"
+        },
+        "456": {
+            "title": "Kad zvezdice"
+        },
+        "457": {
+            "title": "Ah, sećam se majko na te"
+        },
+        "458": {
+            "title": "Celim putem Spas me vodi"
+        },
+        "459": {
+            "title": "Išti najpre"
+        },
+        "460": {
+            "title": "Kad krst na mom’ ramenu"
+        },
+        "461": {
+            "title": "Bog je dobar"
+        },
+        "462": {
+            "title": "Napustiš li Boga"
+        },
+        "463": {
+            "title": "Radost svetu"
+        },
+        "464": {
+            "title": "U grobu je mir"
+        },
+        "465": {
+            "title": "Mili moji"
+        },
+        "466": {
+            "title": "Gle doči će, Gospodnji dan"
+        },
+        "467": {
+            "title": "Ah, što će bit’ slavan"
+        },
+        "468": {
+            "title": "Dolazi Isus"
+        },
+        "469": {
+            "title": "Hvalimo Te za hranu"
+        },
+        "470": {
+            "title": "Približuje s’ strašno vreme"
+        },
+        "471": {
+            "title": "O osana"
+        },
+        "472": {
+            "title": "O osana! O osana!"
+        },
+        "473": {
+            "title": "Osana"
+        },
+        "474": {
+            "title": "Dal’ ćemo se opet vidit’"
+        },
+        "475": {
+            "title": "Znam da je živ moj Spasitelj"
+        },
+        "476": {
+            "title": "Neba roso dođi"
+        },
+        "477": {
+            "title": "Gle, to je Jagne Božje"
+        },
+        "478": {
+            "title": "Kad glas svete trube"
+        },
+        "479": {
+            "title": "O Isuse saslušaj me"
+        },
+        "480": {
+            "title": "Opet prođe danak"
+        },
+        "481": {
+            "title": "Skupljeni mi smo sad"
+        },
+        "482": {
+            "title": "Rastanka braćo, prispe čas"
+        },
+        "483": {
+            "title": "Dal’ si od borbe već umoran"
+        },
+        "484": {
+            "title": "O koji gledaš sve dubine"
+        },
+        "485": {
+            "title": "Tamo u nebu"
+        }
+    }
+}
