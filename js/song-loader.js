@@ -1,9 +1,10 @@
-import { SONG_BOOKS } from "/books/index.js";
+import { BOOK_METADATA } from "/books/index.js";
 
 function addSongs(bookShort) {
     let btns = ""
-    let numOfSongsInBook = Object.keys(SONG_BOOKS[bookShort].songs).length // Change later to just a length check?
-    for(let songNum = 1; songNum <= numOfSongsInBook; songNum++) {
+    let songNums = Array.from({length: BOOK_METADATA[bookShort].numOfSongs}, (_, i) => i + 1).filter(x => !BOOK_METADATA[bookShort].missingSongs.includes(x));
+
+    for(let songNum of songNums) {
         btns += `
             <a href="selection.html?book=${bookShort}&song=${songNum}">
                 <div class="song-btn">
@@ -13,6 +14,15 @@ function addSongs(bookShort) {
     }
     const songList = document.getElementById("songs");
     songList.innerHTML = btns
+}
+
+function getSongFileName(bookShort, songNum){
+    // BOOK_METADATA[bookShort].numOfSongsInBook.toString().length
+    return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
+}
+
+async function getBookSongs(bookShort) {
+    return await fetch(`/books/${bookShort}/songs.json`).then(resp => resp.json());
 }
 
 // Change image dynamically if dark/light mode changes
@@ -25,5 +35,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', eve
 });
 
 export {
-    addSongs
+    addSongs,
+    getSongFileName,
+    getBookSongs
 };

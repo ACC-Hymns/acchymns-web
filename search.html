@@ -70,9 +70,7 @@
             const songNum = urlParams.get("song");
 
             const backURL = new URL(window.location);
-            backURL.searchParams.delete("book");
-            backURL.searchParams.delete("song");
-            document.getElementById('backButton').href = backURL;
+            document.getElementById('backButton').href =  window.location.pathname;
             if (bookName == null || songNum == null){
             } else {
                 const songView = document.getElementById('songview');

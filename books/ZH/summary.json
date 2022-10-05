@@ -1,0 +1,13 @@
+{
+    "name": {
+        "short": "ZH",
+        "medium": "Zion's Harp",
+        "long": "Zion's Harp"
+    },
+    "addOn": false,
+    "primaryColor": "#494949",
+    "secondaryColor": "#000000",
+    "fileExtension": "jpg",
+    "numOfSongs": 346,
+    "missingSongs": []
+}

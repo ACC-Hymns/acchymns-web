@@ -1,8 +1,8 @@
-import { SONG_BOOKS, webApp } from "../books/index.js"
+import { BOOK_METADATA, isWebApp } from "../books/index.js"
 
 const bookContainer = document.getElementById("content")
 
-for (let book of Object.values(SONG_BOOKS)) {
+for (let book of Object.values(BOOK_METADATA)) {
     bookContainer.innerHTML += `
         <a href="selection.html?book=${book.name.short}">
             <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
@@ -13,7 +13,7 @@ for (let book of Object.values(SONG_BOOKS)) {
 
 const appSection = document.getElementById("appsection");
 
-if(webApp)
+if (isWebApp)
     appSection.innerHTML += `
 <a class="app" href='https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
     <img class="appbuttonplay" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>

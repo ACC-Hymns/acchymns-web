@@ -16,12 +16,11 @@
         <script type="module">
             const urlParams = new URLSearchParams(window.location.search);
             const bookName = urlParams.get("book");
-            var songTitle = "";
-
+            
+            import { BOOK_METADATA } from "/books/index.js";
             var styleSheet = document.createElement("style")
             styleSheet.type = "text/css"
-            import { SONG_BOOKS } from "/books/index.js";
-            styleSheet.innerText = `.song-btn{background:${SONG_BOOKS[bookName].primaryColor}}`;
+            styleSheet.innerText = `.song-btn{background:${BOOK_METADATA[bookName].primaryColor}}`;
             document.head.appendChild(styleSheet)
         </script>
     </head>
@@ -73,16 +72,16 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script type="module">
-            import { SONG_BOOKS } from "/books/index.js";
-            import { addSongs } from "/js/song-loader.js";
-
+            import { addSongs, getSongFileName } from "/js/song-loader.js";
+            import { BOOK_METADATA } from "/books/index.js";
+            
             const urlParams = new URLSearchParams(window.location.search);
             const bookName = urlParams.get("book");
             const songNum = urlParams.get("song");
             document.getElementById('backButton').href = `${window.location.pathname}?book=${bookName}`;
             if (songNum == null){
                 document.body.onload = addSongs(bookName);
-                document.getElementById("bookName").innerText = SONG_BOOKS[bookName].name.medium;
+                document.getElementById("bookName").innerText = BOOK_METADATA[bookName].name.medium;
             } else {
                 const songView = document.getElementById('songview');
                 songView.classList.remove('hidden');
@@ -93,7 +92,6 @@
                 songViewTitle.innerHTML = "";
                 const textNode = document.createTextNode(`#${songNum}`);
                 songViewTitle.appendChild(textNode);
-                
 
                 // accessing the element
                 const songViewImage = document.getElementById('songimage');
@@ -103,14 +101,11 @@
                     }
                 }
                 
-                let book = SONG_BOOKS[urlParams.get("book")];
-                let song = book.songs[songNum];
-                let filename = songNum.padStart(Number(book.numberLength), "0") + "." + book.fileExtension;
-                songViewImage.setAttribute('src', `./books/${urlParams.get("book")}/songs/${filename}`);
+                let fileName = getSongFileName(bookName, songNum);
+                songViewImage.setAttribute('src', `./books/${bookName}/songs/${fileName}`);
             }
         </script>
         <script type="module" src="./js/bookmark-button.js"></script>
-        <script type="module" src="./js/bookmarks.js"></script>
     </body>
 
     

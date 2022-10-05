@@ -64,14 +64,13 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script type="module">
-            import { SONG_BOOKS } from "/books/index.js";
+            import { addSongs, getSongFileName } from "/js/song-loader.js";
 
             const urlParams = new URLSearchParams(window.location.search);
             const bookName = urlParams.get("book");
             const songNum = urlParams.get("song");
-            document.getElementById('backButton').href = `${window.location.pathname}`;
-            if (bookName == null || songNum == null){
-            } else {
+            document.getElementById('backButton').href = window.location.pathname;
+            if (bookName != null && songNum != null){
                 const songView = document.getElementById('songview');
                 songView.classList.remove('hidden');
                 const searchContent = document.getElementById('content');
@@ -89,10 +88,8 @@
                     }
                 }
                 
-                let book = SONG_BOOKS[urlParams.get("book")];
-                let song = book.songs[songNum];
-                let filename = songNum.padStart(Number(book.numberLength), "0") + "." + book.fileExtension;
-                songViewImage.setAttribute('src', `/books/${urlParams.get("book")}/songs/${filename}`);
+                let fileName = getSongFileName(bookName, songNum);
+                songViewImage.setAttribute('src', `./books/${bookName}/songs/${fileName}`);
             }
         </script>
         <script type="module" src="./js/bookmarks.js"></script>

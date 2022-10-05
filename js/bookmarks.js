@@ -1,10 +1,12 @@
-import { SONG_BOOKS } from "/books/index.js";
+import { BOOK_METADATA } from "/books/index.js";
+import { addSongs, getSongFileName, getBookSongs } from "/js/song-loader.js";
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
 let bookmarks = [];
+var SONG_METADATA = {};
 
-searchBar.addEventListener('keyup', (e) => {
+searchBar.addEventListener('keyup', e => {
     if (bookmarks == null || bookmarks.length == 0){
         return;
     }
@@ -21,29 +23,26 @@ searchBar.addEventListener('keyup', (e) => {
     }
 
     const filteredSongs = bookmarks.filter(s => {
-        const book = SONG_BOOKS[s.book];
-        const song = book.songs[s.song];
-        var characterStrippedTitle = song.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-        var characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+        const song = SONG_METADATA[s.song];
+        let characterStrippedTitle = song.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+        let characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
 
         return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
         s.song.toLowerCase().includes(characterStrippedSearchString);
     });
     displaySongList(filteredSongs, bookmarksList);
-    return;
 });
 
 const displaySongList = (songs, listContainer) => {
-
     listContainer.innerHTML = songs
         .map(song => {
-            const book = SONG_BOOKS[song.book];
+            const bookMetaData = BOOK_METADATA[song.book];
             return `
             <a href="bookmarks.html?book=${song.book}&song=${song.song}">
-                <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
+                <div class="book" style="background: linear-gradient(135deg, ${bookMetaData.primaryColor}, ${bookMetaData.secondaryColor})">
                     <div>
-                        <div class="song__title">${book.songs[song.song].title}</div>
-                        <div class="book__title">${book.name.medium}</div>
+                        <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
+                        <div class="book__title">${bookMetaData.name.medium}</div>
                     </div>
                     <div class="booktext--right">
                         <div class="song__number">#${song.song}</div>
@@ -58,6 +57,25 @@ const displaySongList = (songs, listContainer) => {
 
 const loadBookmarkSongs = async () => {
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
+    const songSummary = await Promise.all([
+        fetch("/books/ZH/songs.json").then(resp => resp.json()),
+        fetch("/books/GH/songs.json").then(resp => resp.json()),
+        fetch("/books/JH/songs.json").then(resp => resp.json()),
+        // Add-on books
+        fetch("/books/HG/songs.json").then(resp => resp.json()),
+        fetch("/books/HZ/songs.json").then(resp => resp.json()),
+        fetch("/books/PC/songs.json").then(resp => resp.json()),
+        fetch("/books/ZG/songs.json").then(resp => resp.json())
+    ]);
+    SONG_METADATA = {
+        ZH: songSummary[0],
+        GH: songSummary[1],
+        JH: songSummary[2],
+        HG: songSummary[3],
+        HZ: songSummary[4],
+        PC: songSummary[5],
+        ZG: songSummary[6]
+    };
     displaySongList(bookmarks, bookmarksList);
 };
 
