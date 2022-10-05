@@ -1,5 +1,5 @@
 import { BOOK_METADATA } from "/books/index.js";
-import { addSongs, getSongFileName, getBookSongs } from "/js/song-loader.js";
+import { filter } from "/js/search.js";
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
@@ -22,15 +22,7 @@ searchBar.addEventListener('keyup', e => {
         return;
     }
 
-    const filteredSongs = bookmarks.filter(s => {
-        const song = SONG_METADATA[s.song];
-        let characterStrippedTitle = song.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-        let characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-
-        return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
-        s.song.toLowerCase().includes(characterStrippedSearchString);
-    });
-    displaySongList(filteredSongs, bookmarksList);
+    displaySongList(filter(bookmarks, searchString), bookmarksList);
 });
 
 const displaySongList = (songs, listContainer) => {
