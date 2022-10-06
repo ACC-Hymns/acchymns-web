@@ -12,15 +12,15 @@ searchBar.addEventListener('keyup', (e) => {
         searchBar.blur();
         return;
     }
-    
+
     const searchString = e.target.value.toLowerCase();
 
-    if(!searchString) { // No search term
-        displaySongList([], bookmarksList);
+    if (!searchString) { // No search term
+        displaySongList([], songList, metadata);
         return;
     }
 
-    displaySongList(filter(songs, searchString), songList, searchString);
+    displaySongList(filter(songs, searchString), songList, SONG_METADATA);
 });
 
 function filter(toFilter, searchString) {
@@ -29,24 +29,20 @@ function filter(toFilter, searchString) {
         let characterStrippedTitle = SONG_METADATA[s.book][s.song].title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
 
         return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
-        s.song.toLowerCase().includes(characterStrippedSearchString);
+            s.song.toLowerCase().includes(characterStrippedSearchString);
     });
     return filteredSongs;
 }
 
-const displaySongList = (songs, listContainer, searchString) => {
-    if (listContainer == null){
+const displaySongList = (songs, listContainer, metadata) => {
+    if (listContainer == null) {
         return;
     }
-    songs.sort((a, b) => SONG_METADATA[a.book][a.song].title.localeCompare(SONG_METADATA[b.book][b.song].title));
+    songs.sort((a, b) => metadata[a.book][a.song].title.localeCompare(metadata[b.book][b.song].title));
     listContainer.innerHTML = songs
         .map(song => {
-            const url = new URL(window.location);
-            // url.searchParams.set("book", song.book.name.short);
-            // url.searchParams.set("song", song.number);
-            // url.searchParams.set("search", searchString);
             return `
-            <a href="${url}">
+            <a href="${window.location.pathname}?book=${song.book}&song=${song.song}">
                 <div class="book" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
                     <div>
                         <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
@@ -57,8 +53,7 @@ const displaySongList = (songs, listContainer, searchString) => {
                         <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
                     </div>
                 </div>
-            </a>    
-            `;
+            </a>`;
         })
         .join('');
 };
@@ -91,11 +86,12 @@ const loadSongs = async () => {
             });
         }
     }
-    displaySongList([], songList, "")
+    displaySongList([], songList, SONG_METADATA);
 };
 
 loadSongs();
 
 export {
-    filter
+    filter,
+    displaySongList
 }

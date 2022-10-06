@@ -1,5 +1,5 @@
 import { BOOK_METADATA } from "/books/index.js";
-import { filter } from "/js/search.js";
+import { filter, displaySongList } from "/js/search.js";
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
@@ -18,34 +18,12 @@ searchBar.addEventListener('keyup', e => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(bookmarks, bookmarksList);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA);
         return;
     }
 
-    displaySongList(filter(bookmarks, searchString), bookmarksList);
+    displaySongList(filter(bookmarks, searchString), bookmarksList, SONG_METADATA);
 });
-
-const displaySongList = (songs, listContainer) => {
-    listContainer.innerHTML = songs
-        .map(song => {
-            const bookMetaData = BOOK_METADATA[song.book];
-            return `
-            <a href="bookmarks.html?book=${song.book}&song=${song.song}">
-                <div class="book" style="background: linear-gradient(135deg, ${bookMetaData.primaryColor}, ${bookMetaData.secondaryColor})">
-                    <div>
-                        <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
-                        <div class="book__title">${bookMetaData.name.medium}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <div class="song__number">#${song.song}</div>
-                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
-                    </div>
-                </div>
-            </a>
-            `;
-        })
-        .join('');
-};
 
 const loadBookmarkSongs = async () => {
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
@@ -68,7 +46,7 @@ const loadBookmarkSongs = async () => {
         PC: songSummary[5],
         ZG: songSummary[6]
     };
-    displaySongList(bookmarks, bookmarksList);
+    displaySongList(bookmarks, bookmarksList, SONG_METADATA);
 };
 
 loadBookmarkSongs();
