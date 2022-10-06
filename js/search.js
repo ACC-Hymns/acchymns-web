@@ -1,11 +1,9 @@
-import { BOOK_METADATA } from "/books/index.js";
+import { filter, displaySongList } from "/js/search-tools.js";
 
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
 var SONG_METADATA = {};
 let songs = [];
-
-searchBar.addEventListener('search', () => filter(""));
 
 searchBar.addEventListener('keyup', (e) => {
     if (e.key === "Enter") {
@@ -20,43 +18,8 @@ searchBar.addEventListener('keyup', (e) => {
         return;
     }
 
-    displaySongList(filter(songs, searchString), songList, SONG_METADATA);
+    displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA);
 });
-
-function filter(toFilter, searchString) {
-    let characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-    let filteredSongs = toFilter.filter(s => {
-        let characterStrippedTitle = SONG_METADATA[s.book][s.song].title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-
-        return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
-            s.song.toLowerCase().includes(characterStrippedSearchString);
-    });
-    return filteredSongs;
-}
-
-const displaySongList = (songs, listContainer, metadata) => {
-    if (listContainer == null) {
-        return;
-    }
-    songs.sort((a, b) => metadata[a.book][a.song].title.localeCompare(metadata[b.book][b.song].title));
-    listContainer.innerHTML = songs
-        .map(song => {
-            return `
-            <a href="${window.location.pathname}?book=${song.book}&song=${song.song}">
-                <div class="book" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
-                    <div>
-                        <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
-                        <div class="book__title">${BOOK_METADATA[song.book].name.medium}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <div class="song__number">#${song.song}</div>
-                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
-                    </div>
-                </div>
-            </a>`;
-        })
-        .join('');
-};
 
 const loadSongs = async () => {
     const songSummary = await Promise.all([
@@ -90,8 +53,3 @@ const loadSongs = async () => {
 };
 
 loadSongs();
-
-export {
-    filter,
-    displaySongList
-}
