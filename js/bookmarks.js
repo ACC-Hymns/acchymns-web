@@ -1,10 +1,12 @@
 import { filter, displaySongList } from "/js/search-tools.js";
-import { getSongMetaData } from "/books/index.js"
+import { getSongMetaData, getBookMetaData } from "/books/index.js"
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
 let bookmarks = [];
-var SONG_METADATA = {};
+
+const BOOK_METADATA = await getBookMetaData();
+const SONG_METADATA = await getSongMetaData();
 
 searchBar.addEventListener('keyup', e => {
     if (e.key === "Enter") {
@@ -18,7 +20,7 @@ searchBar.addEventListener('keyup', e => {
         return;
     }
 
-    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA);
+    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA);
 });
 
 const loadBookmarkSongs = async () => {

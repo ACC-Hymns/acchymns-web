@@ -1,9 +1,11 @@
 import { filter, displaySongList } from "/js/search-tools.js";
-import { getSongMetaData } from "/books/index.js"
+import { getSongMetaData, getBookMetaData } from "/books/index.js"
 
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
-var SONG_METADATA = {};
+
+const BOOK_METADATA = await getBookMetaData();
+const SONG_METADATA = await getSongMetaData();
 let songs = [];
 
 searchBar.addEventListener('keyup', (e) => {
@@ -15,15 +17,14 @@ searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if (!searchString) { // No search term
-        displaySongList([], songList, metadata);
+        displaySongList([], songList, SONG_METADATA);
         return;
     }
 
-    displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA);
+    displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA, BOOK_METADATA);
 });
 
 const loadSongs = async () => {
-    SONG_METADATA = await getSongMetaData();
     for (const book of Object.keys(SONG_METADATA)) {
         for (const songNum of Object.keys(SONG_METADATA[book])) {
             songs.push({
