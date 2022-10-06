@@ -25,14 +25,6 @@ async function getBookSongs(bookShort) {
     return await fetch(`/books/${bookShort}/songs.json`).then(resp => resp.json());
 }
 
-// Change image dynamically if dark/light mode changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    const songViewImage = document.getElementById('songimage');
-    if(event.matches)
-        songViewImage.style.filter = "invert(92%)";
-    else
-        songViewImage.style.filter = "invert(0%)";
-});
 
 export {
     addSongs,

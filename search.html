@@ -17,7 +17,7 @@
         <div id="songview" class="songpage hidden">
             <div id="menu" class="menu">
                 <div class="title">
-                    <a id="backButton"><img class="ionicon" src="./assets/chevron-back-outline.svg"/></a>
+                    <a id="backButton" href="search.html"><img class="ionicon" src="./assets/chevron-back-outline.svg"/></a>
                     <h1 id="titlenumber"></h1>
                     <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="./assets/bookmark-outline.svg"/></a>
                 </div>
@@ -62,40 +62,10 @@
         </div>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <script type="module">
-            import { getSongFileName } from "/js/song-loader.js";
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const bookName = urlParams.get("book");
-            const songNum = urlParams.get("song");
-
-            const backURL = new URL(window.location);
-            document.getElementById('backButton').href =  window.location.pathname;
-            if (bookName != null && songNum != null){
-                const songView = document.getElementById('songview');
-                songView.classList.remove('hidden');
-                const searchContent = document.getElementById('content');
-                searchContent.classList.add('hidden');
-
-                const songViewTitle = document.getElementById('titlenumber');
-                songViewTitle.innerHTML = "";
-                const textNode = document.createTextNode(`#${songNum}`);
-                songViewTitle.appendChild(textNode);
-                
-                const songViewImage = document.getElementById('songimage');
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    if(window.localStorage.getItem("songInverted") == "true") {
-                        songViewImage.style.filter = "invert(92%)";
-                    }
-                }
-                
-                let fileName = getSongFileName(bookName, songNum);
-                songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
-            }
-        </script>
         <script type="module" src="./js/search.js"></script>
         <script type="module" src="./js/song-loader.js"></script>
         <script type="module" src="./js/bookmark-button.js"></script> 
         <script type="module" src="./js/back-button.js"></script> 
+        <script type="module" src="./js/display-song.js"></script> 
     </body>
 </html>

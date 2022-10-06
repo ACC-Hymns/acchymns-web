@@ -72,7 +72,7 @@
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
         <script type="module">
-            import { addSongs, getSongFileName } from "/js/song-loader.js";
+            import { addSongs } from "/js/song-loader.js";
             import { BOOK_METADATA } from "/books/index.js";
             
             const urlParams = new URLSearchParams(window.location.search);
@@ -82,30 +82,11 @@
             if (songNum == null){
                 document.body.onload = addSongs(bookName);
                 document.getElementById("bookName").innerText = BOOK_METADATA[bookName].name.medium;
-            } else {
-                const songView = document.getElementById('songview');
-                songView.classList.remove('hidden');
-                const searchContent = document.getElementById('content');
-                searchContent.classList.add('hidden');
-
-                const songViewTitle = document.getElementById('titlenumber');
-                songViewTitle.innerHTML = "";
-                const textNode = document.createTextNode(`#${songNum}`);
-                songViewTitle.appendChild(textNode);
-
-                // accessing the element
-                const songViewImage = document.getElementById('songimage');
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    if(window.localStorage.getItem("songInverted") == "true") {
-                        songViewImage.style.filter = "invert(92%)";
-                    }
-                }
-                
-                let fileName = getSongFileName(bookName, songNum);
-                songViewImage.setAttribute('src', `./books/${bookName}/songs/${fileName}`);
             }
         </script>
         <script type="module" src="./js/bookmark-button.js"></script>
+        <script type="module" src="./js/display-song.js"></script> 
+
     </body>
 
     
