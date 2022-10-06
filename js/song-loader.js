@@ -1,6 +1,4 @@
-import { BOOK_METADATA } from "/books/index.js";
-
-function addSongs(bookShort) {
+function addSongs(bookShort, BOOK_METADATA) {
     let btns = ""
     let songNums = Array.from({length: BOOK_METADATA[bookShort].numOfSongs}, (_, i) => i + 1).filter(x => !BOOK_METADATA[bookShort].missingSongs.includes(x));
 
@@ -16,8 +14,7 @@ function addSongs(bookShort) {
     songList.innerHTML = btns
 }
 
-function getSongFileName(bookShort, songNum){
-    // BOOK_METADATA[bookShort].numOfSongsInBook.toString().length
+function getSongFileName(bookShort, songNum, BOOK_METADATA){
     return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
 }
 

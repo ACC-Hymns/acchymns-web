@@ -1,4 +1,6 @@
 import { getSongFileName } from "/js/song-loader.js";
+import { getBookMetaData } from "/books/index.js";
+const BOOK_METADATA = await getBookMetaData();
 
 function displaySong(bookName, songNum) {
     const songView = document.getElementById('songview');
@@ -19,7 +21,7 @@ function displaySong(bookName, songNum) {
         }
     }
     
-    let fileName = getSongFileName(bookName, songNum);
+    let fileName = getSongFileName(bookName, songNum, BOOK_METADATA);
     songViewImage.setAttribute('src', `./books/${bookName}/songs/${fileName}`);
 }
 

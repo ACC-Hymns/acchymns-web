@@ -1,9 +1,7 @@
-import { BOOK_METADATA } from "/books/index.js";
-
-function filter(toFilter, searchString, metadata) {
+function filter(toFilter, searchString, SONG_METADATA) {
     let characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
     let filteredSongs = toFilter.filter(s => {
-        let characterStrippedTitle = metadata[s.book][s.song].title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+        let characterStrippedTitle = SONG_METADATA[s.book][s.song].title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
 
         return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
             s.song.toLowerCase().includes(characterStrippedSearchString);
@@ -11,18 +9,18 @@ function filter(toFilter, searchString, metadata) {
     return filteredSongs;
 }
 
-function displaySongList(songs, listContainer, metadata) {
+function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA) {
     if (listContainer == null) {
         return;
     }
-    songs.sort((a, b) => metadata[a.book][a.song].title.localeCompare(metadata[b.book][b.song].title));
+    songs.sort((a, b) => SONG_METADATA[a.book][a.song].title.localeCompare(SONG_METADATA[b.book][b.song].title));
     listContainer.innerHTML = songs
         .map(song => {
             return `
             <a href="${window.location.pathname}?book=${song.book}&song=${song.song}">
                 <div class="book" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
                     <div>
-                        <div class="song__title">${metadata[song.book][song.song].title}</div>
+                        <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
                         <div class="book__title">${BOOK_METADATA[song.book].name.medium}</div>
                     </div>
                     <div class="booktext--right">
