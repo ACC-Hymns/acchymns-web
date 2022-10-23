@@ -7,7 +7,8 @@ async function getBookMetaData() {
         fetch("/books/HG/summary.json").then(resp => resp.json()),
         fetch("/books/HZ/summary.json").then(resp => resp.json()),
         fetch("/books/PC/summary.json").then(resp => resp.json()),
-        fetch("/books/ZG/summary.json").then(resp => resp.json())
+        fetch("/books/ZG/summary.json").then(resp => resp.json()),
+        fetch("/books/ARF/summary.json").then(resp => resp.json())
     ]);
     return {
         ZH: bookSummary[0],
@@ -16,7 +17,8 @@ async function getBookMetaData() {
         HG: bookSummary[3],
         HZ: bookSummary[4],
         PC: bookSummary[5],
-        ZG: bookSummary[6]
+        ZG: bookSummary[6],
+        ARF: bookSummary[7]
     };
 }
 
@@ -29,7 +31,8 @@ async function getSongMetaData() {
         fetch("/books/HG/songs.json").then(resp => resp.json()),
         fetch("/books/HZ/songs.json").then(resp => resp.json()),
         fetch("/books/PC/songs.json").then(resp => resp.json()),
-        fetch("/books/ZG/songs.json").then(resp => resp.json())
+        fetch("/books/ZG/songs.json").then(resp => resp.json()),
+        fetch("/books/ARF/songs.json").then(resp => resp.json())
     ]);
     return {
         ZH: songs[0],
@@ -38,7 +41,8 @@ async function getSongMetaData() {
         HG: songs[3],
         HZ: songs[4],
         PC: songs[5],
-        ZG: songs[6]
+        ZG: songs[6],
+        ARF: songs[7]
     };
 }
 
