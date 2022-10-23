@@ -18,9 +18,10 @@ a {
 
 
 h2 {
-    margin: 30px 0px 10px 0px;
+    margin: 10px 20px 20px 30px;
     font-size: 20px;
 }
+
 
 form {
     background-color: var(--search-color);
@@ -163,6 +164,10 @@ input {
     position: fixed;
     width: 100%;
     top: 0;
+}
+
+.content {
+    padding-bottom: 89px;
 }
 
 .title {

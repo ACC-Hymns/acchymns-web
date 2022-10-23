@@ -13,11 +13,10 @@ searchBar.addEventListener('keyup', (e) => {
         searchBar.blur();
         return;
     }
-
     const searchString = e.target.value.toLowerCase();
 
-    if (!searchString) { // No search term
-        displaySongList([], songList, SONG_METADATA);
+    if(!searchString) { // No search term
+        displaySongList([], songList, SONG_METADATA, BOOK_METADATA);
         return;
     }
 

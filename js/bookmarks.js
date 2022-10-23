@@ -16,7 +16,8 @@ searchBar.addEventListener('keyup', e => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(bookmarks, bookmarksList, SONG_METADATA);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
+        console.log(bookmarks);
         return;
     }
 
@@ -25,8 +26,8 @@ searchBar.addEventListener('keyup', e => {
 
 const loadBookmarkSongs = async () => {
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
-    SONG_METADATA = await getSongMetaData();
-    displaySongList(bookmarks, bookmarksList, SONG_METADATA);
+    //SONG_METADATA = await getSongMetaData();
+    displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
 };
 
 loadBookmarkSongs();
