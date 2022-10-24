@@ -22,7 +22,16 @@ function displaySong(bookName, songNum) {
     }
     
     let fileName = getSongFileName(bookName, songNum, BOOK_METADATA);
-    songViewImage.setAttribute('src', `./books/${bookName}/songs/${fileName}`);
+    if(BOOK_METADATA[bookName].addOn){
+        songViewImage.setAttribute('src',  BOOK_METADATA[bookName].sourceRoot + fileName);
+    } else {
+        songViewImage.setAttribute('src', `/books/.${bookName}/songs/${fileName}`);
+    }
+    songViewImage.onerror = () => {
+        songViewImage.src = "/assets/wifi_off.svg";
+        songViewImage.style.width = "50%";
+        songViewImage.style.height = "50%";
+    }
 }
 
 const urlParams = new URLSearchParams(window.location.search);

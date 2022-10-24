@@ -9,11 +9,14 @@ function filter(toFilter, searchString, SONG_METADATA) {
     return filteredSongs;
 }
 
-function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA) {
+function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sort = true) {
     if (listContainer == null) {
         return;
     }
-    songs.sort((a, b) => SONG_METADATA[a.book][a.song].title.localeCompare(SONG_METADATA[b.book][b.song].title));
+    if (sort) {
+        songs.sort((a, b) => SONG_METADATA[a.book][a.song].title.localeCompare(SONG_METADATA[b.book][b.song].title));
+    }
+    let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">`
     listContainer.innerHTML = songs
         .map(song => {
             return `
@@ -25,6 +28,7 @@ function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA) {
                     </div>
                     <div class="booktext--right">
                         <div class="song__number">#${song.song}</div>
+                        ${BOOK_METADATA[song.book].addOn ? wifiSymbol : ""}
                         <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
                     </div>
                 </div>

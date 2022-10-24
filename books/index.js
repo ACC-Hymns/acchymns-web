@@ -16,8 +16,8 @@ async function getBookMetaData() {
         JH: bookSummary[2],
         HG: bookSummary[3],
         HZ: bookSummary[4],
-        PC: bookSummary[5],
         ZG: bookSummary[6],
+        PC: bookSummary[5],
         ARF: bookSummary[7]
     };
 }
@@ -40,8 +40,8 @@ async function getSongMetaData() {
         JH: songs[2],
         HG: songs[3],
         HZ: songs[4],
-        PC: songs[5],
         ZG: songs[6],
+        PC: songs[5],
         ARF: songs[7]
     };
 }
