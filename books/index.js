@@ -1,14 +1,14 @@
 async function getBookMetaData() {
     const bookSummary = await Promise.all([
-        fetch("/books/ZH/summary.json").then(resp => resp.json()),
-        fetch("/books/GH/summary.json").then(resp => resp.json()),
-        fetch("/books/JH/summary.json").then(resp => resp.json()),
+        fetch("../books/ZH/summary.json").then(resp => resp.json()),
+        fetch("../books/GH/summary.json").then(resp => resp.json()),
+        fetch("../books/JH/summary.json").then(resp => resp.json()),
         // Add-on books
-        fetch("/books/HG/summary.json").then(resp => resp.json()),
-        fetch("/books/HZ/summary.json").then(resp => resp.json()),
-        fetch("/books/PC/summary.json").then(resp => resp.json()),
-        fetch("/books/ZG/summary.json").then(resp => resp.json()),
-        fetch("/books/ARF/summary.json").then(resp => resp.json())
+        fetch("../books/HG/summary.json").then(resp => resp.json()),
+        fetch("../books/HZ/summary.json").then(resp => resp.json()),
+        fetch("../books/PC/summary.json").then(resp => resp.json()),
+        fetch("../books/ZG/summary.json").then(resp => resp.json()),
+        fetch("../books/ARF/summary.json").then(resp => resp.json())
     ]);
     return {
         ZH: bookSummary[0],
@@ -24,15 +24,15 @@ async function getBookMetaData() {
 
 async function getSongMetaData() {
     const songs = await Promise.all([
-        fetch("/books/ZH/songs.json").then(resp => resp.json()),
-        fetch("/books/GH/songs.json").then(resp => resp.json()),
-        fetch("/books/JH/songs.json").then(resp => resp.json()),
+        fetch("../books/ZH/songs.json").then(resp => resp.json()),
+        fetch("../books/GH/songs.json").then(resp => resp.json()),
+        fetch("../books/JH/songs.json").then(resp => resp.json()),
         // Add-on books
-        fetch("/books/HG/songs.json").then(resp => resp.json()),
-        fetch("/books/HZ/songs.json").then(resp => resp.json()),
-        fetch("/books/PC/songs.json").then(resp => resp.json()),
-        fetch("/books/ZG/songs.json").then(resp => resp.json()),
-        fetch("/books/ARF/songs.json").then(resp => resp.json())
+        fetch("../books/HG/songs.json").then(resp => resp.json()),
+        fetch("../books/HZ/songs.json").then(resp => resp.json()),
+        fetch("../books/PC/songs.json").then(resp => resp.json()),
+        fetch("../books/ZG/songs.json").then(resp => resp.json()),
+        fetch("../books/ARF/songs.json").then(resp => resp.json())
     ]);
     return {
         ZH: songs[0],

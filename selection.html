@@ -25,7 +25,7 @@
             styleSheet.type = "text/css"
             styleSheet.innerText = `.song-btn{background:${BOOK_METADATA[bookName].primaryColor}}`;
             document.head.appendChild(styleSheet)
-            import { addSongs } from "/js/song-loader.js";;
+            import { addSongs } from "./js/song-loader.js";;
 
             document.getElementById('backButton').href = `${window.location.pathname}?book=${bookName}`;
             if (songNum == null){

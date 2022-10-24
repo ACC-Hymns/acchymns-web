@@ -1,5 +1,5 @@
-import { getSongFileName } from "/js/song-loader.js";
-import { getBookMetaData } from "/books/index.js";
+import { getSongFileName } from "./song-loader.js";
+import { getBookMetaData } from "../books/index.js";
 const BOOK_METADATA = await getBookMetaData();
 
 function displaySong(bookName, songNum) {
@@ -28,7 +28,7 @@ function displaySong(bookName, songNum) {
         songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
     }
     songViewImage.onerror = () => {
-        songViewImage.src = "/assets/wifi_off.svg";
+        songViewImage.src = "assets/wifi_off.svg";
         songViewImage.style.width = "50%";
         songViewImage.style.height = "50%";
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
