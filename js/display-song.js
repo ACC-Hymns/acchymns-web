@@ -25,7 +25,7 @@ function displaySong(bookName, songNum) {
     if(BOOK_METADATA[bookName].addOn){
         songViewImage.setAttribute('src',  BOOK_METADATA[bookName].sourceRoot + fileName);
     } else {
-        songViewImage.setAttribute('src', `/books/.${bookName}/songs/${fileName}`);
+        songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
     }
     songViewImage.onerror = () => {
         songViewImage.src = "/assets/wifi_off.svg";
