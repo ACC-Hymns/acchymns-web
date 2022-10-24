@@ -5,6 +5,7 @@
         "long": "Pisne Chorale"
     },
     "addOn": true,
+    "sourceRoot": "https://raw.githubusercontent.com/Christoffyw/acchymns-web/new-books-url-params/books/PC/songs/",
     "primaryColor": "#99D9EA",
     "secondaryColor": "#80C5D0",
     "fileExtension": "png",

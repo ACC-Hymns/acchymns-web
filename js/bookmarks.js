@@ -26,7 +26,6 @@ searchBar.addEventListener('keyup', e => {
 
 const loadBookmarkSongs = async () => {
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
-    //SONG_METADATA = await getSongMetaData();
     displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
 };
 

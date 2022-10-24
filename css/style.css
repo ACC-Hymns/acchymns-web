@@ -4,16 +4,19 @@ h1 {
 
 .book {
     margin: 15px 20px 15px 20px;
+    padding: 15px 20px;
     border-radius: 15px;
-    height: 120px;
+    height: 80px;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .book_title {
     color: #ffffff;
     font-size: 24px;
     font-weight: 700; 
-    position: absolute;
-    margin: 0 0 20px 20px;
+    position: relative;
     bottom: 0;
 }
