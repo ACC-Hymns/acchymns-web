@@ -43,6 +43,10 @@ h2 {
     margin: 30px 30px 10px 30px;
 }
 
+.settings-holder {
+    padding-bottom: 89px;
+}
+
 .settings {
     background: var(--div-color);
     margin: 15px 20px 15px 20px;

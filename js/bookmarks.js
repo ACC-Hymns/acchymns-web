@@ -16,7 +16,8 @@ searchBar.addEventListener('keyup', e => {
     const searchString = e.target.value.toLowerCase();
 
     if(!searchString) { // No search term
-        displaySongList(bookmarks, bookmarksList, SONG_METADATA);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
+        console.log(bookmarks);
         return;
     }
 
