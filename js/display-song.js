@@ -31,6 +31,9 @@ function displaySong(bookName, songNum) {
         songViewImage.src = "/assets/wifi_off.svg";
         songViewImage.style.width = "50%";
         songViewImage.style.height = "50%";
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            songViewImage.style.filter = "invert(92%)";
+        }
     }
 }
 
