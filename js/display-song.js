@@ -2,6 +2,18 @@ import { getSongFileName } from "./song-loader.js";
 import { getBookMetaData } from "../books/index.js";
 const BOOK_METADATA = await getBookMetaData();
 
+const songImage = document.getElementById('songimage');
+const panzoom = Panzoom(songImage, { canvas: true, minScale: 1 });
+const parent = songImage.parentElement;
+// No function bind needed
+parent.addEventListener('wheel', panzoom.zoomWithWheel);
+
+// This demo binds to shift + wheel
+parent.addEventListener('wheel', function(event) {
+    if (!event.shiftKey) return;
+    panzoom.zoomWithWheel(event);
+});
+
 function displaySong(bookName, songNum) {
     const songView = document.getElementById('songview');
     songView.classList.remove('hidden');
