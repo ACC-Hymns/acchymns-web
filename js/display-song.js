@@ -12,7 +12,7 @@ function displaySong(bookName, songNum) {
     songViewTitle.innerHTML = "";
     const textNode = document.createTextNode(`#${songNum}`);
     songViewTitle.appendChild(textNode);
-console.log(BOOK_METADATA)
+
     // accessing the element
     const songViewImage = document.getElementById('songimage');
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
