@@ -192,3 +192,21 @@ object{
 .hidden {
     display: none;
 }
+
+.menu {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: var(--menu-color);
+    box-shadow: var(--box-shadow);
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.title {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: env(safe-area-inset-top) 30px 0px 30px;
+}

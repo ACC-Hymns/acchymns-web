@@ -1,0 +1,35 @@
+.song {
+    margin: 0px 20px 15px 20px;
+    padding: 15px 10px 15px 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book__title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.song__title {
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.song__number {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 900;
+    margin-right: 5px;
+}
+
+.booktext--right {
+    color: white;
+    display: flex;
+    align-items: center;
+}
+

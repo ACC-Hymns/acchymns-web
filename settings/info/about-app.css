@@ -79,7 +79,7 @@ h2 {
 
 .attribution {
     align-items: center;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 20px;
     color: #000;
     border-bottom: var(--border-color);
 }
@@ -94,7 +94,11 @@ h2 {
 
 .release, .releaseDate {
     display: inline-block;
-    padding: 5px;
+    padding: 0px, 5px;
+}
+
+.releaseDate {
+    float: right;
 }
 
 .settings-option:last-child {

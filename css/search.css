@@ -15,10 +15,6 @@ h2 {
     font-size: 20px;
 }
 
-.topicalindexheading {
-    margin: 30px 20px 0px 30px;
-    font-size: 20px;
-}
 
 form {
     background-color: var(--search-color);
@@ -60,96 +56,9 @@ input {
     font-family: 'Lato', sans-serif;
 }
 
-.topicalindex {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    overflow: auto;
-  
-}
-
-.topicalindexbutton {
-    height: 70px;
-    min-width: 70px;
-    padding: 10px;
-    text-align: center;
-    color: var(--color);
-    border-radius: 15px;
-    margin-right: 15px;
-    background-color: var(--topical-color);
-    box-shadow: var(--box-shadow);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    line-height: 1.7;
-}
-
-.book__title {
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-.song__title {
-    color: #ffffff;
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.song__number {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 900;
-    margin-right: 5px;
-}
-
-.booktext--right {
-    color: white;
-    display: flex;
-    align-items: center;
-}
-
-.content {
-    padding-bottom: 89px;
-}
-
-#charactersList {
+.songlist {
     padding-inline-start: 0;
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
-}
-
-.title ion-icon {
-    font-size: 25px;
-    color: var(--back-color);
-}
-
-.menu {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    background-color: var(--menu-color);
-    box-shadow: var(--box-shadow);
-    position: fixed;
-    width: 100%;
-    top: 0;
-}
-
-.book {
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: env(safe-area-inset-top) 30px 0px 30px;
 }

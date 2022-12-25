@@ -21,7 +21,7 @@ function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sor
         .map(song => {
             return `
             <a href="${window.location.pathname}?book=${song.book}&song=${song.song}">
-                <div class="book" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
+                <div class="song" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
                     <div>
                         <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
                         <div class="book__title">${BOOK_METADATA[song.book].name.medium}</div>
