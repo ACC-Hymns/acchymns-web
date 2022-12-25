@@ -1,5 +1,4 @@
 function removeExternalBook(book_index) {
-    console.log("removing index", book_index)
     let externalBooks = window.localStorage.getItem("externalBooks");
 
     if (externalBooks == null) {
@@ -52,7 +51,6 @@ async function reloadExternalBooksDisplay() {
         }
     }
 
-    console.log(imported_books.children)
     for (let [book_index, imported_book_html] of [...imported_books.children].entries()) {
         let bound = removeExternalBook.bind(null, book_index);
         imported_book_html.getElementsByTagName("button")[0].addEventListener("click", (event) => bound());
@@ -63,7 +61,6 @@ reloadExternalBooksDisplay()
 
 async function AddImportURL(event){
     event.preventDefault();
-    console.log("attempt to import")
     let externalBooks = window.localStorage.getItem("externalBooks");
     if (externalBooks == null) {
         externalBooks = [];
@@ -71,7 +68,6 @@ async function AddImportURL(event){
         externalBooks = JSON.parse(externalBooks);
     }
     externalBooks.push(event.target.elements.import_url.value);
-    console.log(externalBooks)
     window.localStorage.setItem("externalBooks", JSON.stringify(externalBooks));
     reloadExternalBooksDisplay();
     return false;

@@ -17,7 +17,6 @@ searchBar.addEventListener('keyup', e => {
     window.history.replaceState(null, "", `bookmarks.html?q=${searchString}`);
     if(!searchString) { // No search term
         displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
-        console.log(bookmarks);
         return;
     }
 
