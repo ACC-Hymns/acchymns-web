@@ -12,7 +12,7 @@ function displaySong(bookName, songNum) {
     songViewTitle.innerHTML = "";
     const textNode = document.createTextNode(`#${songNum}`);
     songViewTitle.appendChild(textNode);
-
+console.log(BOOK_METADATA)
     // accessing the element
     const songViewImage = document.getElementById('songimage');
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -23,7 +23,7 @@ function displaySong(bookName, songNum) {
     
     let fileName = getSongFileName(bookName, songNum, BOOK_METADATA);
     if(BOOK_METADATA[bookName].addOn){
-        songViewImage.setAttribute('src',  BOOK_METADATA[bookName].sourceRoot + fileName);
+        songViewImage.setAttribute('src', `${BOOK_METADATA[bookName].sourceRoot}/songs/${fileName}`);
     } else {
         songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
     }

@@ -6,8 +6,9 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-        <link rel="stylesheet" href="theme.css">
-        <link rel="stylesheet" href="../../css/globals.css">
+        <link rel="stylesheet" href="/css/settings.css">
+        <link rel="stylesheet" href="/css/book.css">
+        <link rel="stylesheet" href="/css/globals.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
@@ -15,42 +16,43 @@
     </head>
     <body>
         <div class="title">
-            <a href="../../settings.html"><img class="ionicon" src="../../assets/chevron-back-outline.svg"></a>
-            <h1>Theme</h1>
+            <a href="/settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"></a>
+            <h1>Import Books</h1>
             <span class="space"></span>
         </div>
         
-        <h2>Dark Theme</h2>
         <div class="settings">
-            <a href="#" class="settings-option">
-                <span>Invert Song Colors</span>
-                <label class="switch">
-                    <input id='songInverted' type="checkbox" onclick="ToggleSongInverted(this)">
-                    <span class="slider round"></span>
-                  </label>
-            </a>
+            <div class="settings-option">
+                <span>Import URL</span>
+                <form id="myForm">
+                    <input name='import_url' type="url">
+                </form>
+            </div>
         </div>
-        
+
+        <h2>Imported Books</h2>
+        <div id="imported_books"></div>
+
         <nav class="nav">
-            <a href="../../index.html" class="nav__link">
-                <img class="ionicon nav__icon" src="../../assets/home-outline.svg"/>
+            <a href="/index.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/home-outline.svg"/>
                 <span class="nav__text">Home</span>
             </a>
-            <a href="../../search.html" class="nav__link">
-                <img class="ionicon nav__icon" src="../../assets/search-outline.svg"/>
+            <a href="/search.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/search-outline.svg"/>
                 <span class="nav__text">Search</span>
             </a>
-            <a href="../../bookmarks.html" class="nav__link">
-                <img class="ionicon nav__icon" src="../../assets/bookmark-outline.svg"/>
+            <a href="/bookmarks.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg"/>
                 <span class="nav__text">Bookmarks</span>
             </a>
-            <a href="#" class="nav__link nav__link--active">
-                <img class="ionicon nav__icon--active" src="../../assets/settings.svg"/>
+            <a href="/settings.html" class="nav__link nav__link--active">
+                <img class="ionicon nav__icon--active" src="/assets/settings.svg"/>
                 <span class="nav__text">Settings</span>
             </a>
         </nav>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <script src="./theme.js"></script>
+        <script type="module" src="import_songs.js"></script>
     </body>
 </html>

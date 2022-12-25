@@ -14,7 +14,7 @@ searchBar.addEventListener('keyup', (e) => {
         return;
     }
     const searchString = e.target.value.toLowerCase();
-
+    window.history.replaceState(null, "", `search.html?q=${searchString}`);
     if(!searchString) { // No search term
         displaySongList([], songList, SONG_METADATA, BOOK_METADATA);
         return;
@@ -32,7 +32,13 @@ const loadSongs = async () => {
             });
         }
     }
-    displaySongList([], songList, SONG_METADATA);
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchString = urlParams.get("q");
+    if (searchString == null){
+        displaySongList([], songList, SONG_METADATA, BOOK_METADATA);
+    } else {
+        displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA, BOOK_METADATA);
+    }
 };
 
 loadSongs();
