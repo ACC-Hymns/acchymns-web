@@ -14,6 +14,9 @@ function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sor
         return;
     }
     if (sort) {
+        songs = songs.filter((song) => {
+            return BOOK_METADATA[song.book] != undefined;
+        })
         songs.sort((a, b) => SONG_METADATA[a.book][a.song].title.localeCompare(SONG_METADATA[b.book][b.song].title));
     }
     let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`
