@@ -6,8 +6,8 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-        <link rel="stylesheet" href="./css/selection.css">
-        <link rel="stylesheet" href="./css/globals.css">
+        <link rel="stylesheet" href="/css/selection.css">
+        <link rel="stylesheet" href="/css/globals.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
             styleSheet.type = "text/css"
             styleSheet.innerText = `.song-btn{background:${BOOK_METADATA[bookName].primaryColor}}`;
             document.head.appendChild(styleSheet)
-            import { addSongs } from "./js/song-loader.js";;
+            import { addSongs } from "/js/song-loader.js";;
 
             document.getElementById('backButton').href = `${window.location.pathname}?book=${bookName}`;
             if (songNum == null){
@@ -38,9 +38,9 @@
         <div id="songview" class="songpage hidden">
             <div class="menu">
                 <div class="title">
-                    <a id="backButton"><img class="ionicon" src="./assets/chevron-back-outline.svg"/></a>
+                    <a id="backButton"><img class="ionicon" src="/assets/chevron-back-outline.svg"/></a>
                     <h1 id="titlenumber"></h1>
-                    <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="./assets/bookmark-outline.svg"/></a>
+                    <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="/assets/bookmark-outline.svg"/></a>
                 </div>
             </div>
             <div class="song_img_container">
@@ -51,9 +51,9 @@
         <div id="content" class="content">
             <div class="menu">
                 <div class="title">
-                    <a href="index.html"><img class="ionicon" src="./assets/chevron-back-outline.svg"/></a>
+                    <a href="index.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"/></a>
                     <h1 id="bookName"></h1>
-                    <img class="ionicon" src="./assets/information-circle-outline.svg"/>
+                    <img class="ionicon" src="/assets/information-circle-outline.svg"/>
                 </div>
             </div>
         
@@ -63,19 +63,19 @@
             
             <nav class="nav">
                 <a href="index.html" class="nav__link nav__link--active">
-                    <img class="ionicon nav__icon--active" src="./assets/home.svg"/>
+                    <img class="ionicon nav__icon--active" src="/assets/home.svg"/>
                     <span class="nav__text">Home</span>
                 </a>
                 <a href="search.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="./assets/search-outline.svg"/>
+                    <img class="ionicon nav__icon" src="/assets/search-outline.svg"/>
                     <span class="nav__text">Search</span>
                 </a>
                 <a href="bookmarks.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="./assets/bookmark-outline.svg"/>
+                    <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg"/>
                     <span class="nav__text">Bookmarks</span>
                 </a>
                 <a href="settings.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="./assets/settings-outline.svg"/>
+                    <img class="ionicon nav__icon" src="/assets/settings-outline.svg"/>
                     <span class="nav__text">Settings</span>
                 </a>
             </nav>
@@ -83,8 +83,8 @@
 
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <script type="module" src="./js/bookmark-button.js"></script>
+        <script type="module" src="/js/bookmark-button.js"></script>
         <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
-        <script type="module" src="./js/display-song.js"></script> 
+        <script type="module" src="/js/display-song.js"></script> 
     </body>
 </html>

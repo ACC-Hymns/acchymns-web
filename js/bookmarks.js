@@ -1,12 +1,12 @@
 import { filter, displaySongList } from "./search-tools.js";
-import { getSongMetaData, getBookMetaData } from "../books/index.js"
+import { getSongMetaData, getBookMetaData } from "/books/index.js"
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
 let bookmarks = [];
 
-const BOOK_METADATA = await getBookMetaData();
-const SONG_METADATA = await getSongMetaData();
+let BOOK_METADATA = {};
+let SONG_METADATA = {};
 
 searchBar.addEventListener('keyup', e => {
     if (e.key === "Enter") {
@@ -24,6 +24,8 @@ searchBar.addEventListener('keyup', e => {
 });
 
 const loadBookmarkSongs = async () => {
+    const BOOK_METADATA = await getBookMetaData();
+    const SONG_METADATA = await getSongMetaData();
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");

@@ -4,8 +4,8 @@ import { getSongMetaData, getBookMetaData } from "../books/index.js"
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
 
-const BOOK_METADATA = await getBookMetaData();
-const SONG_METADATA = await getSongMetaData();
+let BOOK_METADATA = {};
+let SONG_METADATA = {};
 let songs = [];
 
 searchBar.addEventListener('keyup', (e) => {
@@ -24,6 +24,8 @@ searchBar.addEventListener('keyup', (e) => {
 });
 
 const loadSongs = async () => {
+    BOOK_METADATA = await getBookMetaData();
+    SONG_METADATA = await getSongMetaData();
     for (const book of Object.keys(SONG_METADATA)) {
         for (const songNum of Object.keys(SONG_METADATA[book])) {
             songs.push({
