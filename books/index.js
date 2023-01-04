@@ -54,7 +54,7 @@ async function getSongMetaData() {
 }
 
 async function getBookSongMetaData(book_short_name) {
-    if (book_short_name in ["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"]){
+    if (["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"].includes(book_short_name)){
         return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json());
     }
 
