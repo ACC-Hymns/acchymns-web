@@ -15,10 +15,7 @@ function removeExternalBook(book_index) {
 async function reloadExternalBooksDisplay() {
     let imported_books = document.getElementById("imported_books");
     let externalBooks = window.localStorage.getItem("externalBooks");
-    if (externalBooks == null) {
 
-        return;
-    }
     externalBooks = JSON.parse(externalBooks);
     
     imported_books.innerHTML = "";
@@ -63,16 +60,45 @@ async function AddImportURL(event){
     event.preventDefault();
     let externalBooks = window.localStorage.getItem("externalBooks");
     if (externalBooks == null) {
-        externalBooks = [];
-    } else {
-        externalBooks = JSON.parse(externalBooks);
+        externalBooks = "[]";
     }
+    externalBooks = JSON.parse(externalBooks);
+
     externalBooks.push(event.target.elements.import_url.value);
+
+    externalBooks = [...new Set(externalBooks)];
+
     window.localStorage.setItem("externalBooks", JSON.stringify(externalBooks));
     reloadExternalBooksDisplay();
     return false;
 }
 
-let form = document.getElementById("myForm");
-form.addEventListener('submit', AddImportURL);
+let url_form = document.getElementById("URLForm");
+url_form.addEventListener('submit', AddImportURL);
+
+async function AddImportReference(event){
+    event.preventDefault();
+    let externalBooks = window.localStorage.getItem("externalBooks");
+    if (externalBooks == null) {
+        externalBooks = "[]";
+    }
+    externalBooks = JSON.parse(externalBooks);
+
+    let known_references = {
+        "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/Dallas/Avon-Road-Favorites/books/ARF",
+        // "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/Dallas/Avon-Road-Favorites/books/ARF",
+    };
+
+    if (event.target.elements.import_reference.value in known_references) {
+        externalBooks.push(known_references[event.target.elements.import_reference.value]);
+        externalBooks = [...new Set(externalBooks)];
+        window.localStorage.setItem("externalBooks", JSON.stringify(externalBooks));
+        reloadExternalBooksDisplay();
+    }
+
+    return false;
+}
+
+let reference_form = document.getElementById("ReferenceForm");
+reference_form.addEventListener('submit', AddImportReference);
 
