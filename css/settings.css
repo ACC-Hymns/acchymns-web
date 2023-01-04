@@ -9,12 +9,14 @@ body {
 :root {
     --button-color: #ffffff;
     --search-color: #dfdede;
+    --slider-base: #CCCCCC;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --button-color: #2b2b2b;
         --search-color: #2b2b2b;
+        --slider-base: #606060;
     }
 }
 
@@ -133,6 +135,15 @@ input {
 }
 
 .settings-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--color);
+    border-bottom: var(--border-color);
+}
+
+.input-option {
     display: flex;
     align-items: center;
     padding: 15px 20px;

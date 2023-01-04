@@ -16,7 +16,7 @@
     <body>
         <div class="title">
             <a href="/settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"></a>
-            <h1>Theme</h1>
+            <h1>Options</h1>
             <span class="space"></span>
         </div>
         
@@ -26,6 +26,16 @@
                 <span>Invert Song Colors</span>
                 <label class="switch">
                     <input id='songInverted' type="checkbox" onclick="ToggleSongInverted(this)">
+                    <span class="slider round"></span>
+                  </label>
+            </a>
+        </div>
+        <h2>General</h2>
+        <div class="settings">
+            <a href="#" class="settings-option">
+                <span>Pinch and Pan</span>
+                <label class="switch">
+                    <input id='pinchandpan' type="checkbox" onclick="TogglePinchAndPan(this)">
                     <span class="slider round"></span>
                   </label>
             </a>
@@ -51,6 +61,6 @@
         </nav>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-        <script src="./theme.js"></script>
+        <script src="./options.js"></script>
     </body>
 </html>

@@ -8,8 +8,10 @@ function mobileOrTablet() {
 };
 
 const songImage = document.getElementById('songimage');
-const panzoom = Panzoom(songImage, { canvas: true, minScale: (mobileOrTablet() ? 1 : 0.25), maxScale: 3});
+const panzoom = Panzoom(songImage, { canvas: true, minScale: (mobileOrTablet() ? 1 : 0.25), maxScale: 3, pinchAndPan: false});
 const parent = songImage.parentElement;
+if(window.localStorage.getItem("pinchandpan") == "true")
+    panzoom.setOptions({pinchAndPan: true});
 
 // This demo binds to shift + wheel
 parent.addEventListener('wheel', function(event) {
