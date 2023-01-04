@@ -10,8 +10,6 @@ function mobileOrTablet() {
 const songImage = document.getElementById('songimage');
 const panzoom = Panzoom(songImage, { canvas: true, minScale: (mobileOrTablet() ? 1 : 0.25), maxScale: 3});
 const parent = songImage.parentElement;
-// No function bind needed
-parent.addEventListener('wheel', panzoom.zoomWithWheel);
 
 // This demo binds to shift + wheel
 parent.addEventListener('wheel', function(event) {
