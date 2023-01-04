@@ -53,10 +53,20 @@ async function getSongMetaData() {
     return Object.fromEntries(Object.keys(BOOK_METADATA).map((book_name, i) => [book_name, bookSongs[i]]));
 }
 
+async function getBookSongMetaData(book_short_name) {
+    if (book_short_name in ["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"]){
+        return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json());
+    }
+
+    const BOOK_METADATA = await getBookMetaData();
+    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).then(resp => resp.json());
+}
+
 const isWebApp = true;
 
 export {
     getBookMetaData,
     getSongMetaData,
+    getBookSongMetaData,
     isWebApp
 }
