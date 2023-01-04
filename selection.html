@@ -15,23 +15,25 @@
 
         <script type="module">
             import { getBookMetaData } from "/books/index.js";
-            const BOOK_METADATA = await getBookMetaData();
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const bookName = urlParams.get("book");
-            const songNum = urlParams.get("song");
-
-            var styleSheet = document.createElement("style")
-            styleSheet.type = "text/css"
-            styleSheet.innerText = `.song-btn{background:${BOOK_METADATA[bookName].primaryColor}}`;
-            document.head.appendChild(styleSheet)
             import { addSongs } from "/js/song-loader.js";;
-
-            document.getElementById('backButton').href = `${window.location.pathname}?book=${bookName}`;
-            if (songNum == null){
-                document.body.onload = addSongs(bookName, BOOK_METADATA);
-                document.getElementById("bookName").innerText = BOOK_METADATA[bookName].name.medium;
-            }
+            
+            (async () => {
+                const BOOK_METADATA = await getBookMetaData();
+    
+                const urlParams = new URLSearchParams(window.location.search);
+                const bookName = urlParams.get("book");
+                const songNum = urlParams.get("song");
+    
+                var styleSheet = document.createElement("style")
+                styleSheet.type = "text/css"
+                styleSheet.innerText = `.song-btn{background:${BOOK_METADATA[bookName].primaryColor}}`;
+                document.head.appendChild(styleSheet)
+                document.getElementById('backButton').href = `${window.location.pathname}?book=${bookName}`;
+                if (songNum == null){
+                    document.body.onload = addSongs(bookName, BOOK_METADATA);
+                    document.getElementById("bookName").innerText = BOOK_METADATA[bookName].name.medium;
+                }
+            })();
         </script>
     </head>
     <body>

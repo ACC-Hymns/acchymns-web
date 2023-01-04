@@ -27,6 +27,9 @@ const loadBookmarkSongs = async () => {
     const BOOK_METADATA = await getBookMetaData();
     const SONG_METADATA = await getSongMetaData();
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
+    if (bookmarks == null) {
+        bookmarks = [];
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");
     if (searchString == null){
