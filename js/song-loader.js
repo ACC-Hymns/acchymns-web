@@ -18,13 +18,7 @@ function getSongFileName(bookShort, songNum, BOOK_METADATA){
     return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
 }
 
-async function getBookSongs(bookShort) {
-    return await fetch(`/books/${bookShort}/songs.json`).then(resp => resp.json());
-}
-
-
 export {
     addSongs,
-    getSongFileName,
-    getBookSongs
+    getSongFileName
 };

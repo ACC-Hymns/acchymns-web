@@ -1,4 +1,4 @@
-import { getBookMetaData, getBookSongMetaData, getBookIndex } from "/books/index.js"
+import { getAllBookMetaData, getSongMetaData, getBookIndex } from "/books/index.js"
 
 const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");
@@ -12,8 +12,8 @@ if (bookName != null && songNum != null){
 const loadTopicalIndex = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const bookName = urlParams.get("book");
-    const BOOK_METADATA = await getBookMetaData();
-    const BOOK_SONG_METADATA = await getBookSongMetaData(bookName);
+    const BOOK_METADATA = await getAllBookMetaData();
+    const BOOK_SONG_METADATA = await getSongMetaData(bookName);
     const BOOK_INDEX = await getBookIndex(bookName);
     const container = document.getElementById("index");
     let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`

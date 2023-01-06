@@ -1,6 +1,6 @@
 const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"];
 
-async function getBookMetaData() {
+async function getAllBookMetaData() {
     let toFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/summary.json`).then(resp => resp.json()));
     
     let externalBooks = window.localStorage.getItem("externalBooks");
@@ -21,7 +21,7 @@ async function getBookMetaData() {
     return Object.fromEntries(bookSummary.filter(e => e != null).map((summary, _) => [summary.name.short, summary]));
 }
 
-async function getSongMetaData() {
+async function getAllSongMetaData() {
     let songsToFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/songs.json`).then(resp => resp.json()).catch(() => null));
     
     let externalBooks = window.localStorage.getItem("externalBooks");
@@ -34,17 +34,20 @@ async function getSongMetaData() {
     }
     
     const bookSongs = await Promise.all(songsToFetch);
-    const BOOK_METADATA = await getBookMetaData();
+    const BOOK_METADATA = await getAllBookMetaData();
     
     return Object.fromEntries(Object.keys(BOOK_METADATA).map((book_name, i) => [book_name, bookSongs[i]]));
 }
 
-async function getBookSongMetaData(book_short_name) {
+async function getSongMetaData(book_short_name) {
     if (prepackaged_books.includes(book_short_name)){
         return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json()).catch(() => null);
     }
 
-    const BOOK_METADATA = await getBookMetaData();
+    const BOOK_METADATA = await getAllBookMetaData();
+    if (BOOK_METADATA[book_short_name] == null){
+        return null;
+    }
     return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).then(resp => resp.json()).catch(() => null);
 }
 
@@ -54,15 +57,18 @@ async function getBookIndex(book_short_name) {
     }
 
     const BOOK_METADATA = await getBookMetaData();
+    if (BOOK_METADATA[book_short_name] == null){
+        return null;
+    }
     return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/index.json`).then(resp => resp.json()).catch(() => null);
 }
 
 const isWebApp = true;
 
 export {
-    getBookMetaData,
+    getAllBookMetaData,
+    getAllSongMetaData,
     getSongMetaData,
-    getBookSongMetaData,
     getBookIndex,
     isWebApp
 }

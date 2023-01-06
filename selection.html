@@ -14,11 +14,11 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <script type="module">
-            import { getBookMetaData } from "/books/index.js";
+            import { getAllBookMetaData } from "/books/index.js";
             import { addSongs } from "/js/song-loader.js";;
             
             (async () => {
-                const BOOK_METADATA = await getBookMetaData();
+                const BOOK_METADATA = await getAllBookMetaData();
     
                 const urlParams = new URLSearchParams(window.location.search);
                 const bookName = urlParams.get("book");

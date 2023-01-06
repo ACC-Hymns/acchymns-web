@@ -1,5 +1,5 @@
 import { getSongFileName } from "./song-loader.js";
-import { getBookMetaData } from "../books/index.js";
+import { getAllBookMetaData } from "/books/index.js";
 
 function mobileOrTablet() {
     let check = false;
@@ -20,7 +20,7 @@ parent.addEventListener('wheel', function(event) {
 });
 
 async function displaySong(bookName, songNum) {
-    const BOOK_METADATA = await getBookMetaData();
+    const BOOK_METADATA = await getAllBookMetaData();
 
     const songView = document.getElementById('songview');
     songView.classList.remove('hidden');

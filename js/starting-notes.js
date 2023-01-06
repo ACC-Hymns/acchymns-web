@@ -4,12 +4,12 @@ const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");
 const songNum = urlParams.get("song");
 
-import { getBookSongMetaData } from "/books/index.js"
+import { getSongMetaData } from "/books/index.js"
 
 let book_song_metadata = null;
 if (bookName != null && songNum != null){
     (async () => {
-        book_song_metadata = await getBookSongMetaData(bookName);
+        book_song_metadata = await getSongMetaData(bookName);
         if (book_song_metadata[songNum]["notes"] != null){
             startingNotesIcon.classList.remove('hidden');
         }
