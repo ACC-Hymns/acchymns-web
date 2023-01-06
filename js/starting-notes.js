@@ -7,12 +7,14 @@ const songNum = urlParams.get("song");
 import { getBookSongMetaData } from "/books/index.js"
 
 let book_song_metadata = null;
-(async () => {
-    book_song_metadata = await getBookSongMetaData(bookName);
-    if (book_song_metadata[songNum]["notes"] != null){
-        startingNotesIcon.classList.remove('hidden');
-    }
-})();
+if (bookName != null && songNum != null){
+    (async () => {
+        book_song_metadata = await getBookSongMetaData(bookName);
+        if (book_song_metadata[songNum]["notes"] != null){
+            startingNotesIcon.classList.remove('hidden');
+        }
+    })();
+}
 
 const sampler = new Tone.Sampler({
 	urls: {
