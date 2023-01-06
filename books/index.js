@@ -22,14 +22,14 @@ async function getBookMetaData() {
 }
 
 async function getSongMetaData() {
-    let songsToFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/songs.json`).then(resp => resp.json()));
+    let songsToFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/songs.json`).then(resp => resp.json()).catch(() => null));
     
     let externalBooks = window.localStorage.getItem("externalBooks");
     
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            songsToFetch.push(fetch(`${book_url}/songs.json`).then(resp => resp.json()))
+            songsToFetch.push(fetch(`${book_url}/songs.json`).then(resp => resp.json()).catch(() => null))
         }
     }
     
@@ -41,20 +41,20 @@ async function getSongMetaData() {
 
 async function getBookSongMetaData(book_short_name) {
     if (prepackaged_books.includes(book_short_name)){
-        return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json());
+        return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json()).catch(() => null);
     }
 
     const BOOK_METADATA = await getBookMetaData();
-    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).then(resp => resp.json());
+    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).then(resp => resp.json()).catch(() => null);
 }
 
 async function getBookIndex(book_short_name) {
     if (prepackaged_books.includes(book_short_name)){
-        return await fetch(`/books/${book_short_name}/index.json`).then(resp => resp.json());
+        return await fetch(`/books/${book_short_name}/index.json`).then(resp => resp.json()).catch(() => null);
     }
 
     const BOOK_METADATA = await getBookMetaData();
-    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/index.json`).then(resp => resp.json());
+    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/index.json`).then(resp => resp.json()).catch(() => null);
 }
 
 const isWebApp = true;
