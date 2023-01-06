@@ -301,7 +301,7 @@
 	},
 	"76": {
 		"title": "A Little While",
-        "notes": "Eb4", "C4", "Ab4", "Ab3"]
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"77": {
 		"title": "Just a Word for Jesus",
@@ -553,7 +553,7 @@
 	},
 	"139": {
 		"title": "I'll Stand by You",
-        "notes": ["Bb5", "G4", "Bb4" "Eb3"]
+        "notes": ["Bb5", "G4", "Bb4", "Eb3"]
 	},
 	"140": {
 		"title": "Saved by the Blood",
