@@ -1,13 +1,7 @@
+const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"];
+
 async function getBookMetaData() {
-    let toFetch = [
-        fetch("/books/ZH/summary.json").then(resp => resp.json()),
-        fetch("/books/GH/summary.json").then(resp => resp.json()),
-        fetch("/books/JH/summary.json").then(resp => resp.json()),
-        fetch("/books/HG/summary.json").then(resp => resp.json()),
-        fetch("/books/HZ/summary.json").then(resp => resp.json()),
-        fetch("/books/PC/summary.json").then(resp => resp.json()),
-        fetch("/books/ZG/summary.json").then(resp => resp.json())
-    ];
+    let toFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/summary.json`).then(resp => resp.json()));
     
     let externalBooks = window.localStorage.getItem("externalBooks");
     
@@ -28,15 +22,7 @@ async function getBookMetaData() {
 }
 
 async function getSongMetaData() {
-    let songsToFetch = [
-        fetch("/books/ZH/songs.json").then(resp => resp.json()),
-        fetch("/books/GH/songs.json").then(resp => resp.json()),
-        fetch("/books/JH/songs.json").then(resp => resp.json()),
-        fetch("/books/HG/songs.json").then(resp => resp.json()),
-        fetch("/books/HZ/songs.json").then(resp => resp.json()),
-        fetch("/books/PC/songs.json").then(resp => resp.json()),
-        fetch("/books/ZG/songs.json").then(resp => resp.json())
-    ];
+    let songsToFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/songs.json`).then(resp => resp.json()));
     
     let externalBooks = window.localStorage.getItem("externalBooks");
     
@@ -54,7 +40,7 @@ async function getSongMetaData() {
 }
 
 async function getBookSongMetaData(book_short_name) {
-    if (["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"].includes(book_short_name)){
+    if (prepackaged_books.includes(book_short_name)){
         return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json());
     }
 
@@ -63,7 +49,7 @@ async function getBookSongMetaData(book_short_name) {
 }
 
 async function getBookIndex(book_short_name) {
-    if (["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"].includes(book_short_name)){
+    if (prepackaged_books.includes(book_short_name)){
         return await fetch(`/books/${book_short_name}/index.json`).then(resp => resp.json());
     }
 
