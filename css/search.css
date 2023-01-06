@@ -10,19 +10,11 @@
     }
 }
 
-.pagetitle {
-    margin: 55px 10px 20px 30px;
-}
-
-.topicalindexheading {
-    margin: 30px 20px 0px 30px;
-    font-size: 20px;
-}
-
 h2 {
     margin: 10px 20px 20px 30px;
     font-size: 20px;
 }
+
 
 form {
     background-color: var(--search-color);
@@ -64,135 +56,9 @@ input {
     font-family: 'Lato', sans-serif;
 }
 
-.topicalindex {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    overflow: auto;
-  
-}
-
-.topicalindexbutton {
-    height: 70px;
-    min-width: 70px;
-    padding: 10px;
-    text-align: center;
-    color: var(--color);
-    border-radius: 15px;
-    margin-right: 15px;
-    background-color: var(--topical-color);
-    box-shadow: var(--box-shadow);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    line-height: 1.7;
-}
-
-.book-zionsharp {
-    background: rgb(0,0,0);
-    background: linear-gradient(-47deg, rgba(0,0,0,1) 0%, rgb(73, 73, 73) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-gospelhymns {
-    background: rgb(172,32,36);
-    background: linear-gradient(47deg, rgba(172,32,36,1) 0%, rgba(90,18,17,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-higherground {
-    background: rgb(251,188,19);
-    background: linear-gradient(47deg, rgba(251,188,19,1) 0%, rgba(189,119,42,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-juniorhymnal {
-    background: rgb(21,82,152);
-    background: linear-gradient(47deg, rgba(21,82,152,1) 0%, rgba(23,38,78,1) 100%);
-    margin: 0px 20px 15px 20px;
-    padding: 15px 10px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book__title {
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-.song__title {
-    color: #ffffff;
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.song__number {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 900;
-    margin-right: 5px;
-}
-
-.booktext--right {
-    color: white;
-    display: flex;
-    align-items: center;
-}
-
-#charactersList {
+.songlist {
     padding-inline-start: 0;
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
-}
-
-.title ion-icon {
-    font-size: 25px;
-    color: var(--back-color);
-}
-
-.menu {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    background-color: var(--menu-color);
-    box-shadow: var(--box-shadow);
-    position: fixed;
-    width: 100%;
-    top: 0;
-}
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: env(safe-area-inset-top) 30px 0px 30px;
-}
-
-img {
-    padding-top: calc(env(safe-area-inset-top) + 40px);
-    padding-bottom: 100px;
-    width: 100%;
-    z-index: -1;
-    position: relative;
-    background-color: white;
 }

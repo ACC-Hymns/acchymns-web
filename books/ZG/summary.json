@@ -1,0 +1,13 @@
+{
+    "name": {
+        "short": "ZG",
+        "medium": "Zbirka",
+        "long": "Zbirka Slavopoja Gospodu Bogu"
+    },
+    "addOn": false,
+    "primaryColor": "#CF0F17",
+    "secondaryColor": "#902024",
+    "fileExtension": "png",
+    "numOfSongs": 485,
+    "missingSongs": []
+}

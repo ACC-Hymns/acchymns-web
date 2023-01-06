@@ -1,8 +1,11 @@
-import { getClassFromBook, getFullBook } from "./helpers.js";
-import { SONG_BOOKS } from "./books.js";
+import { filter, displaySongList } from "./search-tools.js";
+import { getSongMetaData, getBookMetaData } from "../books/index.js"
 
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
+
+let BOOK_METADATA = {};
+let SONG_METADATA = {};
 let songs = [];
 
 searchBar.addEventListener('keyup', (e) => {
@@ -11,55 +14,33 @@ searchBar.addEventListener('keyup', (e) => {
         return;
     }
     const searchString = e.target.value.toLowerCase();
-
+    window.history.replaceState(null, "", `search.html?q=${searchString}`);
     if(!searchString) { // No search term
-        displaySongList(songs, songList);
+        displaySongList([], songList, SONG_METADATA, BOOK_METADATA);
         return;
     }
 
-    let filteredSongs = songs.filter(song => {
-        return song.title.toLowerCase().includes(searchString) ||
-        song.number.toLowerCase().includes(searchString);
-    });
-    return displaySongList(filteredSongs, songList); 
+    displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA, BOOK_METADATA);
 });
 
-const displaySongList = (songs, listContainer) => {
-    if (listContainer == null){
-        return;
-    }
-    songs.sort((a, b) => a.title.localeCompare(b.title));
-    listContainer.innerHTML = songs
-        .map(song => {
-            return `
-            <a onclick="loadSong(${song.number}, '${song.bookShort}')">
-                <div class="${getClassFromBook(song.bookShort)}">
-                    <div class="book-gospelhymns--left">
-                        <div class="song__title">${song.title}</div>
-                        <div class="book__title">${getFullBook(song.bookShort)}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <div class="song__number">#${song.number}</div>
-                        <ion-icon name="ellipsis-vertical"></ion-icon>
-                    </div>
-                </div>
-            </a>
-            `;
-        })
-        .join('');
-};
-
 const loadSongs = async () => {
-    for (const [bookName, book] of Object.entries(SONG_BOOKS)) {
-        for (const [songNum, song] of Object.entries(book.songs)) {
+    BOOK_METADATA = await getBookMetaData();
+    SONG_METADATA = await getSongMetaData();
+    for (const book of Object.keys(SONG_METADATA)) {
+        for (const songNum of Object.keys(SONG_METADATA[book])) {
             songs.push({
-                title: song.title,
-                bookShort: bookName,
-                number: songNum
-            })
+                book: book,
+                song: songNum
+            });
         }
     }
-    displaySongList([], songList)
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchString = urlParams.get("q");
+    if (searchString == null){
+        displaySongList([], songList, SONG_METADATA, BOOK_METADATA);
+    } else {
+        displaySongList(filter(songs, searchString, SONG_METADATA), songList, SONG_METADATA, BOOK_METADATA);
+    }
 };
 
 loadSongs();

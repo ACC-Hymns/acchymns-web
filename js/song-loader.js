@@ -1,60 +1,30 @@
-import { SONG_BOOKS } from "./books.js";
-
-function loadSong(songNumber, bookShort) {
-    const songView = document.getElementById('songview');
-    songView.classList.remove('hidden');
-    const searchContent = document.getElementById('content');
-    searchContent.classList.add('hidden');
-
-    const songViewTitle = document.getElementById('titlenumber');
-    songViewTitle.innerHTML = "";
-    const textNode = document.createTextNode(`#${songNumber}`);
-    songViewTitle.appendChild(textNode);
-    
-    const songViewImage = document.getElementById('songimage');
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        if(window.localStorage.getItem("songInverted") == "true") {
-            songViewImage.style.filter = "invert(92%)";
-        }
-    }
-    
-    let book = SONG_BOOKS[bookShort]
-    let song = book.songs[songNumber];
-    let filename = String(songNumber).padStart(Number(book.numberLength), "0") + "." + book.fileExtension;
-    songViewImage.setAttribute('src', `./songs/${bookShort}/${filename}`);
-
-    // Set page-global variables TODO: find a better way of doing this
-    songNum = songNumber;
-    songTitle = song.title;
-}
-
-function addSongs(bookShort) {
+function addSongs(bookShort, BOOK_METADATA) {
     let btns = ""
-    let numOfSongsInBook = Object.keys(SONG_BOOKS[bookShort].songs).length // Change later to just a length check?
-    for(let songNum = 1; songNum <= numOfSongsInBook; songNum++) {
+    let songNums = Array.from({length: BOOK_METADATA[bookShort].numOfSongs}, (_, i) => i + 1).filter(x => !BOOK_METADATA[bookShort].missingSongs.includes(x));
+
+    for(let songNum of songNums) {
         btns += `
-        <a onclick="loadSong(${songNum}, '${bookShort}')">
-            <div class="song-btn">
-            ${songNum}
-            </div>
-        </a>
-        `;
+            <a href="selection.html?book=${bookShort}&song=${songNum}">
+                <div class="song-btn">
+                ${songNum}
+                </div>
+            </a>`;
     }
     const songList = document.getElementById("songs");
     songList.innerHTML = btns
 }
 
-window.loadSong = loadSong;
+function getSongFileName(bookShort, songNum, BOOK_METADATA){
+    return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
+}
 
-// Change image dynamically if dark/light mode changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    const songViewImage = document.getElementById('songimage');
-    if(event.matches)
-        songViewImage.style.filter = "invert(92%)";
-    else
-        songViewImage.style.filter = "invert(0%)";
-});
+async function getBookSongs(bookShort) {
+    return await fetch(`/books/${bookShort}/songs.json`).then(resp => resp.json());
+}
+
 
 export {
-    addSongs
+    addSongs,
+    getSongFileName,
+    getBookSongs
 };

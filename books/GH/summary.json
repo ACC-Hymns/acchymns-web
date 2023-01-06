@@ -1,0 +1,13 @@
+{
+    "name": {
+        "short": "GH",
+        "medium": "Gospel Hymns",
+        "long": "Gospel Hymns"
+    },
+    "addOn": false,
+    "primaryColor": "#AC2024",
+    "secondaryColor": "#5A1211",
+    "fileExtension": "png",
+    "numOfSongs": 882,
+    "missingSongs": []
+}

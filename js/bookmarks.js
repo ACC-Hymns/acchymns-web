@@ -1,67 +1,42 @@
-import { getClassFromBook, getFullBook } from "./helpers.js";
+import { filter, displaySongList } from "./search-tools.js";
+import { getSongMetaData, getBookMetaData } from "/books/index.js"
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
-let songs = [];
+let bookmarks = [];
 
-searchBar.addEventListener('keyup', (e) => {
-    if (songs == null || songs.length == 0){
-        return;
-    }
+let BOOK_METADATA = {};
+let SONG_METADATA = {};
 
+searchBar.addEventListener('keyup', e => {
     if (e.key === "Enter") {
         searchBar.blur();
         return;
     }
     const searchString = e.target.value.toLowerCase();
-
+    window.history.replaceState(null, "", `bookmarks.html?q=${searchString}`);
     if(!searchString) { // No search term
-        displaySongList(songs, bookmarksList);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
         return;
     }
 
-    let filteredSongs = songs.filter(song => {
-        return song.title.toLowerCase().includes(searchString) ||
-        song.number.toLowerCase().includes(searchString);
-    });
-    return displaySongList(filteredSongs, bookmarksList); 
+    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA);
 });
 
-const displaySongList = (songs, listContainer) => {
-    if (songs == null || songs.length == 0){
-        return;
-    }
-    listContainer.innerHTML = songs
-        .map(song => {
-            return `
-            <a onclick="bookName='${song.bookShort}';
-            let bookmarks = JSON.parse(window.localStorage.getItem('bookmarks'));
-            if (bookmarks == null)
-                bookmarks = [];
-            if(bookmarks.findIndex(bookmark => bookmark.number == ${song.number} && bookmark.bookShort == '${song.bookShort}') != -1) {
-                bookmarkIcon.setAttribute('name', 'bookmark');
-            } else {
-                bookmarkIcon.setAttribute('name', 'bookmark-outline');
-            }loadSong(${song.number}, '${song.bookShort}')">
-                <div class="${getClassFromBook(song.bookShort)}">
-                    <div class="book-gospelhymns--left">
-                        <div class="song__title">${song.title}</div>
-                        <div class="book__title">${getFullBook(song.bookShort)}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <div class="song__number">#${song.number}</div>
-                        <ion-icon name="ellipsis-vertical"></ion-icon>
-                    </div>
-                </div>
-            </a>
-            `;
-        })
-        .join('');
-};
-
 const loadBookmarkSongs = async () => {
-    songs = JSON.parse(window.localStorage.getItem("bookmarks"));
-    displaySongList(songs, bookmarksList);
+    const BOOK_METADATA = await getBookMetaData();
+    const SONG_METADATA = await getSongMetaData();
+    bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
+    if (bookmarks == null) {
+        bookmarks = [];
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchString = urlParams.get("q");
+    if (searchString == null){
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
+    } else {
+        displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA);
+    }
 };
 
 loadBookmarkSongs();

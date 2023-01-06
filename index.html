@@ -8,64 +8,37 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no, viewport-fit=cover">
-        <link rel="stylesheet" href="./css/style.css">
-        <link rel="stylesheet" href="./css/globals.css">
+        <link rel="stylesheet" href="/css/book.css">
+        <link rel="stylesheet" href="/css/globals.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900;700&display=swap" rel="stylesheet">
-        
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <div class="content">
-            <h1>Home</h1>
-            <a href="selection.html?book=ZH">
-                <div class="book-zionsharp">
-                    <div class="book__title">Zion's Harp</div>
-                </div>
-            </a>
-            <a href="selection.html?book=GH">
-                <div class="book-gospelhymns">
-                    <div class="book__title">Gospel Hymns</div>
-                </div>
-            </a>
-            <a href="selection.html?book=HG">
-                <div class="book-higherground">
-                    <div class="book__title">Higher Ground</div>
-                </div>
-            </a>
-            <a href="selection.html?book=JH">
-                <div class="book-juniorhymnal">
-                    <div class="book__title">Junior Hymnal</div>
-                </div>
-            </a>
-            <div class="appsection">
-                <a class="app" href='https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-                    <img class="appbuttonplay" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/>
-                </a>
-                <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
-                    <object class="appbuttonapple" data="./badge/Appstore_badge.svg"></object>
-                </a>
-            </div>
+        <div id="content" class="content">
+            <h1 class="pagetitle">Home</h1>
         </div>
+        <div id="appsection" class="appsection" style="padding-bottom: 198px;"></div>
         <nav class="nav">
             <a href="index.html" class="nav__link nav__link--active">
-                <ion-icon name="home" class="nav__icon"></ion-icon>
+                <img class="ionicon nav__icon--active" src="/assets/home.svg"/>
                 <span class="nav__text">Home</span>
             </a>
             <a href="search.html" class="nav__link">
-                <ion-icon name="search-outline" class="nav__icon"></ion-icon>
+                <img class="ionicon nav__icon" src="/assets/search-outline.svg"/>
                 <span class="nav__text">Search</span>
             </a>
             <a href="bookmarks.html" class="nav__link">
-                <ion-icon name="bookmark-outline" class="nav__icon"></ion-icon>
+                <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg"/>
                 <span class="nav__text">Bookmarks</span>
             </a>
             <a href="settings.html" class="nav__link">
-                <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
+                <img class="ionicon nav__icon" src="/assets/settings-outline.svg"/>
                 <span class="nav__text">Settings</span>
             </a>
         </nav>
+        <script type="module" src="/js/index.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </body>

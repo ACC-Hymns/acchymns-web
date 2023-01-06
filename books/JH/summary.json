@@ -1,0 +1,13 @@
+{
+    "name": {
+        "short": "JH",
+        "medium": "Junior Hymnal",
+        "long": "Junior Hymnal"
+    },
+    "addOn": false,
+    "primaryColor": "#155298",
+    "secondaryColor": "#17264E",
+    "fileExtension": "png",
+    "numOfSongs": 162,
+    "missingSongs": []
+}

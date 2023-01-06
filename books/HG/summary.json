@@ -1,0 +1,13 @@
+{
+    "name": {
+        "short": "HG",
+        "medium": "Higher Ground",
+        "long": "Higher Ground"
+    },
+    "addOn": false,
+    "primaryColor": "#FBBC13",
+    "secondaryColor": "#BD772A",
+    "fileExtension": "jpg",
+    "numOfSongs": 124,
+    "missingSongs": []
+}

@@ -36,18 +36,11 @@ a {
     text-decoration: none;
 }
 
-.title ion-icon {
+ion-icon {
     font-size: 25px;
     color: var(--back-color);
 }
 
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 30px 10px 30px;
-}
 
 
 
@@ -70,51 +63,6 @@ a {
     align-items: center;
     justify-content: center;
     margin: 5px;
-}
-
-.book-zionsharp {
-    background: rgb(0,0,0);
-    background: linear-gradient(-47deg, rgba(0,0,0,1) 0%, rgb(73, 73, 73) 100%);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    height: 120px;
-    position: relative;
-}
-
-.book-gospelhymns {
-    background: rgb(172,32,36);
-    background: linear-gradient(47deg, rgba(172,32,36,1) 0%, rgba(90,18,17,1) 100%);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    height: 120px;
-    position: relative;
-}
-
-.book-higherground {
-    background: rgb(251,188,19);
-    background: linear-gradient(47deg, rgba(251,188,19,1) 0%, rgba(189,119,42,1) 100%);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    height: 120px;
-    position: relative;
-}
-
-.book-juniorhymnal {
-    background: rgb(21,82,152);
-    background: linear-gradient(47deg, rgba(21,82,152,1) 0%, rgba(23,38,78,1) 100%);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    height: 120px;
-    position: relative;
-}
-
-.book__title {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 700; 
-    position: absolute;
-    margin: 0 0 20px 20px;
-    bottom: 0;
 }
 
 .nav {
@@ -160,31 +108,4 @@ a {
 .nav__text {
     padding-top: 3px;
     font-family: 'Lato', sans-serif;
-}
-
-.menu {
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    background-color: var(--menu-color);
-    box-shadow: var(--box-shadow);
-    position: fixed;
-    width: 100%;
-    top: 0;
-}
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: env(safe-area-inset-top) 30px 0px 30px;
-}
-
-img {
-    padding-top: calc(env(safe-area-inset-top) + 40px);
-    padding-bottom: 100px;
-    width: 100%;
-    z-index: -1;
-    position: relative;
-    background-color: white;
 }
