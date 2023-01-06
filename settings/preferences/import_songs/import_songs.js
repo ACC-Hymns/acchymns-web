@@ -85,7 +85,7 @@ async function AddImportReference(event){
     externalBooks = JSON.parse(externalBooks);
 
     let known_references = {
-        "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/Dallas/Avon-Road-Favorites/books/ARF",
+        "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/new-books-url-params/books/ARF",
         // "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/Dallas/Avon-Road-Favorites/books/ARF",
     };
 
