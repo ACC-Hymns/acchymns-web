@@ -1,77 +1,102 @@
 {
 	"1": {
-		"title": "Sladký pokoj v nebi"
+		"title": "Sladký pokoj v nebi",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"2": {
-		"title": "Vedeni duchem svatým"
+		"title": "Vedeni duchem svatým",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"3": {
-		"title": "Zemĕ pokoje"
+		"title": "Zemĕ pokoje",
+        "notes": ["G4", "D4", "B4", "G3"]
 	},
 	"4": {
-		"title": "Tauženi za pribýtkem svĕtla"
+		"title": "Tauženi za pribýtkem svĕtla",
+        "notes": ["G3", "Bb4", "Bb3"]
 	},
 	"5": {
-		"title": "Slavná zemĕ!"
+		"title": "Slavná zemĕ!",
+        "notes": ["A5", "C4", "A4", "A3"]
 	},
 	"6": {
-		"title": "Nalezl sem spaseni!"
+		"title": "Nalezl sem spaseni!",
+        "notes": ["E4", "C4", "G3", "C3"]
 	},
 	"7": {
-		"title": "Ježis vĕrný pritel v sauženi"
+		"title": "Ježis vĕrný pritel v sauženi",
+        "notes": ["C5", "F4", "A4", "F3"]
 	},
 	"8": {
-		"title": "Malé svetlá"
+		"title": "Malé svetlá",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"9": {
-		"title": "Pracujte neb pricházit noc"
+		"title": "Pracujte neb pricházit noc",
+        "notes": ["Cb5", "A5", "F4", "F3"]
 	},
 	"10": {
-		"title": "Vlast vyvolených"
+		"title": "Vlast vyvolených",
+        "notes": ["Cb5", "A5", "F4", "F3"]
 	},
 	"11": {
-		"title": "Bratri zde na brehu čekejme!"
+		"title": "Bratri zde na brehu čekejme!",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"12": {
-		"title": "Odpočinuti pro unavených!"
+		"title": "Odpočinuti pro unavených!",
+        "notes": ["E4", "C4", "C3"]
 	},
 	"13": {
-		"title": "Téch devadesát devĕt!"
+		"title": "Téch devadesát devĕt!",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"14": {
-		"title": "Což bude táto žeň?"
+		"title": "Což bude táto žeň?",
+        "notes": ["E4", "C4", "C3"]
 	},
 	"15": {
-		"title": "Pocitĕni po križem!"
+		"title": "Pocitĕni po križem!",
+        "notes": ["D5", "B5", "G3"]
 	},
 	"16": {
-		"title": "Jedna ovĕčka s pastvy"
+		"title": "Jedna ovĕčka s pastvy",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"17": {
-		"title": "Na vĕky doma"
+		"title": "Na vĕky doma",
+        "notes": ["A5", "F#4", "A4", "D3"]
 	},
 	"18": {
-		"title": "Chvatle Hospodina"
+		"title": "Chvatle Hospodina",
+        "notes": ["D4", "F#3", "D3"]
 	},
 	"19": {
-		"title": "V zkršeni"
+		"title": "V zkršeni",
+        "notes": ["G4", "E#4", "B4", "E3"]
 	},
 	"20": {
-		"title": "Hrobový odpočinek"
+		"title": "Hrobový odpočinek",
+        "notes": ["D4", "D3"]
 	},
 	"21": {
-		"title": "Upomináni"
+		"title": "Upomináni",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"22": {
-		"title": "Ježiš-dité"
+		"title": "Ježiš-dité",
+        "notes": ["B5", "G4", "D4", "G3"]
 	},
 	"23": {
-		"title": "Navráceni"
+		"title": "Navráceni",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"24": {
-		"title": "Ježiš vysvoboditel"
+		"title": "Ježiš vysvoboditel",
+        "notes": ["Bb5", "G4", "Bb4", "Eb3"]
 	},
 	"25": {
-		"title": "Nemámli já zde spivati?"
+		"title": "Nemámli já zde spivati?",
+        "notes": ["D4", "D3"]
 	}
 }

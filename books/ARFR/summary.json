@@ -4,8 +4,8 @@
         "medium": "Avon Favorites (Romanian)",
         "long": "Avon Road Favorites (Romanian)"
     },
-    "primaryColor": "#253F40",
-    "secondaryColor":"#486666",
+    "primaryColor": "#486666",
+    "secondaryColor":"#253F40",
     "fileExtension": "png",
     "numOfSongs": 132,
     "missingSongs": []
