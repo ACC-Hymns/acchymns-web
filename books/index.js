@@ -18,13 +18,13 @@ async function getBookMetaData() {
                 resp.addOn = true;
                 resp.sourceRoot = book_url;
                 return resp;
-            }));
+            }).catch(() => null));
         }
     }
     
     const bookSummary = await Promise.all(toFetch);
 
-    return Object.fromEntries(bookSummary.map((summary, i) => [summary.name.short, summary]));
+    return Object.fromEntries(bookSummary.filter(e => e != null).map((summary, _) => [summary.name.short, summary]));
 }
 
 async function getSongMetaData() {
