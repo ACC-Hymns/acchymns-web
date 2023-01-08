@@ -1,0 +1,12 @@
+{
+    "name": {
+        "short": "ARFR",
+        "medium": "Avon Favorites (Romanian)",
+        "long": "Avon Road Favorites (Romanian)"
+    },
+    "primaryColor": "#486666",
+    "secondaryColor":"#253F40",
+    "fileExtension": "png",
+    "numOfSongs": 132,
+    "missingSongs": []
+}
