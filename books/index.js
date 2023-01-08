@@ -3,7 +3,7 @@ async function fetchWithTimeout(resource, options = {}) {
     
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetchWithTimeout(resource, {
+    const response = await fetch(resource, {
       ...options,
       signal: controller.signal  
     });
@@ -13,7 +13,7 @@ async function fetchWithTimeout(resource, options = {}) {
 
 async function getBookMetaData() {
     let toFetch = [
-        fetchWithTimeout("/books/ZH/summary.json", {timeout}).then(resp => resp.json()),
+        fetchWithTimeout("/books/ZH/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/GH/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/JH/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/HG/summary.json").then(resp => resp.json()),

@@ -1,3 +1,5 @@
+import { fetchWithTimeout } from "/books/index.js";
+
 function removeExternalBook(book_index) {
     let externalBooks = window.localStorage.getItem("externalBooks");
 
