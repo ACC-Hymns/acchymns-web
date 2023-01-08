@@ -38,13 +38,13 @@ startingNotesButton.addEventListener('mousedown', (e) => {
 startingNotesButton.addEventListener('mouseup', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now());
+        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() +1);
     }
 });
 
 startingNotesButton.addEventListener('mouseleave', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now());
+        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + 1);
     }
 });

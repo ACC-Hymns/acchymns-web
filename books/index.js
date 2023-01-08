@@ -56,7 +56,7 @@ async function getBookIndex(book_short_name) {
         return await fetch(`/books/${book_short_name}/index.json`).then(resp => resp.json()).catch(() => null);
     }
 
-    const BOOK_METADATA = await getBookMetaData();
+    const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] == null){
         return null;
     }

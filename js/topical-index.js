@@ -13,6 +13,8 @@ const loadTopicalIndex = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const bookName = urlParams.get("book");
     const BOOK_METADATA = await getAllBookMetaData();
+    const topicalIndexTitle = document.getElementById("topicalIndexTitle");
+    topicalIndexTitle.innerText = BOOK_METADATA[bookName].name.medium + " Topical Index";
     const BOOK_SONG_METADATA = await getSongMetaData(bookName);
     const BOOK_INDEX = await getBookIndex(bookName);
     const container = document.getElementById("index");
@@ -31,7 +33,6 @@ const loadTopicalIndex = async () => {
                     <div class="song" style="background: linear-gradient(135deg, ${BOOK_METADATA[bookName].primaryColor}, ${BOOK_METADATA[bookName].secondaryColor})">
                         <div>
                             <div class="song__title">${BOOK_SONG_METADATA[song_num].title}</div>
-                            <div class="book__title">${BOOK_METADATA[bookName].name.medium}</div>
                         </div>
                         <div class="booktext--right">
                             <div class="song__number">#${song_num}</div>
