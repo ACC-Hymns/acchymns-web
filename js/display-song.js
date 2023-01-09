@@ -13,7 +13,9 @@ panzoom(songImage, {
         return !e.shiftKey;
     },
     maxZoom: 3,
-    minZoom: 0.25
+    minZoom: (mobileOrTablet() ? 1 : 0.25),
+    bounds: true,
+    boundsPadding: 0.5
 });
 
 async function displaySong(bookName, songNum) {
