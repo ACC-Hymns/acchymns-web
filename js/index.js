@@ -1,4 +1,4 @@
-import { getBookMetaData, isWebApp } from "../books/index.js"
+import { getAllBookMetaData, isWebApp } from "/books/index.js"
 
 const bookContainer = document.getElementById("content")
 
@@ -14,7 +14,7 @@ if (isWebApp) {
 }
 
 (async () => {
-    for (let book of Object.values(await getBookMetaData())) {
+    for (let book of Object.values(await getAllBookMetaData())) {
         let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`
         bookContainer.innerHTML += `
             <a href="selection.html?book=${book.name.short}">

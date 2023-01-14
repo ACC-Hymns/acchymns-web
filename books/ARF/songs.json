@@ -1,398 +1,530 @@
 {
 	"1": {
-		"title": "He Leadeth Me"
+		"title": "He Leadeth Me",
+        "notes": ["A5", "F#4", "A4", "D3"]
 	},
 	"2": {
-		"title": "When He Cometh"
+		"title": "When He Cometh",
+        "notes": ["E4", "G#3", "E3"]
 	},
 	"3": {
-		"title": "My Jesus, I Love Thee"
+		"title": "My Jesus, I Love Thee",
+        "notes": ["F4", "C4", "A4", "F3"]
 	},
 	"4": {
-		"title": "Since Jesus Came Into My Heart"
+		"title": "Since Jesus Came Into My Heart",
+        "notes": ["C#4", "A4", "E3", "A3"]
 	},
 	"5": {
-		"title": "In the Garden"
+		"title": "In the Garden",
+        "notes": ["Eb4", "C4"]
 	},
 	"6": {
-		"title": "All Hail the Pow'r of Jesus' Name"
+		"title": "All Hail the Pow'r of Jesus' Name",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"7": {
-		"title": "Have You Any Room For Jesus"
+		"title": "Have You Any Room For Jesus",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"8": {
-		"title": "All the Way My Saviour Leads"
+		"title": "All the Way My Saviour Leads",
+        "notes": ["C5", "Eb4", "Ab4", "Ab3"]
 	},
 	"9": {
-		"title": "Holy is the Lord"
+		"title": "Holy is the Lord",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"10": {
-		"title": "Dwelling in Beulah Land"
+		"title": "Dwelling in Beulah Land",
+        "notes": ["Bb5", "D4", "Bb4", "Bb3"]
 	},
 	"11": {
-		"title": "More About Jesus"
+		"title": "More About Jesus",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"12": {
-		"title": "Lead me, Saviour"
+		"title": "Lead me, Saviour",
+        "notes": ["Ab5", "F4", "Db4", "Db3"]
 	},
 	"13": {
-		"title": "Beautiful River"
+		"title": "Beautiful River",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"14": {
-		"title": "Trust and Obey"
+		"title": "Trust and Obey",
+        "notes": ["F4", "C4", "A4", "F3"]
 	},
 	"15": {
-		"title": "I Know Whom I Have Believed"
+		"title": "I Know Whom I Have Believed",
+        "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"16": {
-		"title": "The Solid Rock"
+		"title": "The Solid Rock",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"17": {
-		"title": "Come, Thou Fount"
+		"title": "Come, Thou Fount",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"18": {
-		"title": "Lord, I'm Coming Home"
+		"title": "Lord, I'm Coming Home",
+        "notes": ["Eb4", "C4", "Ab4"]
 	},
 	"19": {
-		"title": "What A Friend"
+		"title": "What A Friend",
+        "notes": ["C5", "F4", "A4", "F3"]
 	},
 	"20": {
-		"title": "I Love to Tell the Story"
+		"title": "I Love to Tell the Story",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"21": {
-		"title": "How I Love Jesus"
+		"title": "How I Love Jesus",
+        "notes": ["Ab5", "C4", "Ab4", "Ab3"]
 	},
 	"22": {
-		"title": "Sweet Hour of Prayer"
+		"title": "Sweet Hour of Prayer",
+        "notes": ["D4", "F#3", "D3"]
 	},
 	"23": {
-		"title": "I Will Sing the Wondrous Story"
+		"title": "I Will Sing the Wondrous Story",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"24": {
-		"title": "My Faith Looks up to Thee"
+		"title": "My Faith Looks up to Thee",
+        "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"25": {
-		"title": "Work, for the Night is Coming"
+		"title": "Work, for the Night is Coming",
+        "notes": ["C5", "A5", "F3"]
 	},
 	"26": {
-		"title": "Why Not Now?"
+		"title": "Why Not Now?",
+        "notes": ["A5", "F4", "A4", "D3"]
 	},
 	"27": {
-		"title": "Jesus is Calling"
+		"title": "Jesus is Calling",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"28": {
-		"title": "Holy Spirit, Faithful Guide"
+		"title": "Holy Spirit, Faithful Guide",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"29": {
-		"title": "Love Lifted Me"
+		"title": "Love Lifted Me",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"30": {
-		"title": "Come to the Fountain"
+		"title": "Come to the Fountain",
+        "notes": ["C5", "A5", "C4", "F3"]
 	},
 	"31": {
-		"title": "Is My Name Written There?"
+		"title": "Is My Name Written There?",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"32": {
-		"title": "Let the Saviour in!"
+		"title": "Let the Saviour in!",
+        "notes": ["F4", "Db4", "Ab4", "Db3"]
 	},
 	"33": {
-		"title": "Count Your Blessings"
+		"title": "Count Your Blessings",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"34": {
-		"title": "The Home Over There"
+		"title": "The Home Over There",
+        "notes": ["E4", "C#4", "A4", "A3"]
 	},
 	"35": {
-		"title": "Sweet By-and-By"
+		"title": "Sweet By-and-By",
+        "notes": ["G4", "D4", "B4", "G3"]
 	},
 	"36": {
-		"title": "What Did He Do?"
+		"title": "What Did He Do?",
+        "notes": ["Db5", "F4", "Ab4", "Db3"]
 	},
 	"37": {
-		"title": "Blessed Assurance"
+		"title": "Blessed Assurance",
+        "notes": ["F#4", "D4", "A4", "D3"]
 	},
 	"38": {
-		"title": "To the Work"
+		"title": "To the Work",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"39": {
-		"title": "At the Cross"
+		"title": "At the Cross",
+        "notes": ["E4", "G#3", "E3"]
 	},
 	"40": {
-		"title": "Take the Name of Jesus With You"
+		"title": "Take the Name of Jesus With You",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"41": {
-		"title": "There is a Fountain"
+		"title": "There is a Fountain",
+        "notes": ["C4", "E3", "C3"]
 	},
 	"42": {
-		"title": "Are You Washed in the Blood?"
+		"title": "Are You Washed in the Blood?",
+        "notes": ["C4", "Ab4", "Eb3", "Ab3"]
 	},
 	"43": {
-		"title": "Rescue the Perishing"
+		"title": "Rescue the Perishing",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"44": {
-		"title": "God Will Take Care of You"
+		"title": "God Will Take Care of You",
+        "notes": ["D4", "Bb4", "F3", "Bb3"]
 	},
 	"45": {
-		"title": "Face to Face"
+		"title": "Face to Face",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"46": {
-		"title": "Standing on the Promises"
+		"title": "Standing on the Promises",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"47": {
-		"title": "Love Divine"
+		"title": "Love Divine",
+        "notes": ["F4", "D4", "F3", "Bb3"]
 	},
 	"48": {
-		"title": "Angry Words! O Let Them Never"
+		"title": "Angry Words! O Let Them Never",
+        "notes": ["Bb5", "G4"]
 	},
 	"49": {
-		"title": "Tell Mother I'll Be There"
+		"title": "Tell Mother I'll Be There",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"50": {
-		"title": "I Must Tell Jesus"
+		"title": "I Must Tell Jesus",
+        "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"51": {
-		"title": "There Is Power In The Blood"
+		"title": "There Is Power In The Blood",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"52": {
-		"title": "God Be With You"
+		"title": "God Be With You",
+        "notes": ["F4", "Db4", "Ab4", "Db3"]
 	},
 	"53": {
-		"title": "'Tis So Sweet to Trust in Jesus"
+		"title": "'Tis So Sweet to Trust in Jesus",
+        "notes": ["C5", "Eb4", "Ab4", "Ab3"]
 	},
 	"54": {
-		"title": "Must I Go and Empty Handed?"
+		"title": "Must I Go and Empty Handed?",
+        "notes": ["A5", "F#4"]
 	},
 	"55": {
-		"title": "There shall be Showers of Blessing"
+		"title": "There shall be Showers of Blessing",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"56": {
-		"title": "Precious Promise"
+		"title": "Precious Promise",
+        "notes": ["D4", "D3"]
 	},
 	"57": {
-		"title": "The Old Rugged Cross"
+		"title": "The Old Rugged Cross",
+        "notes": ["D4", "Bb4", "F3", "Bb3"]
 	},
 	"58": {
-		"title": "My Redeemer"
+		"title": "My Redeemer",
+        "notes": ["Eb4", "C4", "Ab4"]
 	},
 	"59": {
-		"title": "Where is my Boy To-night"
+		"title": "Where is my Boy To-night",
+        "notes": ["B5"]
 	},
 	"60": {
-		"title": "Onward, Christian Soldiers"
+		"title": "Onward, Christian Soldiers",
+        "notes": ["C5", "A5", "F3"]
 	},
 	"61": {
-		"title": "We're Marching to Zion"
+		"title": "We're Marching to Zion",
+        "notes": ["G4", "D4", "B4", "G3"]
 	},
 	"62": {
-		"title": "I'll Stand by You"
+		"title": "I'll Stand by You",
+        "notes": ["Bb5", "G4", "Bb4", "Eb3"]
 	},
 	"63": {
-		"title": "Stepping in the Light"
+		"title": "Stepping in the Light",
+        "notes": ["Ab5", "F4", "Db4", "Db3"]
 	},
 	"64": {
-		"title": "I am Thine, O Lord"
+		"title": "I am Thine, O Lord",
+        "notes": ["C5", "Eb4", "Ab4", "Ab3"]
 	},
 	"65": {
-		"title": "May Our Hearts be Joyful Ever"
+		"title": "May Our Hearts be Joyful Ever",
+        "notes": ["G#4", "E4", "B4", "E3"]
 	},
 	"66": {
-		"title": "Softly and Tenderly"
+		"title": "Softly and Tenderly",
+        "notes": ["C5", "Eb4", "Ab4", "Ab3"]
 	},
 	"67": {
-		"title": "Leaning On the Everlasting Arms"
+		"title": "Leaning On the Everlasting Arms",
+        "notes": ["C#5", "E4", "A4", "A3"]
 	},
 	"68": {
-		"title": "Christ Receiveth Sinful Men"
+		"title": "Christ Receiveth Sinful Men",
+        "notes": ["F#4", "D4", "A4", "D3"]
 	},
 	"69": {
-		"title": "Bring Them In"
+		"title": "Bring Them In",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"70": {
-		"title": "The Prodigal Child"
+		"title": "The Prodigal Child",
+        "notes": ["Bb5", "Eb4", "G3", "Eb3"]
 	},
 	"71": {
-		"title": "Take Time to be Holy"
+		"title": "Take Time to be Holy",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"72": {
-		"title": "Behold Mesiah Come"
+		"title": "Behold Mesiah Come",
+        "notes": ["Bb5", "G4", "Eb4", "Eb3"]
 	},
 	"73": {
-		"title": "Christ Arose!"
+		"title": "Christ Arose!",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"74": {
-		"title": "Christ, the Lord is Risen Today"
+		"title": "Christ, the Lord is Risen Today",
+        "notes": ["C4", "E3", "C3"]
 	},
 	"75": {
-		"title": "Have Time Own Way, Lord"
+		"title": "Have Time Own Way, Lord",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"76": {
-		"title": "I Need Thee Every Hour"
+		"title": "I Need Thee Every Hour",
+        "notes": ["Ab5", "C4", "Eb3", "Ab3"]
 	},
 	"77": {
-		"title": "O Paradise, O Paradise"
+		"title": "O Paradise, O Paradise",
+        "notes": ["E4", "E3"]
 	},
 	"78": {
-		"title": "The Church in the Wildwood"
+		"title": "The Church in the Wildwood",
+        "notes": ["F4", "D4", "F3", "Bb3"]
 	},
 	"79": {
-		"title": "Tell it to Jesus Alone"
+		"title": "Tell it to Jesus Alone",
+        "notes": ["Bb5", "D4", "F3", "Bb3"]
 	},
 	"80": {
-		"title": "Faith of Our Fathers"
+		"title": "Faith of Our Fathers",
+        "notes": ["C5", "Eb4", "Ab4"]
 	},
 	"81": {
-		"title": "Jesus Loves Me"
+		"title": "Jesus Loves Me",
+        "notes": ["Bb5", "G4", "Bb4", "Eb3"]
 	},
 	"82": {
-		"title": "Pass Me Not, O Gentle Savior"
+		"title": "Pass Me Not, O Gentle Savior",
+        "notes": ["C5", "Eb4", "Ab4", "Ab3"]
 	},
 	"83": {
-		"title": "Nearer, My God to Thee"
+		"title": "Nearer, My God to Thee",
+        "notes": ["B5", "D4", "G3"]
 	},
 	"84": {
-		"title": "Let the Lower Lights be Burning"
+		"title": "Let the Lower Lights be Burning",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"85": {
-		"title": "Just as I Am"
+		"title": "Just as I Am",
+        "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"86": {
-		"title": "Happy Day"
+		"title": "Happy Day",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"87": {
-		"title": "Nothing but the Blood of Jesus"
+		"title": "Nothing but the Blood of Jesus",
+        "notes": ["G4", "D4", "B4", "G3"]
 	},
 	"88": {
-		"title": "The Great Physician"
+		"title": "The Great Physician",
+        "notes": ["Bb5", "G4", "Bb4", "Eb3"]
 	},
 	"89": {
-		"title": "Knocking, Knocking"
+		"title": "Knocking, Knocking",
+        "notes": ["G4", "Eb4", "Bb4", "Eb3"]
 	},
 	"90": {
-		"title": "Jesus, Saviour, Pilot Me"
+		"title": "Jesus, Saviour, Pilot Me",
+        "notes": ["D5", "F4", "Bb4", "Bb3"]
 	},
 	"91": {
-		"title": "Stand up for Jesus"
+		"title": "Stand up for Jesus",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"92": {
-		"title": "Almost Persuaded"
+		"title": "Almost Persuaded",
+        "notes": ["B5", "D4", "G3"]
 	},
 	"93": {
-		"title": "How Gentle God's Commands"
+		"title": "How Gentle God's Commands",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"94": {
-		"title": "O Praise the Lord"
+		"title": "O Praise the Lord",
+        "notes": ["A5", "F#4", "A4"]
 	},
 	"95": {
-		"title": "Rock of Ages"
+		"title": "Rock of Ages",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"96": {
-		"title": "Revive Us Again"
+		"title": "Revive Us Again",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"97": {
-		"title": "O Worship the King"
+		"title": "O Worship the King",
+        "notes": ["E4", "C#4", "A4", "A3"]
 	},
 	"98": {
-		"title": "How Great Thou Art"
+		"title": "How Great Thou Art",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"99": {
-		"title": "Holy, Holy, Holy. Lord God Almighty"
+		"title": "Holy, Holy, Holy. Lord God Almighty",
+        "notes": ["E4", "B4", "G#3", "E3"]
 	},
 	"100": {
-		"title": "Jesus Saves"
+		"title": "Jesus Saves",
+        "notes": ["D4", "B4", "G3", "G2"]
 	},
 	"101": {
-		"title": "Jesus, I Come"
+		"title": "Jesus, I Come",
+        "notes": ["E4", "C#4", "A4", "A3"]
 	},
 	"102": {
-		"title": "Faith is the Victory"
+		"title": "Faith is the Victory",
+        "notes": ["C5", "F4", "A4", "F3"]
 	},
 	"103": {
-		"title": "Tell Me the Old, Old Story"
+		"title": "Tell Me the Old, Old Story",
+        "notes": ["E4", "C4", "G3", "C3"]
 	},
 	"104": {
-		"title": "When the Roll is Called up Yonder"
+		"title": "When the Roll is Called up Yonder",
+        "notes": ["Ab5", "C4", "Ab4", "Ab3"]
 	},
 	"105": {
-		"title": "All Hail the Power"
+		"title": "All Hail the Power",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"106": {
-		"title": "He Will Hide Me"
+		"title": "He Will Hide Me",
+        "notes": ["G4", "B4", "G3"]
 	},
 	"107": {
-		"title": "O That Will Be Glory"
+		"title": "O That Will Be Glory",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"108": {
-		"title": "When We All Get to Heaven"
+		"title": "When We All Get to Heaven",
+        "notes": ["Ab5", "F4", "Db4", "Db3"]
 	},
 	"109": {
-		"title": "Bringing In the Sheaves"
+		"title": "Bringing In the Sheaves",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"110": {
-		"title": "Silent Night! Holy Night"
+		"title": "Silent Night! Holy Night",
+        "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"111": {
-		"title": "A Shelter in the Time of Storm"
+		"title": "A Shelter in the Time of Storm",
+        "notes": ["C4", "A4", "G3"]
 	},
 	"112": {
-		"title": "Joy to the World"
+		"title": "Joy to the World",
+        "notes": ["D5", "F#4", "D4", "D3"]
 	},
 	"113": {
-		"title": "Ring the Bells of Heaven"
+		"title": "Ring the Bells of Heaven",
+        "notes": ["F4", "D4", "Bb4", "Bb3"]
 	},
 	"114": {
-		"title": "Will There Be Any Stars?"
+		"title": "Will There Be Any Stars?",
+        "notes": ["C#4", "A4", "E3", "A3"]
 	},
 	"115": {
-		"title": "No, Not One"
+		"title": "No, Not One",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"116": {
-		"title": "Jesus Lover of My Soul"
+		"title": "Jesus Lover of My Soul",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"117": {
-		"title": "Though your Sins be as Scarlet"
+		"title": "Though your Sins be as Scarlet",
+        "notes": ["Eb4", "C4", "Ab4"]
 	},
 	"118": {
-		"title": "The Song of the Soldier"
+		"title": "The Song of the Soldier",
+        "notes": ["Bb4", "Bb3"]
 	},
 	"119": {
-		"title": "Glorious Things of Thee Are Spoken"
+		"title": "Glorious Things of Thee Are Spoken",
+        "notes": ["F4", "C4", "A4", "F3"]
 	},
 	"120": {
-		"title": "Galilea"
+		"title": "Galilea",
+        "notes": ["E4"]
 	},
 	"121": {
-		"title": "A Mighty Fortress"
+		"title": "A Mighty Fortress",
+        "notes": ["D5", "F#4", "A4", "D3"]
 	},
 	"122": {
-		"title": "Abide With Me!"
+		"title": "Abide With Me!",
+        "notes": ["G#4", "E4", "B4", "E3"]
 	},
 	"123": {
-		"title": "Hark, the Herald Angels Sing"
+		"title": "Hark, the Herald Angels Sing",
+        "notes": ["D4", "B4", "G3"]
 	},
 	"124": {
-		"title": "Behold, How Good and Pleasant"
+		"title": "Behold, How Good and Pleasant",
+        "notes": ["C4", "C3"]
 	},
 	"125": {
-		"title": "Nearer, Still Nearer"
+		"title": "Nearer, Still Nearer",
+        "notes": ["F4", "Db4", "Ab4", "Db3"]
 	},
 	"126": {
-		"title": "Near the Cross"
+		"title": "Near the Cross",
+        "notes": ["A5", "F4", "C4", "F3"]
 	},
 	"127": {
-		"title": "Where He Leads Me"
+		"title": "Where He Leads Me",
+        "notes": ["C4", "A4", "F3"]
 	},
 	"128": {
-		"title": "Yield Not to Temptation"
+		"title": "Yield Not to Temptation",
+        "notes": ["D5", "Bb5", "Bb4"]
 	},
 	"129": {
-		"title": "Higher Ground"
+		"title": "Higher Ground",
+        "notes": ["Eb4", "C4", "Ab4", "Ab3"]
 	},
 	"130": {
-		"title": "The First Noel"
+		"title": "The First Noel",
+        "notes": ["F#4", "D4", "A4", "D3"]
 	},
 	"131": {
-		"title": "My Father In Heaven"
+		"title": "My Father In Heaven",
+        "notes": ["Db4", "F3", "Db3"]
 	},
 	"132": {
-		"title": "Our Life is Like Summer"
+		"title": "Our Life is Like Summer",
+        "notes": ["Eb4", "G3", "Eb3"]
 	}
 }

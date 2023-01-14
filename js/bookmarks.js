@@ -1,5 +1,5 @@
 import { filter, displaySongList } from "./search-tools.js";
-import { getSongMetaData, getBookMetaData } from "/books/index.js"
+import { getAllSongMetaData, getAllBookMetaData } from "/books/index.js"
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
@@ -24,8 +24,8 @@ searchBar.addEventListener('keyup', e => {
 });
 
 const loadBookmarkSongs = async () => {
-    const BOOK_METADATA = await getBookMetaData();
-    const SONG_METADATA = await getSongMetaData();
+    const BOOK_METADATA = await getAllBookMetaData();
+    const SONG_METADATA = await getAllSongMetaData();
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
     if (bookmarks == null) {
         bookmarks = [];
