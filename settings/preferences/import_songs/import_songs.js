@@ -92,7 +92,7 @@ async function AddImportReference(event){
         "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARF",
         "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARFR",
         "PC": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/PC",
-        "ZHJ": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/dallas/zions-harp-japanese/books/ZHJ",
+        "ZHJ": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ZHJ"
     };
 
     if (event.target.elements.import_reference.value in known_references) {
