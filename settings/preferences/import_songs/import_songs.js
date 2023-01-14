@@ -1,3 +1,5 @@
+import { fetchWithTimeout } from "/books/index.js";
+
 function removeExternalBook(book_index) {
     let externalBooks = window.localStorage.getItem("externalBooks");
 
@@ -15,13 +17,15 @@ function removeExternalBook(book_index) {
 async function reloadExternalBooksDisplay() {
     let imported_books = document.getElementById("imported_books");
     let externalBooks = window.localStorage.getItem("externalBooks");
-
+    if (externalBooks == null) {
+        return;
+    }
     externalBooks = JSON.parse(externalBooks);
     
     imported_books.innerHTML = "";
     for (let book_url of externalBooks) {
         try {
-            let book = await fetch(`${book_url}/summary.json`).then(resp => resp.json());
+            let book = await fetchWithTimeout(`${book_url}/summary.json`).then(resp => resp.json());
             imported_books.innerHTML += `
                 <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
                     <div>
@@ -85,8 +89,10 @@ async function AddImportReference(event){
     externalBooks = JSON.parse(externalBooks);
 
     let known_references = {
-        "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/new-books-url-params/books/ARF",
-        // "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/Dallas/Avon-Road-Favorites/books/ARF",
+        "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARF",
+        "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARFR",
+        "PC": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/PC",
+        "ZHJ": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ZHJ"
     };
 
     if (event.target.elements.import_reference.value in known_references) {

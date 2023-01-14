@@ -1,5 +1,18 @@
-const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "PC", "ZG"];
+const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "ZG"];
 
+async function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 2500 } = options;
+    
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal  
+    });
+    clearTimeout(id);
+    return response;
+  }
+  
 async function getAllBookMetaData() {
     let toFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/summary.json`).then(resp => resp.json()));
     
@@ -8,7 +21,7 @@ async function getAllBookMetaData() {
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            toFetch.push(fetch(`${book_url}/summary.json`).then(resp => resp.json()).then(resp => { 
+            toFetch.push(fetchWithTimeout(`${book_url}/summary.json`).then(resp => resp.json()).then(resp => { 
                 resp.addOn = true;
                 resp.sourceRoot = book_url;
                 return resp;
@@ -29,7 +42,7 @@ async function getAllSongMetaData() {
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            songsToFetch.push(fetch(`${book_url}/songs.json`).then(resp => resp.json()).catch(() => null))
+            songsToFetch.push(fetchWithTimeout(`${book_url}/songs.json`).then(resp => resp.json())).catch(() => null))
         }
     }
     
@@ -70,5 +83,6 @@ export {
     getAllSongMetaData,
     getSongMetaData,
     getBookIndex,
+    fetchWithTimeout,
     isWebApp
 }
