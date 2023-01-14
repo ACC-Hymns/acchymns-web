@@ -14,11 +14,11 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <script type="module">
-            import { getBookMetaData } from "/books/index.js";
+            import { getAllBookMetaData } from "/books/index.js";
             import { addSongs } from "/js/song-loader.js";;
             
             (async () => {
-                const BOOK_METADATA = await getBookMetaData();
+                const BOOK_METADATA = await getAllBookMetaData();
     
                 const urlParams = new URLSearchParams(window.location.search);
                 const bookName = urlParams.get("book");
@@ -77,7 +77,10 @@
                 <div class="title">
                     <a id="backButton"><img class="ionicon" src="/assets/chevron-back-outline.svg"/></a>
                     <h1 id="titlenumber"></h1>
-                    <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="/assets/bookmark-outline.svg"/></a>
+                    <div>
+                        <a id="startingNotesButton"><img class="ionicon hidden" id="startingNotesIcon" src="/assets/musical-notes-outline.svg"/></a>
+                        <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="/assets/bookmark-outline.svg"/></a>
+                    </div>
                 </div>
             </div>
             <div class="song_img_container">
@@ -90,7 +93,7 @@
                 <div class="title">
                     <img id="homeButton" class="ionicon" src="/assets/chevron-back-outline.svg"/>
                     <h1 id="bookName"></h1>
-                    <img class="ionicon" src="/assets/information-circle-outline.svg"/>
+                    <a id="topicalIndexButton"><img class="ionicon hidden" draggable="false" id="topicalIndexIcon" src="/assets/information-circle-outline.svg"/></a>
                 </div>
             </div>
         
@@ -123,5 +126,8 @@
         <script type="module" src="/js/bookmark-button.js"></script>
         <script src="/js/external/panzoom.min.js"></script>
         <script type="module" src="/js/display-song.js"></script> 
+        <script src="/js/external/tone.min.js"></script>
+        <script type="module" src="/js/starting-notes.js"></script> 
+        <script type="module" src="/js/topical-index-button.js"></script> 
     </body>
 </html>

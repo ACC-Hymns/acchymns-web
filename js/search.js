@@ -1,5 +1,5 @@
 import { filter, displaySongList } from "./search-tools.js";
-import { getSongMetaData, getBookMetaData } from "../books/index.js"
+import { getAllSongMetaData, getAllBookMetaData } from "/books/index.js"
 
 const songList = document.getElementById('charactersList');
 const searchBar = document.getElementById('searchBar');
@@ -24,8 +24,8 @@ searchBar.addEventListener('keyup', (e) => {
 });
 
 const loadSongs = async () => {
-    BOOK_METADATA = await getBookMetaData();
-    SONG_METADATA = await getSongMetaData();
+    BOOK_METADATA = await getAllBookMetaData();
+    SONG_METADATA = await getAllSongMetaData();
     for (const book of Object.keys(SONG_METADATA)) {
         for (const songNum of Object.keys(SONG_METADATA[book])) {
             songs.push({
