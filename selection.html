@@ -35,6 +35,28 @@
                 }
             })();
         </script>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const songNum = urlParams.get("song");
+            document.addEventListener("DOMContentLoaded", e => { 
+                if (songNum !== null) return;
+
+                let scroll_pos = localStorage.getItem('scrollpos');
+                if (scroll_pos) {
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: scroll_pos,
+                            left: 0
+                        });
+                    },30);
+                }
+            });
+            
+            window.onbeforeunload = e => {
+                if (songNum !== null) return;
+                localStorage.setItem('scrollpos', window.scrollY);
+            };
+        </script>
     </head>
     <body>
         <div id="songview" class="songpage hidden">
