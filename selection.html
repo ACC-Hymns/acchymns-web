@@ -37,11 +37,17 @@
         </script>
         <script>
             const urlParams = new URLSearchParams(window.location.search);
+            const bookName = urlParams.get("book");
             const songNum = urlParams.get("song");
-            document.addEventListener("DOMContentLoaded", e => { 
+            let backToHome = false;
+            window.addEventListener("load", e => { 
                 if (songNum !== null) return;
 
-                let scroll_pos = localStorage.getItem('scrollpos');
+                let scroll_pos = localStorage.getItem('scrollpos' + bookName);
+                if (scroll_pos == -5) {
+                    scroll_pos = 0;
+                    localStorage.setItem('scrollpos' + bookName, 0);
+                }
                 if (scroll_pos) {
                     setTimeout(() => {
                         window.scrollTo({
@@ -50,11 +56,19 @@
                         });
                     },150);
                 }
+                document.getElementById("homeButton").addEventListener("click", e => {
+                    console.log("here");
+                    localStorage.setItem('scrollpos' + bookName, -5);
+                    backToHome = true;
+                    location.href='index.html'
+                });
             });
             
             window.onbeforeunload = e => {
                 if (songNum !== null) return;
-                localStorage.setItem('scrollpos', window.scrollY);
+                if (localStorage.getItem('scrollpos' + bookName) != -5) {
+                    localStorage.setItem('scrollpos' + bookName, window.scrollY);
+                }
             };
         </script>
     </head>
@@ -75,7 +89,7 @@
         <div id="content" class="content">
             <div class="menu">
                 <div class="title">
-                    <a href="index.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"/></a>
+                    <img id="homeButton" class="ionicon" src="/assets/chevron-back-outline.svg"/>
                     <h1 id="bookName"></h1>
                     <img class="ionicon" src="/assets/information-circle-outline.svg"/>
                 </div>

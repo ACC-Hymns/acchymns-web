@@ -27,9 +27,7 @@ async function displaySong(bookName, songNum) {
     searchContent.classList.add('hidden');
 
     const songViewTitle = document.getElementById('titlenumber');
-    songViewTitle.innerHTML = "";
-    const textNode = document.createTextNode(`#${songNum}`);
-    songViewTitle.appendChild(textNode);
+    songViewTitle.innerHTML = `#${songNum}`;
 
     // accessing the element
     const songViewImage = document.getElementById('songimage');
