@@ -18,7 +18,6 @@ async function getBookMetaData() {
         fetchWithTimeout("/books/JH/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/HG/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/HZ/summary.json").then(resp => resp.json()),
-        fetchWithTimeout("/books/PC/summary.json").then(resp => resp.json()),
         fetchWithTimeout("/books/ZG/summary.json").then(resp => resp.json())
     ];
     
@@ -47,7 +46,6 @@ async function getSongMetaData() {
         fetchWithTimeout("/books/JH/songs.json").then(resp => resp.json()),
         fetchWithTimeout("/books/HG/songs.json").then(resp => resp.json()),
         fetchWithTimeout("/books/HZ/songs.json").then(resp => resp.json()),
-        fetchWithTimeout("/books/PC/songs.json").then(resp => resp.json()),
         fetchWithTimeout("/books/ZG/songs.json").then(resp => resp.json())
     ];
     
