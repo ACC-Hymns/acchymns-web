@@ -91,6 +91,8 @@ async function AddImportReference(event){
     let known_references = {
         "ARF": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARF",
         "ARFR": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ARFR",
+        "PC": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/PC",
+        "ZHJ": "https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/staging/books/ZHJ"
     };
 
     if (event.target.elements.import_reference.value in known_references) {
