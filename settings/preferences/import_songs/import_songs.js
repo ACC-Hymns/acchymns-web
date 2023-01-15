@@ -1,6 +1,6 @@
-import { fetchWithTimeout } from "/books/index.js";
+import { fetchJSONWithTimeout } from "/books/index.js";
 
-function removeExternalBook(book_index) {
+function removeExternalBook(book_url) {
     let externalBooks = window.localStorage.getItem("externalBooks");
 
     if (externalBooks == null) {
@@ -8,7 +8,7 @@ function removeExternalBook(book_index) {
     }
     externalBooks = JSON.parse(externalBooks);
 
-    externalBooks.splice(book_index, 1);
+    externalBooks.splice(externalBooks.indexOf(book_url), 1);
 
     window.localStorage.setItem("externalBooks", JSON.stringify(externalBooks));
     reloadExternalBooksDisplay();
@@ -23,39 +23,32 @@ async function reloadExternalBooksDisplay() {
     externalBooks = JSON.parse(externalBooks);
     
     imported_books.innerHTML = "";
-    for (let book_url of externalBooks) {
-        try {
-            let book = await fetchWithTimeout(`${book_url}/summary.json`).then(resp => resp.json());
-            imported_books.innerHTML += `
-                <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
-                    <div>
-                        <div class="book_title">${book.name.medium}</div>
-                        <div class="book_subtitle">${book_url}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
-                        <button><img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/close.svg"></button>
-                    </div>
-                </div>`
-        } catch {
-            imported_books.innerHTML += `
-                <div class="book" style="background: linear-gradient(135deg, #000000, #000000)">
-                    <div>
-                        <div class="book_title">Unavailable</div>
-                        <div class="book_subtitle">${book_url}</div>
-                    </div>
-                    <div class="booktext--right">
-                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
-                        <button><img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/close.svg"></button>
-                    </div>
-                </div>`
-        }
-    }
 
-    for (let [book_index, imported_book_html] of [...imported_books.children].entries()) {
-        let bound = removeExternalBook.bind(null, book_index);
-        imported_book_html.getElementsByTagName("button")[0].addEventListener("click", (event) => bound());
-    }
+    await Promise.all(externalBooks.map(book_url => fetchJSONWithTimeout(`${book_url}/summary.json`).then(book => {
+        imported_books.innerHTML += `
+            <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
+                <div>
+                    <div class="book_title">${book.name.medium}</div>
+                    <div class="book_subtitle">${book_url}</div>
+                </div>
+                <div class="booktext--right">
+                    <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
+                    <button onclick="removeExternalBook('${book_url}')"><img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/close.svg"></button>
+                </div>
+            </div>`
+    }).catch(() => {
+        imported_books.innerHTML += `
+            <div class="book" style="background: linear-gradient(135deg, #000000, #000000)">
+                <div>
+                    <div class="book_title">Unavailable</div>
+                    <div class="book_subtitle">${book_url}</div>
+                </div>
+                <div class="booktext--right">
+                    <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
+                    <button onclick="removeExternalBook('${book_url}')"><img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/close.svg"></button>
+                </div>
+            </div>`
+    })));
 }
 
 reloadExternalBooksDisplay()
@@ -104,6 +97,8 @@ async function AddImportReference(event){
 
     return false;
 }
+
+window.removeExternalBook = removeExternalBook;
 
 let reference_form = document.getElementById("ReferenceForm");
 reference_form.addEventListener('submit', AddImportReference);

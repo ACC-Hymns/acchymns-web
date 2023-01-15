@@ -1,6 +1,6 @@
 const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "ZG"];
 
-async function fetchWithTimeout(resource, options = {}) {
+async function fetchJSONWithTimeout(resource, options = {}) {
     const { timeout = 2500 } = options;
 
     const controller = new AbortController();
@@ -8,20 +8,20 @@ async function fetchWithTimeout(resource, options = {}) {
     const response = await fetch(resource, {
         ...options,
         signal: controller.signal
-    });
+    }).then(resp => resp.json());
     clearTimeout(id);
     return response;
 }
 
 async function getAllBookMetaData() {
-    let toFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/summary.json`).then(resp => resp.json()));
+    let toFetch = prepackaged_books.map(book_name => fetchJSONWithTimeout(`/books/${book_name}/summary.json`));
 
     let externalBooks = window.localStorage.getItem("externalBooks");
 
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            toFetch.push(fetchWithTimeout(`${book_url}/summary.json`).then(resp => resp.json()).then(resp => {
+            toFetch.push(fetchJSONWithTimeout(`${book_url}/summary.json`).then(resp => {
                 resp.addOn = true;
                 resp.sourceRoot = book_url;
                 return resp;
@@ -35,14 +35,14 @@ async function getAllBookMetaData() {
 }
 
 async function getAllSongMetaData() {
-    let songsToFetch = prepackaged_books.map(book_name => fetch(`/books/${book_name}/songs.json`).then(resp => resp.json()).catch(() => null));
+    let songsToFetch = prepackaged_books.map(book_name => fetchJSONWithTimeout(`/books/${book_name}/songs.json`).catch(() => null));
 
     let externalBooks = window.localStorage.getItem("externalBooks");
 
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            songsToFetch.push(fetchWithTimeout(`${book_url}/songs.json`).then(resp => resp.json())).catch(() => null);
+            songsToFetch.push(fetchJSONWithTimeout(`${book_url}/songs.json`).catch(() => null));
         }
     }
 
@@ -54,26 +54,26 @@ async function getAllSongMetaData() {
 
 async function getSongMetaData(book_short_name) {
     if (prepackaged_books.includes(book_short_name)) {
-        return await fetch(`/books/${book_short_name}/songs.json`).then(resp => resp.json()).catch(() => null);
+        return await fetchJSONWithTimeout(`/books/${book_short_name}/songs.json`).catch(() => null);
     }
 
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] == null) {
         return null;
     }
-    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).then(resp => resp.json()).catch(() => null);
+    return await fetchJSONWithTimeout(`${BOOK_METADATA[book_short_name].sourceRoot}/songs.json`).catch(() => null);
 }
 
 async function getBookIndex(book_short_name) {
     if (prepackaged_books.includes(book_short_name)) {
-        return await fetch(`/books/${book_short_name}/index.json`).then(resp => resp.json()).catch(() => null);
+        return await fetchJSONWithTimeout(`/books/${book_short_name}/index.json`).catch(() => null);
     }
 
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] == null) {
         return null;
     }
-    return await fetch(`${BOOK_METADATA[book_short_name].sourceRoot}/index.json`).then(resp => resp.json()).catch(() => null);
+    return await fetchJSONWithTimeout(`${BOOK_METADATA[book_short_name].sourceRoot}/index.json`).catch(() => null);
 }
 
 const isWebApp = true;
@@ -83,6 +83,6 @@ export {
     getAllSongMetaData,
     getSongMetaData,
     getBookIndex,
-    fetchWithTimeout,
+    fetchJSONWithTimeout,
     isWebApp
 }
