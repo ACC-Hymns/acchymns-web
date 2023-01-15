@@ -1,7 +1,7 @@
 {
 	"1": {
 		"title": "With Your Zion's Harps Now Chiming",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"2": {
 		"title": "The Lord Is In His Holy Temple",
@@ -9,15 +9,15 @@
 	},
 	"3": {
 		"title": "Before Jehovah's Awful Throne",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"4": {
 		"title": "God Is Our Refuge",
-		"notes": ["Ab5", "F4", "C4", "Db3"]
+		"notes": ["Ab4", "F4", "C4", "Db3"]
 	},
 	"5": {
 		"title": "O Worship The King",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"6": {
 		"title": "There's A Wilderness In God's Mercy",
@@ -25,27 +25,27 @@
 	},
 	"7": {
 		"title": "Greetings He To You",
-		"notes": ["Ab5", "Eb4", "C4", "Ab3"]
+		"notes": ["Ab4", "Eb4", "C4", "Ab2"]
 	},
 	"8": {
 		"title": "Day Is Dying In The West",
-		"notes": ["Ab5", "C4", "Eb3", "Ab3"]
+		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"9": {
 		"title": "How Gentile God's Commands",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"10": {
 		"title": "Break Thou The Bread Of Life",
-		"notes": ["G4", "E4", "Bb4", "Eb4"]
+		"notes": ["G4", "E4", "Bb3", "Eb4"]
 	},
 	"11": {
 		"title": "How Firm A Foundation, Ye Saints",
-		"notes": ["A5", "E4", "C#4", "A3"]
+		"notes": ["A4", "E4", "C#4", "A2"]
 	},
 	"12": {
 		"title": "How Previous Is The Book Divine",
-		"notes": ["Eb4", "C4", "Ab4", "Ab4"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab3"]
 	},
 	"13": {
 		"title": "My Soul, Be On Thy Guard",
@@ -53,43 +53,43 @@
 	},
 	"14": {
 		"title": "As With Gladness Men Of Old",
-		"notes": ["Ab5", "Eb4", "C4", "Ab4"]
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
 	},
 	"15": {
 		"title": "Quiet, Lord, My Froward Heart",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"16": {
 		"title": "What Glory Gilds The Sacred",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"17": {
 		"title": "Lord, Dismiss Us",
-		"notes": ["Bb5", "Eb4", "G3", "Eb3"]
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"18": {
 		"title": "The Traveler's Hymn",
-		"notes": ["B5", "G4", "D4", "G3"]
+		"notes": ["B4", "G4", "D4", "G3"]
 	},
 	"19": {
 		"title": "Saviour, Again To Thy Dear Name",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"20": {
 		"title": "O Gentle Saviour",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"21": {
 		"title": "All The Way My Saviour Leads Me",
-		"notes": ["C5", "Eb4", "Ab4", "Ab3"]
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"22": {
 		"title": "The Prodigal's Return",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"23": {
 		"title": "The Lord Bless Thee",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"24": {
 		"title": "I Know I Love Thee Better, Lord",
@@ -97,7 +97,7 @@
 	},
 	"25": {
 		"title": "Come, Thou Almighty King",
-		"notes": ["D5", "G4", "B4", "G3"]
+		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"26": {
 		"title": "Peace, Perfect Peace",
@@ -105,59 +105,59 @@
 	},
 	"27": {
 		"title": "Majestic Sweetness Sits Enthroned",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"28": {
 		"title": "Tis Midnight; And On Olive's Brow",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"29": {
 		"title": "Jesus The Very Thought Of Thee",
-		"notes": ["C5", "Eb4", "Ab4", "Ab3"]
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"30": {
 		"title": "My Life, My Love",
-		"notes": ["C4", "A4", "F3"]
+		"notes": ["C4", "A3", "F3"]
 	},
 	"31": {
 		"title": "I Have A Saviour",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"32": {
 		"title": "Gracious Spirit, Love Divine",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"33": {
 		"title": "Now From The Altar Of My Heart",
-		"notes": ["Ab5", "C4", "Ab4"]
+		"notes": ["Ab4", "C4", "Ab3"]
 	},
 	"34": {
 		"title": "It Came Upon The Midnight Clear",
-		"notes": ["F4", "D4", "F3", "Bb3"]
+		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"35": {
 		"title": "The Nativity",
-		"notes": ["Bb5", "G4", "Bb4", "Eb3"]
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"36": {
 		"title": "The Blessed Story Of The Christ",
-		"notes": ["Eb5", "C5", "C4", "A4"]
+		"notes": ["Eb5", "C5", "C4", "A3"]
 	},
 	"37": {
 		"title": "O Little Town Of Bethlehem",
-		"notes": ["B5", "D4", "G3"]
+		"notes": ["B4", "D4", "G3"]
 	},
 	"38": {
 		"title": "Away In A Manger",
-		"notes": ["C5", "A5"]
+		"notes": ["C5", "A4"]
 	},
 	"39": {
 		"title": "While Shepherds Watched Their Flocks",
-		"notes": ["F#4", "D4", "A4", "D3"]
+		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"40": {
 		"title": "O Come, All Ye Faithful",
-		"notes": ["A5", "E4", "C#4", "A3"]
+		"notes": ["A4", "E4", "C#4", "A2"]
 	},
 	"41": {
 		"title": "Angels, From The Realms Of Glory",
@@ -169,11 +169,11 @@
 	},
 	"43": {
 		"title": "The First Noel",
-		"notes": ["F#4", "D4", "A4", "D3"]
+		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"44": {
 		"title": "No, I Will Not Envy",
-		"notes": ["B5", "G4", "B4", "A4"]
+		"notes": ["B4", "G4", "B3", "A3"]
 	},
 	"45": {
 		"title": "Why Come Ye At Break Of Morning",
@@ -181,7 +181,7 @@
 	},
 	"46": {
 		"title": "The Golden Harvest",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"47": {
 		"title": "Up Yonder In Heaven",
@@ -189,11 +189,11 @@
 	},
 	"48": {
 		"title": "Upon A Stormy Sea",
-		"notes": ["D4", "C4", "F3", "Bb3"]
+		"notes": ["D4", "C4", "F3", "Bb2"]
 	},
 	"49": {
 		"title": "The Heavens Are Praising",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"50": {
 		"title": "The Beautiful Land",
@@ -209,31 +209,31 @@
 	},
 	"53": {
 		"title": "Meet Today And Part Tomorrow",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"54": {
 		"title": "There Was A Loving Shepherd",
-		"notes": ["A5", "C#4", "A4", "A3"]
+		"notes": ["A4", "C#4", "A3", "A2"]
 	},
 	"55": {
 		"title": "When Peace Like A River",
-		"notes": ["Ab5", "F4", "Ab4", "Db3"]
+		"notes": ["Ab4", "F4", "Ab3", "Db3"]
 	},
 	"56": {
 		"title": "The Spiritual Conflict",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"57": {
 		"title": "When Earth's Few Trials",
-		"notes": ["D4", "B4", "A4"]
+		"notes": ["D4", "B3", "A3"]
 	},
 	"58": {
 		"title": "What Shall I Do To Be Saved?",
-		"notes": ["C5", "A5", "C4", "F3"]
+		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"59": {
 		"title": "Let The Words Of My Mouth",
-		"notes": ["Bb5", "D4", "F3", "Bb3"]
+		"notes": ["Bb4", "D4", "F3", "Bb2"]
 	},
 	"60": {
 		"title": "Once More Before We Part",
@@ -241,47 +241,47 @@
 	},
 	"61": {
 		"title": "The Dwelling Of Light",
-		"notes": ["Bb4", "Bb3"]
+		"notes": ["Bb3", "Bb2"]
 	},
 	"62": {
 		"title": "Take The Bible In The Morning",
-		"notes": ["D4", "A4", "F#3"]
+		"notes": ["D4", "A3", "F#3"]
 	},
 	"63": {
 		"title": "It Was In Dark Gethsemane",
-		"notes": ["C#5", "A5", "C#4", "A4", "A3"]
+		"notes": ["C#5", "A4", "C#4", "A3", "A2"]
 	},
 	"64": {
 		"title": "There Is Beauty All Around",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"65": {
 		"title": "Angry Words! O Let Them Never",
-		"notes": ["Bb5", "G4"]
+		"notes": ["Bb4", "G4"]
 	},
 	"66": {
 		"title": "Beyond The Smiling And Weeping",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"67": {
 		"title": "The Earth Is The Lord's",
-		"notes": ["D5", "G4", "B4", "G3"]
+		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"68": {
 		"title": "His Ways Are Ways Of Pleasantness",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"69": {
 		"title": "Wait Upon The Lord",
-		"notes": ["C5", "F4", "A4", "F3"]
+		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"70": {
 		"title": "Jesus Nearness",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"71": {
 		"title": "The Eternal God Is Thy Refuge",
-		"notes": ["C4", "A5", "C4", "F3"]
+		"notes": ["C4", "A4", "C4", "F3"]
 	},
 	"72": {
 		"title": "When I See The Blood",
@@ -289,15 +289,15 @@
 	},
 	"73": {
 		"title": "The Sunday School",
-		"notes": ["C#4", "A4", "A3"]
+		"notes": ["C#4", "A3", "A2"]
 	},
 	"74": {
 		"title": "Jesus Knows Thy Sorrow",
-		"notes": ["Eb4", "C4", "Ab4"]
+		"notes": ["Eb4", "C4", "Ab3"]
 	},
 	"75": {
 		"title": "Reading God's Word",
-		"notes": ["D4", "B4", "G3", "G2"]
+		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"76": {
 		"title": "Oh, To Be Nothing",
@@ -309,23 +309,23 @@
 	},
 	"78": {
 		"title": "The Greatest Joy",
-		"notes": ["Ab5", "Eb4", "C4", "Ab4"]
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
 	},
 	"79": {
 		"title": "My Day's Journey",
-		"notes": ["Ab5", "Eb4", "C4", "Ab4"]
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
 	},
 	"80": {
 		"title": "All Hail The Power Of Jesus' Name",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"81": {
 		"title": "Who At My Door Is Standing",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"82": {
 		"title": "While Life Prolongs Its Previous Lights",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"83": {
 		"title": "The Heavens Declare",
@@ -333,15 +333,15 @@
 	},
 	"84": {
 		"title": "Keep Thy Heart With All Diligence",
-		"notes": ["A5", "E4", "C#4", "A3"]
+		"notes": ["A4", "E4", "C#4", "A2"]
 	},
 	"85": {
 		"title": "Faith Of Our Fathers",
-		"notes": ["C5", "Eb4", "Ab4", ""]
+		"notes": ["C5", "Eb4", "Ab3", ""]
 	},
 	"86": {
 		"title": "Shall You? Shall I?",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"87": {
 		"title": "O I Love To Talk With Jesus",
@@ -349,7 +349,7 @@
 	},
 	"88": {
 		"title": "Forever With The Lord",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"89": {
 		"title": "Oh Who Among The Sons Of Men",
@@ -357,7 +357,7 @@
 	},
 	"90": {
 		"title": "Who Can Cheer The Heart",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"91": {
 		"title": "There Are Friendships",
@@ -365,35 +365,35 @@
 	},
 	"92": {
 		"title": "Nearer My God To Thee (Swiss)",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"93": {
 		"title": "I Need Thee Every Hour",
-		"notes": ["Ab5", "C4", "Eb3", "Ab3"]
+		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"94": {
 		"title": "O Love That Wilt Not Let Me Go",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"95": {
 		"title": "Praise God",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"96": {
 		"title": "Hear Our Prayer, O Lord",
-		"notes": ["F#4", "D4", "A4", "G3"]
+		"notes": ["F#4", "D4", "A3", "G3"]
 	},
 	"97": {
 		"title": "Amazing Grave",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"98": {
 		"title": "Teach Me Yet More",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"99": {
 		"title": "The Solid Rock",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"100": {
 		"title": "Faith Is A Living Power",
@@ -401,7 +401,7 @@
 	},
 	"101": {
 		"title": "More Holiness Give Me",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"102": {
 		"title": "Christ, The Lord, Is Risen Today",
@@ -409,7 +409,7 @@
 	},
 	"103": {
 		"title": "While Jesus Whispers",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"104": {
 		"title": "The Lord Watch",
@@ -421,15 +421,15 @@
 	},
 	"106": {
 		"title": "Take My Life, And Let It Be",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"107": {
 		"title": "Sun Of My Soul",
-		"notes": ["F4", "C4", "A4", "F3"]
+		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"108": {
 		"title": "Come, Ye Disconsolate",
-		"notes": ["A5", "D4", "F#3", "D3"]
+		"notes": ["A4", "D4", "F#3", "D3"]
 	},
 	"109": {
 		"title": "I Know Whom I Have Believed",
@@ -437,23 +437,23 @@
 	},
 	"110": {
 		"title": "Abide With Me",
-		"notes": ["G#4", "E4", "B4", "E3"]
+		"notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"111": {
 		"title": "Asleep In Jesus! Blessed Sleep",
-		"notes": ["A4", "D4", "F#3", "D3"]
+		"notes": ["A3", "D4", "F#3", "D3"]
 	},
 	"112": {
 		"title": "Take Time To Be Holy",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"113": {
 		"title": "Have Thine Own Way, Lord",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"114": {
 		"title": "More Love To Thee",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"115": {
 		"title": "I Gave My Life For Thee",
@@ -461,7 +461,7 @@
 	},
 	"116": {
 		"title": "When Upon Life's Billows",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"117": {
 		"title": "My Faith Looks Up To Thee",
@@ -469,11 +469,11 @@
 	},
 	"118": {
 		"title": "Saviour, Like A Shepherd Lead Us",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"119": {
 		"title": "O How I Love Thy Holy Law",
-		"notes": ["A5", "C#4", "A4", "A3"]
+		"notes": ["A4", "C#4", "A3", "A2"]
 	},
 	"120": {
 		"title": "Thou Art The Way",
@@ -481,19 +481,19 @@
 	},
 	"121": {
 		"title": "Watch And Pray",
-		"notes": ["Eb4", "Bb4", "G3", "Eb3"]
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"122": {
 		"title": "With Friends On Earth We Meet",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"123": {
 		"title": "The Lord's Apostles",
-		"notes": ["F4", "D4", "Bb4"]
+		"notes": ["F4", "D4", "Bb3"]
 	},
 	"124": {
 		"title": "Ready",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"125": {
 		"title": "We Shall Sleep But Not Forever",
@@ -501,7 +501,7 @@
 	},
 	"126": {
 		"title": "O Jerusalem, The Golden",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"127": {
 		"title": "Never Alone",
@@ -509,15 +509,15 @@
 	},
 	"128": {
 		"title": "Parting Hymn",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"129": {
 		"title": "Yet There Is Room",
-		"notes": ["F4", "D4", "B4"]
+		"notes": ["F4", "D4", "B3"]
 	},
 	"130": {
 		"title": "The Lord Is My Shepherd",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"131": {
 		"title": "O What Is Mortal",
@@ -525,31 +525,31 @@
 	},
 	"132": {
 		"title": "Sweeter Than All",
-		"notes": ["E4", "B4", "G#3", "E3"]
+		"notes": ["E4", "B3", "G#3", "E3"]
 	},
 	"133": {
 		"title": "Lead Me Gently Home",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"134": {
 		"title": "What Joy It Will Be",
-		"notes": ["A5", "F#4", "D4", "D3"]
+		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"135": {
 		"title": "In Days Of Youth",
-		"notes": ["Bb5", "G4", "Bb4", "Eb3"]
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"136": {
 		"title": "Thro' The Love Of God",
-		"notes": ["A5", "C#4", "A4", "A3"]
+		"notes": ["A4", "C#4", "A3", "A2"]
 	},
 	"137": {
 		"title": "Tread Softly",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"138": {
 		"title": "God Will Take Care Of You",
-		"notes": ["D4", "Bb4", "F3", "Bb3"]
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"139": {
 		"title": "Each Day I'll Do A Golden Deed",
@@ -557,7 +557,7 @@
 	},
 	"140": {
 		"title": "Lead Kindly Light",
-		"notes": ["Eb4", "C4", "Ab4"]
+		"notes": ["Eb4", "C4", "Ab3"]
 	},
 	"141": {
 		"title": "Jehovah",
@@ -565,11 +565,11 @@
 	},
 	"142": {
 		"title": "Twilight Is Stealing",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"143": {
 		"title": "Before The Dawn",
-		"notes": ["Ab5", "F4", "Db4", "Db3"]
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"144": {
 		"title": "Rest For The Weary",
@@ -577,27 +577,27 @@
 	},
 	"145": {
 		"title": "Come Souls That Are Longing",
-		"notes": ["Eb4", "C4", "Ab4"]
+		"notes": ["Eb4", "C4", "Ab3"]
 	},
 	"146": {
 		"title": "Go Bury Thy Sorrow",
-		"notes": ["Bb5", "D4", "Bb4", "Bb3"]
+		"notes": ["Bb4", "D4", "Bb3", "Bb2"]
 	},
 	"147": {
 		"title": "This So Sweet To Trust In Jesus",
-		"notes": ["C5", "Eb4", "Ab4", "Ab3"]
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"148": {
 		"title": "Hear Thou My Prayer",
-		"notes": ["F4", "D4", "F3", "Bb3"]
+		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"149": {
 		"title": "Holy, Holy, Holy",
-		"notes": ["E4", "Bb4", "G#3", "E3"]
+		"notes": ["E4", "Bb3", "G#3", "E3"]
 	},
 	"150": {
 		"title": "Another Year Is Dawning",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"151": {
 		"title": "Years I Spent In Vanity And Pride",
@@ -605,83 +605,83 @@
 	},
 	"152": {
 		"title": "Take The Name Of Jesus With You",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"153": {
 		"title": "My Jesus, I Love Thee",
-		"notes": ["F4", "C4", "A4", "F3"]
+		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"154": {
 		"title": "Youth",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"155": {
 		"title": "Near The Cross",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"156": {
 		"title": "Blest Be The Tie That Binds",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"157": {
 		"title": "Saviour, Thy Dying Love",
-		"notes": ["B5", "D4", "G3"]
+		"notes": ["B4", "D4", "G3"]
 	},
 	"158": {
 		"title": "Guide Me, O Thou Great Jehovah",
-		"notes": ["Ab5", "F4", "Db4","Db3"]
+		"notes": ["Ab4", "F4", "Db4","Db3"]
 	},
 	"159": {
 		"title": "How Sweet The Name Of Jesus",
-		"notes": ["G4", "B4", "G3"]
+		"notes": ["G4", "B3", "G3"]
 	},
 	"160": {
 		"title": "The Sweet Story Of Old",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"161": {
 		"title": "What A Friend",
-		"notes": ["C5", "F4", "A4", "F3"]
+		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"162": {
 		"title": "He Leadeth Me",
-		"notes": ["A5", "F#4", "A4", "D3"]
+		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"163": {
 		"title": "Kind Words",
-		"notes": ["F#4", "D5", "A4", "D3"]
+		"notes": ["F#4", "D5", "A3", "D3"]
 	},
 	"164": {
 		"title": "Arise, My Soul",
-		"notes": ["Bb5", "D4", "F4", "Bb3"]
+		"notes": ["Bb4", "D4", "F4", "Bb2"]
 	},
 	"165": {
 		"title": "Some Time We'll Understand",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"166": {
 		"title": "Yield Not To Temptation",
-		"notes": ["C5", "Ab5", "Ab4"]
+		"notes": ["C5", "Ab4", "Ab3"]
 	},
 	"167": {
 		"title": "The Way Of The Cross Leads Home",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"168": {
 		"title": "The Old Rugged Cross",
-		"notes": ["D4", "B4", "F3", "Bb3"]
+		"notes": ["D4", "B3", "F3", "Bb2"]
 	},
 	"169": {
 		"title": "Jesus I My Cross Have Taken",
-		"notes": ["Ab5", "C4", "Eb3", "Ab3"]
+		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"170": {
 		"title": "I Am Thine, O Lord",
-		"notes": ["C5", "Eb4", "Ab4", "Ab3"]
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"171": {
 		"title": "Open The Wells Of Salvation",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"172": {
 		"title": "Beyond The Sunset",
@@ -689,79 +689,79 @@
 	},
 	"173": {
 		"title": "Where The Gates Swing Outward Never",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"174": {
 		"title": "My Saviour's Love",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"175": {
 		"title": "There Is A Place",
-		"notes": ["F4", "Db4", "Ab4", "Db3"]
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"176": {
 		"title": "Jesus Loves Me",
-		"notes": ["Bb5", "Gb4", "Ab4", "Db3"]
+		"notes": ["Bb4", "Gb4", "Ab3", "Db3"]
 	},
 	"177": {
 		"title": "If I Have Wounded Any Soul",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"178": {
 		"title": "O Mother Dear, Jerusalem",
-		"notes": ["Ab5", "F4", "Bb4", "Db3"]
+		"notes": ["Ab4", "F4", "Bb3", "Db3"]
 	},
 	"179": {
 		"title": "Anywhere With Jesus",
-		"notes": ["A5", "F#4", "B4", "D3"]
+		"notes": ["A4", "F#4", "B3", "D3"]
 	},
 	"180": {
 		"title": "Seeking The Lost",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"181": {
 		"title": "Ere You Left Your Room",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"182": {
 		"title": "Lead Me To Calvary",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"183": {
 		"title": "Safely Through Another Week",
-		"notes": ["G4", "B4", "G3"]
+		"notes": ["G4", "B3", "G3"]
 	},
 	"184": {
 		"title": "When By Thoughts Of Sin",
-		"notes": ["D5", "F#4", "A4", "B3"]
+		"notes": ["D5", "F#4", "A3", "B2"]
 	},
 	"185": {
 		"title": "Love Divine",
-		"notes": ["F4", "D4", "F3", "Bb3"]
+		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"186": {
 		"title": "When We Walk With The Lord",
-		"notes": ["F4", "C4", "A4", "F3"]
+		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"187": {
 		"title": "What Did He Do",
-		"notes": ["Db5", "F4", "Ab4", "Db3"]
+		"notes": ["Db5", "F4", "Ab3", "Db3"]
 	},
 	"188": {
 		"title": "The Unity Of Brethren",
-		"notes": ["C5", "F4", "A4", "F3"]
+		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"189": {
 		"title": "Great God! Attend While Zion Sings",
-		"notes": ["Bb5", "F4", "Ab4", "F3"]
+		"notes": ["Bb4", "F4", "Ab3", "F3"]
 	},
 	"190": {
 		"title": "The Sun Has Set",
-		"notes": ["D4", "B4", "D3"]
+		"notes": ["D4", "B3", "D3"]
 	},
 	"191": {
 		"title": "Be Still My Soul",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"192": {
 		"title": "O My Soul, By Pain Surrounded",
@@ -773,11 +773,11 @@
 	},
 	"194": {
 		"title": "Farewell My Morning Dawns",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"195": {
 		"title": "Wonderful The Power Of Christ",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"196": {
 		"title": "The Voice That Breathed O'er Eden",
@@ -785,15 +785,15 @@
 	},
 	"197": {
 		"title": "Just Over The River",
-		"notes": ["D4", "Bb4", "F3", "Bb3"]
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"198": {
 		"title": "Christian, Walk Carefully",
-		"notes": ["D4", "B4", "G3", "G2"]
+		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"199": {
 		"title": "Know Ye That Land",
-		"notes": ["Eb4", "Bb4", "G3", "E3"]
+		"notes": ["Eb4", "Bb3", "G3", "E3"]
 	},
 	"200": {
 		"title": "I Know That My Redeemer Lives (Mcgranahan)",
@@ -801,35 +801,35 @@
 	},
 	"201": {
 		"title": "I Need The Prayers",
-		"notes": ["A5", "F#4", "D4", "D3"]
+		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"202": {
 		"title": "What Various Hindrances We Meet",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"203": {
 		"title": "I Owe The Lord Ma Morning Song",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"204": {
 		"title": "Heavenly Father We Breach Thee",
-		"notes": ["Ab5", "C4", "Ab4", "Ab3"]
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"205": {
 		"title": "Prayer",
-		"notes": ["Bb5", "G4", "C4", "Eb3"]
+		"notes": ["Bb4", "G4", "C4", "Eb3"]
 	},
 	"206": {
 		"title": "Come, For The Feast Is Spread",
-		"notes": ["D5", "F4", "Bb4", "Bb3"]
+		"notes": ["D5", "F4", "Bb3", "Bb2"]
 	},
 	"207": {
 		"title": "Creation",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"208": {
 		"title": "Lord, Speak To Me",
-		"notes": ["D5", "D4", "Bb4", "Bb3"]
+		"notes": ["D5", "D4", "Bb3", "Bb2"]
 	},
 	"209": {
 		"title": "Rise, Glorious Conqueror",
@@ -837,23 +837,23 @@
 	},
 	"210": {
 		"title": "Whiter Than Snow",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"211": {
 		"title": "Lord, I Care Not For Riches",
-		"notes": ["Eb4", "C4", "Ab4", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"212": {
 		"title": "Almost Persuaded",
-		"notes": ["B5", "D4", "G3"]
+		"notes": ["B4", "D4", "G3"]
 	},
 	"213": {
 		"title": "Now The Day Is Over",
-		"notes": ["E4", "C#4", "A4"]
+		"notes": ["E4", "C#4", "A3"]
 	},
 	"214": {
 		"title": "The Heavenly Home",
-		"notes": ["G4", "B4", "G3"]
+		"notes": ["G4", "B3", "G3"]
 	},
 	"215": {
 		"title": "Sweet Hour Of Prayer",
@@ -861,15 +861,15 @@
 	},
 	"216": {
 		"title": "God Be With You",
-		"notes": ["F4", "Db4", "Ab4", "Db3"]
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"217": {
 		"title": "Shall We Meet?",
-		"notes": ["Ab5", "C4", "Ab4", "Ab3"]
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"218": {
 		"title": "Safe In The Arms Of Jesus",
-		"notes": ["B5", "D4", "G3"]
+		"notes": ["B4", "D4", "G3"]
 	},
 	"219": {
 		"title": "Stand Up For Jesus",
@@ -877,31 +877,31 @@
 	},
 	"220": {
 		"title": "Holy Spirit, Faithful Guide",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"221": {
 		"title": "One Sweetly Solemn Thought",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"222": {
 		"title": "Will The Circle Be Unbroken",
-		"notes": ["C4", "Ab4", "Eb3", "Ab3"]
+		"notes": ["C4", "Ab3", "Eb3", "Ab2"]
 	},
 	"223": {
 		"title": "Thou, My Everlasting Portion",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"224": {
 		"title": "There Is A Land",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"225": {
 		"title": "Faithful Until Death Remain",
-		"notes": ["A5", "C#4", "A4", "A3"]
+		"notes": ["A4", "C#4", "A3", "A2"]
 	},
 	"226": {
 		"title": "My Life's Best Delight",
-		"notes": ["Bb5", "G4", "Eb4", "Eb3"]
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"227": {
 		"title": "Psalm 117",
@@ -909,19 +909,19 @@
 	},
 	"228": {
 		"title": "We, Who In God's Name",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"229": {
 		"title": "The Home Of The Soul",
-		"notes": ["B5", "G#4", "E4", "E3"]
+		"notes": ["B4", "G#4", "E4", "E3"]
 	},
 	"230": {
 		"title": "Farewell",
-		"notes": ["A5", "F#4", "D4", "D3"]
+		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"231": {
 		"title": "Let Me Go",
-		"notes": ["A5", "F#4", "A4", "D3"]
+		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"232": {
 		"title": "Jesus Thou My Soul's Redeemer",
@@ -929,15 +929,15 @@
 	},
 	"233": {
 		"title": "When Heaven's Ways A Soul Forsakes",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"234": {
 		"title": "Sunday Morning",
-		"notes": ["A5", "D4", "F3", "D3"]
+		"notes": ["A4", "D4", "F3", "D3"]
 	},
 	"235": {
 		"title": "Song Of Praise",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"236": {
 		"title": "Upward Soar, My Soul",
@@ -945,23 +945,23 @@
 	},
 	"237": {
 		"title": "We'll Ne'er Forsake The Bible",
-		"notes": ["F4", "A4", "F3"]
+		"notes": ["F4", "A3", "F3"]
 	},
 	"238": {
 		"title": "When Sounds The Hour",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"239": {
 		"title": "Joyfully, Joyfully",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"240": {
 		"title": "The Bands Of Earth",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"241": {
 		"title": "Wrapped In Thoughts",
-		"notes": ["G4", "Eb4", "Bb4", "Eb3"]
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"242": {
 		"title": "Rest, My Soul, In Comfort",
@@ -973,7 +973,7 @@
 	},
 	"244": {
 		"title": "I Will Strive",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"245": {
 		"title": "Thank Ye The Lord!",
@@ -981,15 +981,15 @@
 	},
 	"246": {
 		"title": "There Is A Heav'nly Rest",
-		"notes": ["B5", "E4", "G#3", "E3"]
+		"notes": ["B4", "E4", "G#3", "E3"]
 	},
 	"247": {
 		"title": "My Heav'nly Home",
-		"notes": ["G4", "B4", "G3"]
+		"notes": ["G4", "B3", "G3"]
 	},
 	"248": {
 		"title": "When A Christian Dies",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"249": {
 		"title": "The Son Of God",
@@ -997,7 +997,7 @@
 	},
 	"250": {
 		"title": "Yearning For The Homeland",
-		"notes": ["G#4", "E4", "B4", "E3"]
+		"notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"251": {
 		"title": "Glorious Comes The Lord",
@@ -1009,11 +1009,11 @@
 	},
 	"253": {
 		"title": "I Know That My Redeemer Lives (Handel)",
-		"notes": ["A5", "D4", "F#3", "D3"]
+		"notes": ["A4", "D4", "F#3", "D3"]
 	},
 	"254": {
 		"title": "Go To Slumber",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"255": {
 		"title": "Why Should Ye All Be Weeping",
@@ -1021,7 +1021,7 @@
 	},
 	"256": {
 		"title": "Stay Thou With Me",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"257": {
 		"title": "The Grave Of Christ",
@@ -1033,7 +1033,7 @@
 	},
 	"259": {
 		"title": "What Joy I Feel",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"260": {
 		"title": "Where Goest Thou",
@@ -1041,7 +1041,7 @@
 	},
 	"261": {
 		"title": "When Thou Shalt Come",
-		"notes": ["E4", "C#4", "A4", "A3"]
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"262": {
 		"title": "The Blessed Resurrection",
@@ -1049,11 +1049,11 @@
 	},
 	"263": {
 		"title": "Shall We Meet Up Yonder",
-		"notes": ["C#4", "A4", "E3", "A3"]
+		"notes": ["C#4", "A3", "E3", "A2"]
 	},
 	"264": {
 		"title": "Longing For Home",
-		"notes": ["F4", "D4", "Bb4", "Bb3"]
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"265": {
 		"title": "Lord, Jesus, Our Light",
@@ -1065,35 +1065,35 @@
 	},
 	"267": {
 		"title": "The Blessed Rest",
-		"notes": ["B5", "G4", "D4", "G3", "G3"]
+		"notes": ["B4", "G4", "D4", "G3", "G3"]
 	},
 	"268": {
 		"title": "Who Are They Before God Standing",
-		"notes": ["F#4", "D4", "A4", "D3"]
+		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"269": {
 		"title": "To That Fair Celestial City",
-		"notes": ["F4", "Db4", "Ab4", "Db3"]
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"270": {
 		"title": "Resurrection",
-		"notes": ["C5", "A5", "C4", "F3"]
+		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"271": {
 		"title": "To Him That Overcometh",
-		"notes": ["F4", "A4", "F3"]
+		"notes": ["F4", "A3", "F3"]
 	},
 	"272": {
 		"title": "Hail To The Brightness",
-		"notes": ["A5", "C#4", "E3", "A3"]
+		"notes": ["A4", "C#4", "E3", "A2"]
 	},
 	"273": {
 		"title": "O That I Were With Jesus",
-		"notes": ["D5", "G4", "B4", "G3"]
+		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"274": {
 		"title": "We Who In Love Are Bound",
-		"notes": ["F4", "D4", "F3", "Bb3"]
+		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"275": {
 		"title": "Awaken, For Past Is The Gloom",
@@ -1105,27 +1105,27 @@
 	},
 	"277": {
 		"title": "Love For Jesus",
-		"notes": ["D5", "G4", "B4", "G3"]
+		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"278": {
 		"title": "Nearer, My God To Thee (Mason)",
-		"notes": ["B5", "D4", "G3"]
+		"notes": ["B4", "D4", "G3"]
 	},
 	"279": {
 		"title": "Jesus Lover Of My Soul",
-		"notes": ["A5", "F4", "C4", "F3"]
+		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"280": {
 		"title": "Behold The Glories Of The Lamb",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"281": {
 		"title": "Jesus Is Mine",
-		"notes": ["Bb5", "G4", "Eb4", "Eb3"]
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"282": {
 		"title": "Work, For The Night Is Coming",
-		"notes": ["C5", "A5", "F3"]
+		"notes": ["C5", "A4", "F3"]
 	},
 	"283": {
 		"title": "With Songs And Honors Sounding",
@@ -1133,15 +1133,15 @@
 	},
 	"284": {
 		"title": "The Lord My Shepherd Is",
-		"notes": ["G4", "D4", "B4", "G3"]
+		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"285": {
 		"title": "Jesus Rose Of Sharon",
-		"notes": ["G#4", "E4", "B4", "E3"]
+		"notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"286": {
 		"title": "O God Of Wisdom",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"287": {
 		"title": "O God Our Help In Ages Past",
@@ -1149,15 +1149,15 @@
 	},
 	"288": {
 		"title": "Blessed Assurance",
-		"notes": ["F#4", "D4", "A4", "D3"]
+		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"289": {
 		"title": "The Love Of God",
-		"notes": ["Eb4", "Bb4", "G3", "Eb3"]
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"290": {
 		"title": "We Praise Thee, O God",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"291": {
 		"title": "O For A Thousand Tongues",
@@ -1165,35 +1165,35 @@
 	},
 	"292": {
 		"title": "Only Believe",
-		"notes": ["Ab5", "F4", "Db4", "Db3"]
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"293": {
 		"title": "Rest From Your Labors",
-		"notes": ["A5", "E4", "C#4", "A3"]
+		"notes": ["A4", "E4", "C#4", "A2"]
 	},
 	"294": {
 		"title": "Blessed Are The Pure In Heart",
-		"notes": ["Bb5", "G4", "Eb4", "Eb3"]
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"295": {
 		"title": "Come Unto Me",
-		"notes": ["Ab5", "Eb4", "C4", "Ab3"]
+		"notes": ["Ab4", "Eb4", "C4", "Ab2"]
 	},
 	"296": {
 		"title": "Psalm 92",
-		"notes": ["C5", "A5", "C4", "F3"]
+		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"297": {
 		"title": "When The Lord Shall Return",
-		"notes": ["D4", "B4", "G3"]
+		"notes": ["D4", "B3", "G3"]
 	},
 	"298": {
 		"title": "The Twenty-Third Psalm",
-		"notes": ["C#5", "A5", "E4", "A4"]
+		"notes": ["C#5", "A4", "E4", "A3"]
 	},
 	"299": {
 		"title": "Today Is The Lord's Day",
-		"notes": ["D5", "F4", "Bb4", "Bb3"]
+		"notes": ["D5", "F4", "Bb3", "Bb2"]
 	},
 	"300": {
 		"title": "There Were Shepherds",
@@ -1201,6 +1201,6 @@
 	},
 	"301": {
 		"title": "We Will Remember Thee",
-		"notes": ["C5", "A5", "F4", "F3"]
+		"notes": ["C5", "A4", "F4", "F3"]
 	}
 }
