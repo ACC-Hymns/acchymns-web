@@ -31,7 +31,7 @@ const sampler = new Tone.Sampler({
 startingNotesButton.addEventListener('mousedown', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        if(window.localStorage.getItem("staggered") == "true") {
+        if(window.localStorage.getItem("staggered") == "true" || window.localStorage.getItem("staggered") == undefined) {
             for(var i = (book_song_metadata[songNum]["notes"].length - 1); i >= 0; i--) {
                 sampler.triggerAttack(book_song_metadata[songNum]["notes"][i], Tone.now() + (0.25 * (book_song_metadata[songNum]["notes"].length - i)));
             }
