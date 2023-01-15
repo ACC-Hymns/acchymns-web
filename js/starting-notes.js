@@ -31,20 +31,26 @@ const sampler = new Tone.Sampler({
 startingNotesButton.addEventListener('mousedown', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerAttack(book_song_metadata[songNum]["notes"], Tone.now());
+        if(window.localStorage.getItem("staggered") == "true") {
+            for(var i = (book_song_metadata[songNum]["notes"].length - 1); i >= 0; i--) {
+                sampler.triggerAttack(book_song_metadata[songNum]["notes"][i], Tone.now() + (0.25 * (book_song_metadata[songNum]["notes"].length - i)));
+            }
+        } else {
+            sampler.triggerAttack(book_song_metadata[songNum]["notes"], Tone.now());
+        }
     }
 });
 
 startingNotesButton.addEventListener('mouseup', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() +1);
+        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() +3);
     }
 });
 
 startingNotesButton.addEventListener('mouseleave', (e) => {
     startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + 1);
+        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + 3);
     }
 });
