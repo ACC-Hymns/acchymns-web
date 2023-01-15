@@ -32,12 +32,22 @@
         </div>
         <h2>General</h2>
         <div class="settings">
-            <a href="#" class="settings-option">
+            <a draggable="false" href="#" class="settings-option">
                 <span>Staggered Playback</span>
                 <label class="switch">
                     <input id='staggered' type="checkbox" onclick="ToggleStaggered(this)">
                     <span class="slider round"></span>
-                  </label>
+                </label>
+            </a>
+            <a draggable="false" href="#" class="settings-option">
+                <span class="setting-label">Playback Interval</span>
+                <input id='playbackInterval' class="slider-setting" type="range" step="0.5" min = "1" max="10" value="2.5" oninput="ChangePlaybackInterval(this)">
+                <span id='playbackIntervalValue' class="slider-value"></span>
+            </a>
+            <a draggable="false" href="#" class="settings-option">
+                <span class="setting-label">Playback Duration</span>
+                <input id='playbackDuration' class="slider-setting" type="range" step="5" min = "5" max="50" value="30" oninput="ChangePlaybackDuration(this)">
+                <span id='playbackDurationValue'class="slider-value"></span>
             </a>
         </div>
         

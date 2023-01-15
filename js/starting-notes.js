@@ -29,28 +29,16 @@ const sampler = new Tone.Sampler({
 
 
 startingNotesButton.addEventListener('mousedown', (e) => {
-    startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
+    var interval = (window.localStorage.getItem("playbackInterval") == undefined) ? 0.25 : parseFloat(window.localStorage.getItem("playbackInterval"));
+    var duration = (window.localStorage.getItem("playbackDuration") == undefined) ? 3 : parseFloat(window.localStorage.getItem("playbackDuration"));
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
         if(window.localStorage.getItem("staggered") == "true" || window.localStorage.getItem("staggered") == undefined) {
-            for(var i = (book_song_metadata[songNum]["notes"].length - 1); i >= 0; i--) {
-                sampler.triggerAttack(book_song_metadata[songNum]["notes"][i], Tone.now() + (0.25 * (book_song_metadata[songNum]["notes"].length - i)));
+            for(var i = (book_song_metadata[songNum]["notes"].length); i > 0; i--) {
+                sampler.triggerAttack(book_song_metadata[songNum]["notes"][i - 1], Tone.now() + (interval * (book_song_metadata[songNum]["notes"].length - i)));
             }
         } else {
             sampler.triggerAttack(book_song_metadata[songNum]["notes"], Tone.now());
         }
-    }
-});
-
-startingNotesButton.addEventListener('mouseup', (e) => {
-    startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
-    if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() +3);
-    }
-});
-
-startingNotesButton.addEventListener('mouseleave', (e) => {
-    startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
-    if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + 3);
+        sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + duration + (interval * book_song_metadata[songNum]["notes"].length));
     }
 });
