@@ -38,7 +38,6 @@ function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, que
                     <div class="booktext--right">
                         <div class="song__number">#${song.song}</div>
                         ${BOOK_METADATA[song.book].addOn ? wifiSymbol : ""}
-                        <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 16px" src="../../assets/ellipsis-vertical.svg">
                     </div>
                 </div>
             </a>`;
