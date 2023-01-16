@@ -4,7 +4,7 @@
         "medium": "Zbirka",
         "long": "Zbirka Slavopoja Gospodu Bogu"
     },
-    "addOn": false,
+    "addOn": true,
     "primaryColor": "#CF0F17",
     "secondaryColor": "#902024",
     "fileExtension": "png",
