@@ -18,13 +18,14 @@ if (bookName != null && songNum != null){
 
 const sampler = new Tone.Sampler({
 	urls: {
+		"A2": "A2.mp3",
+		"C3": "C3.mp3",
+		"A3": "A3.mp3",
 		"C4": "C4.mp3",
-		"D#4": "Ds4.mp3",
-		"F#4": "Fs4.mp3",
 		"A4": "A4.mp3",
+		"C5": "C5.mp3"
 	},
-	release: 1,
-	baseUrl: "https://tonejs.github.io/audio/salamander/",
+	baseUrl: "/assets/notes/",
 }).toDestination();
 
 
