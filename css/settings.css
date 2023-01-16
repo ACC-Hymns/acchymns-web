@@ -84,6 +84,10 @@ input {
     padding: 6px 15px;
 }
 
+.import-input {
+    padding: 3px 15px;
+}
+
 ::placeholder {
     color: var(--color);
     opacity: 0.7;
@@ -145,7 +149,7 @@ input {
 .input-option {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
+    padding: 10px 20px;
     color: var(--color);
     border-bottom: var(--border-color);
 }
@@ -154,7 +158,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 20px;
+    padding: 10px 20px;
     background-color: #2196F3;
     border-bottom: var(--border-color);
     border-bottom-left-radius: 15px;

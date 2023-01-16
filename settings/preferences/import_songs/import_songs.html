@@ -18,11 +18,32 @@
         <div class="title">
             <a href="/settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"></a>
             <h1>Import Books</h1>
-            <a href="import_songs_advanced.html"><img class="ionicon" src="/assets/ellipsis-vertical.svg"></a>
+            <span class="space">
         </div>
         <div style="display: flex; justify-content: center;">
             <span class="text" style="margin: 0 auto; font-size: 14px;">The song books below require an internet connection</span>
         </div> 
+        <div class="settings">
+            <div class="input-option">
+                <span>Reference</span>
+                <form id="ReferenceForm">
+                    <input class="import-input" name='import_reference' type="text">
+                </form>
+            </div>
+            <div class="input-option">
+                <span>URL</span>
+                <form id="URLForm">
+                    <input class="import-input" name='import_url' type="url">
+                </form>
+            </div>
+            <div class="input-option-button">
+                <a id="import-button">
+                    <div>
+                        <span style="color: white">Import</span>
+                    </div>
+                </a>
+            </div>
+        </div>
 
         <div id="import_books_preview"></div>
 
