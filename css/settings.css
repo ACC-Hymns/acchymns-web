@@ -150,6 +150,20 @@ input {
     border-bottom: var(--border-color);
 }
 
+.input-option-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    background-color: #2196F3;
+    border-bottom: var(--border-color);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.input-option-button:active {
+    background-color: #1b80d2;
+}
+
 .settings-option:last-child {
     border-bottom: none;
 }

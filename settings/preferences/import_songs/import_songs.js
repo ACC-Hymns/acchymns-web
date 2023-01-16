@@ -77,8 +77,6 @@ var branch = "staging";
 let known_references = {
     "HZ": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/HZ`,
     "ZG": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZG`,
-    "ARF": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ARF`,
-    "ARFR": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ARFR`,
     "PC": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/PC`,
     "ZHJ": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZHJ`
 };
