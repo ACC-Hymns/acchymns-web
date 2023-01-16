@@ -8,7 +8,8 @@ function filter(toFilter, searchString, SONG_METADATA) {
         if(songData == undefined)
             return false;
         let characterStrippedTitle = songData.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
-
+        if(!isNaN(characterStrippedSearchString))
+            return characterStrippedSearchString == s.song;
         return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
             s.song.toLowerCase().includes(characterStrippedSearchString);
     });

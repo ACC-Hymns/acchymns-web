@@ -33,6 +33,10 @@ a, img {
     --svg-back-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(183deg) brightness(99%) contrast(90%);
 }
 
+.text {
+    color: var(--color);
+}
+
 h1, h2, h3, h4, h5 {
     color: var(--color);
 }

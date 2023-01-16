@@ -29,9 +29,9 @@ async function reloadExternalBooksDisplay() {
         imported_books.innerHTML += `
             <div class="book" style="max-height: 50px; background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
                 <div>
-                    <div class="book_title">${book.name.medium}</div>
+                    <div class="book_title_small">${book.name.medium}</div>
                 </div>
-                <div class="booktext--right">
+                <div class="booktext--right" style="float: right; display: inline-block;">
                     <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
                     <button onclick="removeExternalBook('${book_url}')"><img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/close.svg"></button>
                 </div>
@@ -40,7 +40,7 @@ async function reloadExternalBooksDisplay() {
         imported_books.innerHTML += `
             <div class="book" style="max-height: 50px; background: linear-gradient(135deg, #000000, #000000)">
                 <div>
-                    <div class="book_title">Unavailable</div>
+                    <div class="book_title_small">Unavailable</div>
                 </div>
                 <div class="booktext--right">
                     <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">
@@ -115,7 +115,7 @@ async function loadPreviewBooks() {
         <a onclick="AddBook('${book}')">
             <div class="book" style="max-height: 50px; background: linear-gradient(135deg, ${response.primaryColor}, ${response.secondaryColor})">
                 <div>
-                    <div class="book_title">${response.name.medium}</div>
+                    <div class="book_title_small">${response.name.medium}</div>
                 </div>
                 <div class="booktext--right">
                     <img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/add-circle-outline.svg">

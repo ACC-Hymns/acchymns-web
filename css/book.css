@@ -17,6 +17,14 @@
     bottom: 0;
 }
 
+.book_title_small {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700; 
+    position: relative;
+    bottom: 0;
+}
+
 .book_subtitle {
     color: #ffffff;
     font-size: 14px;
