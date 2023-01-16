@@ -9,7 +9,6 @@ function filter(toFilter, searchString, SONG_METADATA) {
     return filteredSongs;
 }
 
-function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sort = true) {
 function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, query, sort = true) {
     if (listContainer == null) {
         return;
