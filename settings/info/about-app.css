@@ -67,10 +67,9 @@ h2 {
 
 .changelog {
     align-items: center;
-    padding: 15px 20px;
+    padding: 0px 20px;
     color: #000;
     border-bottom: var(--border-color);
-    line-height: 60%;
 }
 
 .changelog:last-child {
