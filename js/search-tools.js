@@ -1,7 +1,13 @@
 function filter(toFilter, searchString, SONG_METADATA) {
     let characterStrippedSearchString = searchString.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
     let filteredSongs = toFilter.filter(s => {
-        let characterStrippedTitle = SONG_METADATA[s.book][s.song].title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
+        let bookData = SONG_METADATA[s.book];
+        if(bookData == undefined)
+            return false;
+        let songData = bookData[s.song];
+        if(songData == undefined)
+            return false;
+        let characterStrippedTitle = songData.title.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").replace(/s{2,}/g, " ");
 
         return characterStrippedTitle.toLowerCase().includes(characterStrippedSearchString) ||
             s.song.toLowerCase().includes(characterStrippedSearchString);
