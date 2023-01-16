@@ -193,6 +193,17 @@ object{
     display: none;
 }
 
+:root {
+    --button-spacing: 15px;
+}
+
+.buttonGroupLeft > * {
+    padding-right: var(--button-spacing)
+}
+.buttonGroupRight > * {
+    padding-left: var(--button-spacing)
+}
+
 .menu {
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);

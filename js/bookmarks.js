@@ -16,16 +16,16 @@ searchBar.addEventListener('keyup', e => {
     const searchString = e.target.value.toLowerCase();
     window.history.replaceState(null, "", `bookmarks.html?q=${searchString}`);
     if(!searchString) { // No search term
-        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA, "");
         return;
     }
 
-    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA);
+    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA, searchString);
 });
 
 const loadBookmarkSongs = async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    const SONG_METADATA = await getAllSongMetaData();
+    BOOK_METADATA = await getAllBookMetaData();
+    SONG_METADATA = await getAllSongMetaData();
     bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
     if (bookmarks == null) {
         bookmarks = [];
@@ -33,9 +33,9 @@ const loadBookmarkSongs = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");
     if (searchString == null){
-        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA);
+        displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA, "");
     } else {
-        displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA);
+        displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA, searchString);
     }
 };
 

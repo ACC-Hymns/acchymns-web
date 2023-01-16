@@ -10,6 +10,7 @@ function filter(toFilter, searchString, SONG_METADATA) {
 }
 
 function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sort = true) {
+function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, query, sort = true) {
     if (listContainer == null) {
         return;
     }
@@ -23,7 +24,7 @@ function displaySongList(songs, listContainer, SONG_METADATA, BOOK_METADATA, sor
     listContainer.innerHTML = songs
         .map(song => {
             return `
-            <a href="${window.location.pathname}?book=${song.book}&song=${song.song}">
+            <a href="${window.location.pathname}?book=${song.book}&song=${song.song}&q=${query}">
                 <div class="song" style="background: linear-gradient(135deg, ${BOOK_METADATA[song.book].primaryColor}, ${BOOK_METADATA[song.book].secondaryColor})">
                     <div>
                         <div class="song__title">${SONG_METADATA[song.book][song.song].title}</div>
