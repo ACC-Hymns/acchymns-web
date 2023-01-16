@@ -8,6 +8,10 @@ let BOOK_METADATA = {};
 let SONG_METADATA = {};
 let songs = [];
 
+const urlParams = new URLSearchParams(window.location.search);
+const searchString = urlParams.get("q");
+document.getElementById('backButton').href = `${window.location.pathname}?q=${searchString}`
+
 searchBar.addEventListener('keyup', (e) => {
     if (e.key === "Enter") {
         searchBar.blur();

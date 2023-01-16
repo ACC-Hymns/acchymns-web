@@ -27,7 +27,6 @@ function finished() {
             "C5": blob_C5
         },
         onload: () => {
-            console.log("playing");
             var interval = (window.localStorage.getItem("playbackInterval") == undefined) ? 0.25 : parseFloat(window.localStorage.getItem("playbackInterval"));
             var duration = (window.localStorage.getItem("playbackDuration") == undefined) ? 3 : parseFloat(window.localStorage.getItem("playbackDuration"));
             if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
@@ -51,7 +50,6 @@ startingNotesButton.addEventListener('mousedown', async (e) => {
     for (var i = 0; i < index.length; i++) {
 
         var url = "/assets/notes/" + index[i] + ".mp3";
-        console.log(url);
         let request = new XMLHttpRequest();
         request.open("GET", url, true);
         request.responseType = 'blob';

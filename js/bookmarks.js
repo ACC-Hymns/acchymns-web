@@ -3,8 +3,11 @@ import { getAllSongMetaData, getAllBookMetaData } from "/books/index.js"
 
 const bookmarksList = document.getElementById('bookmarksList');
 const searchBar = document.getElementById('searchBar');
-let bookmarks = [];
+const urlParams = new URLSearchParams(window.location.search);
+const searchString = urlParams.get("q");
+document.getElementById('backButton').href = `${window.location.pathname}?q=${searchString}`
 
+let bookmarks = [];
 let BOOK_METADATA = {};
 let SONG_METADATA = {};
 
@@ -32,7 +35,8 @@ const loadBookmarkSongs = async () => {
     }
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");
-    if (searchString == null){
+    searchBar.value = searchString;
+    if (searchString == "" || searchString == null){
         displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA, "");
     } else {
         displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA, searchString);
