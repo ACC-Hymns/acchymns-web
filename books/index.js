@@ -1,4 +1,4 @@
-const prepackaged_books = ["ZH", "GH", "JH", "HG", "HZ", "ZG"];
+const prepackaged_books = ["ZH", "GH", "JH", "HG"];
 
 async function fetchJSONWithTimeout(resource, options = {}) {
     const { timeout = 2500 } = options;
