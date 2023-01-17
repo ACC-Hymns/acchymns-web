@@ -45,6 +45,7 @@ function finished() {
 }
 
 startingNotesButton.addEventListener('mousedown', async (e) => {
+    startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
     await Tone.start();
     let index = ["A2", "C3", "A3", "C4", "A4", "C5"];
     for (var i = 0; i < index.length; i++) {
@@ -61,4 +62,7 @@ startingNotesButton.addEventListener('mousedown', async (e) => {
         };
         request.send();
     }
+});
+startingNotesButton.addEventListener('mouseup', (e) => {
+    startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
 });
