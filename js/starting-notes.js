@@ -40,8 +40,8 @@ function finished() {
                 }
                 sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + duration + (interval * book_song_metadata[songNum]["notes"].length));
             }
+            startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
         }
-
     }).toDestination();
 }
 
