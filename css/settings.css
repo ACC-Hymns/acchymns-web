@@ -321,3 +321,10 @@ input:checked+.slider:before {
   .setting-label {
     margin-right: 10px;
   }
+
+  .import-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }

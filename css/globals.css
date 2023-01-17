@@ -31,6 +31,7 @@ a, img {
     --box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     --invert: invert(0%);
     --svg-back-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(183deg) brightness(99%) contrast(90%);
+    --change-svg-filter: invert(0%) sepia(9%) saturate(4%) hue-rotate(326deg) brightness(105%) contrast(86%);
 }
 
 .text {
@@ -67,6 +68,7 @@ body {
         --border-color: rgb(36, 36, 36) solid 2px;
         --box-shadow: 0 0 20px rgba(0, 0, 0, 0.0);
         --invert: invert(92%);
+        --change-svg-filter: invert(100%) sepia(0%) saturate(1487%) hue-rotate(92deg) brightness(124%) contrast(108%);
         --svg-back-filter: invert(73%) sepia(1%) saturate(606%) hue-rotate(104deg) brightness(115%) contrast(91%);
     }
 }
@@ -184,6 +186,11 @@ object{
     background-color: white;
 }
 
+.splashscreen {
+    width: 100%;
+    height: 100%;
+}
+
 .songpage {
     width: 100%;
     height: 100%;
@@ -224,4 +231,53 @@ object{
     justify-content: space-between;
     align-items: center;
     margin: env(safe-area-inset-top) 30px 0px 30px;
+}
+
+.welcomepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.startbutton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.startbuttoncontainer {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+    height: 50px;
+    width: 80%;
+    background-color: #2196F3;
+    border-radius: 15px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.grid-item {
+    padding: 30px;
+    font-size: 15px;
+    text-align: center;
+    border-color: #141414;
+}
+.changeslistings {
+    text-align: center;
+}
+.changetext {
+    display: block;
+    white-space: normal; 
+    color: var(--color);
+}
+.grid-image {
+    width: 80px;
+    filter: var(--change-svg-filter);
 }
