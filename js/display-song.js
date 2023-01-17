@@ -1,4 +1,4 @@
-import { getSongFileName } from "./song-loader.js";
+import { getSongSrc } from "./song-loader.js";
 import { getAllBookMetaData } from "/books/index.js";
 
 function mobileOrTablet() {
@@ -7,8 +7,18 @@ function mobileOrTablet() {
     return check;
 };
 
-const songImage = document.getElementById('songimage');
-panzoom(songImage, {
+const songIm = document.getElementById('songimage');
+const songCan = document.getElementById('songcanvas');
+panzoom(songIm, {
+    beforeWheel: (e) => {
+        return !e.shiftKey;
+    },
+    maxZoom: 3,
+    minZoom: (mobileOrTablet() ? 1 : 0.25),
+    bounds: true,
+    boundsPadding: 0.5
+});
+panzoom(songCan, {
     beforeWheel: (e) => {
         return !e.shiftKey;
     },
@@ -18,39 +28,60 @@ panzoom(songImage, {
     boundsPadding: 0.5
 });
 
-async function displaySong(bookName, songNum) {
-    const BOOK_METADATA = await getAllBookMetaData();
+let pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
-    const songView = document.getElementById('songview');
-    songView.classList.remove('hidden');
+
+async function displaySong(bookName, songNum) {
     const searchContent = document.getElementById('content');
     searchContent.classList.add('hidden');
+    const BOOK_METADATA = await getAllBookMetaData()
+
+    const songViewImage = document.getElementById('songimage');
 
     const songViewTitle = document.getElementById('titlenumber');
     songViewTitle.innerHTML = `#${songNum}`;
 
     // accessing the element
-    const songViewImage = document.getElementById('songimage');
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         if(window.localStorage.getItem("songInverted") == "true") {
             songViewImage.style.filter = "invert(92%)";
         }
     }
     
-    let fileName = getSongFileName(bookName, songNum, BOOK_METADATA);
-    if(BOOK_METADATA[bookName].addOn){
-        songViewImage.setAttribute('src', `${BOOK_METADATA[bookName].sourceRoot}/songs/${fileName}`);
-    } else {
-        songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
-    }
-    songViewImage.onerror = () => {
-        songViewImage.src = "assets/wifi_off.svg";
-        songViewImage.style.width = "50%";
-        songViewImage.style.height = "50%";
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            songViewImage.style.filter = "invert(92%)";
+    if (BOOK_METADATA[bookName].fileExtension != "pdf") {
+        songViewImage.setAttribute('src', getSongSrc(bookName, songNum, BOOK_METADATA));
+        songViewImage.onerror = () => {
+            songViewImage.src = "assets/wifi_off.svg";
+            songViewImage.style.width = "50%";
+            songViewImage.style.height = "50%";
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                songViewImage.style.filter = "invert(92%)";
+            }
         }
+    } else {
+        let canvas = document.getElementById('songcanvas');
+        let ctx = canvas.getContext('2d');
+        songViewImage.classList.add("hidden")
+        canvas.classList.remove("hidden")
+
+        console.log(getSongSrc(bookName, songNum, BOOK_METADATA))
+        let pdfDoc = await pdfjsLib.getDocument(getSongSrc(bookName, songNum, BOOK_METADATA)).promise;
+
+        // Using promise to fetch the page
+        let page = await pdfDoc.getPage(1);
+        let viewport = page.getViewport({scale: 5});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+    
+        // Render PDF page into canvas context
+        await page.render({
+            canvasContext: ctx,
+            viewport: viewport
+        }).promise;
     }
+    const songView = document.getElementById('songview');
+    songView.classList.remove('hidden');
 }
 
 const urlParams = new URLSearchParams(window.location.search);

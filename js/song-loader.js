@@ -14,11 +14,16 @@ function addSongs(bookShort, BOOK_METADATA) {
     songList.innerHTML = btns
 }
 
-function getSongFileName(bookShort, songNum, BOOK_METADATA){
-    return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
+function getSongSrc(bookShort, songNum, BOOK_METADATA){
+    let fileName = songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension
+    if(BOOK_METADATA[bookShort].addOn){
+        return `${BOOK_METADATA[bookShort].sourceRoot}/songs/${fileName}`;
+    }
+        
+    return `/books/${bookShort}/songs/${fileName}`;
 }
 
 export {
     addSongs,
-    getSongFileName
+    getSongSrc
 };
