@@ -3,18 +3,16 @@ import { getAllBookMetaData, isWebApp } from "/books/index.js"
 const bookContainer = document.getElementById("content")
 const startButton = document.getElementById("startbutton").addEventListener('click', () => {
     window.localStorage.setItem("landing_complete", "true");
-    document.getElementById("main").setAttribute("class", "main");
-    document.getElementById("splashscreen").setAttribute("class", "splashscreen hidden");
+    document.getElementById("main").classList.remove("hidden");
+    document.getElementById("splashscreen").classList.add("hidden");
 });
 
-var firsttime = window.localStorage.getItem("landing_complete");
-
-if(firsttime != "true") {
-    document.getElementById("main").setAttribute("class", "main hidden");
-    document.getElementById("splashscreen").setAttribute("class", "splashscreen");
+if(window.localStorage.getItem("landing_complete") == "true") {
+    document.getElementById("main").classList.remove("hidden");
+    document.getElementById("splashscreen").classList.add("hidden");
 } else {
-    document.getElementById("main").setAttribute("class", "main");
-    document.getElementById("splashscreen").setAttribute("class", "splashscreen hidden");
+    document.getElementById("main").classList.add("hidden");
+    document.getElementById("splashscreen").classList.remove("hidden");
 }
 
 if (isWebApp) {

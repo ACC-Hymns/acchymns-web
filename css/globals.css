@@ -138,8 +138,6 @@ object{
     font-family: 'Lato', sans-serif;
 }
 
-
-
 .ionicon {
     filter: var(--svg-back-filter);
     width: 25px;
@@ -167,11 +165,6 @@ object{
     filter: var(--svg-color);
 }
 
-.song_container {
-    width: 100%;
-    height: 100%;
-}
-
 .panzoom_container {  
     display: block;
     height: max-content;
@@ -191,12 +184,15 @@ object{
     z-index: -1;
 }
 
-.splashscreen {
-    width: 100%;
+.h-100 {
     height: 100%;
 }
 
-.songpage {
+.w-100 {
+    width: 100%;
+}
+
+.fill {
     width: 100%;
     height: 100%;
 }

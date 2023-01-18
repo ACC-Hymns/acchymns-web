@@ -41,15 +41,11 @@ ion-icon {
     color: var(--back-color);
 }
 
-
-
-
 .songs {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     padding: 0px 10px 110px 10px;
-    
 }
 
 .song-btn {
