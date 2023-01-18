@@ -93,13 +93,13 @@ async function displaySong(bookName, songNum) {
     
     const songSrc = getSongSrc(bookName, songNum, BOOK_METADATA);
 
+    const songView = document.getElementById('songview');
+    songView.classList.remove('hidden');
     if (BOOK_METADATA[bookName].fileExtension != "pdf") {
         displaySongImg(songSrc)
     } else {
         displaySongPDF(songSrc);
     }
-    const songView = document.getElementById('songview');
-    songView.classList.remove('hidden');
 }
 
 const urlParams = new URLSearchParams(window.location.search);
