@@ -1,7 +1,7 @@
 import { getAllBookMetaData, isWebApp } from "/books/index.js"
 
 const bookContainer = document.getElementById("content")
-const startButton = document.getElementById("startbutton").addEventListener('click', () => {
+document.getElementById("startbutton").addEventListener('click', () => {
     window.localStorage.setItem("landing_complete", "true");
     document.getElementById("main").classList.remove("hidden");
     document.getElementById("splashscreen").classList.add("hidden");
@@ -28,17 +28,11 @@ if (isWebApp) {
 
 (async () => {
     for (let book of Object.values(await getAllBookMetaData())) {
-        let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`
+        let wifiSymbol = `<img class="ionicon booktext--right" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">`
         bookContainer.innerHTML += `
-            <a href="selection.html?book=${book.name.short}">
-                <div class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
-                    <div>
-                        <div class="book_title">${book.name.medium}</div>
-                    </div>
-                    <div class="booktext--right">
-                        ${book.addOn ? wifiSymbol : ""}
-                    </div>
-                </div>
-            </a>`
+            <a href="selection.html?book=${book.name.short}" class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
+                <div class="book_title">${book.name.medium}</div>
+                ${book.addOn ? wifiSymbol : ""}
+            </div>`
     }
 })()

@@ -8,6 +8,5 @@
     "primaryColor": "#E8666C",
     "secondaryColor": "#E32B34",
     "fileExtension": "pdf",
-    "numOfSongs": 128,
-    "missingSongs": []
+    "numOfSongs": 128
 }
