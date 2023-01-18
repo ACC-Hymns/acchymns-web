@@ -21,14 +21,33 @@ panzoom(panzoomContainer, {
 let pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
 
+let displayedImages = [];
+// Change image dynamically if dark/light mode changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    for (let element of displayedImages) {
+        invertSongColor(element);
+    }
+});
+
+function invertSongColor(element) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if(window.localStorage.getItem("songInverted") == "true") {
+            element.style.filter = "invert(92%)";
+        } else {
+            element.style.filter = "invert(0%)";
+        }
+    }
+}
+
 async function displaySongPDF(songSrc) {
     let pdfDoc = await pdfjsLib.getDocument(songSrc).promise;
-    console.log(pdfDoc.numPages)
     for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++){
         // Create canvas element to render PDF onto
         let canvas = document.createElement("canvas");
         canvas.classList.add("song_img");
+        invertSongColor(canvas);
         panzoomContainer.appendChild(canvas);
+        displayedImages.push(canvas);
         
         // Grab current page
         let page = await pdfDoc.getPage(pageNum);
@@ -46,9 +65,12 @@ async function displaySongPDF(songSrc) {
 }
 
 async function displaySongImg(songSrc) {
+    displayedImages = [];
     let img = document.createElement("img");
     img.classList.add("song_img");
+    invertSongColor(img);
     panzoomContainer.appendChild(img);
+    displayedImages.push(img);
     img.setAttribute('src', songSrc);
     img.onerror = () => {
         img.src = "assets/wifi_off.svg";
@@ -58,15 +80,10 @@ async function displaySongImg(songSrc) {
             img.style.filter = "invert(92%)";
         }
     }
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        if(window.localStorage.getItem("songInverted") == "true") {
-            img.style.filter = "invert(92%)";
-        }
-    }
 }
 
-
 async function displaySong(bookName, songNum) {
+    displayedImages = [];
     const searchContent = document.getElementById('content');
     searchContent.classList.add('hidden');
     const BOOK_METADATA = await getAllBookMetaData()
@@ -91,15 +108,6 @@ const songNum = urlParams.get("song");
 if (bookName != null && songNum != null){
     displaySong(bookName, songNum);
 }
-
-// Change image dynamically if dark/light mode changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    const songViewImage = document.getElementById('songimage');
-    if(event.matches)
-        songViewImage.style.filter = "invert(92%)";
-    else
-        songViewImage.style.filter = "invert(0%)";
-});
 
 export {
     displaySong
