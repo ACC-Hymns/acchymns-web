@@ -7,18 +7,8 @@ function mobileOrTablet() {
     return check;
 };
 
-const songIm = document.getElementById('songimage');
-const songCan = document.getElementById('songcanvas');
-panzoom(songIm, {
-    beforeWheel: (e) => {
-        return !e.shiftKey;
-    },
-    maxZoom: 3,
-    minZoom: (mobileOrTablet() ? 1 : 0.25),
-    bounds: true,
-    boundsPadding: 0.5
-});
-panzoom(songCan, {
+const panzoomContainer = document.getElementById('panzoomContainer');
+panzoom(panzoomContainer, {
     beforeWheel: (e) => {
         return !e.shiftKey;
     },
@@ -29,7 +19,51 @@ panzoom(songCan, {
 });
 
 let pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
+
+async function displaySongPDF(songSrc) {
+    let pdfDoc = await pdfjsLib.getDocument(songSrc).promise;
+    console.log(pdfDoc.numPages)
+    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++){
+        // Create canvas element to render PDF onto
+        let canvas = document.createElement("canvas");
+        canvas.classList.add("song_img");
+        panzoomContainer.appendChild(canvas);
+        
+        // Grab current page
+        let page = await pdfDoc.getPage(pageNum);
+        let viewport = page.getViewport({scale: 5});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render PDF page into canvas context
+        let ctx = canvas.getContext('2d');
+        await page.render({
+            canvasContext: ctx,
+            viewport: viewport
+        }).promise;
+    }
+}
+
+async function displaySongImg(songSrc) {
+    let img = document.createElement("img");
+    img.classList.add("song_img");
+    panzoomContainer.appendChild(img);
+    img.setAttribute('src', songSrc);
+    img.onerror = () => {
+        img.src = "assets/wifi_off.svg";
+        img.style.width = "50%";
+        img.style.height = "50%";
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            img.style.filter = "invert(92%)";
+        }
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if(window.localStorage.getItem("songInverted") == "true") {
+            img.style.filter = "invert(92%)";
+        }
+    }
+}
 
 
 async function displaySong(bookName, songNum) {
@@ -37,48 +71,15 @@ async function displaySong(bookName, songNum) {
     searchContent.classList.add('hidden');
     const BOOK_METADATA = await getAllBookMetaData()
 
-    const songViewImage = document.getElementById('songimage');
-
     const songViewTitle = document.getElementById('titlenumber');
     songViewTitle.innerHTML = `#${songNum}`;
-
-    // accessing the element
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        if(window.localStorage.getItem("songInverted") == "true") {
-            songViewImage.style.filter = "invert(92%)";
-        }
-    }
     
+    const songSrc = getSongSrc(bookName, songNum, BOOK_METADATA);
+
     if (BOOK_METADATA[bookName].fileExtension != "pdf") {
-        songViewImage.setAttribute('src', getSongSrc(bookName, songNum, BOOK_METADATA));
-        songViewImage.onerror = () => {
-            songViewImage.src = "assets/wifi_off.svg";
-            songViewImage.style.width = "50%";
-            songViewImage.style.height = "50%";
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                songViewImage.style.filter = "invert(92%)";
-            }
-        }
+        displaySongImg(songSrc)
     } else {
-        let canvas = document.getElementById('songcanvas');
-        let ctx = canvas.getContext('2d');
-        songViewImage.classList.add("hidden")
-        canvas.classList.remove("hidden")
-
-        console.log(getSongSrc(bookName, songNum, BOOK_METADATA))
-        let pdfDoc = await pdfjsLib.getDocument(getSongSrc(bookName, songNum, BOOK_METADATA)).promise;
-
-        // Using promise to fetch the page
-        let page = await pdfDoc.getPage(1);
-        let viewport = page.getViewport({scale: 5});
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-    
-        // Render PDF page into canvas context
-        await page.render({
-            canvasContext: ctx,
-            viewport: viewport
-        }).promise;
+        displaySongPDF(songSrc);
     }
     const songView = document.getElementById('songview');
     songView.classList.remove('hidden');
