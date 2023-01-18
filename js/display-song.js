@@ -8,7 +8,7 @@ function mobileOrTablet() {
 };
 
 const songIm = document.getElementById('songimage');
-const songCan = document.getElementById('pdfContainer');
+const songCan = document.getElementById('songcanvas');
 panzoom(songIm, {
     beforeWheel: (e) => {
         return !e.shiftKey;
@@ -18,18 +18,18 @@ panzoom(songIm, {
     bounds: true,
     boundsPadding: 0.5
 });
-// panzoom(songCan, {
-//     beforeWheel: (e) => {
-//         return !e.shiftKey;
-//     },
-//     maxZoom: 3,
-//     minZoom: (mobileOrTablet() ? 1 : 0.25),
-//     bounds: true,
-//     boundsPadding: 0.5
-// });
+panzoom(songCan, {
+    beforeWheel: (e) => {
+        return !e.shiftKey;
+    },
+    maxZoom: 3,
+    minZoom: (mobileOrTablet() ? 1 : 0.25),
+    bounds: true,
+    boundsPadding: 0.5
+});
 
 let pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
 
 
 async function displaySong(bookName, songNum) {
@@ -59,31 +59,27 @@ async function displaySong(bookName, songNum) {
                 songViewImage.style.filter = "invert(92%)";
             }
         }
-    } 
-    // else {
-    //     console.log(getSongSrc(bookName, songNum, BOOK_METADATA))
-    //     let pdfDoc = await pdfjsLib.getDocument(getSongSrc(bookName, songNum, BOOK_METADATA)).promise;
-    //     songViewImage.classList.add("hidden");
-    //     songCan.classList.remove("hidden");
-    //     for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++){
-    //         let canvas = document.createElement("canvas");
-    //         canvas.classList.add("song_img");
-            
-    //         // Using promise to fetch the page
-    //         let page = await pdfDoc.getPage(pageNum);
-    //         let viewport = page.getViewport({scale: 5});
-    //         canvas.height = viewport.height;
-    //         canvas.width = viewport.width;
-            
-    //         // Render PDF page into canvas context
-    //         let ctx = canvas.getContext('2d');
-    //         await page.render({
-    //             canvasContext: ctx,
-    //             viewport: viewport
-    //         }).promise;
-    //         songCan.appendChild(canvas);
-    //     }
-    // }
+    } else {
+        let canvas = document.getElementById('songcanvas');
+        let ctx = canvas.getContext('2d');
+        songViewImage.classList.add("hidden")
+        canvas.classList.remove("hidden")
+
+        console.log(getSongSrc(bookName, songNum, BOOK_METADATA))
+        let pdfDoc = await pdfjsLib.getDocument(getSongSrc(bookName, songNum, BOOK_METADATA)).promise;
+
+        // Using promise to fetch the page
+        let page = await pdfDoc.getPage(1);
+        let viewport = page.getViewport({scale: 5});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+    
+        // Render PDF page into canvas context
+        await page.render({
+            canvasContext: ctx,
+            viewport: viewport
+        }).promise;
+    }
     const songView = document.getElementById('songview');
     songView.classList.remove('hidden');
 }

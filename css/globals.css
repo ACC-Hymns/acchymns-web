@@ -138,6 +138,8 @@ object{
     font-family: 'Lato', sans-serif;
 }
 
+
+
 .ionicon {
     filter: var(--svg-back-filter);
     width: 25px;
@@ -183,11 +185,9 @@ object{
     height: 100%;
 }
 
-.song_pdf {
-    display: block;
+.songpage {
     width: 100%;
-    z-index: -1;
-    position: absolute;
+    height: 100%;
 }
 
 .song_img_container {
@@ -195,7 +195,6 @@ object{
     height: 100%;
     margin: calc(env(safe-area-inset-top) + 61.16px) auto;
 }
-
 .hidden {
     display: none;
 }
