@@ -11,7 +11,7 @@
     :root {
         --button-color: #2b2b2b;
         --search-color: #2b2b2b;
-        --slider-base: #606060;
+        --slider-base: #292323;
     }
 }
 
@@ -74,6 +74,7 @@ input {
 
 .settings-option {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
     color: var(--color);
@@ -82,28 +83,6 @@ input {
 
 .settings-option:last-child {
     border-bottom: none;
-}
-
-.title ion-icon {
-    font-size: 25px;
-    color: var(--back-color);
-}
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 30px 10px 30px;
-}
-
-.settings-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    color: var(--color);
-    border-bottom: var(--border-color);
 }
 
 .input-option {
@@ -127,10 +106,6 @@ input {
 
 .input-option-button:active {
     background-color: #1b80d2;
-}
-
-.settings-option:last-child {
-    border-bottom: none;
 }
 
 .switch {
@@ -191,10 +166,6 @@ input:checked+.slider:before {
 
 .slider.round:before {
     border-radius: 50%;
-}
-
-.space {
-    width: 25px;
 }
 
 .slider-setting {

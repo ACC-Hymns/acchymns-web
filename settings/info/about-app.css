@@ -6,39 +6,8 @@ h2 {
     font-weight: 400;
 }
 
-.title ion-icon {
-    font-size: 25px;
-    color: var(--back-color);
-}
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 30px 10px 30px;
-}
-
 .settings-holder {
     padding-bottom: 89px;
-}
-
-.settings {
-    background: var(--div-color);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--box-shadow);
-}
-
-.settings-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    color: var(--color);
-    border-bottom: var(--border-color);
 }
 
 .changelog {
@@ -70,16 +39,9 @@ h2 {
 .release, .releaseDate {
     display: inline-block;
     padding: 0px, 5px;
+    margin-bottom: 0px;
 }
 
 .releaseDate {
     float: right;
-}
-
-.settings-option:last-child {
-    border-bottom: none;
-}
-
-.space {
-    width: 25px;
 }

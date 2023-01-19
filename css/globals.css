@@ -168,6 +168,10 @@ object{
     width: 16px;
 }
 
+#songview  {
+    height: 100vh;
+}
+
 .panzoom_container {  
     display: block;
     height: max-content;
@@ -229,6 +233,15 @@ object{
     justify-content: space-between;
     align-items: center;
     margin: env(safe-area-inset-top) 30px 0px 30px;
+}
+
+.space {
+    width: 25px;
+}
+
+ion-icon {
+    font-size: 25px;
+    color: var(--back-color);
 }
 
 .welcomepage {
