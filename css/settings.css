@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-html,
-body {
-    width: 100vw;
-    height: 100vh;
-}
 
 :root {
     --button-color: #ffffff;
@@ -20,24 +15,6 @@ body {
     }
 }
 
-a {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    text-decoration: none;
-}
-
-body {
-    margin: 0 0 120px 0;
-    padding-top: env(safe-area-inset-top);
-    font-family: 'Lato', sans-serif;
-    background-color: #fcfcfc;
-}
-
 h2 {
     margin: 20px 20px 0px 30px;
     font-size: 20px;
@@ -46,7 +23,7 @@ h2 {
 form {
     background-color: var(--search-color);
     border-radius: 15px;
-    margin: 0px 20px 0px 20px;
+    margin: 0px 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -87,12 +64,12 @@ input {
 }
 
 .settings {
-    background: var(--button-color);
-    margin: 15px 20px 15px 20px;
+    background: var(--div-color);
+    margin: 15px 20px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
 }
 
 .settings-option {
@@ -118,15 +95,6 @@ input {
     justify-content: space-between;
     align-items: center;
     margin: 30px 30px 10px 30px;
-}
-
-.settings {
-    background: var(--div-color);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: var(--box-shadow);
 }
 
 .settings-option {
@@ -227,51 +195,6 @@ input:checked+.slider:before {
 
 .space {
     width: 25px;
-}
-
-.nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    min-height: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-bottom: env(safe-area-inset-bottom);
-    display: flex;
-    overflow-x: auto;
-}
-
-.nav__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    min-width: 90px;
-    overflow: hidden;
-    white-space: nowrap;
-    font-family: sans-serif;
-    font-size: 13px;
-    color: #636363;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    border-radius: 10px;
-}
-
-.nav__link--active {
-    color: #000000;
-}
-
-.nav__icon {
-    font-size: 23px;
-    margin-bottom: 3px;
-}
-
-.nav__text {
-    padding-top: 3px;
-    font-family: 'Lato', sans-serif;
 }
 
 .slider-setting {

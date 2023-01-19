@@ -20,7 +20,7 @@ form {
     background-color: var(--search-color);
     height: 40px;
     border-radius: 15px;
-    margin: 15px 20px 15px 20px;
+    margin: 15px 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
