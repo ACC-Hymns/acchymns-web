@@ -1,6 +1,6 @@
 function addSongs(bookShort, BOOK_METADATA) {
     let btns = "";
-    for(let songNum = 0; songNum < BOOK_METADATA[bookShort].numOfSongs; songNum++) {
+    for(let songNum = 1; songNum <= BOOK_METADATA[bookShort].numOfSongs; songNum++) {
         btns += `<a href="selection.html?book=${bookShort}&song=${songNum}" class="song-btn">${songNum}</a>`;
     }
     document.getElementById("songs").innerHTML = btns;
