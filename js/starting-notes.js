@@ -4,6 +4,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");
 const songNum = urlParams.get("song");
 
+import * as Tone from "tone";
+
 import { getSongMetaData } from "/books/index.js"
 
 let book_song_metadata = null;

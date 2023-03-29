@@ -1,5 +1,8 @@
 import { getSongSrc } from "./song-loader.js";
 import { getAllBookMetaData } from "/books/index.js";
+import * as panzoom from "panzoom";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "node_modules/pdfjs-dist/legacy/build/pdf.worker.js";
 
 function mobileOrTablet() {
     let check = false;
@@ -18,8 +21,6 @@ panzoom(panzoomContainer, {
     boundsPadding: 0.5
 });
 
-let pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
 
 let displayedImages = [];
 // Change image dynamically if dark/light mode changes
