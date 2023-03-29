@@ -6,7 +6,7 @@ const songNum = urlParams.get("song");
 
 import * as Tone from "tone";
 
-import { getSongMetaData } from "/books/index.js"
+import { getSongMetaData } from "/js/book_import.js"
 
 let book_song_metadata = null;
 if (bookName != null && songNum != null){

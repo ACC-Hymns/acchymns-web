@@ -1,4 +1,4 @@
-import { getAllBookMetaData, getSongMetaData, getBookIndex } from "/books/index.js"
+import { getAllBookMetaData, getSongMetaData, getBookIndex } from "/js/book_import.js"
 
 const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");

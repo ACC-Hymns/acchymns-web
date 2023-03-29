@@ -1,8 +1,9 @@
 import { getSongSrc } from "./song-loader.js";
-import { getAllBookMetaData } from "/books/index.js";
-import * as panzoom from "panzoom";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
-pdfjsLib.GlobalWorkerOptions.workerSrc = "node_modules/pdfjs-dist/legacy/build/pdf.worker.js";
+import { getAllBookMetaData } from "/js/book_import.js";
+import panzoom from "panzoom";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.min";
+import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
 
 function mobileOrTablet() {
     let check = false;

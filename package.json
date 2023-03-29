@@ -15,6 +15,7 @@
     "@capacitor/android": "^4.7.1",
     "@capacitor/core": "^4.7.1",
     "@capacitor/ios": "^4.7.1",
+    "import-meta-resolve": "^2.2.2",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^3.4.120",
     "pinia": "^2.0.32",

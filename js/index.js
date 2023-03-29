@@ -1,4 +1,4 @@
-import { getAllBookMetaData, isWebApp } from "/books/index.js"
+import { getAllBookMetaData, isWebApp } from "/js/book_import.js"
 
 const bookContainer = document.getElementById("content")
 document.getElementById("startbutton").addEventListener('click', () => {
