@@ -1,29 +1,36 @@
 import { filter, displaySongList } from "./search-tools.js";
-import { getAllSongMetaData, getAllBookMetaData } from "/js/book_import.js"
+import { getAllSongMetaData, getAllBookMetaData } from "/js/book_import.js";
 
-const bookmarksList = document.getElementById('bookmarksList');
-const searchBar = document.getElementById('searchBar');
+const bookmarksList = document.getElementById("bookmarksList");
+const searchBar = document.getElementById("searchBar");
 const urlParams = new URLSearchParams(window.location.search);
 const searchString = urlParams.get("q");
-document.getElementById('backButton').href = `${window.location.pathname}?q=${searchString}`
+document.getElementById("backButton").href = `${window.location.pathname}?q=${searchString}`;
 
 let bookmarks = [];
 let BOOK_METADATA = {};
 let SONG_METADATA = {};
 
-searchBar.addEventListener('keyup', e => {
+searchBar.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
         searchBar.blur();
         return;
     }
     const searchString = e.target.value.toLowerCase();
     window.history.replaceState(null, "", `bookmarks.html?q=${searchString}`);
-    if(!searchString) { // No search term
+    if (!searchString) {
+        // No search term
         displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA, "");
         return;
     }
 
-    displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA, searchString);
+    displaySongList(
+        filter(bookmarks, searchString, SONG_METADATA),
+        bookmarksList,
+        SONG_METADATA,
+        BOOK_METADATA,
+        searchString
+    );
 });
 
 const loadBookmarkSongs = async () => {
@@ -36,10 +43,16 @@ const loadBookmarkSongs = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");
     searchBar.value = searchString;
-    if (searchString == "" || searchString == null){
+    if (searchString == "" || searchString == null) {
         displaySongList(bookmarks, bookmarksList, SONG_METADATA, BOOK_METADATA, "");
     } else {
-        displaySongList(filter(bookmarks, searchString, SONG_METADATA), bookmarksList, SONG_METADATA, BOOK_METADATA, searchString);
+        displaySongList(
+            filter(bookmarks, searchString, SONG_METADATA),
+            bookmarksList,
+            SONG_METADATA,
+            BOOK_METADATA,
+            searchString
+        );
     }
 };
 

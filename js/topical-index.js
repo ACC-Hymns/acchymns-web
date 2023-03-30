@@ -1,13 +1,12 @@
-import { getAllBookMetaData, getSongMetaData, getBookIndex } from "/js/book_import.js"
+import { getAllBookMetaData, getSongMetaData, getBookIndex } from "/js/book_import.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");
 const songNum = urlParams.get("song");
 
-if (bookName != null && songNum != null){
+if (bookName != null && songNum != null) {
     displaySong(bookName, songNum);
 }
-
 
 const loadTopicalIndex = async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,8 +17,8 @@ const loadTopicalIndex = async () => {
     const BOOK_SONG_METADATA = await getSongMetaData(bookName);
     const BOOK_INDEX = await getBookIndex(bookName);
     const container = document.getElementById("index");
-    let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`
-    
+    let wifiSymbol = `<img class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="assets/wifi.svg">`;
+
     for (const [index_name, songs] of Object.entries(BOOK_INDEX)) {
         const sub_index_node = document.createElement("h2");
         sub_index_node.innerText = index_name;
@@ -27,10 +26,12 @@ const loadTopicalIndex = async () => {
         container.appendChild(sub_index_node);
         container.appendChild(sub_index_container_node);
         sub_index_container_node.innerHTML = songs
-            .map(song_num => {
+            .map((song_num) => {
                 return `
                 <a href="${window.location.pathname}?book=${bookName}&song=${song_num}">
-                    <div class="song" style="background: linear-gradient(135deg, ${BOOK_METADATA[bookName].primaryColor}, ${BOOK_METADATA[bookName].secondaryColor})">
+                    <div class="song" style="background: linear-gradient(135deg, ${
+                        BOOK_METADATA[bookName].primaryColor
+                    }, ${BOOK_METADATA[bookName].secondaryColor})">
                         <div>
                             <div class="song__title">${BOOK_SONG_METADATA[song_num].title}</div>
                         </div>
@@ -42,9 +43,8 @@ const loadTopicalIndex = async () => {
                     </div>
                 </a>`;
             })
-            .join('');
+            .join("");
     }
-    
 };
 
 loadTopicalIndex();

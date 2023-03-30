@@ -7,35 +7,41 @@ async function fetchJSONWithTimeout(resource, options = {}) {
     const id = setTimeout(() => controller.abort(), timeout);
     const response = await fetch(resource, {
         ...options,
-        signal: controller.signal
-    }).then(resp => resp.json());
+        signal: controller.signal,
+    }).then((resp) => resp.json());
     clearTimeout(id);
     return response;
 }
 
 async function getAllBookMetaData() {
-    let toFetch = prepackaged_books.map(book_name => fetchJSONWithTimeout(`/books/${book_name}/summary.json`));
+    let toFetch = prepackaged_books.map((book_name) => fetchJSONWithTimeout(`/books/${book_name}/summary.json`));
 
     let externalBooks = window.localStorage.getItem("externalBooks");
 
     if (externalBooks != null) {
         externalBooks = JSON.parse(externalBooks);
         for (let book_url of externalBooks) {
-            toFetch.push(fetchJSONWithTimeout(`${book_url}/summary.json`).then(resp => {
-                resp.addOn = true;
-                resp.sourceRoot = book_url;
-                return resp;
-            }).catch(() => null));
+            toFetch.push(
+                fetchJSONWithTimeout(`${book_url}/summary.json`)
+                    .then((resp) => {
+                        resp.addOn = true;
+                        resp.sourceRoot = book_url;
+                        return resp;
+                    })
+                    .catch(() => null)
+            );
         }
     }
 
     const bookSummary = await Promise.all(toFetch);
 
-    return Object.fromEntries(bookSummary.filter(e => e != null).map((summary, _) => [summary.name.short, summary]));
+    return Object.fromEntries(bookSummary.filter((e) => e != null).map((summary, _) => [summary.name.short, summary]));
 }
 
 async function getAllSongMetaData() {
-    let songsToFetch = prepackaged_books.map(book_name => fetchJSONWithTimeout(`/books/${book_name}/songs.json`).catch(() => null));
+    let songsToFetch = prepackaged_books.map((book_name) =>
+        fetchJSONWithTimeout(`/books/${book_name}/songs.json`).catch(() => null)
+    );
 
     let externalBooks = window.localStorage.getItem("externalBooks");
 
@@ -78,11 +84,4 @@ async function getBookIndex(book_short_name) {
 
 const isWebApp = true;
 
-export {
-    getAllBookMetaData,
-    getAllSongMetaData,
-    getSongMetaData,
-    getBookIndex,
-    fetchJSONWithTimeout,
-    isWebApp
-}
+export { getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, fetchJSONWithTimeout, isWebApp };

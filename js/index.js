@@ -1,13 +1,13 @@
-import { getAllBookMetaData, isWebApp } from "/js/book_import.js"
+import { getAllBookMetaData, isWebApp } from "/js/book_import.js";
 
-const bookContainer = document.getElementById("content")
-document.getElementById("startbutton").addEventListener('click', () => {
+const bookContainer = document.getElementById("content");
+document.getElementById("startbutton").addEventListener("click", () => {
     window.localStorage.setItem("landing_complete", "true");
     document.getElementById("main").classList.remove("hidden");
     document.getElementById("splashscreen").classList.add("hidden");
 });
 
-if(window.localStorage.getItem("landing_complete") == "true") {
+if (window.localStorage.getItem("landing_complete") == "true") {
     document.getElementById("main").classList.remove("hidden");
     document.getElementById("splashscreen").classList.add("hidden");
 } else {
@@ -23,16 +23,18 @@ if (isWebApp) {
     </a>
     <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
         <object class="appbuttonapple" data="./assets/Appstore_badge.svg"></object>
-    </a>`
+    </a>`;
 }
 
 (async () => {
     for (let book of Object.values(await getAllBookMetaData())) {
-        let wifiSymbol = `<img class="ionicon booktext--right" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">`
+        let wifiSymbol = `<img class="ionicon booktext--right" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%); width: 24px" src="/assets/wifi.svg">`;
         bookContainer.innerHTML += `
-            <a href="selection.html?book=${book.name.short}" class="book" style="background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})">
+            <a href="selection.html?book=${book.name.short}" class="book" style="background: linear-gradient(135deg, ${
+            book.primaryColor
+        }, ${book.secondaryColor})">
                 <div class="book_title">${book.name.medium}</div>
                 ${book.addOn ? wifiSymbol : ""}
-            </div>`
+            </div>`;
     }
-})()
+})();
