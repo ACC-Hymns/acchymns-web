@@ -12,7 +12,7 @@ type BookSummary = {
     srcUrl?: string;
 };
 
-const unknown: BookSummary = {
+const UnknownBookSummary: BookSummary = {
     name: {
         short: "UK",
         medium: "Unknown",
@@ -24,5 +24,17 @@ const unknown: BookSummary = {
     numOfSongs: 0,
 };
 
-export type { BookSummary };
-export { unknown };
+
+type Song = {
+    title?: string;
+    notes?: string[];
+};
+
+type SongList = {
+    [song_number: string]: Song;
+};
+
+const UnknownSongList: SongList = {};
+
+export type { BookSummary, Song, SongList };
+export { UnknownBookSummary, UnknownSongList };

@@ -1,5 +1,5 @@
 import { getSongSrc } from "./song-loader.js";
-import { getAllBookMetaData } from "/js/book_import.js";
+import { getAllBookMetaData } from "./book_import";
 import panzoom from "panzoom";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.min";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";

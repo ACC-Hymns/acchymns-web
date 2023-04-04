@@ -5,8 +5,7 @@ const bookName = urlParams.get("book");
 const songNum = urlParams.get("song");
 
 bookmarkButton.addEventListener("click", (_) => {
-    let bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
-    if (bookmarks == null) bookmarks = [];
+    let bookmarks = JSON.parse(window.localStorage.getItem("bookmarks") ?? "[]");
     let index = bookmarks.findIndex((bookmark) => bookmark.book == bookName && bookmark.song == songNum);
     if (index != -1) {
         bookmarks.splice(index, 1);
@@ -20,8 +19,7 @@ bookmarkButton.addEventListener("click", (_) => {
 });
 
 function getBookmarkIndex(number, book) {
-    let bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
-    if (bookmarks == null) return -1;
+    let bookmarks = JSON.parse(window.localStorage.getItem("bookmarks") ?? "[]");
     return bookmarks.findIndex((bookmark) => bookmark.book == book && bookmark.song == number);
 }
 

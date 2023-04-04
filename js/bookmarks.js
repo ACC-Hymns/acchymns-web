@@ -36,10 +36,7 @@ searchBar.addEventListener("keyup", (e) => {
 const loadBookmarkSongs = async () => {
     BOOK_METADATA = await getAllBookMetaData();
     SONG_METADATA = await getAllSongMetaData();
-    bookmarks = JSON.parse(window.localStorage.getItem("bookmarks"));
-    if (bookmarks == null) {
-        bookmarks = [];
-    }
+    bookmarks = JSON.parse(window.localStorage.getItem("bookmarks") ?? "[]");
     const urlParams = new URLSearchParams(window.location.search);
     const searchString = urlParams.get("q");
     searchBar.value = searchString;

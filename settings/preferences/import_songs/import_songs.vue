@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { fetchJSONWithTimeout } from "../../../js/book_import.js";
+import { fetchBookSummary } from "../../../js/book_import.js";
 import type { BookSummary } from "../../../js/types";
-import { unknown } from "../../../js/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -23,19 +22,6 @@ const known_references = {
     ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZHJ`,
 };
 
-function fetchBookSummary(url: string) {
-    return fetchJSONWithTimeout(`${url}/summary.json`, { timeout: 500 })
-        .then((book: BookSummary) => {
-            book.srcUrl = url;
-            return book;
-        })
-        .catch(() => {
-            let temp = unknown;
-            temp.srcUrl = url;
-            return temp;
-        });
-}
-
 let imported_book_urls = useLocalStorage<string[]>("externalBooks", []); // Not watching deeply, must assign new array
 
 const url_input = ref("");
@@ -46,7 +32,7 @@ let imported_books = ref<BookSummary[]>([]);
 watch(
     imported_book_urls,
     async (urls) => {
-        imported_books.value = await Promise.all(urls.map(fetchBookSummary));
+        imported_books.value = await Promise.all(urls.map((url) => fetchBookSummary(url)));
     },
     { immediate: true }
 );
@@ -57,7 +43,7 @@ watch(
     imported_book_urls,
     async (urls) => {
         let preview_urls = Object.values(public_references).filter((url) => !urls.includes(url));
-        preview_books.value = await Promise.all(preview_urls.map(fetchBookSummary));
+        preview_books.value = await Promise.all(preview_urls.map((url) => fetchBookSummary(url)));
     },
     { immediate: true }
 );
@@ -113,15 +99,15 @@ function removeImportedBook(book: BookSummary) {
     <div class="settings">
         <div class="input-option">
             <span>Reference</span>
-            <input v-model="reference_input" type="text" />
-            <button @click="addImportedBookByCode(reference_input)">
+            <input v-model.trim="reference_input" type="text" />
+            <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
                 <img class="ionicon ionicon-custom" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>
         <div class="input-option">
             <span>URL</span>
             <input v-model="url_input" type="url" />
-            <button @click="addImportedURL(url_input)">
+            <button :disabled="url_input.length === 0" @click="addImportedURL(url_input)">
                 <img class="ionicon ionicon-custom" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>
@@ -129,10 +115,10 @@ function removeImportedBook(book: BookSummary) {
 
     <!-- Publicly available, but not imported books -->
     <h2 v-if="preview_books.length != 0">Available Books</h2>
-    <TransitionGroup name="book-list" tag="div" class="ease-height">
+    <div>
         <div
             v-for="book in preview_books"
-            :key="book.name.short"
+            :key="book.srcUrl"
             class="book"
             :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
         >
@@ -145,14 +131,14 @@ function removeImportedBook(book: BookSummary) {
                 </button>
             </div>
         </div>
-    </TransitionGroup>
+    </div>
 
     <!-- Imported Books -->
     <h2 v-if="imported_books.length != 0">Imported Books</h2>
-    <TransitionGroup name="book-list" tag="div" class="ease-height" style="padding-bottom: 200px">
+    <div style="padding-bottom: 200px">
         <div
             v-for="book in imported_books"
-            :key="book.name.short"
+            :key="book.srcUrl"
             class="book"
             :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
         >
@@ -166,7 +152,7 @@ function removeImportedBook(book: BookSummary) {
                 </button>
             </div>
         </div>
-    </TransitionGroup>
+    </div>
 
     <nav class="nav">
         <a href="/index.html" class="nav__link">
@@ -203,31 +189,5 @@ function removeImportedBook(book: BookSummary) {
 
 .book {
     max-height: 50px;
-    /* width: max-content; */
-    backface-visibility: hidden;
-    z-index: 1;
-}
-
-.book-list-move {
-    transition: all 1s ease;
-}
-.book-list-enter-active,
-.book-list-leave-active {
-    transition: all 2s ease;
-}
-
-.book-list-enter-from,
-.book-list-leave-to {
-    opacity: 0;
-}
-
-.ease-height {
-    transition-property: height;
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-.book-list-leave-active {
-    position: absolute;
 }
 </style>

@@ -1,5 +1,5 @@
 import { filter, displaySongList } from "./search-tools.js";
-import { getAllSongMetaData, getAllBookMetaData } from "/js/book_import.js";
+import { getAllSongMetaData, getAllBookMetaData } from "./book_import";
 
 const songList = document.getElementById("charactersList");
 const searchBar = document.getElementById("searchBar");

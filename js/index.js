@@ -1,5 +1,5 @@
 import { Capacitor } from "@capacitor/core";
-import { getAllBookMetaData } from "/js/book_import.js";
+import { getAllBookMetaData } from "./book_import";
 
 const bookContainer = document.getElementById("content");
 document.getElementById("startbutton").addEventListener("click", () => {
