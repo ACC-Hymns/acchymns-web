@@ -61,7 +61,7 @@ function finished() {
     }).toDestination();
 }
 
-startingNotesButton.addEventListener("mousedown", async (e) => {
+startingNotesButton.addEventListener("mousedown", async (_) => {
     startingNotesIcon.setAttribute("src", "/assets/musical-notes.svg");
     await Tone.start();
     let index = ["A2", "C3", "A3", "C4", "A4", "C5"];

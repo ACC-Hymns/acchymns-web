@@ -34,7 +34,7 @@ panzoom(panzoomContainer, {
 
 let displayedImages = [];
 // Change image dynamically if dark/light mode changes
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
     for (let element of displayedImages) {
         invertSongColor(element);
     }

@@ -1,4 +1,5 @@
-import { getAllBookMetaData, isWebApp } from "/js/book_import.js";
+import { Capacitor } from "@capacitor/core";
+import { getAllBookMetaData } from "/js/book_import.js";
 
 const bookContainer = document.getElementById("content");
 document.getElementById("startbutton").addEventListener("click", () => {
@@ -15,7 +16,7 @@ if (window.localStorage.getItem("landing_complete") == "true") {
     document.getElementById("splashscreen").classList.remove("hidden");
 }
 
-if (isWebApp) {
+if (Capacitor.getPlatform() == "web") {
     const appSection = document.getElementById("appsection");
     appSection.innerHTML += `
     <a class="app" href='https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
