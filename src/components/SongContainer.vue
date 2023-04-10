@@ -1,10 +1,23 @@
-import { getSongSrc } from "./song-loader.js";
+<script setup lang="ts">
+import { fetchBookSummary } from "../../js/book_import.js";
+import type { BookSummary } from "../../js/types";
+import { getSongSrc } from "../../js/song-loader.js";
 import { getAllBookMetaData } from "./book_import";
 import panzoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.min";
+import { watch, ref, defineProps, onMounted } from "vue";
+import { useLocalStorage } from "@vueuse/core";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
+
+const props = defineProps<{
+    book: string;
+    song: string;
+}>();
+
+let song_img_type = ref<string>("");
+let pdf_canvases = ref(null);
 
 const panzoomContainer = document.getElementById("panzoomContainer");
 panzoom(panzoomContainer, {
@@ -39,8 +52,6 @@ async function displaySongPDF(songSrc) {
     let pdfDoc = await pdfjsLib.getDocument(songSrc).promise;
     for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
         // Create canvas element to render PDF onto
-        let canvas = document.createElement("canvas");
-        canvas.classList.add("song_img");
         invertSongColor(canvas);
         panzoomContainer.appendChild(canvas);
         displayedImages.push(canvas);
@@ -53,6 +64,9 @@ async function displaySongPDF(songSrc) {
 
         // Render PDF page into canvas context
         let ctx = canvas.getContext("3d"); // 3D faster then 2D?
+        if (ctx == null) {
+            continue;
+        }
         await page.render({
             canvasContext: ctx,
             viewport: viewport,
@@ -62,10 +76,7 @@ async function displaySongPDF(songSrc) {
 
 async function displaySongImg(songSrc) {
     displayedImages = [];
-    let img = document.createElement("img");
-    img.classList.add("song_img");
     invertSongColor(img);
-    panzoomContainer.appendChild(img);
     displayedImages.push(img);
     img.setAttribute("src", songSrc);
     img.onerror = () => {
@@ -78,31 +89,40 @@ async function displaySongImg(songSrc) {
     };
 }
 
-async function displaySong(bookName, songNum) {
-    displayedImages = [];
-    const searchContent = document.getElementById("content");
-    searchContent.classList.add("hidden");
+
+onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-
-    const songViewTitle = document.getElementById("titlenumber");
-    songViewTitle.innerHTML = `#${songNum}`;
-
-    const songSrc = getSongSrc(bookName, songNum, BOOK_METADATA);
-
-    const songView = document.getElementById("songview");
-    songView.classList.remove("hidden");
-    if (BOOK_METADATA[bookName].fileExtension != "pdf") {
-        displaySongImg(songSrc);
-    } else {
+    const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
+    if (BOOK_METADATA[props.book].fileExtension === "pdf") {
         displaySongPDF(songSrc);
+    } else {
+        displaySongImg(songSrc);
     }
-}
+});
+</script>
 
-const urlParams = new URLSearchParams(window.location.search);
-const bookName = urlParams.get("book");
-const songNum = urlParams.get("song");
-if (bookName != null && songNum != null) {
-    displaySong(bookName, songNum);
-}
+<template>
+    <!-- Publicly available, but not imported books -->
+    <div v-if="song_img_type == 'pdf'">
+        <canvas v-for="" ref="pdf_canvases" class="song_img"/>
+    </div>
+    <div v-else-if="song_img_type !== ''">
+        <img class="song_img" />
+    </div>
+</template>
 
-export { displaySong };
+<style>
+@import "/css/settings.css";
+@import "/css/book.css";
+@import "/css/globals.css";
+@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+</style>
+
+<style scoped>
+.song_img {
+    display: block;
+    width: 100%;
+    z-index: -1;
+}
+</style>

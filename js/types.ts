@@ -24,7 +24,6 @@ const UnknownBookSummary: BookSummary = {
     numOfSongs: 0,
 };
 
-
 type Song = {
     title?: string;
     notes?: string[];

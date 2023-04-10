@@ -183,12 +183,6 @@ object{
     left: 0;
 }
 
-.song_img {
-    display: block;
-    width: 100%;
-    z-index: -1;
-}
-
 .h-100 {
     height: 100%;
 }
