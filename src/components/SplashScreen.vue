@@ -5,7 +5,7 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
 </script>
 
 <template>
-    <div v-if="!landing_complete" class="fill" style="position: fixed">
+    <div class="fill">
         <div class="welcomepage">
             <div class="changeslistings">
                 <h1 style="margin-top: 20%">What's new?</h1>
@@ -36,3 +36,10 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
         </div>
     </div>
 </template>
+
+<style>
+@import "/css/settings.css";
+@import "/css/globals.css";
+@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+</style>
