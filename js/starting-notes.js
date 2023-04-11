@@ -37,10 +37,7 @@ startingNotesButton.addEventListener("mousedown", async (_) => {
     let interval = parseFloat(window.localStorage.getItem("playbackInterval") ?? "0.25");
     let duration = parseFloat(window.localStorage.getItem("playbackDuration") ?? "3");
     if (book_song_metadata != null && book_song_metadata[songNum]["notes"] != null) {
-        if (
-            window.localStorage.getItem("staggered") == "true" ||
-            window.localStorage.getItem("staggered") == undefined
-        ) {
+        if ((window.localStorage.getItem("staggered") ?? "true") == "true") {
             for (let i = book_song_metadata[songNum]["notes"].length; i > 0; i--) {
                 sampler.triggerAttack(
                     book_song_metadata[songNum]["notes"][i - 1],

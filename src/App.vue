@@ -1,85 +1,79 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import { Capacitor } from "@capacitor/core";
+import SplashScreen from "@/components/SplashScreen.vue";
+import { getAllBookMetaData } from "/js/book_import";
+import type { BookSummary } from "js/types";
+import { ref, onMounted } from "vue";
+
+let available_books = ref<BookSummary[]>([]);
+
+onMounted(async () => {
+    available_books.value = Object.values(await getAllBookMetaData());
+});
 </script>
 
 <template>
-    <header>
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-        <div class="wrapper">
-            <HelloWorld msg="You did it!" />
-
-            <nav>
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
-            </nav>
+    <SplashScreen />
+    <div id="main" class="w-100">
+        <div id="content">
+            <h1 class="pagetitle">Home</h1>
         </div>
-    </header>
-
-    <RouterView />
+        <div id="appsection">
+            <div v-for="book in available_books" :key="book.name.short">
+                <a
+                    :href="`selection.html?book=${book.name.short}`"
+                    class="book"
+                    :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
+                >
+                    <div class="book_title">{{ book.name.medium }}</div>
+                    <img
+                        v-if="book.addOn"
+                        class="ionicon booktext--right"
+                        style="
+                            filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%)
+                                contrast(93%);
+                            width: 24px;
+                        "
+                        src="/assets/wifi.svg"
+                    />
+                </a>
+            </div>
+            <div v-if="Capacitor.getPlatform() === 'web'">
+                <a class="app" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
+                    <img
+                        class="appbuttonplay"
+                        src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                    />
+                </a>
+                <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
+                    <object class="appbuttonapple" data="./assets/Appstore_badge.svg"></object>
+                </a>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav__link nav__link--active">
+                <img class="ionicon nav__icon--active" src="/assets/home.svg" />
+                <span class="nav__text">Home</span>
+            </a>
+            <a href="search.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
+                <span class="nav__text">Search</span>
+            </a>
+            <a href="bookmarks.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
+                <span class="nav__text">Bookmarks</span>
+            </a>
+            <a href="settings.html" class="nav__link">
+                <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
+                <span class="nav__text">Settings</span>
+            </a>
+        </nav>
+    </div>
 </template>
 
-<style scoped>
-header {
-    line-height: 1.5;
-    max-height: 100vh;
-}
-
-.logo {
-    display: block;
-    margin: 0 auto 2rem;
-}
-
-nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-    color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-    background-color: transparent;
-}
-
-nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-    border: 0;
-}
-
-@media (min-width: 1024px) {
-    header {
-        display: flex;
-        place-items: center;
-        padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-        margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-        display: flex;
-        place-items: flex-start;
-        flex-wrap: wrap;
-    }
-
-    nav {
-        text-align: left;
-        margin-left: -1rem;
-        font-size: 1rem;
-
-        padding: 1rem 0;
-        margin-top: 1rem;
-    }
-}
+<style>
+@import "/css/book.css";
+@import "/css/globals.css";
+@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 </style>
