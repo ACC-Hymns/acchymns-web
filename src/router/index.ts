@@ -9,8 +9,18 @@ const router = createRouter({
             component: HomeView,
         },
         {
-            path: "/about",
-            component: () => import("../views/AboutView.vue"),
+            path: "/selection/:book",
+            props: true,
+            component: () => import("../views/SongSelectionView.vue"),
+        },
+        {
+            path: "/display/:book/:song",
+            props: true,
+            component: () => import("../views/SongDisplayView.vue"),
+        },
+        {
+            path: "/settings/import_songs",
+            component: () => import("../views/ImportSongsView.vue"),
         },
     ],
 });

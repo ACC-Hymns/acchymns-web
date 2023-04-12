@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { fetchBookSummary } from "../../../js/book_import.js";
-import type { BookSummary } from "../../../js/types";
+import { fetchBookSummary } from "@/scripts/book_import";
+import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
+import type { RouterLink } from "vue-router";
 
 const branch = "dallas/try-pdf";
 
@@ -155,10 +156,10 @@ function removeImportedBook(book: BookSummary) {
     </div>
 
     <nav class="nav">
-        <a href="/index.html" class="nav__link">
+        <RouterLink to="/" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
             <span class="nav__text">Home</span>
-        </a>
+        </RouterLink>
         <a href="/search.html" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
             <span class="nav__text">Search</span>

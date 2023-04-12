@@ -63,7 +63,7 @@ async function getAllSongMetaData() {
     return Object.fromEntries(Object.keys(BOOK_METADATA).map((book_name, i) => [book_name, bookSongs[i]]));
 }
 
-async function getSongMetaData(book_short_name): Promise<SongList> {
+async function getSongMetaData(book_short_name: string): Promise<SongList> {
     if (prepackaged_books.includes(book_short_name)) {
         return await fetchJSONWithTimeout(`/books/${book_short_name}/songs.json`);
     }

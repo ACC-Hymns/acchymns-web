@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { getAllBookMetaData } from "@/scripts/book_import";
-import type { BookSummary } from "@/scripts/types";
-import createPanZoom from "panzoom";
-import { Capacitor } from "@capacitor/core";
 import { ref, defineProps, onMounted } from "vue";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
 
 const props = defineProps<{
-    book: string;
+    src: URL;
     song: string;
 }>();
 
@@ -80,17 +76,6 @@ async function displayWifiFail(e: Event) {
 }
 
 onMounted(async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
-    createPanZoom(panzoom_container.value as HTMLDivElement, {
-        beforeWheel: (e) => {
-            return !e.shiftKey;
-        },
-        maxZoom: 3,
-        minZoom: Capacitor.getPlatform() !== "web" ? 1 : 0.25,
-        bounds: true,
-        boundsPadding: 0.5,
-    });
 
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     if (song_img_type.value === "pdf") {
@@ -106,7 +91,7 @@ onMounted(async () => {
     <div ref="panzoom_container" class="song_img">
         <div v-if="song_img_type == 'pdf'" ref="song_display_pdf" class="song_img" />
         <div v-else-if="song_img_type !== ''">
-            <img @error="displayWifiFail" :src="song_img_src" class="song_img"/>
+            <img @error="displayWifiFail" :src="song_img_src" class="song_img"  />
         </div>
     </div>
 </template>
