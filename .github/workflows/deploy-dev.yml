@@ -33,7 +33,6 @@ jobs:
       - name: Build
         run: |
           cd build
-          mkdir dist
           cp -r ./* dist
           #npm i
           #npm run build
