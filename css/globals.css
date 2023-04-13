@@ -278,6 +278,7 @@ object{
     white-space: normal; 
     color: var(--color);
 }
+
 .grid-image {
     width: 80px;
     filter: var(--change-svg-filter);
