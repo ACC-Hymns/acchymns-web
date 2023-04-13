@@ -43,6 +43,7 @@ jobs:
       
       - name: Push files to target
         run: |
+          rm -r deploy/*
           cp -r build/* deploy
           cd deploy
           touch .nojekyll
