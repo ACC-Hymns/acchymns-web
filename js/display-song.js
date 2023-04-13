@@ -19,7 +19,7 @@ panzoom(panzoomContainer, {
 });
 
 let pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'js/external/pdf.worker.js';
 
 let displayedImages = [];
 // Change image dynamically if dark/light mode changes

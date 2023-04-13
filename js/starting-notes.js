@@ -17,7 +17,7 @@ if (bookName != null && songNum != null){
 }
 
 function finished() {
-    startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
+    startingNotesIcon.setAttribute('src', "assets/musical-notes.svg");
     const sampler = new Tone.Sampler({
         urls: {
             "A2": blob_A2,
@@ -40,7 +40,7 @@ function finished() {
                 }
                 sampler.triggerRelease(book_song_metadata[songNum]["notes"], Tone.now() + duration + (interval * book_song_metadata[songNum]["notes"].length));
             }
-            startingNotesIcon.setAttribute('src', "/assets/musical-notes-outline.svg");
+            startingNotesIcon.setAttribute('src', "assets/musical-notes-outline.svg");
         }
     }).toDestination();
 }
@@ -50,7 +50,7 @@ startingNotesButton.addEventListener('mousedown', async (e) => {
     let index = ["A2", "C3", "A3", "C4", "A4", "C5"];
     for (var i = 0; i < index.length; i++) {
 
-        var url = "/assets/notes/" + index[i] + ".mp3";
+        var url = "assets/notes/" + index[i] + ".mp3";
         let request = new XMLHttpRequest();
         request.open("GET", url, true);
         request.responseType = 'blob';
