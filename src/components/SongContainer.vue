@@ -25,6 +25,24 @@ function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: str
 let song_img_src = ref("");
 let error_is_active = ref(false);
 
+// let displayedImages = [];
+// // Change image dynamically if dark/light mode changes
+// window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
+//     for (let element of displayedImages) {
+//         invertSongColor(element);
+//     }
+// });
+
+// function invertSongColor(element) {
+//     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+//         if (window.localStorage.getItem("songInverted") == "true") {
+//             element.style.filter = "invert(92%)";
+//         } else {
+//             element.style.filter = "invert(0%)";
+//         }
+//     }
+// }
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
