@@ -5,7 +5,7 @@ import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import type { RouterLink } from "vue-router";
 
-const branch = "dallas/try-pdf";
+const branch = "staging";
 
 const public_references = {
     HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/HZ`,

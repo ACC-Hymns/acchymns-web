@@ -3,7 +3,7 @@ import { getAllBookMetaData } from "@/scripts/book_import";
 import type { BookSummary } from "@/scripts/types";
 import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
-import { ref, defineProps, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
 
 const props = defineProps<{
