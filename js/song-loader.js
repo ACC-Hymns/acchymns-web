@@ -12,7 +12,7 @@ function getSongSrc(bookShort, songNum, BOOK_METADATA){
         return `${BOOK_METADATA[bookShort].sourceRoot}/songs/${fileName}`;
     }
         
-    return `/books/${bookShort}/songs/${fileName}`;
+    return `books/${bookShort}/songs/${fileName}`;
 }
 
 export {

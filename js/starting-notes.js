@@ -4,7 +4,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const bookName = urlParams.get("book");
 const songNum = urlParams.get("song");
 
-import { getSongMetaData } from "/books/index.js"
+import { getSongMetaData } from "../books/index.js"
 
 let book_song_metadata = null;
 if (bookName != null && songNum != null){

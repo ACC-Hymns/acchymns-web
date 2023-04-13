@@ -1,5 +1,5 @@
 import { getSongSrc } from "./song-loader.js";
-import { getAllBookMetaData } from "/books/index.js";
+import { getAllBookMetaData } from "../books/index.js";
 
 function mobileOrTablet() {
     let check = false;
