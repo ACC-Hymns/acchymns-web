@@ -1,5 +1,5 @@
-import { getSongFileName } from "./song-loader.js";
-import { getAllBookMetaData } from "/books/index.js";
+import { getSongSrc } from "./song-loader.js";
+import { getAllBookMetaData } from "../books/index.js";
 
 function mobileOrTablet() {
     let check = false;
@@ -7,8 +7,8 @@ function mobileOrTablet() {
     return check;
 };
 
-const songImage = document.getElementById('songimage');
-panzoom(songImage, {
+const panzoomContainer = document.getElementById('panzoomContainer');
+panzoom(panzoomContainer, {
     beforeWheel: (e) => {
         return !e.shiftKey;
     },
@@ -18,38 +18,87 @@ panzoom(songImage, {
     boundsPadding: 0.5
 });
 
-async function displaySong(bookName, songNum) {
-    const BOOK_METADATA = await getAllBookMetaData();
+let pdfjsLib = window['pdfjs-dist/build/pdf'];
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/external/pdf.worker.js';
 
-    const songView = document.getElementById('songview');
-    songView.classList.remove('hidden');
+let displayedImages = [];
+// Change image dynamically if dark/light mode changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    for (let element of displayedImages) {
+        invertSongColor(element);
+    }
+});
+
+function invertSongColor(element) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if(window.localStorage.getItem("songInverted") == "true") {
+            element.style.filter = "invert(92%)";
+        } else {
+            element.style.filter = "invert(0%)";
+        }
+    }
+}
+
+async function displaySongPDF(songSrc) {
+    let pdfDoc = await pdfjsLib.getDocument(songSrc).promise;
+    for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++){
+        // Create canvas element to render PDF onto
+        let canvas = document.createElement("canvas");
+        canvas.classList.add("song_img");
+        invertSongColor(canvas);
+        panzoomContainer.appendChild(canvas);
+        displayedImages.push(canvas);
+        
+        // Grab current page
+        let page = await pdfDoc.getPage(pageNum);
+        let viewport = page.getViewport({scale: 5});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // Render PDF page into canvas context
+        let ctx = canvas.getContext('2d');
+        await page.render({
+            canvasContext: ctx,
+            viewport: viewport
+        }).promise;
+    }
+}
+
+async function displaySongImg(songSrc) {
+    displayedImages = [];
+    let img = document.createElement("img");
+    img.classList.add("song_img");
+    invertSongColor(img);
+    panzoomContainer.appendChild(img);
+    displayedImages.push(img);
+    img.setAttribute('src', songSrc);
+    img.onerror = () => {
+        img.src = "assets/wifi_off.svg";
+        img.style.width = "50%";
+        img.style.height = "50%";
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            img.style.filter = "invert(92%)";
+        }
+    }
+}
+
+async function displaySong(bookName, songNum) {
+    displayedImages = [];
     const searchContent = document.getElementById('content');
     searchContent.classList.add('hidden');
+    const BOOK_METADATA = await getAllBookMetaData()
 
     const songViewTitle = document.getElementById('titlenumber');
     songViewTitle.innerHTML = `#${songNum}`;
-
-    // accessing the element
-    const songViewImage = document.getElementById('songimage');
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        if(window.localStorage.getItem("songInverted") == "true") {
-            songViewImage.style.filter = "invert(92%)";
-        }
-    }
     
-    let fileName = getSongFileName(bookName, songNum, BOOK_METADATA);
-    if(BOOK_METADATA[bookName].addOn){
-        songViewImage.setAttribute('src', `${BOOK_METADATA[bookName].sourceRoot}/songs/${fileName}`);
+    const songSrc = getSongSrc(bookName, songNum, BOOK_METADATA);
+
+    const songView = document.getElementById('songview');
+    songView.classList.remove('hidden');
+    if (BOOK_METADATA[bookName].fileExtension != "pdf") {
+        displaySongImg(songSrc)
     } else {
-        songViewImage.setAttribute('src', `/books/${bookName}/songs/${fileName}`);
-    }
-    songViewImage.onerror = () => {
-        songViewImage.src = "assets/wifi_off.svg";
-        songViewImage.style.width = "50%";
-        songViewImage.style.height = "50%";
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            songViewImage.style.filter = "invert(92%)";
-        }
+        displaySongPDF(songSrc);
     }
 }
 
@@ -59,15 +108,6 @@ const songNum = urlParams.get("song");
 if (bookName != null && songNum != null){
     displaySong(bookName, songNum);
 }
-
-// Change image dynamically if dark/light mode changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    const songViewImage = document.getElementById('songimage');
-    if(event.matches)
-        songViewImage.style.filter = "invert(92%)";
-    else
-        songViewImage.style.filter = "invert(0%)";
-});
 
 export {
     displaySong

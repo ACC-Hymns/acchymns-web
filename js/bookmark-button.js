@@ -11,10 +11,10 @@ bookmarkButton.addEventListener('click', (e) => {
     let index = bookmarks.findIndex(bookmark => bookmark.book == bookName && bookmark.song == songNum);
     if (index != -1) {
         bookmarks.splice(index, 1);
-        bookmarkIcon.setAttribute('src', "/assets/bookmark-outline.svg");
+        bookmarkIcon.setAttribute('src', "assets/bookmark-outline.svg");
     } else {
         bookmarks.push({"book": bookName, "song": songNum});
-        bookmarkIcon.setAttribute('src', "/assets/bookmark.svg");
+        bookmarkIcon.setAttribute('src', "assets/bookmark.svg");
     }
     
     window.localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
@@ -29,7 +29,7 @@ function getBookmarkIndex(number, book) {
 
 // Figure out on initialization if bookmarked
 if(getBookmarkIndex(songNum, bookName) != -1) {
-    bookmarkIcon.setAttribute('src', "/assets/bookmark.svg");
+    bookmarkIcon.setAttribute('src', "assets/bookmark.svg");
 } else {
-    bookmarkIcon.setAttribute('src', "/assets/bookmark-outline.svg");
+    bookmarkIcon.setAttribute('src', "assets/bookmark-outline.svg");
 }

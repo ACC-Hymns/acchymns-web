@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-html,
-body {
-    width: 100vw;
-    height: 100vh;
-}
 
 :root {
     --button-color: #ffffff;
@@ -16,34 +11,8 @@ body {
     :root {
         --button-color: #2b2b2b;
         --search-color: #2b2b2b;
-        --slider-base: #606060;
+        --slider-base: #292323;
     }
-}
-
-a {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-body {
-    margin: 0 0 120px 0;
-    padding-top: env(safe-area-inset-top);
-    font-family: 'Lato', sans-serif;
-    background-color: #fcfcfc;
-}
-
-a {
-    text-decoration: none;
-}
-
-.heading-secondary {
-    margin: 30px 20px 0px 30px;
-    font-size: 20px;
 }
 
 h2 {
@@ -54,7 +23,7 @@ h2 {
 form {
     background-color: var(--search-color);
     border-radius: 15px;
-    margin: 0px 20px 0px 20px;
+    margin: 0px 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,42 +64,8 @@ input {
 }
 
 .settings {
-    background: var(--button-color);
-    margin: 15px 20px 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.settings-option {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    color: var(--color);
-    border-bottom: var(--border-color);
-}
-
-.settings-option:last-child {
-    border-bottom: none;
-}
-
-.title ion-icon {
-    font-size: 25px;
-    color: var(--back-color);
-}
-
-.title {
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 30px 10px 30px;
-}
-
-.settings {
     background: var(--div-color);
-    margin: 15px 20px 15px 20px;
+    margin: 15px 20px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -144,6 +79,10 @@ input {
     padding: 15px 20px;
     color: var(--color);
     border-bottom: var(--border-color);
+}
+
+.settings-option:last-child {
+    border-bottom: none;
 }
 
 .input-option {
@@ -164,12 +103,9 @@ input {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
+
 .input-option-button:active {
     background-color: #1b80d2;
-}
-
-.settings-option:last-child {
-    border-bottom: none;
 }
 
 .switch {
@@ -232,55 +168,6 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-.space {
-    width: 25px;
-}
-
-.nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    min-height: 55px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-bottom: env(safe-area-inset-bottom);
-    display: flex;
-    overflow-x: auto;
-}
-
-.nav__link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    min-width: 90px;
-    overflow: hidden;
-    white-space: nowrap;
-    font-family: sans-serif;
-    font-size: 13px;
-    color: #636363;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    border-radius: 10px;
-}
-
-.nav__link--active {
-    color: #000000;
-}
-
-.nav__icon {
-    font-size: 23px;
-    margin-bottom: 3px;
-}
-
-.nav__text {
-    padding-top: 3px;
-    font-family: 'Lato', sans-serif;
-}
-
 .slider-setting {
     -webkit-appearance: none;
     width: 100%;
@@ -291,39 +178,39 @@ input:checked+.slider:before {
     padding: 0px 5px 0px 5px;
     -webkit-transition: .2s;
     transition: opacity .2s;
-  }
-  
-  .slider-setting::-webkit-slider-thumb {
+}
+
+.slider-setting::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 17px;
     height: 17px;
     background: #ffffff;
-    border-radius: 50%; 
+    border-radius: 50%;
     cursor: pointer;
-  }
-  
-  .slider-setting::-moz-range-thumb {
+}
+
+.slider-setting::-moz-range-thumb {
     width: 25px;
     height: 25px;
     background: #ffffff;
-    border-radius: 50%; 
+    border-radius: 50%;
     cursor: pointer;
-  }
+}
 
-  .slider-value {
+.slider-value {
     margin-left: 10px;
     white-space: nowrap;
     min-width: 51.02px;
-  }
-  
-  .setting-label {
-    margin-right: 10px;
-  }
+}
 
-  .import-button {
+.setting-label {
+    margin-right: 10px;
+}
+
+.import-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-  }
+}

@@ -6,13 +6,13 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-        <link rel="stylesheet" href="/css/selection.css">
-        <link rel="stylesheet" href="/css/globals.css">
+        <link rel="stylesheet" href="css/selection.css">
+        <link rel="stylesheet" href="css/globals.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+        <script src="js/external/pdf.js"></script>
         <script type="module">
             import { getAllBookMetaData } from "/books/index.js";
             import { addSongs } from "/js/song-loader.js";;
@@ -72,31 +72,31 @@
         </script>
     </head>
     <body>
-        <div id="songview" class="songpage hidden">
+        <div id="songview" class="fill hidden">
             <div class="menu">
                 <div class="title">
                     <div class="buttonGroupLeft">
-                        <a id="backButton"><img class="ionicon" src="/assets/chevron-back-outline.svg"/></a>
+                        <a id="backButton"><img class="ionicon" src="assets/chevron-back-outline.svg"/></a>
                         <a><img class="ionicon"/></a>
                     </div>
-                    <h1 id="titlenumber"></h1>
+                    <h1 id="titlenumber">#</h1>
                     <div class="buttonGroupRight">
-                        <a id="startingNotesButton"><img class="ionicon hidden" id="startingNotesIcon" src="/assets/musical-notes-outline.svg"/></a>
-                        <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="/assets/bookmark-outline.svg"/></a>
+                        <a id="startingNotesButton"><img class="ionicon hidden" id="startingNotesIcon" src="assets/musical-notes-outline.svg"/></a>
+                        <a id="bookmarkButton"><img class="ionicon" id="bookmarkIcon" src="assets/bookmark-outline.svg"/></a>
                     </div>
                 </div>
             </div>
-            <div class="song_img_container">
-                <img class="song_img" id="songimage"></img>
+            <div class="w-100" style="height: 100vh;">
+                <div class="panzoom_container" id="panzoomContainer"></div>
             </div>
         </div>
 
         <div id="content" class="content">
             <div class="menu">
                 <div class="title">
-                    <img id="homeButton" class="ionicon" src="/assets/chevron-back-outline.svg"/>
+                    <img id="homeButton" class="ionicon" src="assets/chevron-back-outline.svg"/>
                     <h1 id="bookName"></h1>
-                    <a id="topicalIndexButton"><img class="ionicon hidden" draggable="false" id="topicalIndexIcon" src="/assets/information-circle-outline.svg"/></a>
+                    <a id="topicalIndexButton"><img class="ionicon hidden" draggable="false" id="topicalIndexIcon" src="assets/information-circle-outline.svg"/></a>
                 </div>
             </div>
         
@@ -106,30 +106,30 @@
             
             <nav class="nav">
                 <a href="index.html" class="nav__link nav__link--active">
-                    <img class="ionicon nav__icon--active" src="/assets/home.svg"/>
+                    <img class="ionicon nav__icon--active" src="assets/home.svg"/>
                     <span class="nav__text">Home</span>
                 </a>
                 <a href="search.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/search-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/search-outline.svg"/>
                     <span class="nav__text">Search</span>
                 </a>
                 <a href="bookmarks.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/bookmark-outline.svg"/>
                     <span class="nav__text">Bookmarks</span>
                 </a>
                 <a href="settings.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/settings-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/settings-outline.svg"/>
                     <span class="nav__text">Settings</span>
                 </a>
             </nav>
         </div>
-        <script type="module" src="/js/external/ionicons.esm.js"></script>
-        <script nomodule src="/js/external/ionicons.js"></script>
-        <script type="module" src="/js/bookmark-button.js"></script>
-        <script src="/js/external/panzoom.min.js"></script>
-        <script type="module" src="/js/display-song.js"></script> 
-        <script src="/js/external/tone.min.js"></script>
-        <script type="module" src="/js/starting-notes.js"></script> 
-        <script type="module" src="/js/topical-index-button.js"></script> 
+        <script type="module" src="js/external/ionicons.esm.js"></script>
+        <script nomodule src="js/external/ionicons.js"></script>
+        <script type="module" src="js/bookmark-button.js"></script>
+        <script src="js/external/panzoom.min.js"></script>
+        <script type="module" src="js/display-song.js"></script> 
+        <script src="js/external/tone.min.js"></script>
+        <script type="module" src="js/starting-notes.js"></script> 
+        <script type="module" src="js/topical-index-button.js"></script> 
     </body>
 </html>

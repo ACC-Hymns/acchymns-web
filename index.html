@@ -8,33 +8,33 @@
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, user-scalable=no, viewport-fit=cover">
-        <link rel="stylesheet" href="/css/book.css">
-        <link rel="stylesheet" href="/css/globals.css">
+        <link rel="stylesheet" href="css/book.css">
+        <link rel="stylesheet" href="css/globals.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <div id="splashscreen" class="splashscreen hidden">
+        <div id="splashscreen" class="fill hidden">
             <div class="welcomepage">
                 <div class="changeslistings">
                     <h1 style="margin-top: 20%">What's new?</h1>
                     <div class="grid-container">
                         <div class="grid-item">
-                            <img class="grid-image" src="/assets/search.svg">
+                            <img class="grid-image" src="assets/search.svg">
                             <span class="changetext">Pinch-to-Zoom</span>
                         </div>
                         <div class="grid-item">
-                            <img class="grid-image" src="/assets/musical-notes.svg">
+                            <img class="grid-image" src="assets/musical-notes.svg">
                             <span class="changetext">Starting Notes</span>
                         </div>
                         <div class="grid-item">
-                            <img class="grid-image" src="/assets/book-outline.svg">
+                            <img class="grid-image" src="assets/book-outline.svg">
                             <span class="changetext">More Song Books</span>
                         </div>
                         <div class="grid-item">
-                            <img class="grid-image" src="/assets/bug-outline.svg">
+                            <img class="grid-image" src="assets/bug-outline.svg">
                             <span class="changetext">Bug Fixes</span>
                         </div>
                       </div>
@@ -45,34 +45,33 @@
                     <span style="color:white">Continue</span>
                 </a>
             </div>
-
         </div>
-        <div id="main" class="main">
-            <div id="content" class="content">
+        <div id="main" class="w-100">
+            <div id="content">
                 <h1 class="pagetitle">Home</h1>
             </div>
-            <div id="appsection" class="appsection" style="padding-bottom: 198px;"></div>
+            <div id="appsection"></div>
             <nav class="nav">
                 <a href="index.html" class="nav__link nav__link--active">
-                    <img class="ionicon nav__icon--active" src="/assets/home.svg"/>
+                    <img class="ionicon nav__icon--active" src="assets/home.svg"/>
                     <span class="nav__text">Home</span>
                 </a>
                 <a href="search.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/search-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/search-outline.svg"/>
                     <span class="nav__text">Search</span>
                 </a>
                 <a href="bookmarks.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/bookmark-outline.svg"/>
                     <span class="nav__text">Bookmarks</span>
                 </a>
                 <a href="settings.html" class="nav__link">
-                    <img class="ionicon nav__icon" src="/assets/settings-outline.svg"/>
+                    <img class="ionicon nav__icon" src="assets/settings-outline.svg"/>
                     <span class="nav__text">Settings</span>
                 </a>
             </nav>
         </div>
-        <script type="module" src="/js/index.js"></script>
-        <script type="module" src="/js/external/ionicons.esm.js"></script>
-        <script nomodule src="/js/external/ionicons.js"></script>
+        <script type="module" src="js/index.js"></script>
+        <script type="module" src="js/external/ionicons.esm.js"></script>
+        <script nomodule src="js/external/ionicons.js"></script>
     </body>
 </html>

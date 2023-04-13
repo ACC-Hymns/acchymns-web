@@ -1,24 +1,21 @@
 function addSongs(bookShort, BOOK_METADATA) {
-    let btns = ""
-    let songNums = Array.from({length: BOOK_METADATA[bookShort].numOfSongs}, (_, i) => i + 1).filter(x => !BOOK_METADATA[bookShort].missingSongs.includes(x));
-
-    for(let songNum of songNums) {
-        btns += `
-            <a href="selection.html?book=${bookShort}&song=${songNum}">
-                <div class="song-btn">
-                ${songNum}
-                </div>
-            </a>`;
+    let btns = "";
+    for(let songNum = 1; songNum <= BOOK_METADATA[bookShort].numOfSongs; songNum++) {
+        btns += `<a href="selection.html?book=${bookShort}&song=${songNum}" class="song-btn">${songNum}</a>`;
     }
-    const songList = document.getElementById("songs");
-    songList.innerHTML = btns
+    document.getElementById("songs").innerHTML = btns;
 }
 
-function getSongFileName(bookShort, songNum, BOOK_METADATA){
-    return songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
+function getSongSrc(bookShort, songNum, BOOK_METADATA){
+    let fileName = songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension
+    if(BOOK_METADATA[bookShort].addOn){
+        return `${BOOK_METADATA[bookShort].sourceRoot}/songs/${fileName}`;
+    }
+        
+    return `books/${bookShort}/songs/${fileName}`;
 }
 
 export {
     addSongs,
-    getSongFileName
+    getSongSrc
 };

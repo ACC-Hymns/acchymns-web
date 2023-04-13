@@ -7,7 +7,6 @@
     "addOn": true,
     "primaryColor": "#E8666C",
     "secondaryColor": "#E32B34",
-    "fileExtension": "png",
-    "numOfSongs": 128,
-    "missingSongs": []
+    "fileExtension": "pdf",
+    "numOfSongs": 128
 }
