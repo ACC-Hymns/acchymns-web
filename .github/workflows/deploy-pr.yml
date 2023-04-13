@@ -14,7 +14,7 @@ env:
 
 jobs:
   create-repo:
-    if: ${{ github.event.action }} == "opened"
+    if: github.event.action == 'opened'
     runs-on: ubuntu-latest
     steps:
       - name: Create new repository for temporary deployment
@@ -27,7 +27,7 @@ jobs:
           initialize-repo: true
 
   delete-repo:
-    if: ${{ github.event.action }} == "closed"
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
       - name: Delete repository for temporary deployment
@@ -37,7 +37,7 @@ jobs:
           access-token: ${{ secrets.DEPLOYMENT_PAT }}
 
   build-and-deploy:
-    if: ${{ github.event.action }} != "closed"
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
