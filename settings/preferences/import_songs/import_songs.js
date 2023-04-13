@@ -73,7 +73,7 @@ async function AddImportURL(event){
     return false;
 }
 
-let branch = "dallas/try-pdf";
+let branch = "staging";
 
 let visible_references = {
     "HZ": `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/HZ`,
