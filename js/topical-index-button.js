@@ -1,4 +1,4 @@
-import { getBookIndex } from "/books/index.js";
+// import { getBookIndex } from "/books/index.js";
 
 // const topicalIndexButton = document.getElementById('topicalIndexButton');
 // topicalIndexButton.href = `topical-index.html${window.location.search}`;
