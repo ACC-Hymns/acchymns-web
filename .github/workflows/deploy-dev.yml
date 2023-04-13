@@ -39,6 +39,7 @@ jobs:
         with:
           repository: ACC-Hymns/acchymns-dev
           path: 'deploy'
+          token: ${{ secrets.DEPLOYMENT_PAT }}
       
       - name: Push files to target
         run: |
