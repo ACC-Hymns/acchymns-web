@@ -22,11 +22,7 @@ else document.getElementById("staggered").checked = false;
 
 if (window.localStorage.getItem("playbackInterval") == undefined) window.localStorage.setItem("playbackInterval", 0.25);
 document.getElementById("playbackInterval").value = parseFloat(window.localStorage.getItem("playbackInterval")) * 10;
-document.getElementById("playbackIntervalValue").innerHTML = `${
-    document.getElementById("playbackInterval").value * 100
-} ms`;
+document.getElementById("playbackIntervalValue").innerHTML = `${document.getElementById("playbackInterval").value * 100} ms`;
 if (window.localStorage.getItem("playbackDuration") == undefined) window.localStorage.setItem("playbackDuration", 3);
 document.getElementById("playbackDuration").value = parseFloat(window.localStorage.getItem("playbackDuration")) * 10;
-document.getElementById("playbackDurationValue").innerHTML = `${
-    document.getElementById("playbackDuration").value / 10
-} sec`;
+document.getElementById("playbackDurationValue").innerHTML = `${document.getElementById("playbackDuration").value / 10} sec`;

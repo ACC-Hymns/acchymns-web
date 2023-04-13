@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllBookMetaData } from "@/scripts/book_import";
-import type { RouterLink } from "vue-router";
+import { getAllBookMetaData, getBookIndex } from "@/scripts/book_import";
+import { RouterLink, useRouter } from "vue-router";
 
 const props = defineProps<{
     book: string;
 }>();
+const router = useRouter();
 
 let num_of_songs = ref(0);
 let book_name = ref("");
+let index_available = ref(false);
 let button_color = ref("#000000");
 
 onMounted(async () => {
@@ -16,52 +18,48 @@ onMounted(async () => {
     num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
+    const index = await getBookIndex(BOOK_METADATA[props.book].name.short);
+    index_available.value = index != undefined;
 });
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="$router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
             <h1 id="bookName">
                 {{ book_name }}
             </h1>
-            <a id="topicalIndexButton">
-                <img class="ionicon hidden" src="/assets/information-circle-outline.svg" />
-            </a>
+            <RouterLink :to="`/topical/${props.book}`">
+                <img class="ionicon" :class="{ hidden: !index_available }" src="/assets/information-circle-outline.svg" />
+            </RouterLink>
         </div>
     </div>
 
     <div class="songs" style="margin-top: 70px">
         <!-- Buttons will be added here -->
-        <RouterLink
-            v-for="song_num in num_of_songs"
-            :key="song_num"
-            :to="`/display/${$props.book}/${song_num}`"
-            class="song-btn"
-            :style="{ background: button_color }"
-        >
+        <RouterLink v-for="song_num in num_of_songs" :key="song_num" :to="`/display/${$props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}
         </RouterLink>
     </div>
 
     <nav class="nav">
-        <a href="index.html" class="nav__link nav__link--active">
+        <RouterLink to="/" class="nav__link nav__link--active">
             <img class="ionicon nav__icon--active" src="/assets/home.svg" />
             <span class="nav__text">Home</span>
-        </a>
-        <a href="search.html" class="nav__link">
+        </RouterLink>
+        <RouterLink to="/search" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
             <span class="nav__text">Search</span>
-        </a>
-        <a href="bookmarks.html" class="nav__link">
+        </RouterLink>
+        <RouterLink to="/bookmarks" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
             <span class="nav__text">Bookmarks</span>
-        </a>
-        <a href="settings.html" class="nav__link">
+        </RouterLink>
+        <RouterLink to="/settings/import_songs" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
             <span class="nav__text">Settings</span>
-        </a>
+        </RouterLink>
     </nav>
 </template>
 

@@ -161,26 +161,12 @@ object{
 .ionicon {
     filter: var(--svg-back-filter);
     width: 25px;
+    height: 25px;
 }
 
 .entrypoint {
     filter: var(--svg-color);
     width: 16px;
-}
-
-#songview  {
-    height: 100vh;
-}
-
-.panzoom_container {  
-    display: block;
-    height: max-content;
-    width: 100%;
-    z-index: -1;
-    position: absolute;
-    margin: calc(env(safe-area-inset-top) + 61.16px) auto;
-    top: 0;
-    left: 0;
 }
 
 .h-100 {

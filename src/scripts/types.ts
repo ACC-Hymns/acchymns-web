@@ -25,8 +25,9 @@ const UnknownBookSummary: BookSummary = {
 };
 
 type Song = {
-    title?: string;
-    notes?: string[];
+    number?: string; // Numbers unfortunately can be strings: ex: 403a GH
+    title: string;
+    notes: string[];
 };
 
 type SongList = {
@@ -35,5 +36,20 @@ type SongList = {
 
 const UnknownSongList: SongList = {};
 
-export type { BookSummary, Song, SongList };
-export { UnknownBookSummary, UnknownSongList };
+type SongReference = Song & {
+    stripped_title?: string;
+    book: BookSummary;
+};
+
+type BookmarkedSong = {
+    song: string;
+    book: string;
+};
+
+type BookIndex = {
+    [section: string]: string[]; // Dictionary of section, and list of numbers for that section
+};
+const UnknownBookIndex: BookIndex = {};
+
+export type { BookSummary, Song, SongList, BookmarkedSong, SongReference, BookIndex };
+export { UnknownBookSummary, UnknownSongList, UnknownBookIndex };

@@ -1,99 +1,61 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
 
 const props = defineProps<{
-    src: URL;
-    song: string;
+    src: string;
 }>();
 
-let song_img_type = ref("");
-let song_display_pdf = ref<HTMLDivElement>();
-let song_display_img = ref<HTMLImageElement>();
-let panzoom_container = ref<HTMLDivElement>();
+const emit = defineEmits<{
+    (e: "error"): void;
+}>();
 
-function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: string]: BookSummary }): string {
-    const fileName = songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
-    if (BOOK_METADATA[bookShort].addOn) {
-        return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
+let root = ref<HTMLDivElement>();
+
+onMounted(async () => {
+    let pdfDoc;
+    try {
+        pdfDoc = await pdfjsLib.getDocument(props.src).promise;
+    } catch {
+        emit("error");
+        return;
     }
-    return `/books/${bookShort}/songs/${fileName}`;
-}
-// let displayedImages = [];
-// // Change image dynamically if dark/light mode changes
-// window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (_) => {
-//     for (let element of displayedImages) {
-//         invertSongColor(element);
-//     }
-// });
-
-// function invertSongColor(element) {
-//     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-//         if (window.localStorage.getItem("songInverted") == "true") {
-//             element.style.filter = "invert(92%)";
-//         } else {
-//             element.style.filter = "invert(0%)";
-//         }
-//     }
-// }
-
-async function displaySongPDF(songSrc: string) {
-    let pdfDoc = await pdfjsLib.getDocument(songSrc).promise;
     for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
         // Create canvas element to render PDF onto
         let canvas = document.createElement("canvas");
-        canvas.classList.add("song_img");
-        // invertSongColor(canvas);
-        song_display_pdf.value?.appendChild(canvas);
-        console.log("yo");
-        // displayedImages.push(canvas);
+        root.value?.appendChild(canvas);
 
         // Grab current page
         let page = await pdfDoc.getPage(pageNum);
         let viewport = page.getViewport({ scale: 5 });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
+        canvas.classList.add("song-img");
 
         // Render PDF page into canvas context
         let ctx = canvas.getContext("2d"); // 3D faster then 2D?
         if (ctx === null) {
-            continue;
+            emit("error");
+            return;
         }
-        await page.render({
-            canvasContext: ctx,
-            viewport: viewport,
-        }).promise;
-    }
-}
-
-let song_img_src = ref("");
-async function displayWifiFail(e: Event) {
-    e.target.src = "assets/wifi_off.svg";
-    e.target.style.width = "50%";
-    e.target.style.height = "50%";
-}
-
-onMounted(async () => {
-
-    song_img_type.value = BOOK_METADATA[props.book].fileExtension;
-    if (song_img_type.value === "pdf") {
-        displaySongPDF(songSrc);
-    } else {
-        song_img_src.value = songSrc;
-        // displaySongImg(songSrc);
+        try {
+            await page.render({
+                canvasContext: ctx,
+                viewport: viewport,
+            }).promise;
+            canvas.style.width = "100%"; // I don't know why this fixes the PDF being rendered for the full size of the canvas
+        } catch {
+            emit("error");
+            return;
+        }
     }
 });
 </script>
 
 <template>
-    <div ref="panzoom_container" class="song_img">
-        <div v-if="song_img_type == 'pdf'" ref="song_display_pdf" class="song_img" />
-        <div v-else-if="song_img_type !== ''">
-            <img @error="displayWifiFail" :src="song_img_src" class="song_img"  />
-        </div>
-    </div>
+    <div ref="root" />
 </template>
 
 <style>
@@ -105,7 +67,7 @@ onMounted(async () => {
 </style>
 
 <style scoped>
-.song_img {
+.song-img {
     display: block;
     width: 100%;
     z-index: -1;

@@ -9,10 +9,4 @@
     "lib": ["es2022", "dom"],
     "module": "es2022"
   },
-
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
 }

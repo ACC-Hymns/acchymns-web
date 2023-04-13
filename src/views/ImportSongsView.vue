@@ -57,7 +57,7 @@ function addImportedURL(url: string) {
 
 function addImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        addImportedURL(known_references[short_book_name]);
+        addImportedURL(known_references[short_book_name as keyof typeof known_references]);
     }
 }
 
@@ -75,7 +75,7 @@ function removeImportedURL(to_remove: string) {
 
 function removeImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        removeImportedURL(known_references[short_book_name]);
+        removeImportedURL(known_references[short_book_name as keyof typeof known_references]);
     }
 }
 
@@ -102,14 +102,14 @@ function removeImportedBook(book: BookSummary) {
             <span>Reference</span>
             <input v-model.trim="reference_input" type="text" />
             <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
-                <img class="ionicon ionicon-custom" src="/assets/chevron-forward-outline.svg" />
+                <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>
         <div class="input-option">
             <span>URL</span>
             <input v-model="url_input" type="url" />
             <button :disabled="url_input.length === 0" @click="addImportedURL(url_input)">
-                <img class="ionicon ionicon-custom" src="/assets/chevron-forward-outline.svg" />
+                <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>
     </div>
@@ -117,12 +117,7 @@ function removeImportedBook(book: BookSummary) {
     <!-- Publicly available, but not imported books -->
     <h2 v-if="preview_books.length != 0">Available Books</h2>
     <div>
-        <div
-            v-for="book in preview_books"
-            :key="book.srcUrl"
-            class="book"
-            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
-        >
+        <div v-for="book in preview_books" :key="book.srcUrl" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
             <div>
                 <div class="book_title_small">{{ book.name.medium }}</div>
             </div>
@@ -137,12 +132,7 @@ function removeImportedBook(book: BookSummary) {
     <!-- Imported Books -->
     <h2 v-if="imported_books.length != 0">Imported Books</h2>
     <div style="padding-bottom: 200px">
-        <div
-            v-for="book in imported_books"
-            :key="book.srcUrl"
-            class="book"
-            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
-        >
+        <div v-for="book in imported_books" :key="book.srcUrl" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
             <div>
                 <div class="book_title_small">{{ book.name.medium }}</div>
             </div>
@@ -160,18 +150,18 @@ function removeImportedBook(book: BookSummary) {
             <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
             <span class="nav__text">Home</span>
         </RouterLink>
-        <a href="/search.html" class="nav__link">
+        <RouterLink to="/search" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
             <span class="nav__text">Search</span>
-        </a>
-        <a href="/bookmarks.html" class="nav__link">
+        </RouterLink>
+        <RouterLink to="/bookmarks" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
             <span class="nav__text">Bookmarks</span>
-        </a>
-        <a href="/settings.html" class="nav__link nav__link--active">
+        </RouterLink>
+        <RouterLink to="/settings/import_songs" class="nav__link nav__link--active">
             <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
             <span class="nav__text">Settings</span>
-        </a>
+        </RouterLink>
     </nav>
 </template>
 

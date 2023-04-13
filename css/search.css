@@ -11,12 +11,11 @@
 }
 
 h2 {
-    margin: 10px 20px 20px 30px;
+    margin: 10px 20px 5px 30px;
     font-size: 20px;
 }
 
-
-form {
+.search-bar {
     background-color: var(--search-color);
     height: 40px;
     border-radius: 15px;
@@ -27,7 +26,6 @@ form {
 }
 
 button {
-    all: unset;
     cursor: pointer;
     width: 44px;
     height: 44px;
@@ -42,7 +40,6 @@ svg {
 }
 
 input {
-    all: unset;
     font: 16px;
     color: var(--color);
     height: 100%;
@@ -58,7 +55,7 @@ input {
 
 .songlist {
     padding-inline-start: 0;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     display: flex;
     flex-direction: column;
 }

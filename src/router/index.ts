@@ -14,6 +14,16 @@ const router = createRouter({
             component: () => import("../views/SongSelectionView.vue"),
         },
         {
+            path: "/topical/:book",
+            props: true,
+            component: () => import("../views/TopicalIndexView.vue"),
+        },
+        // {
+        //     path: "/alphabetical/:book",
+        //     props: true,
+        //     component: () => import("../views/AlphabeticalIndexView.vue"),
+        // },
+        {
             path: "/display/:book/:song",
             props: true,
             component: () => import("../views/SongDisplayView.vue"),
@@ -21,6 +31,14 @@ const router = createRouter({
         {
             path: "/settings/import_songs",
             component: () => import("../views/ImportSongsView.vue"),
+        },
+        {
+            path: "/search",
+            component: () => import("../views/SearchView.vue"),
+        },
+        {
+            path: "/bookmarks",
+            component: () => import("../views/BookmarkedView.vue"),
         },
     ],
 });
