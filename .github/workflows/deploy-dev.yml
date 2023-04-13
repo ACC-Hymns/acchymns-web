@@ -12,9 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: development
-      url: https://${{ env.URL }}
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v3
