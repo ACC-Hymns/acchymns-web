@@ -36,7 +36,8 @@ jobs:
           name: ACC-Hymns/${{ env.PR_REPO_NAME }}
           access-token: ${{ secrets.DEPLOYMENT_PAT }}
 
-  build:
+  build-and-deploy:
+    if: ${{ github.event.action }} != "closed"
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
