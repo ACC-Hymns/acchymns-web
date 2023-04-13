@@ -1,8 +1,8 @@
 {
     "name": {
         "short": "ARF",
-        "medium": "Avon Favorites",
-        "long": "Avon Road Favorites"
+        "medium": "Avon Favourites",
+        "long": "Avon Road Favourites"
     },
     "addOn": true,
     "primaryColor": "#155715",
