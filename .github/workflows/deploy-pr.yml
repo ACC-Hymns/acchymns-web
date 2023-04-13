@@ -4,7 +4,6 @@ on:
     branches: [ staging ]
     types: [ opened, edited, closed ]
     paths-ignore:
-      - '.github/workflows/**'
       - 'ios/**'
       - 'android/**'
       - '.vscode/**'
@@ -78,4 +77,4 @@ jobs:
           git checkout -b gh-pages
           git add .
           git commit -m $GITHUB_SHA
-          git push -u
+          git push origin gh-pages
