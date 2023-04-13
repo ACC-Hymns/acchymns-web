@@ -1,0 +1,51 @@
+name: Build and Deploy Development Branch
+on:
+  push:
+    branches: [ staging ]
+    paths-ignore:
+      - '.github/workflows/**'
+      - 'ios/**'
+      - 'android/**'
+      - '.vscode/**'
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+      
+      # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
+      - name: Set GitHub Actions as Commit Author
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          path: 'build'
+      
+      - name: Build
+        run: |
+          cd build
+          #npm i
+          #npm run build
+          cd ..
+      
+      - name: Checkout Dev Target
+        uses: actions/checkout@v3
+        with:
+          repository: ACC-Hymns/acchymns-dev
+          path: 'deploy'
+          token: ${{ secrets.DEPLOYMENT_PAT }}
+      
+      - name: Push files to target
+        run: |
+          cp -r build/* deploy
+          cd deploy
+          touch .nojekyll
+          git add .
+          git commit -m $GITHUB_SHA
+          git push

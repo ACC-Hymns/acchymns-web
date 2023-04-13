@@ -17,6 +17,7 @@ if (bookName != null && songNum != null){
 }
 
 function finished() {
+    startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
     const sampler = new Tone.Sampler({
         urls: {
             "A2": blob_A2,
@@ -45,7 +46,6 @@ function finished() {
 }
 
 startingNotesButton.addEventListener('mousedown', async (e) => {
-    startingNotesIcon.setAttribute('src', "/assets/musical-notes.svg");
     await Tone.start();
     let index = ["A2", "C3", "A3", "C4", "A4", "C5"];
     for (var i = 0; i < index.length; i++) {

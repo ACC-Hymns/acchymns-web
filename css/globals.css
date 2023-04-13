@@ -270,6 +270,7 @@ ion-icon {
     background-color: #2196F3;
     border-radius: 15px;
 }
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto;
@@ -283,11 +284,13 @@ ion-icon {
 .changeslistings {
     text-align: center;
 }
+
 .changetext {
     display: block;
     white-space: normal; 
     color: var(--color);
 }
+
 .grid-image {
     width: 80px;
     filter: var(--change-svg-filter);
