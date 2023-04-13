@@ -75,7 +75,7 @@ jobs:
           cp -r build/dist/* deploy
           cd deploy
           touch .nojekyll
+          git checkout -b gh-pages
           git add .
           git commit -m $GITHUB_SHA
-          git branch -M gh-pages
-          git push -u origin gh-page
+          git push -u
