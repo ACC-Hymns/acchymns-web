@@ -27,6 +27,11 @@ let search_results = computed(() => {
         .sort((a, b) => a.title.localeCompare(b.title));
 });
 
+let display_limit = ref(50);
+let limited_search_results = computed(() => {
+    return search_results.value.slice(0, display_limit.value);
+});
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
@@ -60,7 +65,7 @@ onMounted(async () => {
     <h2>Search Results</h2>
     <div class="songlist">
         <RouterLink
-            v-for="song in search_results"
+            v-for="song in limited_search_results"
             :key="song.title + song.number + song.book.name.short"
             :to="`/display/${song.book.name.short}/${song.number}`"
             class="song"
@@ -75,6 +80,9 @@ onMounted(async () => {
                 <img v-if="song.book.addOn" class="ionicon" style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)" src="/assets/wifi.svg" />
             </div>
         </RouterLink>
+        <div v-if="display_limit < search_results.length" @click="display_limit += 50" class="song" style="background: blue; justify-content: center">
+            <div class="song__title">Click for more results...</div>
+        </div>
     </div>
 
     <nav class="nav">
