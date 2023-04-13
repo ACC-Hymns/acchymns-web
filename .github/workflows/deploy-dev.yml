@@ -30,7 +30,6 @@ jobs:
       - name: Build
         run: |
           cd build
-          cp -r ./* dist
           #npm i
           #npm run build
           cd ..
@@ -43,7 +42,7 @@ jobs:
       
       - name: Push files to target
         run: |
-          cp -r build/dist/* deploy
+          cp -r build/* deploy
           cd deploy
           touch .nojekyll
           git add .
