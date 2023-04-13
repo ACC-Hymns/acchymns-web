@@ -1,4 +1,4 @@
-import { fetchJSONWithTimeout } from "/books/index.js";
+import { fetchJSONWithTimeout } from "../../../books/index.js";
 
 function removeExternalBook(book_url) {
     let externalBooks = window.localStorage.getItem("externalBooks");
