@@ -255,6 +255,7 @@ ion-icon {
     display: grid;
     grid-template-columns: auto auto;
 }
+
 .grid-item {
     padding: 30px;
     font-size: 15px;
