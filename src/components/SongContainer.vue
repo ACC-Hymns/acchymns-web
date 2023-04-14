@@ -16,10 +16,7 @@ let panzoom_container = ref<HTMLDivElement>();
 
 function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: string]: BookSummary }): string {
     const fileName = songNum.padStart(3, "0") + "." + BOOK_METADATA[bookShort].fileExtension;
-    if (BOOK_METADATA[bookShort].addOn) {
-        return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
-    }
-    return `/books/${bookShort}/songs/${fileName}`;
+    return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
 
 let song_img_src = ref("");
