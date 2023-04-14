@@ -2,7 +2,7 @@ name: Build and Deploy Development Branch
 on:
   pull_request:
     branches: [ staging ]
-    types: [ opened, edited, closed ]
+    types: [ opened, synchronize, closed ]
     paths-ignore:
       - '.github/workflows/**'
       - 'ios/**'
@@ -76,6 +76,7 @@ jobs:
           git pull origin gh-pages
           rm -r *
           cp -r ../build/dist/* .
+          cp index.html 404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
           touch .nojekyll
           git add .
           git commit -m $GITHUB_SHA
