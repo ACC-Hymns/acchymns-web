@@ -15,7 +15,7 @@ onMounted(async () => {
     <div>
         <h1 class="pagetitle">Home</h1>
     </div>
-    <div>
+    <div id="appsection">
         <div v-for="book in available_books" :key="book.name.short">
             <RouterLink :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
                 <div class="book_title">{{ book.name.medium }}</div>

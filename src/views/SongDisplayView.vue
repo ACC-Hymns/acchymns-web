@@ -30,13 +30,14 @@ function toggleBookmark() {
 
 const sampler = new Tone.Sampler({
     urls: {
-        A2: "/assets/notes/A2.mp3",
-        C3: "/assets/notes/C3.mp3",
-        A3: "/assets/notes/A3.mp3",
-        C4: "/assets/notes/C4.mp3",
-        A4: "/assets/notes/A4.mp3",
-        C5: "/assets/notes/C5.mp3",
+        A2: "assets/notes/A2.mp3",
+        C3: "assets/notes/C3.mp3",
+        A3: "assets/notes/A3.mp3",
+        C4: "assets/notes/C4.mp3",
+        A4: "assets/notes/A4.mp3",
+        C5: "assets/notes/C5.mp3",
     },
+    baseUrl: import.meta.env.BASE_URL,
 }).toDestination();
 
 async function playNotes() {
