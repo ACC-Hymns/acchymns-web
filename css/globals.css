@@ -77,11 +77,6 @@ object{
     pointer-events: none;
 }
 
-#appsection {
-    text-align: center;
-    padding-bottom: 200px;
-}
-
 .app {
     width: fit-content;
 }

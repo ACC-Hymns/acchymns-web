@@ -54,7 +54,7 @@ async function fetchBookSummary(url: string, options: RequestInit & { timeout?: 
 
 async function getAllBookMetaData() {
     const now = performance.now();
-    const toFetch: Promise<BookSummary>[] = prepackaged_books.map((book_name) => fetchJSONCached(`/books/${book_name}/summary.json`));
+    const toFetch: Promise<BookSummary>[] = prepackaged_books.map((book_name) => fetchJSONCached(`books/${book_name}/summary.json`));
 
     const externalBooksURLs: string[] = JSON.parse(window.localStorage.getItem("externalBooks") ?? "[]");
 
@@ -71,7 +71,7 @@ async function getAllBookMetaData() {
 
 async function getAllSongMetaData() {
     const now = performance.now();
-    const songsToFetch: Promise<SongList>[] = prepackaged_books.map((book_name) => fetchJSONCached(`/books/${book_name}/songs.json`));
+    const songsToFetch: Promise<SongList>[] = prepackaged_books.map((book_name) => fetchJSONCached(`books/${book_name}/songs.json`));
 
     const externalBooksURLs: string[] = JSON.parse(window.localStorage.getItem("externalBooks") ?? "[]");
 
@@ -88,7 +88,7 @@ async function getAllSongMetaData() {
 
 async function getSongMetaData(book_short_name: string): Promise<SongList> {
     if (prepackaged_books.includes(book_short_name)) {
-        return await fetchJSONCached(`/books/${book_short_name}/songs.json`);
+        return await fetchJSONCached(`books/${book_short_name}/songs.json`);
     }
 
     const BOOK_METADATA = await getAllBookMetaData();
@@ -100,7 +100,7 @@ async function getSongMetaData(book_short_name: string): Promise<SongList> {
 
 async function getBookIndex(book_short_name: string): Promise<BookIndex | undefined> {
     if (prepackaged_books.includes(book_short_name)) {
-        return await fetchJSONCached(`/books/${book_short_name}/index.json`).catch(() => undefined);
+        return await fetchJSONCached(`books/${book_short_name}/index.json`).catch(() => undefined);
     }
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] === undefined) {
