@@ -43,18 +43,11 @@ async function fetchJSONCached(url: string, options: RequestInit & { timeout?: n
 }
 
 async function fetchBookSummary(url: string, options: RequestInit & { timeout?: number } = { timeout: 250 }) {
-    return await fetchJSONCached(`${url}/summary.json`, options)
-        .then((book: BookSummary) => {
-            book.addOn = !prepackaged_books.includes(book.name.short);
-            book.srcUrl = url;
-            return book;
-        })
-        .catch(() => {
-            const temp = UnknownBookSummary;
-            temp.addOn = true;
-            temp.srcUrl = url;
-            return temp;
-        });
+    return await fetchJSONCached(`${url}/summary.json`, options).then((book: BookSummary) => {
+        book.addOn = !prepackaged_books.includes(book.name.short);
+        book.srcUrl = url;
+        return book;
+    });
 }
 
 async function getAllBookMetaData() {
@@ -81,18 +74,20 @@ async function getAllSongMetaData() {
     return temp;
 }
 
-async function getSongMetaData(book_short_name: string): Promise<SongList | undefined> {
+async function getSongMetaData(book_short_name: string): Promise<SongList> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
-        return await fetchJSONCached(`${BOOK_METADATA[book_short_name].srcUrl}/songs.json`).catch(() => UnknownSongList);
+        return await fetchJSONCached(`${BOOK_METADATA[book_short_name].srcUrl}/songs.json`);
     }
+    return {};
 }
 
 async function getBookIndex(book_short_name: string): Promise<BookIndex | undefined> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
-        return await fetchJSONCached(`${BOOK_METADATA[book_short_name].srcUrl}/index.json`).catch(() => undefined);
+        return await fetchJSONCached(`${BOOK_METADATA[book_short_name].srcUrl}/index.json`);
     }
+    return {};
 }
 
 export { fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, fetchJSONWithTimeout };
