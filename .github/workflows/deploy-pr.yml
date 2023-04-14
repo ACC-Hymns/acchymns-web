@@ -57,7 +57,7 @@ jobs:
       - name: Build
         run: |
           cd build
-          echo "VITE_BASE_URL=${{ env.PR_REPO_NAME }}" > .env
+          echo "VITE_BASE_URL=/${{ env.PR_REPO_NAME }}" > .env
           npm i
           npm run build
           cd ..
@@ -73,7 +73,7 @@ jobs:
         run: |
           cd deploy
           git checkout -b gh-pages
-          git pull
+          git pull origin gh-pages
           rm -r *
           cp -r ../build/dist/* .
           touch .nojekyll
