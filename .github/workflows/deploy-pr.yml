@@ -71,11 +71,11 @@ jobs:
       
       - name: Push files to target
         run: |
+          cd deploy
           git checkout -b gh-pages
           git pull
-          rm -r deploy/*
-          cp -r build/dist/* deploy
-          cd deploy
+          rm -r *
+          cp -r ../build/dist/* .
           touch .nojekyll
           git add .
           git commit -m $GITHUB_SHA
