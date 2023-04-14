@@ -1,5 +1,4 @@
 import type { BookSummary, SongList, BookIndex } from "./types";
-import { UnknownBookSummary, UnknownSongList } from "./types";
 const prepackaged_books = ["ZH", "GH", "JH", "HG"];
 const prepackaged_book_urls: string[] = prepackaged_books.map((book_name) => import.meta.env.BASE_URL + "books/" + book_name);
 
