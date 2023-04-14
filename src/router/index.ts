@@ -40,6 +40,10 @@ const router = createRouter({
             path: "/bookmarks",
             component: () => import("../views/BookmarkedView.vue"),
         },
+        {
+            path: "/:catchAll(.*)",
+            component: () => import("../views/404View.vue"),
+        },
     ],
 });
 
