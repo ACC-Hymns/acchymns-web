@@ -29,16 +29,40 @@ const router = createRouter({
             component: () => import("../views/SongDisplayView.vue"),
         },
         {
-            path: "/settings/import_songs",
-            component: () => import("../views/ImportSongsView.vue"),
-        },
-        {
             path: "/search",
             component: () => import("../views/SearchView.vue"),
         },
         {
             path: "/bookmarks",
             component: () => import("../views/BookmarkedView.vue"),
+        },
+        {
+            path: "/settings",
+            component: () => import("../views/SettingsView.vue"),
+        },
+        {
+            path: "/settings/about",
+            component: () => import("../views/SettingsAboutView.vue"),
+        },
+        {
+            path: "/settings/about/changelog",
+            component: () => import("../views/SettingsAboutChangelogView.vue"),
+        },
+        {
+            path: "/settings/about/attributions",
+            component: () => import("../views/SettingsAboutAttributionsView.vue"),
+        },
+        {
+            path: "/settings/help",
+            component: () => import("../views/SettingsHelpView.vue"),
+        },
+        {
+            path: "/settings/options",
+            component: () => import("../views/SettingsOptionsView.vue"),
+        },
+        {
+            path: "/settings/import",
+            component: () => import("../views/SettingsImportView.vue"),
         },
         {
             path: "/:catchAll(.*)",

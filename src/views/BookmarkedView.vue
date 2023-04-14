@@ -88,7 +88,7 @@ onMounted(async () => {
             <img class="ionicon nav__icon--active" src="/assets/bookmark.svg" />
             <span class="nav__text">Bookmarks</span>
         </RouterLink>
-        <RouterLink to="/settings/import_songs" class="nav__link">
+        <RouterLink to="/settings" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
             <span class="nav__text">Settings</span>
         </RouterLink>

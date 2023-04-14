@@ -27,7 +27,7 @@ onMounted(async () => {
                 <img class="appbuttonplay" src="/assets/en_badge_web_generic.png" />
             </a>
             <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
-                <object class="appbuttonapple" data="./assets/Appstore_badge.svg"></object>
+                <object class="appbuttonapple" data="/assets/Appstore_badge.svg"></object>
             </a>
         </div>
     </div>
@@ -44,7 +44,7 @@ onMounted(async () => {
             <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
             <span class="nav__text">Bookmarks</span>
         </RouterLink>
-        <RouterLink to="/settings/import_songs" class="nav__link">
+        <RouterLink to="/settings" class="nav__link">
             <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
             <span class="nav__text">Settings</span>
         </RouterLink>
