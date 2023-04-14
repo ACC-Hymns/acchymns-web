@@ -57,6 +57,7 @@ jobs:
       - name: Build
         run: |
           cd build
+          echo "VITE_BASE_URL=${{ env.PR_REPO_NAME }}" > .env
           npm i
           npm run build
           cd ..
