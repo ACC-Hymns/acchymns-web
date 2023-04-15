@@ -31,6 +31,7 @@ onMounted(async () => {
                 book: BOOK_METADATA[props.book],
             });
         }
+        topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
 });
 </script>

@@ -51,5 +51,10 @@ type BookIndex = {
 };
 const UnknownBookIndex: BookIndex = {};
 
-export type { BookSummary, Song, SongList, BookmarkedSong, SongReference, BookIndex };
+type SearchParams = {
+    search: string;
+    bookFilters: BookSummary[];
+}
+
+export type { BookSummary, Song, SongList, BookmarkedSong, SongReference, BookIndex, SearchParams };
 export { UnknownBookSummary, UnknownSongList, UnknownBookIndex };

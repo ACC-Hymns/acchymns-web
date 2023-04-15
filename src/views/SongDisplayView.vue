@@ -45,6 +45,9 @@ async function playNotes() {
     if (notes_playing.value) return;
     notes_playing.value = true;
 
+    console.log("attempting to start notes")
+    const start = performance.now();
+
     await Tone.start();
     await Tone.loaded();
 
@@ -68,6 +71,7 @@ async function playNotes() {
     } else {
         sampler.triggerAttackRelease(notes.value, duration);
     }
+    console.log(`notes started (${performance.now() - start} ms)`)
 }
 
 onMounted(async () => {
