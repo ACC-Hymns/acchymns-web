@@ -19,7 +19,7 @@ onMounted(async () => {
         <div v-for="book in available_books" :key="book.name.short">
             <RouterLink :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
                 <div class="book_title">{{ book.name.medium }}</div>
-                <img v-if="book.addOn || Capacitor.getPlatform() === 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
+                <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
             </RouterLink>
         </div>
         <div v-if="Capacitor.getPlatform() === 'web'">

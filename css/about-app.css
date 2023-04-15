@@ -39,7 +39,6 @@ h2 {
 .release, .releaseDate {
     display: inline-block;
     padding: 0px, 5px;
-    margin-bottom: 0px;
 }
 
 .releaseDate {

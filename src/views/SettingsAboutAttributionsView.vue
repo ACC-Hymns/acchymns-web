@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+const router = useRouter();
 </script>
 
 <template>
     <div class="title">
-        <a href="./about-app.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
+        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Attributions</h1>
         <span class="space"></span>
     </div>
@@ -26,7 +27,7 @@ import { RouterLink } from "vue-router";
             <h3 class="release">Avanka Panzoom</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">9.4.3</h5>
         </a>
-        <a class="attribution">
+        <div class="attribution">
             <h3 class="release" style="margin-bottom: 0px">Contributors</h3>
             <ul>
                 <li class="change">Christopher Weinhardt</li>
@@ -39,7 +40,7 @@ import { RouterLink } from "vue-router";
                 <li class="change">Joel Walter</li>
                 <li class="change">Leah Walter</li>
             </ul>
-        </a>
+        </div>
     </div>
 
     <nav class="nav">

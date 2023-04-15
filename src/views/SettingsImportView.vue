@@ -3,7 +3,9 @@ import { fetchBookSummary } from "@/scripts/book_import";
 import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
-import type { RouterLink } from "vue-router";
+import { Capacitor } from "@capacitor/core";
+import { RouterLink, useRouter } from "vue-router";
+const router = useRouter();
 
 const branch = "staging";
 
@@ -90,7 +92,7 @@ function removeImportedBook(book: BookSummary) {
 
 <template>
     <div class="title">
-        <a href="/settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
+        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Import Books</h1>
         <span class="space"></span>
     </div>
@@ -137,7 +139,7 @@ function removeImportedBook(book: BookSummary) {
                 <div class="book_title_small">{{ book.name.medium }}</div>
             </div>
             <div class="booktext--right">
-                <img class="ionicon ionicon-custom" src="/assets/wifi.svg" />
+                <img v-if="Capacitor.getPlatform() !== 'web'" class="ionicon ionicon-custom" src="/assets/wifi.svg" />
                 <button @click="removeImportedBook(book)">
                     <img class="ionicon ionicon-custom" src="/assets/close.svg" />
                 </button>

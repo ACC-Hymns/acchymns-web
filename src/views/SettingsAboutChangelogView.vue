@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+const router = useRouter();
 </script>
 
 <template>
     <div class="title">
-        <a href="./about-app.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
+        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Changelog</h1>
         <span class="space"></span>
     </div>

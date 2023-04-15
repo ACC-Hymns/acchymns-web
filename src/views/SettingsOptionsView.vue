@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+const router = useRouter();
 
 let song_invert = useLocalStorage("songInverted", false);
 let staggered_notes = useLocalStorage("staggered", false);
@@ -10,7 +11,7 @@ let playback_duration = useLocalStorage("playbackDuration", 3);
 
 <template>
     <div class="title">
-        <a href="../../../settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
+        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Options</h1>
         <span class="space"></span>
     </div>
