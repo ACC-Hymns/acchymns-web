@@ -197,6 +197,7 @@ object{
     backdrop-filter: blur(8px);
     background-color: var(--menu-color);
     box-shadow: var(--box-shadow);
+    padding-top: env(safe-area-inset-top);
     position: fixed;
     width: 100%;
     top: 0;

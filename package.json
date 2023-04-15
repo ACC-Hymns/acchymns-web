@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@aashu-dubey/capacitor-statusbar-safe-area": "^2.0.0",
     "@capacitor/android": "^4.7.1",
     "@capacitor/core": "^4.7.1",
     "@capacitor/ios": "^4.7.1",
