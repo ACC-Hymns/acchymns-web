@@ -1,10 +1,13 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-    appId: "org.ACCHymns.app",
+    appId: "com.ChristopherW.acchmns",
     appName: "ACCHymns",
     webDir: "dist",
     bundledWebRuntime: false,
+    ios: {
+        scheme: "ACC Hymns"
+    }
 };
 
 export default config;

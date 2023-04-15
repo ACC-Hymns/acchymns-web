@@ -5,11 +5,6 @@ import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
 import { ref, onMounted } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
-import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
-
-const injectSafeAreaVariables = () => {
-  SafeAreaController.injectCSSVariables();
-};
 
 const props = defineProps<{
     book: string;
@@ -64,15 +59,13 @@ onMounted(async () => {
 </script>
 
 <template>
-    <safe-area mode="margin" edges="top">
-        <div v-if="error_is_active" class="fallback-container">
-            <img src="/assets/wifi_off.svg" class="wifi-fallback" />
-        </div>
-        <div v-else ref="panzoom_container" class="panzoom-container">
-            <PDFWrapper v-if="song_img_type == 'pdf'" @error="error_is_active = true" :src="song_img_src" class="song-img" />
-            <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" />
-        </div>
-    </safe-area>
+    <div v-if="error_is_active" class="fallback-container">
+        <img src="/assets/wifi_off.svg" class="wifi-fallback" />
+    </div>
+    <div v-else ref="panzoom_container" class="panzoom-container">
+        <PDFWrapper v-if="song_img_type == 'pdf'" @error="error_is_active = true" :src="song_img_src" class="song-img" />
+        <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" />
+    </div>
 </template>
 <style scoped>
 @import "/css/globals.css";
@@ -100,7 +93,7 @@ onMounted(async () => {
     width: 100%;
     z-index: -1;
     position: absolute;
-    padding-top: 61.16px;
+    padding-top: calc(var(--safe-area-inset-top) + 61.16px);
     top: 0;
     left: 0;
 }

@@ -26,19 +26,7 @@ function toggleBookmark() {
         let index = bookmarks.value.findIndex((bookmark) => bookmark.book == props.book && bookmark.song == props.song);
         bookmarks.value.splice(index, 1);
     }
-}
-
-const sampler = new Tone.Sampler({
-    urls: {
-        A2: "assets/notes/A2.mp3",
-        C3: "assets/notes/C3.mp3",
-        A3: "assets/notes/A3.mp3",
-        C4: "assets/notes/C4.mp3",
-        A4: "assets/notes/A4.mp3",
-        C5: "assets/notes/C5.mp3",
-    },
-    baseUrl: import.meta.env.BASE_URL,
-}).toDestination();
+}let sampler: Tone.Sampler;
 
 async function playNotes() {
     // Only play notes if notes are not already playing
@@ -75,6 +63,28 @@ async function playNotes() {
 }
 
 onMounted(async () => {
+    const A2 = await fetch(import.meta.env.BASE_URL + "assets/notes/A2.mp3");
+    const C3 = await fetch(import.meta.env.BASE_URL + "assets/notes/C3.mp3");
+    const A3 = await fetch(import.meta.env.BASE_URL + "assets/notes/A3.mp3");
+    const C4 = await fetch(import.meta.env.BASE_URL + "assets/notes/C4.mp3");
+    const A4 = await fetch(import.meta.env.BASE_URL + "assets/notes/A4.mp3");
+    const C5 = await fetch(import.meta.env.BASE_URL + "assets/notes/C5.mp3");
+    const A2Blob = await A2.blob();
+    const C3Blob = await C3.blob();
+    const A3Blob = await A3.blob();
+    const C4Blob = await C4.blob();
+    const A4Blob = await A4.blob();
+    const C5Blob = await C5.blob();
+    sampler = new Tone.Sampler({
+    urls: {
+        A2: URL.createObjectURL(A2Blob),
+        C3: URL.createObjectURL(C3Blob),
+        A3: URL.createObjectURL(A3Blob),
+        C4: URL.createObjectURL(C4Blob),
+        A4: URL.createObjectURL(A4Blob),
+        C5: URL.createObjectURL(C5Blob)
+    }
+}).toDestination();
     const SONG_METADATA = await getSongMetaData(props.book);
     notes.value = (SONG_METADATA[props.song]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
 });

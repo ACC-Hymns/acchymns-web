@@ -55,7 +55,7 @@ input {
 
 .songlist {
     padding-inline-start: 0;
-    padding-bottom: 70px;
+    padding-bottom: calc(var(--safe-area-inset-bottom) + 70px);
     display: flex;
     flex-direction: column;
 }

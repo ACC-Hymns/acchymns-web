@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { SafeAreaController, SafeArea } from '@aashu-dubey/capacitor-statusbar-safe-area';
 // import { createPinia } from "pinia";
 
 import App from "./App.vue";
@@ -10,3 +11,4 @@ const app = createApp(App);
 app.use(router);
 
 app.mount("#app");
+SafeAreaController.injectCSSVariables();
