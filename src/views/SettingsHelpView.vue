@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
     <div class="title">
-        <a href="../../settings.html"><img class="ionicon" src="../../assets/chevron-back-outline.svg"></a>
+        <a href="../../settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg"></a>
         <h1>Help</h1>
         <span class="space"></span>
     </div>
@@ -12,7 +12,7 @@ import { RouterLink } from "vue-router";
     <div class="settings">
         <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
             <span>Report a Bug</span>
-            <img class="ionicon" src="../../assets/link-outline.svg" />
+            <img class="ionicon" src="/assets/link-outline.svg" />
         </a>
     </div>
 

@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
     <div class="title">
-        <a href="./about-app.html"><img class="ionicon" src="../../assets/chevron-back-outline.svg" /></a>
+        <a href="./about-app.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
         <h1>Attributions</h1>
         <span class="space"></span>
     </div>

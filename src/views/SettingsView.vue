@@ -8,11 +8,11 @@ import { RouterLink } from "vue-router";
     <div class="settings">
         <RouterLink to="/settings/about" class="settings-option">
             <span>About App</span>
-            <img class="entrypoint ionicon" src="assets/chevron-forward-outline.svg" />
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
         <RouterLink to="/settings/help" class="settings-option">
             <span>Help</span>
-            <img class="entrypoint ionicon" src="assets/chevron-forward-outline.svg" />
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>
 
@@ -20,11 +20,11 @@ import { RouterLink } from "vue-router";
     <div class="settings">
         <RouterLink to="/settings/options" class="settings-option">
             <span>Options</span>
-            <img class="entrypoint ionicon" src="assets/chevron-forward-outline.svg" />
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
             <span>Import Books</span>
-            <img class="entrypoint ionicon" src="assets/chevron-forward-outline.svg" />
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>
 

@@ -10,7 +10,7 @@ let playback_duration = useLocalStorage("playbackDuration", 3);
 
 <template>
     <div class="title">
-        <a href="../../../settings.html"><img class="ionicon" src="../../../assets/chevron-back-outline.svg" /></a>
+        <a href="../../../settings.html"><img class="ionicon" src="/assets/chevron-back-outline.svg" /></a>
         <h1>Options</h1>
         <span class="space"></span>
     </div>
