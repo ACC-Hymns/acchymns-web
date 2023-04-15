@@ -22,14 +22,14 @@ onMounted(async () => {
                 <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
             </RouterLink>
         </div>
-        <div v-if="Capacitor.getPlatform() === 'web'">
+        <template v-if="Capacitor.getPlatform() === 'web'">
             <a class="app" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
                 <img class="appbuttonplay" src="/assets/en_badge_web_generic.png" />
             </a>
             <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
                 <object class="appbuttonapple" data="/assets/Appstore_badge.svg"></object>
             </a>
-        </div>
+        </template>
     </div>
     <nav class="nav">
         <RouterLink to="/" class="nav__link nav__link--active">
