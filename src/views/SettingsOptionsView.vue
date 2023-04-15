@@ -4,7 +4,7 @@ import { RouterLink, useRouter } from "vue-router";
 const router = useRouter();
 
 let song_invert = useLocalStorage("songInverted", false);
-let staggered_notes = useLocalStorage("staggered", false);
+let staggered_notes = useLocalStorage("staggered", true);
 let playback_interval = useLocalStorage("playbackInterval", 0.25);
 let playback_duration = useLocalStorage("playbackDuration", 3);
 let override_system_theme = useLocalStorage("overrideSystemTheme", false);

@@ -55,7 +55,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div ref="root" />
+    <div ref="root" class="container" />
 </template>
 
 <style>
@@ -71,5 +71,11 @@ onMounted(async () => {
     display: block;
     width: 100%;
     z-index: -1;
+}
+
+/* This is to remove the black line between pages */
+.container {
+    font-size: 0;
+    line-height: 0;
 }
 </style>
