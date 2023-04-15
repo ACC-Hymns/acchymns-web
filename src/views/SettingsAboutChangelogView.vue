@@ -11,7 +11,7 @@ const router = useRouter();
     </div>
     <div class="settings-holder">
         <div class="settings">
-            <div class="changelog">
+            <a class="changelog">
                 <h3 class="release">[v1.4]</h3>
                 <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-02-20</h5>
                 <ul>
@@ -19,8 +19,8 @@ const router = useRouter();
                     <li class="change">Visual fidelity for some books</li>
                     <li class="change">Bug fixes</li>
                 </ul>
-            </div>
-            <div class="changelog">
+            </a>
+            <a class="changelog">
                 <h3 class="release">[v1.3] - New Years Update</h3>
                 <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-01-16</h5>
                 <ul>
@@ -30,8 +30,8 @@ const router = useRouter();
                     <li class="change">Visual improvements</li>
                     <li class="change">Bug fixes</li>
                 </ul>
-            </div>
-            <div class="changelog">
+            </a>
+            <a class="changelog">
                 <h3 class="release">[v1.2]</h3>
                 <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-10-20</h5>
                 <ul>
@@ -41,16 +41,16 @@ const router = useRouter();
                     <li class="change">Visual improvments</li>
                     <li class="change">Bug fixes</li>
                 </ul>
-            </div>
-            <div class="changelog">
+            </a>
+            <a class="changelog">
                 <h3 class="release">[v1.1]</h3>
                 <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-07-16</h5>
                 <ul>
                     <li class="change">Added missing songs</li>
                     <li class="change">Visual improvments</li>
                 </ul>
-            </div>
-            <div class="changelog">
+            </a>
+            <a class="changelog">
                 <h3 class="release">[v1.0] - Initial Release</h3>
                 <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-07-15</h5>
                 <ul>
@@ -62,7 +62,7 @@ const router = useRouter();
                     <li class="change">Added Bookmarks Page</li>
                     <li class="change">Added Dark Theme</li>
                 </ul>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -89,6 +89,7 @@ const router = useRouter();
 <style>
 @import "/css/settings.css";
 @import "/css/globals.css";
+@import "/css/about-app.css";
 @import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 </style>

@@ -73,8 +73,30 @@ function check_selected(book: BookSummary) {
     }
 }
 
+function hexToRgb(hex: string) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+function componentToHex(c: any) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+function rgbToHex(r: any, g: any, b: any) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 function darken(input: string) {
-    return `color-mix(in srgb, ${input}, black)`
+    let baseColor = hexToRgb(input);
+    if(!baseColor)
+        return input;
+    baseColor.r *= 0.50;
+    baseColor.g *= 0.50;
+    baseColor.b *= 0.50;
+    console.log(rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b)));
+    return rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b));
 }
 
 onMounted(async () => {

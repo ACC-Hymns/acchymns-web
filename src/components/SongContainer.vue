@@ -67,8 +67,9 @@ onMounted(async () => {
         <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" />
     </div>
 </template>
-
 <style scoped>
+@import "/css/globals.css";
+
 .song-img {
     display: block;
     width: 100%;
