@@ -7,6 +7,8 @@ let song_invert = useLocalStorage("songInverted", false);
 let staggered_notes = useLocalStorage("staggered", false);
 let playback_interval = useLocalStorage("playbackInterval", 0.25);
 let playback_duration = useLocalStorage("playbackDuration", 3);
+let override_system_theme = useLocalStorage("overrideSystemTheme", false);
+let override_dark_mode = useLocalStorage("overrideDarkMode", false);
 </script>
 
 <template>
@@ -16,12 +18,26 @@ let playback_duration = useLocalStorage("playbackDuration", 3);
         <span class="space"></span>
     </div>
 
-    <h2>Dark Theme</h2>
+    <h2>Theme</h2>
     <div class="settings">
         <div class="settings-option">
             <span>Invert Song Colors</span>
             <label class="switch">
                 <input v-model="song_invert" type="checkbox" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="settings-option">
+            <span>Override System Theme</span>
+            <label class="switch">
+                <input v-model="override_system_theme" type="checkbox" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div v-show="override_system_theme" class="settings-option">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input v-model="override_dark_mode" type="checkbox" />
                 <span class="slider round"></span>
             </label>
         </div>
