@@ -9,6 +9,7 @@ let playback_interval = useLocalStorage("playbackInterval", 0.25);
 let playback_duration = useLocalStorage("playbackDuration", 3);
 let override_system_theme = useLocalStorage("overrideSystemTheme", false);
 let override_dark_mode = useLocalStorage("overrideDarkMode", false);
+let panzoom_enabled = useLocalStorage("panzoomEnable", true);
 </script>
 
 <template>
@@ -24,6 +25,13 @@ let override_dark_mode = useLocalStorage("overrideDarkMode", false);
             <span>Invert Song Colors</span>
             <label class="switch">
                 <input v-model="song_invert" type="checkbox" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="settings-option">
+            <span>Enable Pan & Zoom</span>
+            <label class="switch">
+                <input v-model="panzoom_enabled" type="checkbox" />
                 <span class="slider round"></span>
             </label>
         </div>
