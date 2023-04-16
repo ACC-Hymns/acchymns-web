@@ -10,7 +10,7 @@ body {
     -ms-user-select: none;
     user-select: none;
     
-    padding-top: var(--status-bar-height);
+    padding-top: env(safe-area-inset-top);
     font-family: 'Lato', sans-serif;
     background-color: var(--background);
 }
@@ -106,7 +106,7 @@ object{
     box-shadow: var(--box-shadow);
     background-color: var(--toolbar);
     padding-top: 5px;
-    padding-bottom: calc(var(--safe-area-inset-bottom) + 5px);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5px);
     display: flex;
 }
 
@@ -197,7 +197,7 @@ object{
     backdrop-filter: blur(8px);
     background-color: var(--menu-color);
     box-shadow: var(--box-shadow);
-    padding-top: var(--status-bar-height);
+    padding-top: env(safe-area-inset-top);
     position: fixed;
     width: 100%;
     top: 0;
