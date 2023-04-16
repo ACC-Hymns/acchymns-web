@@ -93,7 +93,7 @@ onMounted(async () => {
     width: 100%;
     z-index: -1;
     position: absolute;
-    padding-top: calc(var(--safe-area-inset-top) + 61.16px);
+    padding-top: calc(var(--status-bar-height) + 61.16px);
     top: 0;
     left: 0;
 }

@@ -10,7 +10,7 @@ body {
     -ms-user-select: none;
     user-select: none;
     
-    padding-top: var(--safe-area-inset-top);
+    padding-top: var(--status-bar-height);
     font-family: 'Lato', sans-serif;
     background-color: var(--background);
 }
@@ -197,7 +197,7 @@ object{
     backdrop-filter: blur(8px);
     background-color: var(--menu-color);
     box-shadow: var(--box-shadow);
-    padding-top: var(--safe-area-inset-top);
+    padding-top: var(--status-bar-height);
     position: fixed;
     width: 100%;
     top: 0;
