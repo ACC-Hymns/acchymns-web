@@ -16,18 +16,22 @@ onMounted(async () => {
         <h1 class="pagetitle">Home</h1>
     </div>
     <div id="appsection">
-        <div v-for="book in available_books" :key="book.name.short">
-            <RouterLink :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
-                <div class="book_title">{{ book.name.medium }}</div>
-                <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
-            </RouterLink>
-        </div>
+        <RouterLink 
+            v-for="book in available_books"
+            :key="book.name.short"
+            :to="`selection/${book.name.short}`"
+            class="book"
+            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
+        >
+            <div class="book_title">{{ book.name.medium }}</div>
+            <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
+        </RouterLink>
         <template v-if="Capacitor.getPlatform() === 'web'">
-            <a class="app" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
-                <img class="appbuttonplay" src="/assets/en_badge_web_generic.png" />
+            <a class="app-button-container play-store-width" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
+                <img class="app-button" src="/assets/en_badge_web_generic.png" />
             </a>
-            <a class="app" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
-                <object class="appbuttonapple" data="/assets/Appstore_badge.svg"></object>
+            <a class="app-button-container app-store-width" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
+                <object class="app-button" data="/assets/Appstore_badge.svg"></object>
             </a>
         </template>
     </div>
@@ -55,6 +59,27 @@ onMounted(async () => {
 #appsection {
     text-align: center;
     padding-bottom: 200px;
+}
+
+.app-button {
+    width: 100%;
+    display: inline-block;
+    pointer-events: none;
+}
+
+.app-button-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.app-store-width {
+    max-width: 310px;
+}
+
+.play-store-width {
+    max-width: 350px;
 }
 </style>
 
