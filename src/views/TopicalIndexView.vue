@@ -120,7 +120,7 @@ onMounted(async () => {
  * @see https://chenhuijing.com/blog/flexbox-and-padding/
  * @see https://itnext.io/horizontal-overflow-with-flexbox-css-64f530495303
  */
- .topic-list::before,
+.topic-list::before,
 .topic-list::after {
     content: "";
     display: inline-block;
