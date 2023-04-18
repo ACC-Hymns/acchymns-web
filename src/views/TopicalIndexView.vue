@@ -15,7 +15,7 @@ let primary_color = ref("#000000");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: SongReference[] }>({});
 
-function isSelected(topic: string) {
+function isSelected(topic: string | number) {
     return false;
 }
 
