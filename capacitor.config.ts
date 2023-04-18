@@ -6,8 +6,8 @@ const config: CapacitorConfig = {
     webDir: "dist",
     bundledWebRuntime: false,
     ios: {
-        scheme: "ACC Hymns"
-    }
+        scheme: "ACC Hymns",
+    },
 };
 
 export default config;

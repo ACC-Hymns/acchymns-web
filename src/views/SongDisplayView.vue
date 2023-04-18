@@ -26,14 +26,15 @@ function toggleBookmark() {
         let index = bookmarks.value.findIndex((bookmark) => bookmark.book == props.book && bookmark.song == props.song);
         bookmarks.value.splice(index, 1);
     }
-}let sampler: Tone.Sampler;
+}
+let sampler: Tone.Sampler;
 
 async function playNotes() {
     // Only play notes if notes are not already playing
     if (notes_playing.value) return;
     notes_playing.value = true;
 
-    console.log("attempting to start notes")
+    console.log("attempting to start notes");
     const start = performance.now();
 
     await Tone.start();
@@ -59,7 +60,7 @@ async function playNotes() {
     } else {
         sampler.triggerAttackRelease(notes.value, duration);
     }
-    console.log(`notes started (${performance.now() - start} ms)`)
+    console.log(`notes started (${performance.now() - start} ms)`);
 }
 
 onMounted(async () => {
@@ -76,15 +77,15 @@ onMounted(async () => {
     const A4Blob = await A4.blob();
     const C5Blob = await C5.blob();
     sampler = new Tone.Sampler({
-    urls: {
-        A2: URL.createObjectURL(A2Blob),
-        C3: URL.createObjectURL(C3Blob),
-        A3: URL.createObjectURL(A3Blob),
-        C4: URL.createObjectURL(C4Blob),
-        A4: URL.createObjectURL(A4Blob),
-        C5: URL.createObjectURL(C5Blob)
-    }
-}).toDestination();
+        urls: {
+            A2: URL.createObjectURL(A2Blob),
+            C3: URL.createObjectURL(C3Blob),
+            A3: URL.createObjectURL(A3Blob),
+            C4: URL.createObjectURL(C4Blob),
+            A4: URL.createObjectURL(A4Blob),
+            C5: URL.createObjectURL(C5Blob),
+        },
+    }).toDestination();
     const SONG_METADATA = await getSongMetaData(props.book);
     notes.value = (SONG_METADATA[props.song]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
 });

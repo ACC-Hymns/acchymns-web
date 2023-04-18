@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted, toRaw } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useSessionStorage } from "@vueuse/core";
-import { Capacitor, } from "@capacitor/core";
-import type {BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
+import { Capacitor } from "@capacitor/core";
+import type { BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
 
-let searchParams = useSessionStorage<SearchParams>("searchParams", {search: "", bookFilters: []})
+let search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
-let search_query = ref(searchParams.value.search);
+let search_query = ref(search_params.value.search);
 let stripped_query = computed(() => {
     var query = search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
         .replace(/s{2,}/g, " ")
         .toLowerCase();
-    searchParams.value.search = query;
+    search_params.value.search = query;
     return query;
 });
 
@@ -23,7 +23,7 @@ let available_books = ref<BookSummary[]>([]);
 
 let display_limit = ref(50);
 let search_results = computed(() => {
-    if(searchParams.value.bookFilters.length > 0) {
+    if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
             .filter((s) => {
                 s.stripped_title = s.title
@@ -31,9 +31,12 @@ let search_results = computed(() => {
                     .replace(/s{2,}/g, " ")
                     .toLowerCase();
                 let stripped_number = s.number?.toLowerCase() ?? "";
-                return (s.stripped_title.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) && searchParams.value.bookFilters.find(b => b.name.short == s.book.name.short);
+                return (
+                    (s.stripped_title.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) &&
+                    search_params.value.bookFilters.find((b) => b.name.short == s.book.name.short)
+                );
             })
-        .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
@@ -45,56 +48,52 @@ let search_results = computed(() => {
                 let stripped_number = s.number?.toLowerCase() ?? "";
                 return s.stripped_title.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
             })
-        .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
 });
-    
+
 let limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
 function filterBook(event: any, book: BookSummary) {
-    if(searchParams.value.bookFilters.find(b => b.name.short == book.name.short)){
-        let foundBook = searchParams.value.bookFilters.find(b => b.name.short == book.name.short);
-        if(foundBook)
-            searchParams.value.bookFilters.splice(searchParams.value.bookFilters.indexOf(foundBook), 1);
-    }
-    else
-        searchParams.value.bookFilters.push(book);
+    if (search_params.value.bookFilters.find((b) => b.name.short == book.name.short)) {
+        let foundBook = search_params.value.bookFilters.find((b) => b.name.short == book.name.short);
+        if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
+    } else search_params.value.bookFilters.push(book);
 }
 
 function check_selected(book: BookSummary) {
-    if(searchParams.value.bookFilters.length == 0)
-        return false;
+    if (search_params.value.bookFilters.length == 0) return false;
     else {
-        if(searchParams.value.bookFilters.find(b => b.name.short == book.name.short))
-            return true;
+        if (search_params.value.bookFilters.find((b) => b.name.short == book.name.short)) return true;
         else return false;
     }
 }
 
 function hexToRgb(hex: string) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+        ? {
+              r: parseInt(result[1], 16),
+              g: parseInt(result[2], 16),
+              b: parseInt(result[3], 16),
+          }
+        : null;
 }
 function componentToHex(c: any) {
-  var hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
 }
 function rgbToHex(r: any, g: any, b: any) {
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 function darken(input: string) {
     let baseColor = hexToRgb(input);
-    if(!baseColor)
-        return input;
-    baseColor.r *= 0.50;
-    baseColor.g *= 0.50;
-    baseColor.b *= 0.50;
+    if (!baseColor) return input;
+    baseColor.r *= 0.5;
+    baseColor.g *= 0.5;
+    baseColor.b *= 0.5;
     console.log(rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b)));
     return rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b));
 }
@@ -131,21 +130,19 @@ onMounted(async () => {
     </div>
 
     <h2>Hymnals</h2>
-            <div class="hymnalfilters">
-                <a
-                v-for="book in available_books"
-                :key="book.name.medium"
-                class="hymnalfilterbutton"
-                :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
-                v-on:click="filterBook($event, book)"
-            >
-                    <div>{{ book.name.medium}}</div>
-                </a>
-            </div>
+    <div class="hymnalfilters">
+        <a
+            v-for="book in available_books"
+            :key="book.name.medium"
+            class="hymnalfilterbutton"
+            :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
+            v-on:click="filterBook($event, book)"
+        >
+            <div>{{ book.name.medium }}</div>
+        </a>
+    </div>
 
-    <h2 v-if="search_results.length > 0">
-        Search Results ({{search_results.length}})
-    </h2>
+    <h2 v-if="search_results.length > 0">Search Results ({{ search_results.length }})</h2>
     <div class="songlist">
         <RouterLink
             v-for="song in limited_search_results"
@@ -168,7 +165,7 @@ onMounted(async () => {
                 />
             </div>
         </RouterLink>
-        <div v-if="display_limit < search_results.length" @click="display_limit += 50" class="song" style="background: #2196F3; justify-content: center">
+        <div v-if="display_limit < search_results.length" @click="display_limit += 50" class="song" style="background: #2196f3; justify-content: center">
             <div class="song__title">Click for more results...</div>
         </div>
     </div>
