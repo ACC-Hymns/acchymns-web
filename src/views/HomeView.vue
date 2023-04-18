@@ -16,7 +16,7 @@ onMounted(async () => {
         <h1 class="pagetitle">Home</h1>
     </div>
     <div id="appsection">
-        <RouterLink 
+        <RouterLink
             v-for="book in available_books"
             :key="book.name.short"
             :to="`selection/${book.name.short}`"

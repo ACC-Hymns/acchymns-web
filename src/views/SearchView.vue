@@ -129,7 +129,7 @@ onMounted(async () => {
         </button>
     </div>
 
-    <h2>Hymnals</h2>
+    <h2>Filter by Hymnal</h2>
     <div class="hymnalfilters">
         <a
             v-for="book in available_books"
