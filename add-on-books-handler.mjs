@@ -1,3 +1,7 @@
+// This script is for compressing the json files
+// which describe each book. It's also used to remove
+// books which are add-ons, and don't come by default
+
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
