@@ -11,15 +11,21 @@ const router = useRouter();
 
 let num_of_songs = ref(0);
 let book_name = ref("");
-let button_color = ref("#000000");
+let primary_color = ref("#000000");
+let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: SongReference[] }>({});
+
+function isSelected(topic: string) {
+    return false;
+}
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const BOOK_SONG_METADATA = await getSongMetaData(props.book);
     num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
     book_name.value = BOOK_METADATA[props.book].name.medium;
-    button_color.value = BOOK_METADATA[props.book].primaryColor;
+    primary_color.value = BOOK_METADATA[props.book].primaryColor;
+    secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
     const raw_index = (await getBookIndex(BOOK_METADATA[props.book].name.short)) ?? {};
     for (let [topic_name, numbers] of Object.entries(raw_index)) {
         topical_index.value[topic_name] = [];
@@ -49,9 +55,11 @@ onMounted(async () => {
 
     <div style="margin-top: 70px">
         <!-- Each Topical Section -->
-        <div v-for="(topic_songs, topic) in topical_index" :key="topic">
-            <h2>{{ topic }}</h2>
-            <RouterLink
+        <div class="topic-list">
+            <div v-for="(topic_songs, topic) in topical_index" :key="topic" class="topic" :style="{ background: isSelected(topic) ? primary_color : secondary_color }">
+                {{ topic }}
+            </div>
+            <!-- <RouterLink
                 v-for="song in topic_songs"
                 :key="song.title + song.number"
                 :to="`/display/${song.book.name.short}/${song.number}`"
@@ -64,7 +72,7 @@ onMounted(async () => {
                 <div class="booktext--right">
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
-            </RouterLink>
+            </RouterLink> -->
         </div>
     </div>
 
@@ -90,4 +98,60 @@ onMounted(async () => {
 
 <style>
 @import "/css/song.css";
+</style>
+
+<style scoped>
+.topic-list {
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    /* padding: 5px 20px 20px 20px; */
+    scrollbar-width: none;
+    width: 100%;
+}
+/* .topic-list::-webkit-scrollbar {
+    display: none;
+} */
+
+/**
+ * Fix overflow scroll ignoring margin/padding.
+ * @see https://chenhuijing.com/blog/flexbox-and-padding/
+ * @see https://itnext.io/horizontal-overflow-with-flexbox-css-64f530495303
+ */
+ .topic-list::before,
+.topic-list::after {
+    content: "";
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 300px;
+    margin-left: -1px;
+}
+
+/*.topic-list:first-child {
+    margin-left: 100px;
+}
+.topic-list:last-child {
+    margin-right: 100px;
+} */
+
+.topic {
+    height: 80px;
+    /* width: 300px; */
+    min-width: 300px;
+    /* flex: 1 0 100%; */
+    scroll-snap-stop: always;
+    scroll-snap-align: center;
+
+    /* padding: 10px; */
+    text-align: center;
+    color: white;
+    border-radius: 15px;
+    margin-right: 15px;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
 </style>

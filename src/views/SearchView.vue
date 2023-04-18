@@ -136,7 +136,7 @@ onMounted(async () => {
             :key="book.name.medium"
             class="hymnalfilterbutton"
             :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
-            v-on:click="filterBook($event, book)"
+            @click="filterBook($event, book)"
         >
             <div>{{ book.name.medium }}</div>
         </a>
