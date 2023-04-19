@@ -60,6 +60,7 @@ jobs:
           echo "VITE_BASE_URL=/${{ env.PR_REPO_NAME }}/" > .env
           npm i
           npm run build
+          npx cap copy web
           cd ..
       
       - name: Checkout Dev Target
