@@ -60,7 +60,7 @@ onMounted(async () => {
     <div class="songlist">
         <RouterLink
             v-for="song in search_results"
-            :key="song.title + song.number + song.book.name.short"
+            :key="song.book.name.short + song.number"
             :to="`/display/${song.book.name.short}/${song.number}`"
             class="song"
             :style="`background: linear-gradient(135deg, ${song.book.primaryColor}, ${song.book.secondaryColor})`"
@@ -103,8 +103,5 @@ onMounted(async () => {
 
 <style>
 @import "/css/search.css";
-@import "/css/globals.css";
 @import "/css/song.css";
-@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 </style>

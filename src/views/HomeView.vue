@@ -85,7 +85,4 @@ onMounted(async () => {
 
 <style>
 @import "/css/book.css";
-@import "/css/globals.css";
-@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 </style>

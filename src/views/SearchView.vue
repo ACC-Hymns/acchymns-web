@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
@@ -10,12 +10,14 @@ let search_params = useSessionStorage<SearchParams>("searchParams", { search: ""
 
 let search_query = ref(search_params.value.search);
 let stripped_query = computed(() => {
-    var query = search_query.value
+    return search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
         .replace(/s{2,}/g, " ")
         .toLowerCase();
-    search_params.value.search = query;
-    return query;
+});
+
+watch(stripped_query, (new_query) => {
+    search_params.value.search = new_query;
 });
 
 let available_songs = ref<SongReference[]>([]);
@@ -26,13 +28,9 @@ let search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
             .filter((s) => {
-                s.stripped_title = s.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .replace(/s{2,}/g, " ")
-                    .toLowerCase();
                 let stripped_number = s.number?.toLowerCase() ?? "";
                 return (
-                    (s.stripped_title.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) &&
+                    (s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) &&
                     search_params.value.bookFilters.find((b) => b.name.short == s.book.name.short)
                 );
             })
@@ -41,12 +39,8 @@ let search_results = computed(() => {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter((s) => {
-                s.stripped_title = s.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .replace(/s{2,}/g, " ")
-                    .toLowerCase();
                 let stripped_number = s.number?.toLowerCase() ?? "";
-                return s.stripped_title.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
+                return s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
@@ -56,7 +50,7 @@ let limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
-function filterBook(event: any, book: BookSummary) {
+function filterBook(book: BookSummary) {
     if (search_params.value.bookFilters.find((b) => b.name.short == book.name.short)) {
         let foundBook = search_params.value.bookFilters.find((b) => b.name.short == book.name.short);
         if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
@@ -65,10 +59,7 @@ function filterBook(event: any, book: BookSummary) {
 
 function check_selected(book: BookSummary) {
     if (search_params.value.bookFilters.length == 0) return false;
-    else {
-        if (search_params.value.bookFilters.find((b) => b.name.short == book.name.short)) return true;
-        else return false;
-    }
+    return search_params.value.bookFilters.find((b) => b.name.short == book.name.short);
 }
 
 function hexToRgb(hex: string) {
@@ -109,6 +100,10 @@ onMounted(async () => {
                 title: song?.title ?? "",
                 number: song_number,
                 book: BOOK_METADATA[book2],
+                stripped_title: song?.title
+                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                    .replace(/s{2,}/g, " ")
+                    .toLowerCase(),
             } as SongReference);
         }
     }
@@ -136,7 +131,7 @@ onMounted(async () => {
             :key="book.name.medium"
             class="hymnalfilterbutton"
             :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
-            @click="filterBook($event, book)"
+            @click="filterBook(book)"
         >
             <div>{{ book.name.medium }}</div>
         </a>
@@ -192,8 +187,5 @@ onMounted(async () => {
 
 <style>
 @import "/css/search.css";
-@import "/css/globals.css";
 @import "/css/song.css";
-@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 </style>

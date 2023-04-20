@@ -68,8 +68,6 @@ onMounted(async () => {
     </div>
 </template>
 <style scoped>
-@import "/css/globals.css";
-
 .song-img {
     display: block;
     width: 100%;

@@ -27,9 +27,7 @@ onMounted(async () => {
     <div class="menu">
         <div class="title">
             <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            <h1 id="bookName">
-                {{ book_name }}
-            </h1>
+            <h1>{{ book_name }}</h1>
             <RouterLink :to="`/topical/${props.book}`">
                 <img class="ionicon" :class="{ hidden: !index_available }" src="/assets/information-circle-outline.svg" />
             </RouterLink>
@@ -63,9 +61,24 @@ onMounted(async () => {
     </nav>
 </template>
 
-<style>
-@import "/css/selection.css";
-@import "/css/globals.css";
-@import "https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+<style scoped>
+.songs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0px 10px 110px 10px;
+}
+
+.song-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
 </style>
