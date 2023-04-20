@@ -116,7 +116,3 @@ onUnmounted(() => {
         <SongContainer :book="props.book" :song="props.song"></SongContainer>
     </div>
 </template>
-
-<style>
-@import "/css/selection.css";
-</style>
