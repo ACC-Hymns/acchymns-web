@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, onUnmounted } from "vue";
 import * as Tone from "tone";
 import { getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
@@ -27,6 +27,7 @@ function toggleBookmark() {
         bookmarks.value.splice(index, 1);
     }
 }
+
 let sampler: Tone.Sampler;
 
 async function playNotes() {
@@ -47,7 +48,7 @@ async function playNotes() {
         const seq = new Tone.Sequence((time, note) => sampler.triggerAttack(note, time), notes.value, interval);
         seq.humanize = true; // Add some variance to the schedule of the notes
         seq.loop = false;
-        seq.start(Tone.now() - interval);
+        seq.start(Tone.now());
 
         // Stop all notes when end_time is reached
         const end_time = Tone.now() + duration + interval * notes.value.length;
@@ -64,30 +65,29 @@ async function playNotes() {
 }
 
 onMounted(async () => {
-    const A2 = await fetch(import.meta.env.BASE_URL + "assets/notes/A2.mp3");
-    const C3 = await fetch(import.meta.env.BASE_URL + "assets/notes/C3.mp3");
-    const A3 = await fetch(import.meta.env.BASE_URL + "assets/notes/A3.mp3");
-    const C4 = await fetch(import.meta.env.BASE_URL + "assets/notes/C4.mp3");
-    const A4 = await fetch(import.meta.env.BASE_URL + "assets/notes/A4.mp3");
-    const C5 = await fetch(import.meta.env.BASE_URL + "assets/notes/C5.mp3");
-    const A2Blob = await A2.blob();
-    const C3Blob = await C3.blob();
-    const A3Blob = await A3.blob();
-    const C4Blob = await C4.blob();
-    const A4Blob = await A4.blob();
-    const C5Blob = await C5.blob();
+    const audio_context = new AudioContext();
+    async function fetchNote(note: string) {
+        const mp3 = await fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`);
+        const blob = await mp3.blob();
+        const array_buffer = await blob.arrayBuffer();
+        const audio_buffer = await audio_context.decodeAudioData(array_buffer);
+        return audio_buffer;
+    }
+    async function constructUrls(notes: string[]) {
+        const audio_buffers = await Promise.all(notes.map((note) => fetchNote(note)));
+        return Object.fromEntries(audio_buffers.map((buffer, index) => [notes[index], buffer]));
+    }
     sampler = new Tone.Sampler({
-        urls: {
-            A2: URL.createObjectURL(A2Blob),
-            C3: URL.createObjectURL(C3Blob),
-            A3: URL.createObjectURL(A3Blob),
-            C4: URL.createObjectURL(C4Blob),
-            A4: URL.createObjectURL(A4Blob),
-            C5: URL.createObjectURL(C5Blob),
-        },
+        urls: await constructUrls(["A2", "C3", "A3", "C4", "A4", "C5"]),
     }).toDestination();
     const SONG_METADATA = await getSongMetaData(props.book);
     notes.value = (SONG_METADATA[props.song]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+});
+
+onUnmounted(() => {
+    // Release all currently active notes, then cancel any future events from being executed
+    sampler.releaseAll();
+    Tone.Transport.cancel();
 });
 </script>
 
