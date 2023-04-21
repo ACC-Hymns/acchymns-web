@@ -59,7 +59,7 @@ let panzoom_enabled = useLocalStorage("panzoomEnable", true);
                 <span class="slider round"></span>
             </label>
         </div>
-        <div class="settings-option">
+        <div v-show="staggered_notes" class="settings-option">
             <span class="setting-label">Playback Interval</span>
             <input v-model="playback_interval" class="slider-setting" type="range" step="0.05" min="0.1" max="1" />
             <span class="slider-value">{{ playback_interval * 1000 }} ms</span>

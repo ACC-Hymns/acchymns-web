@@ -43,16 +43,12 @@ a, img {
     --invert: invert(0%);
     --svg-back-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(183deg) brightness(99%) contrast(90%);
     --change-svg-filter: invert(0%) sepia(9%) saturate(4%) hue-rotate(326deg) brightness(105%) contrast(86%);
+    --button-color: #ffffff;
+    --search-color: #dfdede;
+    --slider-base: #CCCCCC;
+    --topical-color: #ffffff;
+    --menu-color: rgba(255, 255, 255, 0.9);
 }
-
-h1, h2, h3, h4, h5 {
-    color: var(--color);
-}
-
-.pagetitle {
-    margin: 55px 10px 20px 30px;
-}
-
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -72,7 +68,20 @@ h1, h2, h3, h4, h5 {
         --invert: invert(92%);
         --change-svg-filter: invert(100%) sepia(0%) saturate(1487%) hue-rotate(92deg) brightness(124%) contrast(108%);
         --svg-back-filter: invert(73%) sepia(1%) saturate(606%) hue-rotate(104deg) brightness(115%) contrast(91%);
+        --button-color: #2b2b2b;
+        --search-color: #2b2b2b;
+        --slider-base: #292323;
+        --topical-color: #2b2b2b;
+        --menu-color: rgba(31, 31, 31, 0.9);
     }
+}
+
+h1, h2, h3, h4, h5 {
+    color: var(--color);
+}
+
+.pagetitle {
+    margin: 55px 10px 20px 30px;
 }
 
 .nav {
