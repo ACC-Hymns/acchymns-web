@@ -3,8 +3,9 @@ import { getAllBookMetaData } from "@/scripts/book_import";
 import type { BookSummary } from "@/scripts/types";
 import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, readonly } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
+import { useLocalStorage } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
@@ -40,21 +41,24 @@ let error_is_active = ref(false);
 //     }
 // }
 
+let panzoom_enabled = readonly(useLocalStorage("panzoomEnable", true));
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
-
-    createPanZoom(panzoom_container.value as HTMLDivElement, {
-        beforeWheel: (e) => {
-            return !e.shiftKey;
-        },
-        maxZoom: 3,
-        minZoom: Capacitor.getPlatform() !== "web" ? 1 : 0.25,
-        bounds: true,
-        boundsPadding: 0.5,
-    });
+    if (panzoom_enabled.value) {
+        createPanZoom(panzoom_container.value as HTMLDivElement, {
+            beforeWheel: (e) => {
+                return !e.shiftKey;
+            },
+            maxZoom: 3,
+            minZoom: Capacitor.getPlatform() !== "web" ? 1 : 0.25,
+            bounds: true,
+            boundsPadding: 0.5,
+        });
+    }
 });
 </script>
 

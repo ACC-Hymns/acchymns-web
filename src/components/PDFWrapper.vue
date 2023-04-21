@@ -25,13 +25,12 @@ onMounted(async () => {
     for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
         // Create canvas element to render PDF onto
         let canvas = document.createElement("canvas");
-        root.value?.appendChild(canvas);
 
         // Grab current page
         let page = await pdfDoc.getPage(pageNum);
         let viewport = page.getViewport({ scale: 5 });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        canvas.height = viewport.height * window.devicePixelRatio;
+        canvas.width = viewport.width * window.devicePixelRatio;
         canvas.classList.add("song-img");
 
         // Render PDF page into canvas context
@@ -46,6 +45,7 @@ onMounted(async () => {
                 viewport: viewport,
             }).promise;
             canvas.style.width = "100%"; // I don't know why this fixes the PDF being rendered for the full size of the canvas
+            root.value?.appendChild(canvas);
         } catch {
             emit("error");
             return;
