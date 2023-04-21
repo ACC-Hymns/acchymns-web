@@ -28,11 +28,16 @@ const router = useRouter();
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">9.4.3</h5>
         </a>
         <div class="attribution">
-            <h3 class="release" style="margin-bottom: 0px">Contributors</h3>
-            <ul>
+            <h3 class="release" style="margin-bottom: 0px">Developers</h3>
+            <ul style="margin-top: 5px">
                 <li class="change">Christopher Weinhardt</li>
                 <li class="change">Timothy Weinhardt</li>
                 <li class="change">Dallas Hart</li>
+            </ul>
+        </div>
+        <div class="attribution">
+            <h3 class="release" style="margin-bottom: 0px">Contributors</h3>
+            <ul style="margin-top: 5px">
                 <li class="change">Joey Nitz</li>
                 <li class="change">Susie Nitz</li>
                 <li class="change">Neven Jokic</li>
