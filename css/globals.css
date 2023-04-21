@@ -26,7 +26,8 @@ a, img {
     text-decoration: none;
 }
 
-:root{
+:root {
+    --button-spacing: 15px;
     --background: #ebebeb;
     --back-color: #818181;
     --toolbar: #ffffff;
@@ -165,10 +166,6 @@ h1, h2, h3, h4, h5 {
 
 .hidden {
     display: none;
-}
-
-:root {
-    --button-spacing: 15px;
 }
 
 .buttonGroupLeft > * {
