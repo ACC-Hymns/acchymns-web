@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
+import { Capacitor } from "@capacitor/core";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
 
 const props = defineProps<{
@@ -28,9 +29,12 @@ onMounted(async () => {
 
         // Grab current page
         let page = await pdfDoc.getPage(pageNum);
-        let viewport = page.getViewport({ scale: 5 });
-        canvas.height = viewport.height * window.devicePixelRatio;
-        canvas.width = viewport.width * window.devicePixelRatio;
+
+        // We need a better way of picking the scale...
+        const target_scale = Capacitor.getPlatform() == "web" ? 5 : window.devicePixelRatio;
+        let viewport = page.getViewport({ scale: target_scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
         canvas.classList.add("song-img");
 
         // Render PDF page into canvas context
