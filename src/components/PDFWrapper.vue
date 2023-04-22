@@ -35,7 +35,6 @@ onMounted(async () => {
         let viewport = page.getViewport({ scale: target_scale });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
-        canvas.classList.add("song-img");
 
         // Render PDF page into canvas context
         let ctx = canvas.getContext("2d"); // 3D faster then 2D?
@@ -68,12 +67,6 @@ onMounted(async () => {
 </style>
 
 <style scoped>
-.song-img {
-    display: block;
-    width: 100%;
-    z-index: -1;
-}
-
 /* This is to remove the black line between pages */
 .container {
     font-size: 0;

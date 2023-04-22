@@ -1,15 +1,26 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useMediaQuery } from "@vueuse/core";
+import { computed } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 const router = useRouter();
 
-let song_invert = useLocalStorage("songInverted", false);
 let staggered_notes = useLocalStorage("staggered", true);
 let playback_interval = useLocalStorage("playbackInterval", 0.25);
 let playback_duration = useLocalStorage("playbackDuration", 3);
-let override_system_theme = useLocalStorage("overrideSystemTheme", false);
-let override_dark_mode = useLocalStorage("overrideDarkMode", false);
 let panzoom_enabled = useLocalStorage("panzoomEnable", true);
+
+const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
+const override_system_theme = useLocalStorage("overrideSystemTheme", false);
+const user_prefers_dark_mode = useLocalStorage("overrideDarkMode", false);
+let song_invert = useLocalStorage("songInverted", false);
+
+const dark_mode = computed(() => {
+    if (override_system_theme.value) {
+        return user_prefers_dark_mode.value;
+    } else {
+        return system_prefers_dark_mode.value;
+    }
+});
 </script>
 
 <template>
@@ -21,13 +32,6 @@ let panzoom_enabled = useLocalStorage("panzoomEnable", true);
 
     <h2>Theme</h2>
     <div class="settings">
-        <div class="settings-option">
-            <span>Invert Song Colors</span>
-            <label class="switch">
-                <input v-model="song_invert" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
-        </div>
         <div class="settings-option">
             <span>Enable Pan & Zoom</span>
             <label class="switch">
@@ -45,7 +49,14 @@ let panzoom_enabled = useLocalStorage("panzoomEnable", true);
         <div v-show="override_system_theme" class="settings-option">
             <span>Dark Mode</span>
             <label class="switch">
-                <input v-model="override_dark_mode" type="checkbox" />
+                <input v-model="user_prefers_dark_mode" type="checkbox" />
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div v-show="dark_mode" class="settings-option">
+            <span>Invert Song Colors</span>
+            <label class="switch">
+                <input v-model="song_invert" type="checkbox" />
                 <span class="slider round"></span>
             </label>
         </div>
