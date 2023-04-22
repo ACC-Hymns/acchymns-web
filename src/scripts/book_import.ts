@@ -1,6 +1,6 @@
 import type { BookSummary, SongList, BookIndex } from "./types";
 const prepackaged_books = ["ZH", "GH", "JH", "HG"];
-const prepackaged_book_urls: string[] = prepackaged_books.map((book_name) => import.meta.env.BASE_URL + "books/" + book_name);
+const prepackaged_book_urls: string[] = prepackaged_books.map(book_name => import.meta.env.BASE_URL + "books/" + book_name);
 
 function getBookUrls() {
     return prepackaged_book_urls.concat(JSON.parse(window.localStorage.getItem("externalBooks") ?? "[]"));
@@ -14,7 +14,7 @@ async function fetchJSONWithTimeout(resource: RequestInfo | URL, options: Reques
     const response = await fetch(resource, {
         ...options,
         signal: controller.signal,
-    }).then((resp) => resp.json());
+    }).then(resp => resp.json());
     clearTimeout(id);
     return response;
 }
@@ -52,7 +52,7 @@ async function fetchBookSummary(url: string, options: RequestInit & { timeout?: 
 async function getAllBookMetaData() {
     const now = performance.now();
     const book_urls = getBookUrls();
-    const to_fetch = book_urls.map((url) => fetchBookSummary(url));
+    const to_fetch = book_urls.map(url => fetchBookSummary(url));
 
     const bookSummary = await Promise.all(to_fetch);
 
@@ -64,7 +64,7 @@ async function getAllBookMetaData() {
 async function getAllSongMetaData() {
     const now = performance.now();
     const book_urls = getBookUrls();
-    const to_fetch = book_urls.map((url) => fetchJSONCached(`${url}/songs.json`));
+    const to_fetch = book_urls.map(url => fetchJSONCached(`${url}/songs.json`));
 
     const bookSongs = await Promise.all(to_fetch);
     const BOOK_METADATA = await getAllBookMetaData();

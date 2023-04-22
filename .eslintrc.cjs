@@ -13,6 +13,7 @@ module.exports = {
                 // @see https://prettier.io/docs/en/options.html
                 tabWidth: 4,
                 printWidth: 200,
+                arrowParens: "avoid",
             },
         ],
         // Ignore all unused variables that start with an underscore

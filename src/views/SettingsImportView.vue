@@ -34,8 +34,8 @@ const reference_input = ref("");
 let imported_books = ref<BookSummary[]>([]);
 watch(
     imported_book_urls,
-    async (urls) => {
-        imported_books.value = await Promise.all(urls.map((url) => fetchBookSummary(url)));
+    async urls => {
+        imported_books.value = await Promise.all(urls.map(url => fetchBookSummary(url)));
     },
     { immediate: true }
 );
@@ -44,9 +44,9 @@ watch(
 let preview_books = ref<BookSummary[]>([]);
 watch(
     imported_book_urls,
-    async (urls) => {
-        let preview_urls = Object.values(public_references).filter((url) => !urls.includes(url));
-        preview_books.value = await Promise.all(preview_urls.map((url) => fetchBookSummary(url)));
+    async urls => {
+        let preview_urls = Object.values(public_references).filter(url => !urls.includes(url));
+        preview_books.value = await Promise.all(preview_urls.map(url => fetchBookSummary(url)));
     },
     { immediate: true }
 );
@@ -72,7 +72,7 @@ function addImportedBook(book: BookSummary) {
 }
 
 function removeImportedURL(to_remove: string) {
-    imported_book_urls.value = imported_book_urls.value.filter((url) => url != to_remove);
+    imported_book_urls.value = imported_book_urls.value.filter(url => url != to_remove);
 }
 
 function removeImportedBookByCode(short_book_name: string) {

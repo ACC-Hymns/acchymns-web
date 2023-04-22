@@ -47,7 +47,7 @@ onMounted(async () => {
     song_img_src.value = songSrc;
     if (panzoom_enabled.value) {
         createPanZoom(panzoom_container.value as HTMLDivElement, {
-            beforeWheel: (e) => {
+            beforeWheel: e => {
                 return !e.shiftKey;
             },
             maxZoom: 3,

@@ -16,7 +16,7 @@ let stripped_query = computed(() => {
         .toLowerCase();
 });
 
-watch(stripped_query, (new_query) => {
+watch(stripped_query, new_query => {
     search_params.value.search = new_query;
 });
 
@@ -27,18 +27,17 @@ let display_limit = ref(50);
 let search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
-            .filter((s) => {
+            .filter(s => {
                 let stripped_number = s.number?.toLowerCase() ?? "";
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) &&
-                    search_params.value.bookFilters.find((b) => b.name.short == s.book.name.short)
+                    (s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
                 );
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
-            .filter((s) => {
+            .filter(s => {
                 let stripped_number = s.number?.toLowerCase() ?? "";
                 return s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
             })
@@ -51,15 +50,15 @@ let limited_search_results = computed(() => {
 });
 
 function filterBook(book: BookSummary) {
-    if (search_params.value.bookFilters.find((b) => b.name.short == book.name.short)) {
-        let foundBook = search_params.value.bookFilters.find((b) => b.name.short == book.name.short);
+    if (search_params.value.bookFilters.find(b => b.name.short == book.name.short)) {
+        let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
         if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
     } else search_params.value.bookFilters.push(book);
 }
 
 function check_selected(book: BookSummary) {
     if (search_params.value.bookFilters.length == 0) return false;
-    return search_params.value.bookFilters.find((b) => b.name.short == book.name.short);
+    return search_params.value.bookFilters.find(b => b.name.short == book.name.short);
 }
 
 function hexToRgb(hex: string) {

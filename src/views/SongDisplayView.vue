@@ -16,14 +16,14 @@ let notes_playing = ref(false);
 let notes = ref<string[]>([]);
 let bookmarks = useLocalStorage<BookmarkedSong[]>("bookmarks", []);
 let bookmarked = computed(() => {
-    return -1 != bookmarks.value.findIndex((bookmark) => bookmark.book == props.book && bookmark.song == props.song);
+    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.song == props.song);
 });
 
 function toggleBookmark() {
     if (!bookmarked.value) {
         bookmarks.value.push(props as BookmarkedSong);
     } else {
-        let index = bookmarks.value.findIndex((bookmark) => bookmark.book == props.book && bookmark.song == props.song);
+        let index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.song == props.song);
         bookmarks.value.splice(index, 1);
     }
 }
@@ -74,7 +74,7 @@ onMounted(async () => {
         return audio_buffer;
     }
     async function constructUrls(notes: string[]) {
-        const audio_buffers = await Promise.all(notes.map((note) => fetchNote(note)));
+        const audio_buffers = await Promise.all(notes.map(note => fetchNote(note)));
         return Object.fromEntries(audio_buffers.map((buffer, index) => [notes[index], buffer]));
     }
     sampler = new Tone.Sampler({
