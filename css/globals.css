@@ -26,7 +26,7 @@ a, img {
     text-decoration: none;
 }
 
-:root {
+:root, :root[data-theme="light"] {
     --button-spacing: 15px;
     --background: #ebebeb;
     --back-color: #818181;
@@ -36,7 +36,6 @@ a, img {
     --subtext-color: rgb(100, 100, 100);
     --search-color: #dfdede;
     --toolbar-text: #636363;
-    --menu-color: rgba(255, 255, 255, 0.9);
     --toolbar-text-active: black;
     --div-color: #ffffff;
     --border-color: rgb(218, 218, 218) solid 1px;
@@ -51,30 +50,27 @@ a, img {
     --menu-color: rgba(255, 255, 255, 0.9);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --menu-color: rgba(31, 31, 31, 0.9);
-        --background: #141414;
-        --back-color: #cfcfcf;
-        --color: white;
-        --svg-color: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%);
-        --subtext-color: white;
-        --toolbar: rgb(31, 31, 31);
-        --search-color: #2b2b2b; 
-        --toolbar-text: #cacaca;
-        --toolbar-text-active: #ffffff;
-        --div-color: #2b2b2b;
-        --border-color: rgb(36, 36, 36) solid 2px;
-        --box-shadow: 0 0 20px rgba(0, 0, 0, 0.0);
-        --invert: invert(92%);
-        --change-svg-filter: invert(100%) sepia(0%) saturate(1487%) hue-rotate(92deg) brightness(124%) contrast(108%);
-        --svg-back-filter: invert(73%) sepia(1%) saturate(606%) hue-rotate(104deg) brightness(115%) contrast(91%);
-        --button-color: #2b2b2b;
-        --search-color: #2b2b2b;
-        --slider-base: #292323;
-        --topical-color: #2b2b2b;
-        --menu-color: rgba(31, 31, 31, 0.9);
-    }
+:root[data-theme="dark"] {
+    --menu-color: rgba(31, 31, 31, 0.9);
+    --background: #141414;
+    --back-color: #cfcfcf;
+    --color: white;
+    --svg-color: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%);
+    --subtext-color: white;
+    --toolbar: rgb(31, 31, 31);
+    --toolbar-text: #cacaca;
+    --toolbar-text-active: #ffffff;
+    --div-color: #2b2b2b;
+    --border-color: rgb(36, 36, 36) solid 2px;
+    --box-shadow: 0 0 20px rgba(0, 0, 0, 0.0);
+    --invert: invert(92%);
+    --change-svg-filter: invert(100%) sepia(0%) saturate(1487%) hue-rotate(92deg) brightness(124%) contrast(108%);
+    --svg-back-filter: invert(73%) sepia(1%) saturate(606%) hue-rotate(104deg) brightness(115%) contrast(91%);
+    --button-color: #2b2b2b;
+    --search-color: #2b2b2b;
+    --slider-base: #292323;
+    --topical-color: #2b2b2b;
+    --menu-color: rgba(31, 31, 31, 0.9);
 }
 
 h1, h2, h3, h4, h5 {

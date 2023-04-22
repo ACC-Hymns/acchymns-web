@@ -1,10 +1,13 @@
-import { createApp } from "vue";
+import { useLocalStorage, useMediaQuery } from "@vueuse/core";
+import { computed, createApp, readonly, ref, watch } from "vue";
 // import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
 
 import "/css/globals.css";
+
+import "@/scripts/dark_mode";
 
 const app = createApp(App);
 
