@@ -31,7 +31,7 @@ onMounted(async () => {
                 <img class="app-button" src="/assets/en_badge_web_generic.png" />
             </a>
             <a class="app-button-container app-store-width" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
-                <object class="app-button" data="/assets/Appstore_badge.svg"></object>
+                <object class="app-button" data="/assets/Appstore_badge.svg" type="image/svg+xml"></object>
             </a>
         </template>
     </div>
