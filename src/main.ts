@@ -1,5 +1,4 @@
-import { useLocalStorage, useMediaQuery } from "@vueuse/core";
-import { computed, createApp, readonly, ref, watch } from "vue";
+import { createApp } from "vue";
 // import { createPinia } from "pinia";
 
 import App from "./App.vue";
