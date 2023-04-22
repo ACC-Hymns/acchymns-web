@@ -41,7 +41,6 @@ const actually_invert = computed(() => dark_mode.value && song_invert.value);
 let panzoom_enabled = readonly(useLocalStorage("panzoomEnable", true));
 
 onMounted(async () => {
-    console.log(actually_invert.value)
     const BOOK_METADATA = await getAllBookMetaData();
     const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
