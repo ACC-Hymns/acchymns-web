@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed } from "vue";
-import { RouterLink, useRouter } from "vue-router";
-const router = useRouter();
+import { RouterLink } from "vue-router";
+import { navigateBack } from "@/router/back_navigate";
 
 let staggered_notes = useLocalStorage("staggered", true);
 let playback_interval = useLocalStorage("playbackInterval", 0.25);
@@ -25,7 +25,7 @@ const dark_mode = computed(() => {
 
 <template>
     <div class="title">
-        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Options</h1>
         <span class="space"></span>
     </div>

@@ -4,8 +4,8 @@ import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import { RouterLink, useRouter } from "vue-router";
-const router = useRouter();
+import { RouterLink } from "vue-router";
+import { navigateBack } from "@/router/back_navigate";
 
 const branch = "staging";
 
@@ -92,7 +92,7 @@ function removeImportedBook(book: BookSummary) {
 
 <template>
     <div class="title">
-        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Import Books</h1>
         <span class="space"></span>
     </div>

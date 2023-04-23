@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
+import { navigateBack } from "@/router/back_navigate";
 
 const props = defineProps<{
     book: string;
@@ -26,7 +27,7 @@ onMounted(async () => {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             <h1>{{ book_name }}</h1>
             <RouterLink :to="`/topical/${props.book}`">
                 <img class="ionicon" :class="{ hidden: !index_available }" src="/assets/information-circle-outline.svg" />

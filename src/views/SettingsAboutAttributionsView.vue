@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { RouterLink, useRouter } from "vue-router";
-const router = useRouter();
+import { RouterLink } from "vue-router";
+import { navigateBack } from "@/router/back_navigate";
 </script>
 
 <template>
     <div class="title">
-        <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Attributions</h1>
         <span class="space"></span>
     </div>
