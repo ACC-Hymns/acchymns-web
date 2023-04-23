@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
+import { App } from "@capacitor/app";
+import type { URLOpenListenerEvent } from "@capacitor/app";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +71,19 @@ const router = createRouter({
             component: () => import("../views/404View.vue"),
         },
     ],
+});
+
+// Deep Linking for IOS + Android
+// https://capacitorjs.com/docs/next/guides/deep-links#vue
+App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
+    // Example url: https://acchymns.app/tabs/tabs2
+    // slug = /tabs/tabs2
+    const slug = event.url.split(".app").pop();
+
+    // We only push to the route if there is a slug present
+    if (slug) {
+        router.push(slug);
+    }
 });
 
 export default router;

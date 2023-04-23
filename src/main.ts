@@ -4,9 +4,9 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
+// Preload page-wide CSS and setup dark mode
 import "@/assets/css/globals.css";
 import "@/assets/css/fonts.css";
-
 import "@/scripts/dark_mode";
 
 const app = createApp(App);

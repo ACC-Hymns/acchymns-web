@@ -1,7 +1,7 @@
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed, readonly, watch } from "vue";
 
-const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
+const system_prefers_dark_mode = readonly(useMediaQuery("(prefers-color-scheme: dark)"));
 const override_system_theme = readonly(useLocalStorage("overrideSystemTheme", false));
 const user_prefers_dark_mode = readonly(useLocalStorage("overrideDarkMode", false));
 
