@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 
 import "@/assets/css/globals.css";
+import "@/assets/css/fonts.css";
 
 import "@/scripts/dark_mode";
 
