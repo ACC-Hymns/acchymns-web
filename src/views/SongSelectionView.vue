@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { RouterLink, useRouter } from "vue-router";
 
 const props = defineProps<{
     book: string;
 }>();
+const router = useRouter();
 
 let num_of_songs = ref(0);
 let book_name = ref("");
@@ -26,7 +26,7 @@ onMounted(async () => {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             <h1>{{ book_name }}</h1>
             <RouterLink :to="`/topical/${props.book}`">
                 <img class="ionicon" :class="{ hidden: !index_available }" src="/assets/information-circle-outline.svg" />
