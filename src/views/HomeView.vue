@@ -84,5 +84,5 @@ onMounted(async () => {
 </style>
 
 <style>
-@import "/css/book.css";
+@import "@/assets/css/book.css";
 </style>

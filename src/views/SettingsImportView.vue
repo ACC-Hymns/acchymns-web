@@ -168,8 +168,8 @@ function removeImportedBook(book: BookSummary) {
 </template>
 
 <style>
-@import "/css/settings.css";
-@import "/css/book.css";
+@import "@/assets/css/settings.css";
+@import "@/assets/css/book.css";
 </style>
 
 <style scoped>

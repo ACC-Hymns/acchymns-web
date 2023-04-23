@@ -97,7 +97,7 @@ onMounted(async () => {
 </template>
 
 <style>
-@import "/css/song.css";
+@import "@/assets/css/song.css";
 </style>
 
 <style scoped>

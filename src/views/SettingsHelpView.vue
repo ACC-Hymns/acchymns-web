@@ -38,5 +38,5 @@ const router = useRouter();
 </template>
 
 <style>
-@import "/css/settings.css";
+@import "@/assets/css/settings.css";
 </style>

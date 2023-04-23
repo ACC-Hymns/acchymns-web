@@ -69,6 +69,6 @@ const router = useRouter();
 </template>
 
 <style>
-@import "/css/settings.css";
-@import "/css/about-app.css";
+@import "@/assets/css/settings.css";
+@import "@/assets/css/about-app.css";
 </style>

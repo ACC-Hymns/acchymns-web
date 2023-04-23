@@ -103,5 +103,5 @@ const dark_mode = computed(() => {
 </template>
 
 <style>
-@import "/css/settings.css";
+@import "@/assets/css/settings.css";
 </style>

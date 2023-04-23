@@ -4,7 +4,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
-import "/css/globals.css";
+import "@/assets/css/globals.css";
 
 import "@/scripts/dark_mode";
 

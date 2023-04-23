@@ -185,6 +185,6 @@ onMounted(async () => {
 </template>
 
 <style>
-@import "/css/search.css";
-@import "/css/song.css";
+@import "@/assets/css/search.css";
+@import "@/assets/css/song.css";
 </style>
