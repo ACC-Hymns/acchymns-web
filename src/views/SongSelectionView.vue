@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
 
 const props = defineProps<{
     book: string;
 }>();
-const router = useRouter();
 
 let num_of_songs = ref(0);
 let book_name = ref("");

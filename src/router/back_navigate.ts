@@ -1,11 +1,10 @@
 import router from "@/router/index";
 
-
+// Example back navigation:
+// / -> /
+// /app -> /
+// /settings/about -> /settings
 function navigateBack() {
-    // Example back navigation:
-    // / -> /
-    // /app -> /
-    // /settings/about -> /settings
     const current_route = router.currentRoute.value;
     const last_section = current_route.path.lastIndexOf("/");
 
