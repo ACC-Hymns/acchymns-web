@@ -1,21 +1,3 @@
-<script lang="ts">
-const audio_context = new AudioContext();
-async function fetchNote(note: string) {
-    const mp3 = await fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`);
-    const blob = await mp3.blob();
-    const array_buffer = await blob.arrayBuffer();
-    const audio_buffer = await audio_context.decodeAudioData(array_buffer);
-    return audio_buffer;
-}
-async function constructUrls(notes: string[]) {
-    const audio_buffers = await Promise.all(notes.map(note => fetchNote(note)));
-    return Object.fromEntries(audio_buffers.map((buffer, index) => [notes[index], buffer]));
-}
-const sampler = new Tone.Sampler({
-    urls: await constructUrls(["A2", "C3", "A3", "C4", "A4", "C5"]),
-}).toDestination();
-</script>
-
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
 import { onMounted, ref, computed, onUnmounted } from "vue";
@@ -45,6 +27,8 @@ function toggleBookmark() {
         bookmarks.value.splice(index, 1);
     }
 }
+
+let sampler: Tone.Sampler;
 
 async function playNotes() {
     // Only play notes if notes are not already playing
@@ -81,6 +65,21 @@ async function playNotes() {
 }
 
 onMounted(async () => {
+    const audio_context = new AudioContext();
+    async function fetchNote(note: string) {
+        const mp3 = await fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`);
+        const blob = await mp3.blob();
+        const array_buffer = await blob.arrayBuffer();
+        const audio_buffer = await audio_context.decodeAudioData(array_buffer);
+        return audio_buffer;
+    }
+    async function constructUrls(notes: string[]) {
+        const audio_buffers = await Promise.all(notes.map(note => fetchNote(note)));
+        return Object.fromEntries(audio_buffers.map((buffer, index) => [notes[index], buffer]));
+    }
+    sampler = new Tone.Sampler({
+        urls: await constructUrls(["A2", "C3", "A3", "C4", "A4", "C5"]),
+    }).toDestination();
     const SONG_METADATA = await getSongMetaData(props.book);
     notes.value = (SONG_METADATA[props.song]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
 });
