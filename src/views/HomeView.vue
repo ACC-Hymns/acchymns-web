@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import type { BookSummary } from "@/scripts/types";
 import { RouterLink } from "vue-router";
-import { getAllBookMetaData } from "@/scripts/book_import";
-import { onMounted, ref } from "vue";
+import { getBookUrls } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
-
-let available_books = ref<BookSummary[]>([]);
-onMounted(async () => {
-    available_books.value = Object.values(await getAllBookMetaData());
-});
+import HomeBookBox from "@/components/HomeBookBox.vue";
 </script>
 
 <template>
@@ -16,16 +10,7 @@ onMounted(async () => {
         <h1 class="pagetitle">Home</h1>
     </div>
     <div id="appsection">
-        <RouterLink
-            v-for="book in available_books"
-            :key="book.name.short"
-            :to="`selection/${book.name.short}`"
-            class="book"
-            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
-        >
-            <div class="book_title">{{ book.name.medium }}</div>
-            <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
-        </RouterLink>
+        <HomeBookBox v-for="url in getBookUrls()" :key="url" :src="url"></HomeBookBox>
         <template v-if="Capacitor.getPlatform() === 'web'">
             <a class="app-button-container play-store-width" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
                 <img class="app-button" src="/assets/en_badge_web_generic.png" />

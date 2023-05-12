@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 // import { createPinia } from "pinia";
 
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
+
 import App from "./App.vue";
 import router from "./router";
 
@@ -15,3 +17,5 @@ const app = createApp(App);
 app.use(router);
 
 app.mount("#app");
+
+defineCustomElements(window);

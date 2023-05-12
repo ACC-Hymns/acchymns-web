@@ -68,7 +68,7 @@ import { navigateBack } from "@/router/back_navigate";
     </nav>
 </template>
 
-<style>
+<style scoped>
 @import "@/assets/css/settings.css";
 @import "@/assets/css/about-app.css";
 </style>

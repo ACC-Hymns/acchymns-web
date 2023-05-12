@@ -6,7 +6,7 @@ function getBookUrls() {
     return prepackaged_book_urls.concat(JSON.parse(window.localStorage.getItem("externalBooks") ?? "[]"));
 }
 
-async function fetchJSONWithTimeout(resource: RequestInfo | URL, options: RequestInit & { timeout?: number } = {}) {
+async function fetchJSONWithTimeout<T>(resource: RequestInfo | URL, options: RequestInit & { timeout?: number } = {}) {
     const { timeout = 2500 } = options;
 
     const controller = new AbortController();
@@ -16,33 +16,56 @@ async function fetchJSONWithTimeout(resource: RequestInfo | URL, options: Reques
         signal: controller.signal,
     }).then(resp => resp.json());
     clearTimeout(id);
-    return response;
+    return response as T;
 }
 
-type CachedResource = {
+type CachedResource<T> = {
     time: number; // Received from Date.now()
-    data: any;
+    data: T;
 };
 
-async function fetchJSONCached(url: string, options: RequestInit & { timeout?: number } = {}) {
-    const saved_data = localStorage.getItem(`fetchCached.${url}`);
+async function fetchJSONCached<T>(url: string, options: RequestInit & { timeout?: number } & { best_attempt?: boolean } = {}) {
+    const saved_data = sessionStorage.getItem(`fetchCached.${url}`);
+    let cached_data: T | null = null;
     if (saved_data !== null) {
-        const cached = JSON.parse(saved_data) as CachedResource;
+        const cached = JSON.parse(saved_data) as CachedResource<T>;
+        cached_data = cached.data;
         const timeout = 1000 * 60 * 60; // An hour in milliseconds
         if (Date.now() - cached.time < timeout) {
-            return cached.data;
+            return cached_data;
         }
     }
-    const cached: CachedResource = {
-        time: Date.now(),
-        data: await fetchJSONWithTimeout(url, options),
-    };
-    localStorage.setItem(`fetchCached.${url}`, JSON.stringify(cached));
-    return cached.data;
+
+    try {
+        const fetched: CachedResource<T> = {
+            time: Date.now(),
+            data: await fetchJSONWithTimeout(url, options),
+        };
+        sessionStorage.setItem(`fetchCached.${url}`, JSON.stringify(fetched));
+        return fetched.data;
+    } catch (ex: any) {
+        const e = ex as DOMException;
+        if (e.name != "AbortError") {
+            console.log(e);
+            throw e;
+        }
+
+        // If we want to fail soft, best_attempt should be set, and it will return the last cached value
+        const { best_attempt = false } = options;
+        if (best_attempt && cached_data != null) {
+            return cached_data;
+        }
+    }
+
+    // Not entirely sure what to return here...
+    return null;
 }
 
-async function fetchBookSummary(url: string, options: RequestInit & { timeout?: number } = { timeout: 250 }) {
-    return await fetchJSONCached(`${url}/summary.json`, options).then((book: BookSummary) => {
+async function fetchBookSummary(url: string, options: RequestInit & { timeout?: number } = { timeout: 500 }) {
+    return await fetchJSONCached<BookSummary>(`${url}/summary.json`, options).then(book => {
+        if (book == null) {
+            return null;
+        }
         book.addOn = !prepackaged_books.includes(book.name.short);
         book.srcUrl = url;
         return book;
@@ -89,4 +112,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | undefi
     return {};
 }
 
-export { fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, fetchJSONWithTimeout };
+export { getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, fetchJSONWithTimeout };

@@ -4,26 +4,17 @@ import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
+import { Toast } from "@capacitor/toast"
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
 
 const branch = "staging";
 
-const public_references = {
-    HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/HZ`,
-    ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZG`,
-    PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/PC`,
-    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZHJ`,
-};
-
-const known_references = {
-    HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/HZ`,
-    ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZG`,
-    ARF: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ARF`,
-    ARFR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ARFR`,
-    PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/PC`,
-    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/ZHJ`,
-};
+function remoteSource(code: string) {
+    return `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/` + code;
+}
+const public_references = ["HZ", "ZG", "PC", "ZHJ"].map(remoteSource);
+const known_references = public_references.concat(["ARF", "ARFR"].map(remoteSource));
 
 let imported_book_urls = useLocalStorage<string[]>("externalBooks", []); // Not watching deeply, must assign new array
 
@@ -51,7 +42,13 @@ watch(
     { immediate: true }
 );
 
-function addImportedURL(url: string) {
+async function addImportedURL(url: string) {
+    let book = await fetchBookSummary(url);
+    if (book !== null) {
+        await Toast.show({
+            text: "Successfully imported a book",
+        });
+    }
     if (!imported_book_urls.value.includes(url)) {
         imported_book_urls.value = [...imported_book_urls.value, url];
     }
