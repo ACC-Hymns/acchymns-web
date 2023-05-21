@@ -4,7 +4,6 @@ import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import { Toast } from "@capacitor/toast"
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
 

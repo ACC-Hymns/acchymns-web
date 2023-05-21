@@ -8,7 +8,7 @@ function navigateBack() {
     const current_route = router.currentRoute.value;
     const last_section = current_route.path.lastIndexOf("/");
 
-    console.log("navigating from ", current_route, "to", current_route.path.substring(0, last_section))
+    console.log("navigating from ", current_route, "to", current_route.path.substring(0, last_section));
 
     // This route is the root, or a child of the root
     if (last_section == 0) {

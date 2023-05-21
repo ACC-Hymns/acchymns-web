@@ -102,9 +102,12 @@ onUnmounted(() => {
             </div>
             <h1>#{{ props.song }}</h1>
             <div class="buttonGroupRight">
-                <span v-if="notes.length != 0">
-                    <img v-if="!notes_playing" @click="playNotes()" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else class="ionicon" src="/assets/musical-notes.svg" />
+                <span>
+                    <!-- Template does not get rendered, but the span forces the correct spacing -->
+                    <template v-if="notes.length != 0">
+                        <img v-if="!notes_playing" @click="playNotes()" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                        <img v-else class="ionicon" src="/assets/musical-notes.svg" />
+                    </template>
                 </span>
 
                 <img v-if="bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
