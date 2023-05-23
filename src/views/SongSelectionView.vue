@@ -26,17 +26,23 @@ onMounted(async () => {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            <h1>{{ book_name }}</h1>
-            <RouterLink :to="`/topical/${props.book}`">
-                <img class="ionicon" :class="{ hidden: !index_available }" src="/assets/information-circle-outline.svg" />
-            </RouterLink>
+            <div class="title--left">
+                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>{{ book_name }}</h1>
+            </div>
+            <div class="title--right">
+                <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
+                    <img class="ionicon" src="/assets/information-circle-outline.svg" />
+                </RouterLink>
+            </div>
         </div>
     </div>
 
     <div class="songs" style="margin-top: 70px">
         <!-- Buttons will be added here -->
-        <RouterLink v-for="song_num in num_of_songs" :key="song_num" :to="`/display/${$props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
+        <RouterLink v-for="song_num in num_of_songs" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}
         </RouterLink>
     </div>

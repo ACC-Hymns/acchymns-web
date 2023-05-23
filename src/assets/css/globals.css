@@ -164,13 +164,6 @@ h1, h2, h3, h4, h5 {
     display: none;
 }
 
-.buttonGroupLeft > * {
-    padding-right: var(--button-spacing)
-}
-.buttonGroupRight > * {
-    padding-left: var(--button-spacing)
-}
-
 .menu {
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
@@ -184,14 +177,39 @@ h1, h2, h3, h4, h5 {
 
 .space {
     width: 25px;
+    height: 25px;
 }
 
 .title {
     font-size: 12px;
     display: flex;
+    height: 61.16px;
     justify-content: space-between;
     align-items: center;
-    margin: 0px 30px 0px 30px;
+    margin: 0px 30px;
+}
+
+.title--left {
+    text-align: left;
+}
+
+.title--left > * {
+    padding-right: var(--button-spacing)
+}
+
+.title--center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.title--right {
+    text-align: right;
+}
+
+.title--right > * {
+    padding-left: var(--button-spacing)
 }
 
 ion-icon {

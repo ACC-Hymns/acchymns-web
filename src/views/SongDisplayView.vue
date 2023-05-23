@@ -94,21 +94,17 @@ onUnmounted(() => {
 <template>
     <div class="menu">
         <div class="title">
-            <div class="buttonGroupLeft">
-                <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
-
-                <!-- Empty element cause CSS too hard -->
-                <a></a>
+            <div class="title--left">
+                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             </div>
-            <h1>#{{ props.song }}</h1>
-            <div class="buttonGroupRight">
-                <span>
-                    <!-- Template does not get rendered, but the span forces the correct spacing -->
-                    <template v-if="notes.length != 0">
-                        <img v-if="!notes_playing" @click="playNotes()" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                        <img v-else class="ionicon" src="/assets/musical-notes.svg" />
-                    </template>
-                </span>
+            <div class="title--center">
+                <h1>#{{ props.song }}</h1>
+            </div>
+            <div class="title--right">
+                <template v-if="notes.length != 0">
+                    <img v-if="!notes_playing" @click="playNotes()" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" src="/assets/musical-notes.svg" />
+                </template>
 
                 <img v-if="bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
                 <img v-else @click="toggleBookmark()" class="ionicon" src="/assets/bookmark-outline.svg" />
