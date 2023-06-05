@@ -4,6 +4,7 @@ import type { BookSummary } from "@/scripts/types";
 import { watch, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
+import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
 
@@ -12,6 +13,7 @@ const branch = "staging";
 function remoteSource(code: string) {
     return `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/` + code;
 }
+
 const public_references = ["HZ", "ZG", "PC", "ZHJ"].map(remoteSource);
 const known_references = public_references.concat(["ARF", "ARFR"].map(remoteSource));
 
@@ -44,18 +46,27 @@ watch(
 async function addImportedURL(url: string) {
     let book = await fetchBookSummary(url);
     if (book !== null) {
+        console.log("Yolo");
         await Toast.show({
-            text: "Successfully imported a book",
+            text: "Server unreachable, unable to add book",
         });
+        console.log("displayed?")
     }
     if (!imported_book_urls.value.includes(url)) {
         imported_book_urls.value = [...imported_book_urls.value, url];
     }
 }
 
-function addImportedBookByCode(short_book_name: string) {
+async function addImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        addImportedURL(known_references[short_book_name as keyof typeof known_references]);
+        await addImportedURL(known_references[short_book_name]);
+    } else {
+        // Unknown code
+        console.log("yo");
+        await Toast.show({
+            text: "Successfully imported a book",
+        });
+        console.log("displayed?2")
     }
 }
 
@@ -73,7 +84,7 @@ function removeImportedURL(to_remove: string) {
 
 function removeImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        removeImportedURL(known_references[short_book_name as keyof typeof known_references]);
+        removeImportedURL(known_references[short_book_name]);
     }
 }
 
@@ -98,14 +109,14 @@ function removeImportedBook(book: BookSummary) {
     <div class="settings">
         <div class="input-option">
             <span>Reference</span>
-            <input v-model.trim="reference_input" type="text" />
+            <input v-model.trim="reference_input" type="text" class="input-text" />
             <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
                 <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>
         <div class="input-option">
             <span>URL</span>
-            <input v-model="url_input" type="url" />
+            <input v-model="url_input" type="url" class="input-text" />
             <button :disabled="url_input.length === 0" @click="addImportedURL(url_input)">
                 <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
             </button>

@@ -116,6 +116,11 @@ input {
     transition: .4s;
 }
 
+.input-text { 
+    background-color: var(--slider-base);
+    border-radius: 100px;
+}
+
 .slider:before {
     position: absolute;
     content: "";
@@ -159,7 +164,7 @@ input:checked+.slider:before {
     background: var(--slider-base);
     border-radius: 100px;
     outline: none;
-    padding: 0px 5px 0px 5px;
+    padding: 0px 5px;
     -webkit-transition: .2s;
     transition: opacity .2s;
 }
