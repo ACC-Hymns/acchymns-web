@@ -1,0 +1,39 @@
+name: Build IOS
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build IOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup java
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+
+      - name: Build web app
+        run: |
+          npm install
+          npm run build
+          npx cap sync
+
+      - name: Build app bundle
+        run: |
+          npx cap build ios
+
+    #   - name: Upload release IPA
+    #     uses: actions/upload-artifact@v3
+    #     with:
+    #       name: app-release-aab
+    #       path: android/app/build/outputs/bundle/release/app-release-signed.aab
+    #       retention-days: 7
