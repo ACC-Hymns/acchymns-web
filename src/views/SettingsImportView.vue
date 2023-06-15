@@ -1,99 +1,53 @@
 <script setup lang="ts">
-import { fetchBookSummary } from "@/scripts/book_import";
-import type { BookSummary } from "@/scripts/types";
-import { watch, ref } from "vue";
+import { computed, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
-import { Capacitor } from "@capacitor/core";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
+import HomeBookBox from "@/components/HomeBookBox.vue";
+import { known_references, public_references } from "@/scripts/constants";
 
-const branch = "staging";
+// Not watching deeply, must assign new array
+const imported_book_urls = useLocalStorage<string[]>("externalBooks", []);
 
-function remoteSource(code: string) {
-    return `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/books/` + code;
-}
-
-const public_references = ["HZ", "ZG", "PC", "ZHJ"].map(remoteSource);
-const known_references = public_references.concat(["ARF", "ARFR"].map(remoteSource));
-
-let imported_book_urls = useLocalStorage<string[]>("externalBooks", []); // Not watching deeply, must assign new array
+// Preview books are books that haven't been imported, and are publicly available
+const preview_books_urls = computed(() => {
+    return Object.values(public_references).filter(url => !imported_book_urls.value.includes(url));
+});
 
 const url_input = ref("");
 const reference_input = ref("");
 
-// Imported books & updating
-let imported_books = ref<BookSummary[]>([]);
-watch(
-    imported_book_urls,
-    async urls => {
-        imported_books.value = await Promise.all(urls.map(url => fetchBookSummary(url)));
-    },
-    { immediate: true }
-);
-
-// Preview books & updating
-let preview_books = ref<BookSummary[]>([]);
-watch(
-    imported_book_urls,
-    async urls => {
-        let preview_urls = Object.values(public_references).filter(url => !urls.includes(url));
-        preview_books.value = await Promise.all(preview_urls.map(url => fetchBookSummary(url)));
-    },
-    { immediate: true }
-);
-
 async function addImportedURL(url: string) {
-    let book = await fetchBookSummary(url);
-    if (book !== null) {
-        console.log("Yolo");
-        await Toast.show({
-            text: "Server unreachable, unable to add book",
-        });
-        console.log("displayed?")
-    }
     if (!imported_book_urls.value.includes(url)) {
-        imported_book_urls.value = [...imported_book_urls.value, url];
+        imported_book_urls.value.push(url);
     }
 }
 
 async function addImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        await addImportedURL(known_references[short_book_name]);
+        const to_import_url = known_references[short_book_name as keyof typeof known_references];
+        // Check for duplicate url
+        if (imported_book_urls.value.includes(to_import_url)) {
+            await Toast.show({
+                text: `Book (${short_book_name}) already imported!`,
+            });
+        } else {
+            await addImportedURL(to_import_url);
+            await Toast.show({
+                text: `Successfully imported book (${short_book_name})!`,
+            });
+        }
     } else {
         // Unknown code
-        console.log("yo");
         await Toast.show({
-            text: "Successfully imported a book",
+            text: `Failed to import book (${short_book_name})!`,
         });
-        console.log("displayed?2")
-    }
-}
-
-function addImportedBook(book: BookSummary) {
-    if (book.srcUrl !== undefined) {
-        addImportedURL(book.srcUrl);
-    } else {
-        addImportedBookByCode(book.name.short);
     }
 }
 
 function removeImportedURL(to_remove: string) {
     imported_book_urls.value = imported_book_urls.value.filter(url => url != to_remove);
-}
-
-function removeImportedBookByCode(short_book_name: string) {
-    if (short_book_name in known_references) {
-        removeImportedURL(known_references[short_book_name]);
-    }
-}
-
-function removeImportedBook(book: BookSummary) {
-    if (book.srcUrl !== undefined) {
-        removeImportedURL(book.srcUrl);
-    } else {
-        removeImportedBookByCode(book.name.short);
-    }
 }
 </script>
 
@@ -124,34 +78,23 @@ function removeImportedBook(book: BookSummary) {
     </div>
 
     <!-- Publicly available, but not imported books -->
-    <h2 v-if="preview_books.length != 0">Available Books</h2>
+    <h2 v-if="preview_books_urls.length != 0">Available Books</h2>
     <div>
-        <div v-for="book in preview_books" :key="book.srcUrl" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
-            <div>
-                <div class="book_title_small">{{ book.name.medium }}</div>
-            </div>
-            <div class="booktext--right">
-                <button @click="addImportedBook(book)">
-                    <img class="ionicon ionicon-custom" src="/assets/add-circle-outline.svg" />
-                </button>
-            </div>
-        </div>
+        <HomeBookBox v-for="url in preview_books_urls" :key="url" :src="url" :with-link="false">
+            <button @click="addImportedURL(url)">
+                <img class="ionicon ionicon-custom" src="/assets/add-circle-outline.svg" />
+            </button>
+        </HomeBookBox>
     </div>
 
     <!-- Imported Books -->
-    <h2 v-if="imported_books.length != 0">Imported Books</h2>
+    <h2 v-if="imported_book_urls.length != 0">Imported Books</h2>
     <div style="padding-bottom: 200px">
-        <div v-for="book in imported_books" :key="book.srcUrl" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
-            <div>
-                <div class="book_title_small">{{ book.name.medium }}</div>
-            </div>
-            <div class="booktext--right">
-                <img v-if="Capacitor.getPlatform() !== 'web'" class="ionicon ionicon-custom" src="/assets/wifi.svg" />
-                <button @click="removeImportedBook(book)">
-                    <img class="ionicon ionicon-custom" src="/assets/close.svg" />
-                </button>
-            </div>
-        </div>
+        <HomeBookBox v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
+            <button @click="removeImportedURL(url)">
+                <img class="ionicon ionicon-custom" src="/assets/close.svg" />
+            </button>
+        </HomeBookBox>
     </div>
 
     <nav class="nav">
