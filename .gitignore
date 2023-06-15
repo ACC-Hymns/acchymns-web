@@ -28,3 +28,6 @@ coverage
 *.sw?
 android/release.jks
 android/release.jks.base64
+
+resources/ios/**/*
+resources/android/**/*

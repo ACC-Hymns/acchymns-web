@@ -11,7 +11,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup java
+      - name: Setup XCode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
