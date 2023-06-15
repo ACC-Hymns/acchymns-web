@@ -26,3 +26,5 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+android/release.jks
+android/release.jks.base64
