@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: Build APK
+    name: Build Android
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -35,13 +35,8 @@ jobs:
 
       - name: Build app bundle
         run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew build
-          ./gradlew bundle
-
-      - name: Sign dev build
-        run: jarsigner -keystore android/release.jks -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./app/build/outputs/bundle/release/app-release.aab release
+          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias release --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype APK
+          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias release --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype AAB
 
       - name: Upload release AAB
         uses: actions/upload-artifact@v3
@@ -54,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+          path: android/app/build/outputs/apk/release/app-release-signed.apk
           retention-days: 7
