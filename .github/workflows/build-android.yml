@@ -36,6 +36,7 @@ jobs:
       - name: Build app bundle
         run: |
           cd android
+          chmod +x gradlew
           ./gradlew build
           ./gradlew bundle
 
