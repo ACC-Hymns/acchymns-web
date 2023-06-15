@@ -25,11 +25,12 @@ jobs:
         run: |
           npm install
           npm run build
-          npx cap sync
-
+        
       - name: Build app bundle
         run: |
-          npx cap build ios
+          npx cap sync
+          xcodebuild -workspace ios/App/App.xcworkspace -list
+          npx cap build ios -- CODE_SIGNING_REQUIRED=NO
 
     #   - name: Upload release IPA
     #     uses: actions/upload-artifact@v3
