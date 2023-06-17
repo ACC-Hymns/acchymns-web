@@ -7,10 +7,10 @@ import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
 import { darken } from "@/scripts/hex";
 
-let search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
+const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
-let search_query = ref(search_params.value.search);
-let stripped_query = computed(() => {
+const search_query = ref(search_params.value.search);
+const stripped_query = computed(() => {
     return search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
         .replace(/s{2,}/g, " ")
@@ -21,15 +21,14 @@ watch(stripped_query, new_query => {
     search_params.value.search = new_query;
 });
 
-let available_songs = ref<SongReference[]>([]);
-let available_books = ref<BookSummary[]>([]);
+const available_songs = ref<SongReference[]>([]);
+const available_books = ref<BookSummary[]>([]);
 
-let display_limit = ref(50);
-let search_results = computed(() => {
+const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
             .filter(s => {
-                let stripped_number = s.number?.toLowerCase() ?? "";
+                const stripped_number = s.number?.toLowerCase() ?? "";
                 return (
                     (s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
                 );
@@ -39,14 +38,15 @@ let search_results = computed(() => {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                let stripped_number = s.number?.toLowerCase() ?? "";
+                const stripped_number = s.number?.toLowerCase() ?? "";
                 return s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
 });
 
-let limited_search_results = computed(() => {
+const display_limit = ref(50);
+const limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
