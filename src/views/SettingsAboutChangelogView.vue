@@ -12,29 +12,17 @@ import { navigateBack } from "@/router/back_navigate";
     <div class="settings-holder">
         <div class="settings">
             <a class="changelog">
-                <h3 class="release">[v1.4]</h3>
-                <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-02-20</h5>
+                <h3 class="release">[v1.2]</h3>
+                <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-05-01</h5>
                 <ul>
                     <li class="change">Storage savings</li>
                     <li class="change">Visual fidelity for some books</li>
                     <li class="change">Bug fixes</li>
-                </ul>
-            </a>
-            <a class="changelog">
-                <h3 class="release">[v1.3] - New Years Update</h3>
-                <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-01-16</h5>
-                <ul>
                     <li class="change">Zoom and pan on songs</li>
                     <li class="change">Capability to import books</li>
                     <li class="change">Added Japanese Zion's Harp</li>
                     <li class="change">Visual improvements</li>
                     <li class="change">Bug fixes</li>
-                </ul>
-            </a>
-            <a class="changelog">
-                <h3 class="release">[v1.2]</h3>
-                <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-10-20</h5>
-                <ul>
                     <li class="change">Added Hymns of Zion</li>
                     <li class="change">Added Pisne Chorale</li>
                     <li class="change">Added Zbirka</li>

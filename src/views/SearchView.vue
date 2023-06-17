@@ -160,7 +160,7 @@ onMounted(async () => {
             </div>
         </RouterLink>
         <div v-if="display_limit < search_results.length" @click="display_limit += 50" class="song" style="background: #2196f3; justify-content: center">
-            <div class="song__title">Click for more results...</div>
+            <div class="song__title">Show more results</div>
         </div>
     </div>
 

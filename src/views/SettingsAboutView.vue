@@ -10,7 +10,7 @@ import { navigateBack } from "@/router/back_navigate";
         <span class="space"></span>
     </div>
 
-    <h2>ACC Hymns Version 1.4</h2>
+    <h2>ACC Hymns Version 1.2</h2>
 
     <div class="settings">
         <RouterLink to="/settings/about/attributions" class="settings-option">
