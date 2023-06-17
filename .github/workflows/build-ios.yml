@@ -15,7 +15,6 @@ jobs:
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
       - name: Install the Apple certificate and provisioning profile
         run: |
-          echo "$CWD"
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
@@ -50,6 +49,8 @@ jobs:
 
       - name: Build web app
         run: |
+          pwd
+          echo "$(pwd)"
           npm install
           npm run build
         
@@ -70,7 +71,7 @@ jobs:
 
           echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o auth_key.p8
 
-          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$CWD/auth_key.p8"
+          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/auth_key.p8"
 
       - name: Upload release IPA
         uses: actions/upload-artifact@v3
