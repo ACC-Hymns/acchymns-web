@@ -55,12 +55,24 @@ jobs:
       - name: Build app bundle
         run: |
           npx cap sync
-          xcodebuild -workspace ios/App/App.xcworkspace -list
-          npx cap build ios
+          xcodebuild -workspace App.xcworkspace -scheme App -destination generic/platform=iOS -archivePath App.xcarchive archive
+          
+          echo '<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                <plist version="1.0">
+                <dict>
+                <key>method</key>
+                <string>app-store</string>
+                </dict>
+                </plist>' > archive.plist
 
-    #   - name: Upload release IPA
-    #     uses: actions/upload-artifact@v3
-    #     with:
-    #       name: app-release-aab
-    #       path: android/app/build/outputs/bundle/release/app-release-signed.aab
-    #       retention-days: 7
+          echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o auth_key.p8
+
+          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath auth_key.p8
+
+      - name: Upload release IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-ipa
+          path: ios/App/output/*.ipa
+          retention-days: 7
