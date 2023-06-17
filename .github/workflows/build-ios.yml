@@ -42,6 +42,10 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: XCodeBuild Help
+        run: |
+          xcodebuild --help
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -58,8 +62,10 @@ jobs:
         run: |
           npx cap sync
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive archive
+          xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive
           
+      - name: Export IPA
+        run: |            
           echo '<?xml version="1.0" encoding="UTF-8"?>
                 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
                 <plist version="1.0">
@@ -69,9 +75,9 @@ jobs:
                 </dict>
                 </plist>' > archive.plist
 
-          echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o auth_key.p8
+          echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o AuthKey_${{ secrets.AUTH_KEY_ID }}.p8
 
-          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/auth_key.p8"
+          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/AuthKey_${{ secrets.AUTH_KEY_ID }}.p8"
 
       - name: Upload release IPA
         uses: actions/upload-artifact@v3
