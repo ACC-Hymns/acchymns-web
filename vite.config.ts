@@ -14,6 +14,9 @@ export default defineConfig(({ mode }) => {
                 "@": fileURLToPath(new URL("./src", import.meta.url)),
             },
         },
+        optimizeDeps: {
+            exclude: [`@ionic/pwa-elements/loader`],
+        },
         base: env.VITE_BASE_URL,
     };
 });

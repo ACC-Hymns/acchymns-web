@@ -12,29 +12,13 @@ type BookSummary = {
     srcUrl?: string;
 };
 
-const UnknownBookSummary: BookSummary = {
-    name: {
-        short: "UK",
-        medium: "Unknown",
-        long: "Unknown",
-    },
-    primaryColor: "#000000",
-    secondaryColor: "#000000",
-    fileExtension: "",
-    numOfSongs: 0,
-};
-
 type Song = {
     number?: string; // Numbers unfortunately can be strings: ex: 403a GH
     title: string;
     notes: string[];
 };
 
-type SongList = {
-    [song_number: string]: Song;
-};
-
-const UnknownSongList: SongList = {};
+type SongList = Record<string, Song>;
 
 type SongReference = Song & {
     stripped_title?: string;
@@ -46,10 +30,8 @@ type BookmarkedSong = {
     book: string;
 };
 
-type BookIndex = {
-    [section: string]: string[]; // Dictionary of section, and list of numbers for that section
-};
-const UnknownBookIndex: BookIndex = {};
+// Dictionary of section, and list of numbers for that section
+type BookIndex = Record<string, string[]>;
 
 type SearchParams = {
     search: string;
@@ -57,4 +39,3 @@ type SearchParams = {
 };
 
 export type { BookSummary, Song, SongList, BookmarkedSong, SongReference, BookIndex, SearchParams };
-export { UnknownBookSummary, UnknownSongList, UnknownBookIndex };

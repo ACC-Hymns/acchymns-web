@@ -5,6 +5,7 @@ import { computed, ref, onMounted, watch } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
+import { darken } from "@/scripts/hex";
 
 let search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
@@ -59,33 +60,6 @@ function filterBook(book: BookSummary) {
 function check_selected(book: BookSummary) {
     if (search_params.value.bookFilters.length == 0) return false;
     return search_params.value.bookFilters.find(b => b.name.short == book.name.short);
-}
-
-function hexToRgb(hex: string) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result
-        ? {
-              r: parseInt(result[1], 16),
-              g: parseInt(result[2], 16),
-              b: parseInt(result[3], 16),
-          }
-        : null;
-}
-function componentToHex(c: any) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-}
-function rgbToHex(r: any, g: any, b: any) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-function darken(input: string) {
-    let baseColor = hexToRgb(input);
-    if (!baseColor) return input;
-    baseColor.r *= 0.5;
-    baseColor.g *= 0.5;
-    baseColor.b *= 0.5;
-    console.log(rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b)));
-    return rgbToHex(Math.round(baseColor.r), Math.round(baseColor.g), Math.round(baseColor.b));
 }
 
 onMounted(async () => {

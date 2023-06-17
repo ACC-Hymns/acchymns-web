@@ -4,6 +4,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
+
 // Preload page-wide CSS and setup dark mode
 import "@/assets/css/globals.css";
 import "@/assets/css/fonts.css";
@@ -13,5 +15,7 @@ const app = createApp(App);
 
 // app.use(createPinia());
 app.use(router);
+
+defineCustomElements(window);
 
 app.mount("#app");

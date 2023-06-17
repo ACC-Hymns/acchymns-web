@@ -1,6 +1,6 @@
 {
   "name": "acchymnal",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -13,10 +13,13 @@
     "capacitor:copy:after": "node add-on-books-handler.mjs"
   },
   "dependencies": {
-    "@capacitor/android": "^4.7.1",
-    "@capacitor/app": "^4.1.1",
-    "@capacitor/core": "^4.7.1",
-    "@capacitor/ios": "^4.7.1",
+    "@capacitor/android": "^5.0.2",
+    "@capacitor/app": "^5.0.2",
+    "@capacitor/core": "^5.0.2",
+    "@capacitor/ios": "^5.0.2",
+    "@capacitor/preferences": "^5.0.2",
+    "@capacitor/toast": "^5.0.2",
+    "@ionic/pwa-elements": "^3.1.1",
     "@vueuse/core": "^9.13.0",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^3.4.120",
@@ -26,7 +29,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@capacitor/cli": "^4.7.1",
+    "@capacitor/cli": "5.0.3",
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.14.2",
     "@vitejs/plugin-vue": "^4.0.0",
