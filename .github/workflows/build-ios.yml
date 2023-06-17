@@ -55,6 +55,7 @@ jobs:
       - name: Build app bundle
         run: |
           npx cap sync
+          cd ios/App
           xcodebuild -workspace App.xcworkspace -scheme App -destination generic/platform=iOS -archivePath App.xcarchive archive
           
           echo '<?xml version="1.0" encoding="UTF-8"?>
