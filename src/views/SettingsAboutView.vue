@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
+
+// This is retrieved from the package.json
+const version: string = import.meta.env.VITE_PROGRAM_VERSION;
 </script>
 
 <template>
@@ -10,7 +13,7 @@ import { navigateBack } from "@/router/back_navigate";
         <span class="space"></span>
     </div>
 
-    <h2>ACC Hymns Version 2.0</h2>
+    <h2>ACC Hymns Version {{ version }}</h2>
 
     <div class="settings">
         <RouterLink to="/settings/about/attributions" class="settings-option">

@@ -71,14 +71,22 @@ jobs:
                 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
                 <plist version="1.0">
                 <dict>
-                <key>method</key>
-                <string>app-store</string>
+                  <key>compileBitcode</key>
+                  <false/>
+                  <key>method</key>
+                  <string>development</string>
+                  <key>signingStyle</key>
+                  <string>automatic</string>
+                  <key>teamID</key>
+                  <string>Fred Weinhardt</string>
+                  <key>thinning</key>
+                  <string>&lt;none&gt;</string>
                 </dict>
                 </plist>' > archive.plist
 
           echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o AuthKey_${{ secrets.AUTH_KEY_ID }}.p8
 
-          xcodebuild archive -archivePath App.xcarchive -exportArchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/AuthKey_${{ secrets.AUTH_KEY_ID }}.p8"
+          xcodebuild -exportArchive -archivePath App.xcarchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/AuthKey_${{ secrets.AUTH_KEY_ID }}.p8"
 
       - name: Upload release IPA
         uses: actions/upload-artifact@v3

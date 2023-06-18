@@ -1,4 +1,4 @@
-const prepackaged_books = ["ZH", "GH", "JH", "HG"];
+const prepackaged_books = ["ZH", "GH", "JH", "HG"] as const;
 const prepackaged_book_urls: string[] = prepackaged_books.map(book_name => import.meta.env.BASE_URL + "books/" + book_name);
 
 const branch: string = import.meta.env.VITE_GIT_BRANCH;

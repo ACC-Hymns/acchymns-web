@@ -76,6 +76,10 @@ input {
     border-bottom: var(--border-color);
 }
 
+.input-option:last-child {
+    border-bottom: none;
+}
+
 .input-option-button {
     display: flex;
     align-items: center;
@@ -119,6 +123,7 @@ input {
 .input-text { 
     background-color: var(--slider-base);
     border-radius: 100px;
+    margin: 0px 10px 0px 20px
 }
 
 .slider:before {

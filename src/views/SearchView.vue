@@ -65,8 +65,8 @@ function check_selected(book: BookSummary) {
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
+    available_books.value.push(...Object.values(BOOK_METADATA));
     for (const book2 of Object.keys(SONG_METADATA)) {
-        available_books.value.push(BOOK_METADATA[book2]);
         for (const song_number of Object.keys(SONG_METADATA[book2])) {
             let song: Song = SONG_METADATA[book2][song_number];
             available_songs.value.push({
