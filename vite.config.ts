@@ -6,7 +6,8 @@ import vue from "@vitejs/plugin-vue";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
     // Inject the current branch for use with remote books
-    const branch_name = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEnd();
+    const branch_name = execSync("git branch --show-current").toString().trimEnd();
+    console.log("Branch: ", branch_name);
     process.env.VITE_GIT_BRANCH = branch_name;
 
     // Pass the package version to the program from the package.json file
