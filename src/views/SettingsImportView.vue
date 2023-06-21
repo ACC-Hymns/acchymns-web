@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";

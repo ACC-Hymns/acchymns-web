@@ -45,10 +45,6 @@ const console = useConsoleStore();
     height: calc(100vh - 65px - 61.16px - 40px);
 }
 
-p {
-    margin: 0px;
-}
-
 .internal-console {
     height: 100%;
     border-radius: 15px;
@@ -57,6 +53,11 @@ p {
     color: var(--color);
     background: var(--background);
     overflow: auto;
-    white-space: pre;
+}
+</style>
+
+<style>
+p {
+    margin: 0px;
 }
 </style>

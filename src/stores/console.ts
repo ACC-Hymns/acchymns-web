@@ -20,9 +20,9 @@ export const useConsoleStore = defineStore("console", () => {
     function prepend(type: LogLevel, ...data: any[]) {
         for (const element of data) {
             if (Array.isArray(element)) {
-                logs.value = fmt(type, element.join(" ")) + "<br>" + logs.value;
+                logs.value = fmt(type, element.join(" ")) + logs.value;
             } else {
-                logs.value = fmt(type, element) + "<br>" + logs.value;
+                logs.value = fmt(type, element) + logs.value;
             }
         }
     }
@@ -40,7 +40,7 @@ export function registerConsoleStore() {
         std_out(...data); // This line will guarantee that it's still logged to the browser console.
     };
 
-    console.log = (...data: any[]) => logToStore("log", data);
-    console.warn = (...data: any[]) => logToStore("warn", data);
-    console.error = (...data: any[]) => logToStore("error", data);
+    console.log = (...data: any[]) => logToStore("log", ...data);
+    console.warn = (...data: any[]) => logToStore("warn", ...data);
+    console.error = (...data: any[]) => logToStore("error", ...data);
 }

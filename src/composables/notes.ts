@@ -2,13 +2,27 @@ import { useLocalStorage, type MaybeRef } from "@vueuse/core";
 import * as Tone from "tone";
 import { ref, unref } from "vue";
 
-// const context = new Tone.Context({ latencyHint: "interactive", lookAhead: 0 });
-// Tone.setContext(context);
+const notes_to_load = ["A2", "C3", "A3", "C4", "A4", "C5"] as const;
 
-const sampler = new Tone.Sampler({
-    urls: Object.fromEntries(["A2", "C3", "A3", "C4", "A4", "C5"].map(note => [note, `assets/notes/${note}.mp3`])),
-    baseUrl: import.meta.env.BASE_URL,
-}).toDestination();
+const notes_loaded = Object.fromEntries(notes_to_load.map(note => [note, false]));
+
+function AJAX(url: string, cb: (request: XMLHttpRequest, event: ProgressEvent<EventTarget>) => void) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.responseType = "blob";
+    xhr.onload = event => cb(xhr, event);
+    xhr.send(null);
+}
+
+const sampler = new Tone.Sampler().toDestination();
+
+for (const note of notes_to_load) {
+    AJAX(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, (request, _) => {
+        const url = URL.createObjectURL(request.response);
+        sampler.add(note, url);
+        notes_loaded[note] = true;
+    });
+}
 
 const interval = useLocalStorage<number>("playbackInterval", 0.25);
 const duration = useLocalStorage<number>("playbackDuration", 3);
@@ -22,9 +36,20 @@ const player = {
         if (isPlaying.value) return;
         isPlaying.value = true;
 
+        await Tone.start();
+
+        if (!Object.values(notes_loaded).every(v => v)) {
+            console.log("Not all notes have been loaded!");
+            return;
+        }
+
+        if (!sampler.loaded) {
+            console.log("Sampler hasn't loaded!");
+            return;
+        }
+
         console.log("attempting to start notes");
         console.log(...unref(notes));
-        await Tone.start();
         await Tone.loaded();
 
         const start = Tone.now();
@@ -43,26 +68,23 @@ const player = {
             end_time = start + duration.value; // Notes play for `duration` length when playing as a chord
         }
 
+        sampler.triggerRelease(unref(notes), end_time);
+
         // I don't like using setInterval, but it seems to be the most reliable way to schedule the end of the notes playing
         // I tried Transport.schedule() and ToneEvent, but both had a delay on android of 1.5s after expected, they also behaved unusually with hot-reload and vite.
         console.log("End:", end_time);
         cancel_interval_id = setInterval(() => {
             const curr_time = Tone.now();
             if (curr_time > end_time) {
-                sampler.releaseAll(end_time);
-                Tone.Transport.stop(end_time);
                 isPlaying.value = false;
                 clearInterval(cancel_interval_id);
             }
-        }, 10);
-
-        Tone.Transport.start();
+        }, 50);
     },
     stop() {
         // Release all currently active notes, then cancel any future events from being executed
         clearTimeout(cancel_interval_id);
         sampler.releaseAll();
-        Tone.Transport.cancel();
         isPlaying.value = false;
     },
 };
