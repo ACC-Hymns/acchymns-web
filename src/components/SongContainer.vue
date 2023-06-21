@@ -24,9 +24,9 @@ let song_img_src = ref("");
 let error_is_active = ref(false);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
-const override_system_theme = useLocalStorage("overrideSystemTheme", false);
-const user_prefers_dark_mode = useLocalStorage("overrideDarkMode", false);
-let song_invert = useLocalStorage("songInverted", false);
+const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
+const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
+let song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
     if (override_system_theme.value) {
@@ -38,7 +38,7 @@ const dark_mode = computed(() => {
 
 const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
-let panzoom_enabled = readonly(useLocalStorage("panzoomEnable", true));
+let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();

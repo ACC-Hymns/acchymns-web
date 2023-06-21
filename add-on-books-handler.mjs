@@ -1,11 +1,13 @@
 // This script is for compressing the json files
 // which describe each book. It's also used to remove
 // books which are add-ons, and don't come by default
+// This script is run on the capacitor:copy:after hook: https://capacitorjs.com/docs/cli/hooks
 
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
+// These are where the json files end up after `npx cap sync`
 const bundled_books = ["ZH", "GH", "HG", "JH"];
 const mappings = {
     ios: "ios/App/App/public/books",
@@ -13,7 +15,8 @@ const mappings = {
     web: "dist/books",
 };
 
-let target_dir = path.join(process.env.CAPACITOR_ROOT_DIR, mappings[process.env.CAPACITOR_PLATFORM_NAME]);
+// When running, capacitor injects these env variables
+const target_dir = path.join(process.env.CAPACITOR_ROOT_DIR, mappings[process.env.CAPACITOR_PLATFORM_NAME]);
 
 const books = fs.readdirSync(target_dir);
 for (const book of books) {

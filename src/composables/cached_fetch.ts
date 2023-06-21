@@ -12,10 +12,20 @@ export type CachedResource<T> = {
     data: T;
 };
 
+const cache_prefix = "useCachedJSONFetch.";
+
+export function clearCache() {
+    for (const key in localStorage) {
+        if (key.startsWith(cache_prefix)) {
+            localStorage.removeItem(key);
+        }
+    }
+}
+
 export function useCache<T>(url: RequestInfo | URL) {
     return {
         retrieve: () => {
-            const retrieved = localStorage.getItem(`useCachedJSONFetch.${url}`);
+            const retrieved = localStorage.getItem(cache_prefix + url);
             if (retrieved == null) {
                 return null;
             }
@@ -26,7 +36,7 @@ export function useCache<T>(url: RequestInfo | URL) {
                 time: Date.now(),
                 data,
             };
-            localStorage.setItem(`useCachedJSONFetch.${url}`, JSON.stringify(fetched));
+            localStorage.setItem(cache_prefix + url, JSON.stringify(fetched));
         },
     };
 }

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { useNavigator } from "@/router/navigator";
+const { back } = useNavigator();
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_PROGRAM_VERSION;
-const is_prerelease = version.includes("Beta") || version.includes("Alpha");
 </script>
 
 <template>
     <div class="title">
-        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>About App</h1>
         <span class="space"></span>
     </div>
@@ -23,10 +23,6 @@ const is_prerelease = version.includes("Beta") || version.includes("Alpha");
         </RouterLink>
         <RouterLink to="/settings/about/changelog" class="settings-option">
             <span>Changelog</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
-        </RouterLink>
-        <RouterLink v-if="is_prerelease" to="/settings/about/console" class="settings-option">
-            <span>Debug Console</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>
@@ -54,3 +50,4 @@ const is_prerelease = version.includes("Beta") || version.includes("Alpha");
 <style>
 @import "@/assets/css/settings.css";
 </style>
+@/router/navigator

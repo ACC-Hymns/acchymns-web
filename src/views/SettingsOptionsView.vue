@@ -2,17 +2,18 @@
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed } from "vue";
 import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { useNavigator } from "@/router/navigator";
+const { back } = useNavigator();
 
-let staggered_notes = useLocalStorage("staggered", true);
-let playback_interval = useLocalStorage("playbackInterval", 0.25);
-let playback_duration = useLocalStorage("playbackDuration", 3);
-let panzoom_enabled = useLocalStorage("panzoomEnable", true);
+let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
+let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
+let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 3);
+let panzoom_enabled = useLocalStorage("ACCOptions.panzoomEnable", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
-const override_system_theme = useLocalStorage("overrideSystemTheme", false);
-const user_prefers_dark_mode = useLocalStorage("overrideDarkMode", false);
-let song_invert = useLocalStorage("songInverted", false);
+const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
+const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
+let song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
     if (override_system_theme.value) {
@@ -25,7 +26,7 @@ const dark_mode = computed(() => {
 
 <template>
     <div class="title">
-        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Options</h1>
         <span class="space"></span>
     </div>

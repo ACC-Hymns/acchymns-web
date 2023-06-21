@@ -3,7 +3,8 @@ import { computed, ref } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { useNavigator } from "@/router/navigator";
+const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
 
@@ -86,7 +87,7 @@ function removeImportedURL(to_remove: string) {
 
 <template>
     <div class="title">
-        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Import Books</h1>
         <span class="space"></span>
     </div>

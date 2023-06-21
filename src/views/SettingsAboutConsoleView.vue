@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { useNavigator } from "@/router/navigator";
+const { back } = useNavigator();
 import { useConsoleStore } from "@/stores/console";
 
 const console = useConsoleStore();
@@ -8,8 +9,8 @@ const console = useConsoleStore();
 
 <template>
     <div class="title">
-        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>System Logs</h1>
+        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <h1>Application Logs</h1>
         <span class="space"></span>
     </div>
 

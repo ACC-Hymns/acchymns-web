@@ -1,24 +1,17 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { navigateBack } from "@/router/back_navigate";
+import { useNavigator } from "@/router/navigator";
+const { back } = useNavigator();
 </script>
 
 <template>
     <div class="title">
-        <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
         <h1>Attributions</h1>
         <span class="space"></span>
     </div>
 
     <div class="settings">
-        <a href="https://ionic.io/ionicons" class="attribution">
-            <h3 class="release">Ionicons</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">5.5.2</h5>
-        </a>
-        <a href="https://fonts.google.com/about" class="attribution">
-            <h3 class="release">Google Fonts</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">4.0.0</h5>
-        </a>
         <a href="https://tonejs.github.io" class="attribution">
             <h3 class="release">Tone.js</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">14.7.77</h5>
@@ -26,6 +19,30 @@ import { navigateBack } from "@/router/back_navigate";
         <a href="https://anvaka.github.io/panzoom/demo/attach-via-script.html" class="attribution">
             <h3 class="release">Avanka Panzoom</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">9.4.3</h5>
+        </a>
+        <a href="https://mozilla.github.io/pdf.js/" class="attribution">
+            <h3 class="release">PDF.js</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">9.4.3</h5>
+        </a>
+        <a href="https://vuejs.org/" class="attribution">
+            <h3 class="release">Vue.js</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">3.2.47</h5>
+        </a>
+        <a href="https://capacitorjs.com/" class="attribution">
+            <h3 class="release">Capacitor</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">5.0.2</h5>
+        </a>
+        <a href="https://github.com/ionic-team/pwa-elements" class="attribution">
+            <h3 class="release">Ionic PWA Elements</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">3.1.1</h5>
+        </a>
+        <a href="https://ionic.io/ionicons" class="attribution">
+            <h3 class="release">Ionicons</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">5.5.2</h5>
+        </a>
+        <a href="https://fonts.google.com/about" class="attribution">
+            <h3 class="release">Google Fonts</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">4.0.0</h5>
         </a>
     </div>
 

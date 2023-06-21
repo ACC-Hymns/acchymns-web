@@ -1,6 +1,47 @@
 # ACCHymnal
 
-This template should help get you started developing with Vue 3 in Vite.
+Central ACC Hymnal for many song books used across the ACC
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+npm run preview # To preview the minified website
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
+
+## Workflow for developing IOS/Android
+
+```sh
+npm run dev # Until happy with changes
+npm run build # Build & minify all changes
+npx cap sync # Sync all web changes to native apps
+
+# Open in native app editor
+npx cap open ios # XCode
+npx cap open android # Android Studio
+
+# Run emulator (these commands will sync+build&run)
+npx cap run ios
+npx cap run android
+```
 
 ## Recommended IDE Setup
 
@@ -21,26 +62,23 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Developers
 
-```sh
-npm install
-```
+- Christopher Weinhardt
+- Timothy Weinhardt
+- Dallas Hart
 
-### Compile and Hot-Reload for Development
+## Special Thanks
 
-```sh
-npm run dev
-```
+Thanks for supplying PDFs, scans, advice, or assistance.
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- Bro. Ceda Bekic
+- Bro. Peter Denzinger
+- Sis. Rosina Stefan
+- Joey Nitz
+- Susie Nitz
+- Neven Jokic
+- Alyssa Nenadov
+- Riley Nenadov
+- Joel Walter
+- Leah Walter
