@@ -1,0 +1,131 @@
+diff --git a/node_modules/@ionic/pwa-elements/dist/cjs/core-f4aa8a8b.js b/node_modules/@ionic/pwa-elements/dist/cjs/core-f4aa8a8b.js
+index 499ecd0..39cf949 100644
+--- a/node_modules/@ionic/pwa-elements/dist/cjs/core-f4aa8a8b.js
++++ b/node_modules/@ionic/pwa-elements/dist/cjs/core-f4aa8a8b.js
+@@ -70,24 +70,30 @@ const registerHost = (elm) => {
+ const isMemberInElement = (elm, memberName) => memberName in elm;
+ const consoleError = (e) => console.error(e);
+ const moduleCache = /*@__PURE__*/ new Map();
+-const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
++// Needed to patch due to vite: https://github.com/ionic-team/pwa-elements/issues/109#issuecomment-1472349295
++var loadModule = function (cmpMeta, hostRef, hmrVersionId) {
+     // loadModuleImport
+-    const exportName = cmpMeta.$tagName$.replace(/-/g, '_');
+-    const bundleId = ( cmpMeta.$lazyBundleIds$);
+-    const module =  moduleCache.get(bundleId) ;
++    var exportName = cmpMeta.$tagName$.replace(/-/g, '_');
++    var bundleId = (cmpMeta.$lazyBundleIds$);
++    var module = moduleCache.get(bundleId);
+     if (module) {
+         return module[exportName];
+     }
+-    return new Promise(function (resolve) { resolve(_interopNamespace(require(
+-    /* webpackInclude: /\.entry\.js$/ */
+-    /* webpackExclude: /\.system\.entry\.js$/ */
+-    /* webpackMode: "lazy" */
+-    `./${bundleId}.entry.js${ ''}`))); }).then(importedModule => {
++
++    const postImport = (importedModule) => {
+         {
+             moduleCache.set(bundleId, importedModule);
+         }
+         return importedModule[exportName];
+-    }, consoleError);
++    };
++
++    switch (bundleId) {
++        case 'pwa-camera-modal': return import('./pwa-camera-modal.entry.js').then(postImport, consoleError)
++        case 'pwa-camera-modal-instance': return import('./pwa-camera-modal-instance.entry.js').then(postImport, consoleError)
++        case 'pwa-camera': return import('./pwa-camera.entry.js').then(postImport, consoleError)
++        case 'pwa-action-sheet': return import('./pwa-action-sheet.entry.js').then(postImport, consoleError)
++        case 'pwa-toast': return import('./pwa-toast.entry.js').then(postImport, consoleError)
++    }
+ };
+ const styles = new Map();
+ const queueDomReads = [];
+diff --git a/node_modules/@ionic/pwa-elements/dist/esm-es5/core-f86805ad.js b/node_modules/@ionic/pwa-elements/dist/esm-es5/core-f86805ad.js
+index e63be6e..1c7c174 100644
+--- a/node_modules/@ionic/pwa-elements/dist/esm-es5/core-f86805ad.js
++++ b/node_modules/@ionic/pwa-elements/dist/esm-es5/core-f86805ad.js
+@@ -104,6 +104,7 @@ var registerHost = function (elm) {
+ var isMemberInElement = function (elm, memberName) { return memberName in elm; };
+ var consoleError = function (e) { return console.error(e); };
+ var moduleCache = /*@__PURE__*/ new Map();
++// Needed to patch due to vite: https://github.com/ionic-team/pwa-elements/issues/109#issuecomment-1472349295
+ var loadModule = function (cmpMeta, hostRef, hmrVersionId) {
+     // loadModuleImport
+     var exportName = cmpMeta.$tagName$.replace(/-/g, '_');
+@@ -112,16 +113,21 @@ var loadModule = function (cmpMeta, hostRef, hmrVersionId) {
+     if (module) {
+         return module[exportName];
+     }
+-    return import(
+-    /* webpackInclude: /\.entry\.js$/ */
+-    /* webpackExclude: /\.system\.entry\.js$/ */
+-    /* webpackMode: "lazy" */
+-    "./" + bundleId + ".entry.js" + '').then(function (importedModule) {
++
++    const postImport = (importedModule) => {
+         {
+             moduleCache.set(bundleId, importedModule);
+         }
+         return importedModule[exportName];
+-    }, consoleError);
++    };
++
++    switch (bundleId) {
++        case 'pwa-camera-modal': return import('./pwa-camera-modal.entry.js').then(postImport, consoleError)
++        case 'pwa-camera-modal-instance': return import('./pwa-camera-modal-instance.entry.js').then(postImport, consoleError)
++        case 'pwa-camera': return import('./pwa-camera.entry.js').then(postImport, consoleError)
++        case 'pwa-action-sheet': return import('./pwa-action-sheet.entry.js').then(postImport, consoleError)
++        case 'pwa-toast': return import('./pwa-toast.entry.js').then(postImport, consoleError)
++    }
+ };
+ var styles = new Map();
+ var queueDomReads = [];
+diff --git a/node_modules/@ionic/pwa-elements/dist/esm/core-f86805ad.js b/node_modules/@ionic/pwa-elements/dist/esm/core-f86805ad.js
+index a268230..4323d71 100644
+--- a/node_modules/@ionic/pwa-elements/dist/esm/core-f86805ad.js
++++ b/node_modules/@ionic/pwa-elements/dist/esm/core-f86805ad.js
+@@ -49,24 +49,31 @@ const registerHost = (elm) => {
+ const isMemberInElement = (elm, memberName) => memberName in elm;
+ const consoleError = (e) => console.error(e);
+ const moduleCache = /*@__PURE__*/ new Map();
+-const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
++// Needed to patch due to vite: https://github.com/ionic-team/pwa-elements/issues/109#issuecomment-1472349295
++
++var loadModule = function (cmpMeta, hostRef, hmrVersionId) {
+     // loadModuleImport
+-    const exportName = cmpMeta.$tagName$.replace(/-/g, '_');
+-    const bundleId = ( cmpMeta.$lazyBundleIds$);
+-    const module =  moduleCache.get(bundleId) ;
++    var exportName = cmpMeta.$tagName$.replace(/-/g, '_');
++    var bundleId = (cmpMeta.$lazyBundleIds$);
++    var module = moduleCache.get(bundleId);
+     if (module) {
+         return module[exportName];
+     }
+-    return import(
+-    /* webpackInclude: /\.entry\.js$/ */
+-    /* webpackExclude: /\.system\.entry\.js$/ */
+-    /* webpackMode: "lazy" */
+-    `./${bundleId}.entry.js${ ''}`).then(importedModule => {
++
++    const postImport = (importedModule) => {
+         {
+             moduleCache.set(bundleId, importedModule);
+         }
+         return importedModule[exportName];
+-    }, consoleError);
++    };
++
++    switch (bundleId) {
++        case 'pwa-camera-modal': return import('./pwa-camera-modal.entry.js').then(postImport, consoleError)
++        case 'pwa-camera-modal-instance': return import('./pwa-camera-modal-instance.entry.js').then(postImport, consoleError)
++        case 'pwa-camera': return import('./pwa-camera.entry.js').then(postImport, consoleError)
++        case 'pwa-action-sheet': return import('./pwa-action-sheet.entry.js').then(postImport, consoleError)
++        case 'pwa-toast': return import('./pwa-toast.entry.js').then(postImport, consoleError)
++    }
+ };
+ const styles = new Map();
+ const queueDomReads = [];

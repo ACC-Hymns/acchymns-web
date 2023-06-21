@@ -3,6 +3,10 @@ import { execSync } from "node:child_process";
 import { defineConfig, loadEnv, type ConfigEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 
+// Unsolved issue with vite + ionic pwa elements.
+// https://github.com/ionic-team/pwa-elements/issues/109
+// This is the solution I decided on: https://github.com/ionic-team/pwa-elements/issues/109#issuecomment-1472349295
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
     const env = loadEnv(mode, process.cwd());
@@ -30,11 +34,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             alias: {
                 "@": fileURLToPath(new URL("./src", import.meta.url)),
             },
-        },
-        optimizeDeps: {
-            // Unsolved issue with vite + ionic pwa elements, this is the workaround.
-            // https://github.com/ionic-team/pwa-elements/issues/109
-            exclude: [`@ionic/pwa-elements/loader`],
         },
         // We use this to factor in for github hosting, as for github, it's not served at the root, it's at the root + repository name
         // https://vitejs.dev/guide/static-deploy.html#github-pages
