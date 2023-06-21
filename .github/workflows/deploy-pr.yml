@@ -11,6 +11,7 @@ on:
       - '**.md'
 env:
   PR_REPO_NAME: acchymns-pr-${{ github.event.pull_request.node_id }}
+  PR_BRANCH: ${{ github.event.pull_request.head.ref }}
 
 jobs:
   create-repo:
@@ -57,7 +58,8 @@ jobs:
       - name: Build
         run: |
           cd build
-          echo "VITE_BASE_URL=/${{ env.PR_REPO_NAME }}/" > .env
+          export VITE_BASE_URL="/${{ env.PR_REPO_NAME }}/""
+          export VITE_GIT_BRANCH="${{ env.PR_BRANCH }}""
           npm i
           npm run build
           npx cap copy web

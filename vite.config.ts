@@ -5,22 +5,24 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
-    // Inject the current branch for use with remote books
-    const branch_name = execSync("git branch --show-current").toString().trimEnd();
-    console.log("Branch: ", branch_name);
-    process.env.VITE_GIT_BRANCH = branch_name;
+    const env = loadEnv(mode, process.cwd());
+
+    if (!env.VITE_GIT_BRANCH) {
+        // Inject the current branch for use with remote books
+        process.env.VITE_GIT_BRANCH = execSync("git branch --show-current").toString().trimEnd();
+    }
+
+    console.log("Branch:", process.env.VITE_GIT_BRANCH);
 
     // Pass the package version to the program from the package.json file
     // Customize it for staging and feature branches
-    if (branch_name == "main") {
+    if (process.env.VITE_GIT_BRANCH == "main") {
         process.env.VITE_PROGRAM_VERSION = process.env.npm_package_version;
-    } else if (branch_name == "staging") {
+    } else if (process.env.VITE_GIT_BRANCH == "staging") {
         process.env.VITE_PROGRAM_VERSION = "Beta " + process.env.npm_package_version;
     } else {
         process.env.VITE_PROGRAM_VERSION = "Alpha " + process.env.npm_package_version;
     }
-
-    const env = loadEnv(mode, process.cwd());
 
     return {
         plugins: [vue()],
