@@ -45,8 +45,13 @@ const search_results = computed(() => {
     }
 });
 
-const display_limit = ref(50);
+const increment = 50;
+const display_limit = ref(increment);
+
 const limited_search_results = computed(() => {
+    if (search_results.value.length - display_limit.value < increment) {
+        return search_results.value;
+    }
     return search_results.value.slice(0, display_limit.value);
 });
 
@@ -133,7 +138,7 @@ onMounted(async () => {
                 />
             </div>
         </RouterLink>
-        <div v-if="display_limit < search_results.length" @click="display_limit += 50" class="song" style="background: #2196f3; justify-content: center">
+        <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">
             <div class="song__title">Show more results</div>
         </div>
     </div>
