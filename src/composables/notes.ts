@@ -6,19 +6,30 @@ const notes_to_load = ["A2", "C3", "A3", "C4", "A4", "C5"] as const;
 
 const notes_loaded = Object.fromEntries(notes_to_load.map(note => [note, false]));
 
-function AJAX(url: string, cb: (request: XMLHttpRequest, event: ProgressEvent<EventTarget>) => void) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url, true);
-    xhr.responseType = "blob";
-    xhr.onload = event => cb(xhr, event);
-    xhr.send(null);
+// function AJAX(url: string, cb: (request: XMLHttpRequest, event: ProgressEvent<EventTarget>) => void) {
+//     const xhr = new XMLHttpRequest();
+//     xhr.open("GET", url, true);
+//     xhr.responseType = "blob";
+//     xhr.onload = event => cb(xhr, event);
+//     xhr.send(null);
+// }
+
+function FETCH(url: string, cb: (blob: Blob) => void) {
+    fetch(url)
+        .then(resp => resp.blob())
+        .then(blob => cb(blob));
 }
 
 const sampler = new Tone.Sampler().toDestination();
 
 for (const note of notes_to_load) {
-    AJAX(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, (request, _) => {
-        const url = URL.createObjectURL(request.response);
+    // AJAX(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, (request, _) => {
+    //     const url = URL.createObjectURL(request.response);
+    //     sampler.add(note, url);
+    //     notes_loaded[note] = true;
+    // });
+    FETCH(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, blob => {
+        const url = URL.createObjectURL(blob);
         sampler.add(note, url);
         notes_loaded[note] = true;
     });
