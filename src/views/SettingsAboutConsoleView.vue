@@ -1,32 +1,20 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { navigateBack } from "@/router/back_navigate";
+import { useConsoleStore } from "@/stores/console";
+
+const console = useConsoleStore();
 </script>
 
 <template>
     <div class="title">
         <img @click="navigateBack()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>Attributions</h1>
+        <h1>System Logs</h1>
         <span class="space"></span>
     </div>
 
     <div class="settings">
-        <a href="https://ionic.io/ionicons" class="attribution">
-            <h3 class="release">Ionicons</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">5.5.2</h5>
-        </a>
-        <a href="https://fonts.google.com/about" class="attribution">
-            <h3 class="release">Google Fonts</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">4.0.0</h5>
-        </a>
-        <a href="https://tonejs.github.io" class="attribution">
-            <h3 class="release">Tone.js</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">14.7.77</h5>
-        </a>
-        <a href="https://anvaka.github.io/panzoom/demo/attach-via-script.html" class="attribution">
-            <h3 class="release">Avanka Panzoom</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">9.4.3</h5>
-        </a>
+        <div class="internal-console" v-html="console.logs.replaceAll('\n', '<br>')"></div>
     </div>
 
     <nav class="nav">
@@ -52,4 +40,23 @@ import { navigateBack } from "@/router/back_navigate";
 <style scoped>
 @import "@/assets/css/settings.css";
 @import "@/assets/css/about-app.css";
+
+.settings {
+    height: calc(100vh - 65px - 61.16px - 40px);
+}
+
+p {
+    margin: 0px;
+}
+
+.internal-console {
+    height: 100%;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px;
+    color: var(--color);
+    background: var(--background);
+    overflow: auto;
+    white-space: pre;
+}
 </style>

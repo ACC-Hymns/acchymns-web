@@ -51,6 +51,10 @@ const router = createRouter({
             component: () => import("../views/SettingsAboutChangelogView.vue"),
         },
         {
+            path: "/settings/about/console",
+            component: () => import("../views/SettingsAboutConsoleView.vue"),
+        },
+        {
             path: "/settings/about/attributions",
             component: () => import("../views/SettingsAboutAttributionsView.vue"),
         },

@@ -4,6 +4,7 @@ import { navigateBack } from "@/router/back_navigate";
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_PROGRAM_VERSION;
+const is_prerelease = version.includes("Beta") || version.includes("Alpha");
 </script>
 
 <template>
@@ -22,6 +23,10 @@ const version: string = import.meta.env.VITE_PROGRAM_VERSION;
         </RouterLink>
         <RouterLink to="/settings/about/changelog" class="settings-option">
             <span>Changelog</span>
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+        </RouterLink>
+        <RouterLink v-if="is_prerelease" to="/settings/about/console" class="settings-option">
+            <span>Debug Console</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>

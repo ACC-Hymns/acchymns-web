@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useLocalStorage } from "@vueuse/core";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
@@ -15,12 +15,44 @@ const preview_books_urls = computed(() => {
     return Object.values(public_references).filter(url => !imported_book_urls.value.includes(url));
 });
 
-const url_input = ref("");
 const reference_input = ref("");
 
-async function addImportedURL(url: string) {
+async function addImportedURL(url: string, show_on_success: boolean = true): Promise<boolean> {
+    let resp: Response | null = null;
+    try {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 2000);
+        resp = await fetch(url + "/summary.json", {
+            method: "HEAD",
+            signal: controller.signal,
+        });
+        clearTimeout(id);
+    } catch (e: any) {
+        if (e.name != "AbortError") {
+            throw e;
+        }
+    }
+
+    if (resp == null || !resp.ok || resp.status != 200) {
+        await Toast.show({
+            text: `Failed to load book!`,
+        });
+        return false;
+    }
+
     if (!imported_book_urls.value.includes(url)) {
         imported_book_urls.value.push(url);
+        if (show_on_success) {
+            await Toast.show({
+                text: `Successfully imported book!`,
+            });
+        }
+        return true;
+    } else {
+        await Toast.show({
+            text: `Book already imported!`,
+        });
+        return false;
     }
 }
 
@@ -33,15 +65,16 @@ async function addImportedBookByCode(short_book_name: string) {
                 text: `Book (${short_book_name}) already imported!`,
             });
         } else {
-            await addImportedURL(to_import_url);
-            await Toast.show({
-                text: `Successfully imported book (${short_book_name})!`,
-            });
+            if (await addImportedURL(to_import_url, false)) {
+                await Toast.show({
+                    text: `Successfully imported book (${short_book_name})!`,
+                });
+            }
         }
     } else {
         // Unknown code
         await Toast.show({
-            text: `Failed to import book (${short_book_name})!`,
+            text: `Unknown book reference (${short_book_name})!`,
         });
     }
 }
@@ -65,13 +98,6 @@ function removeImportedURL(to_remove: string) {
             <span>Reference</span>
             <input v-model.trim="reference_input" type="text" class="input-text" />
             <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
-                <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
-            </button>
-        </div>
-        <div class="input-option">
-            <span>URL</span>
-            <input v-model="url_input" type="url" class="input-text" />
-            <button :disabled="url_input.length === 0" @click="addImportedURL(url_input)">
                 <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
             </button>
         </div>

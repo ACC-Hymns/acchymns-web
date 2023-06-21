@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-// import { createPinia } from "pinia";
+import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
@@ -13,9 +13,11 @@ import "@/scripts/dark_mode";
 
 const app = createApp(App);
 
-// app.use(createPinia());
+app.use(createPinia());
 app.use(router);
 
+import { registerConsoleStore } from "@/stores/console";
+registerConsoleStore();
 defineCustomElements(window);
 
 app.mount("#app");
