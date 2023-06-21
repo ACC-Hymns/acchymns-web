@@ -28,7 +28,7 @@ for idx, (key, value) in enumerate(data):
         print("Adding page", i)
         writer.add_page(reader.pages[i])
     
-    with open(f"songs/{key}.pdf", "wb") as output_pdf:
+    with open(f"songs/{key.rjust(3, '0')}.pdf", "wb") as output_pdf:
         writer.write(output_pdf)
 
     print("Wrote File")
