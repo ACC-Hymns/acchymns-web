@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUpdate, onUpdated, ref, computed } from "vue";
+import { onMounted, onUpdated, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 import type { SongReference } from "@/scripts/types";

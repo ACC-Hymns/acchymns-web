@@ -8,7 +8,8 @@ type BookSummary = {
     secondaryColor: string;
     fileExtension: string;
     numOfSongs: number;
-    addOn?: boolean;
+    addOn: boolean;
+    indexAvailable: boolean;
     srcUrl?: string;
 };
 

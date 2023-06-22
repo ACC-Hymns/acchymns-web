@@ -18,8 +18,7 @@ onMounted(async () => {
     num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
-    const index = await getBookIndex(BOOK_METADATA[props.book].name.short);
-    index_available.value = index != undefined;
+    index_available.value = BOOK_METADATA[props.book].indexAvailable;
 });
 </script>
 
