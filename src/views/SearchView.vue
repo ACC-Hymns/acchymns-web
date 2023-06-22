@@ -30,7 +30,7 @@ const search_results = computed(() => {
             .filter(s => {
                 const stripped_number = s.number?.toLowerCase() ?? "";
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value)) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
+                    (s.stripped_title?.includes(stripped_query.value) || stripped_number == stripped_query.value) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
                 );
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
@@ -39,7 +39,7 @@ const search_results = computed(() => {
         return available_songs.value
             .filter(s => {
                 const stripped_number = s.number?.toLowerCase() ?? "";
-                return s.stripped_title?.includes(stripped_query.value) || stripped_number.includes(stripped_query.value);
+                return s.stripped_title?.includes(stripped_query.value) || stripped_number == stripped_query.value;
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }

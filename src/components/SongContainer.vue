@@ -48,7 +48,7 @@ onMounted(async () => {
     if (panzoom_enabled.value) {
         createPanZoom(panzoom_container.value as HTMLDivElement, {
             beforeWheel: e => {
-                return !e.shiftKey;
+                return e.shiftKey;
             },
             maxZoom: 3,
             minZoom: Capacitor.getPlatform() !== "web" ? 1 : 0.25,

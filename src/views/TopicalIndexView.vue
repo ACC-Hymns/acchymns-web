@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUpdate, onUpdated, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 import type { SongReference } from "@/scripts/types";
+import { refAutoReset } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
@@ -11,13 +12,25 @@ const router = useRouter();
 
 let num_of_songs = ref(0);
 let book_name = ref("");
-let primary_color = ref("#000000");
+let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: SongReference[] }>({});
+let rendered_topics = ref([]);
+let active_topic = ref<string>("");
+const songs_to_display = computed(() => {
+  if (active_topic.value in topical_index.value) {
+    return topical_index.value[active_topic.value];
+  }
+  return [];
+});
 
 function isSelected(_topic: string | number) {
     return false;
 }
+
+onBeforeUpdate(() => {
+    rendered_topics.value = [];
+})
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -38,6 +51,29 @@ onMounted(async () => {
             });
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+        
+    }
+});
+
+onUpdated(async () => {
+    let observer = new IntersectionObserver((entries, observer) => {
+        for(var i = 0; i < rendered_topics.value.length; i++) {
+            let entry = entries[i];
+            if(entry == null)
+                continue;
+            if(entry.isIntersecting) {
+                console.log(entry.target.childNodes[0].textContent);
+                active_topic.value = entry.target.childNodes[0].textContent;
+            }
+        }
+    }, {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.8
+    });
+    for(var i = 0; i < rendered_topics.value.length; i++) {
+        let element: Element = rendered_topics.value[i];
+        observer.observe(element);
     }
 });
 </script>
@@ -56,11 +92,12 @@ onMounted(async () => {
     <div style="margin-top: 70px">
         <!-- Each Topical Section -->
         <div class="topic-list">
-            <div v-for="(topic_songs, topic) in topical_index" :key="topic" class="topic" :style="{ background: isSelected(topic) ? primary_color : secondary_color }">
-                {{ topic }}
+            <div v-for="(topic_songs, topic) in topical_index" :ref="el => {if(el) rendered_topics.push(el)}" :key="topic" class="topic" :style="{ background: primary_color }">
+                <h3 class="topic-title">{{ topic }}</h3>
             </div>
-            <!-- <RouterLink
-                v-for="song in topic_songs"
+        </div>
+        <RouterLink
+                v-for="song in songs_to_display"
                 :key="song.title + song.number"
                 :to="`/display/${song.book.name.short}/${song.number}`"
                 class="song"
@@ -72,8 +109,7 @@ onMounted(async () => {
                 <div class="booktext--right">
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
-            </RouterLink> -->
-        </div>
+            </RouterLink>
     </div>
 
     <nav class="nav">
@@ -101,6 +137,9 @@ onMounted(async () => {
 </style>
 
 <style scoped>
+.topic-title {
+    color: white;
+}
 .topic-list {
     scroll-snap-type: x mandatory;
     overflow-x: scroll;
