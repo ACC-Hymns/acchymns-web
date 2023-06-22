@@ -155,7 +155,7 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
             isSlowFetch.value = false;
 
             // Any extra errors should get propagated, aborts we can ignore
-            const e = ex as DOMException
+            const e = ex as DOMException;
             // Early exit on weird Apple "TypeError: Load Failed" <- Only Dallas has experienced this so far
             if (e.name == "TypeError") {
                 console.error("Failed to fetch, IOS?:", e);
