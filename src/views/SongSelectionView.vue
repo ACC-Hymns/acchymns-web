@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllBookMetaData, getBookIndex } from "@/scripts/book_import";
+import { getAllBookMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 
 const props = defineProps<{

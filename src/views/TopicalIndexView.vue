@@ -70,7 +70,7 @@ onUpdated(async () => {
 <template>
     <div id="menu" class="menu">
         <div class="title">
-            <img @click="router.go(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             <h1>{{ book_name }} Topical Index</h1>
 
             <!-- Empty element cause CSS too hard -->
@@ -81,17 +81,7 @@ onUpdated(async () => {
     <div style="margin-top: 70px">
         <!-- Each Topical Section -->
         <div class="topic-list">
-            <div
-                v-for="(_topic_songs, topic) in topical_index"
-                :ref="
-                    el => {
-                        if (el) rendered_topics.push(el as Element);
-                    }
-                "
-                :key="topic"
-                class="topic"
-                :style="{ background: primary_color }"
-            >
+            <div v-for="(_topic_songs, topic) in topical_index" ref="rendered_topics" :key="topic" class="topic" :style="{ background: primary_color }">
                 <h3 class="topic-title">{{ topic }}</h3>
             </div>
         </div>
