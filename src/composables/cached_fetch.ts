@@ -72,8 +72,12 @@ export async function fetchCachedJSON<T>(url: RequestInfo | URL, options: UseCac
     } catch (ex: any) {
         // Any extra errors should get propagated, aborts we can ignore
         const e = ex as DOMException;
+        if (e.name == "TypeError") {
+            console.error("Failed to fetch, IOS?:", e);
+            return null;
+        }
         if (e.name != "AbortError") {
-            console.log(e);
+            console.error(e);
             throw e;
         }
 
