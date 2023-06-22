@@ -9,12 +9,10 @@ const notes_loaded = Object.fromEntries(notes_to_load.map(note => [note, false])
 const sampler = new Tone.Sampler().toDestination();
 sampler.sync();
 
-const audio_context = new AudioContext();
-
 for (const note of notes_to_load) {
     fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`).then(async resp => {
-        const audio = await audio_context.decodeAudioData(await resp.arrayBuffer());
-        sampler.add(note, audio);
+        const url = URL.createObjectURL(await resp.blob());
+        sampler.add(note, url);
         notes_loaded[note] = true;
     });
 }
