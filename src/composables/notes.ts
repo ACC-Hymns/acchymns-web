@@ -6,31 +6,15 @@ const notes_to_load = ["A2", "C3", "A3", "C4", "A4", "C5"] as const;
 
 const notes_loaded = Object.fromEntries(notes_to_load.map(note => [note, false]));
 
-// function AJAX(url: string, cb: (request: XMLHttpRequest, event: ProgressEvent<EventTarget>) => void) {
-//     const xhr = new XMLHttpRequest();
-//     xhr.open("GET", url, true);
-//     xhr.responseType = "blob";
-//     xhr.onload = event => cb(xhr, event);
-//     xhr.send(null);
-// }
-
-function FETCH(url: string, cb: (blob: Blob) => void) {
-    fetch(url)
-        .then(resp => resp.blob())
-        .then(blob => cb(blob));
-}
-
 const sampler = new Tone.Sampler().toDestination();
+sampler.sync();
+
+const audio_context = new AudioContext();
 
 for (const note of notes_to_load) {
-    // AJAX(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, (request, _) => {
-    //     const url = URL.createObjectURL(request.response);
-    //     sampler.add(note, url);
-    //     notes_loaded[note] = true;
-    // });
-    FETCH(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`, blob => {
-        const url = URL.createObjectURL(blob);
-        sampler.add(note, url);
+    fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`).then(async resp => {
+        const audio = await audio_context.decodeAudioData(await resp.arrayBuffer());
+        sampler.add(note, audio);
         notes_loaded[note] = true;
     });
 }
@@ -63,7 +47,7 @@ const player = {
         console.log(...unref(notes));
         await Tone.loaded();
 
-        const start = Tone.now();
+        const start = Tone.Transport.now();
         let end_time: number;
 
         if ((localStorage.getItem("staggered") ?? "true") === "true") {
@@ -75,7 +59,7 @@ const player = {
             // Notes play for each note * `interval` + additional `duration`;
             end_time = start + duration.value + interval.value * unref(notes).length;
         } else {
-            sampler.triggerAttack(unref(notes), Tone.now());
+            sampler.triggerAttack(unref(notes), start);
             end_time = start + duration.value; // Notes play for `duration` length when playing as a chord
         }
 
@@ -85,17 +69,19 @@ const player = {
         // I tried Transport.schedule() and ToneEvent, but both had a delay on android of 1.5s after expected, they also behaved unusually with hot-reload and vite.
         console.log("End:", end_time);
         cancel_interval_id = setInterval(() => {
-            const curr_time = Tone.now();
+            const curr_time = Tone.Transport.now();
             if (curr_time > end_time) {
                 isPlaying.value = false;
                 clearInterval(cancel_interval_id);
             }
         }, 50);
+        Tone.Transport.start();
     },
     stop() {
         // Release all currently active notes, then cancel any future events from being executed
         clearTimeout(cancel_interval_id);
-        sampler.releaseAll();
+        sampler.releaseAll(Tone.Transport.now());
+        Tone.Transport.cancel();
         isPlaying.value = false;
     },
 };
