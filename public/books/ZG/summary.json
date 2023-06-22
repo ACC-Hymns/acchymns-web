@@ -4,9 +4,10 @@
         "medium": "Zbirka",
         "long": "Zbirka Slavopoja Gospodu Bogu"
     },
-    "addOn": true,
     "primaryColor": "#CF0F17",
     "secondaryColor": "#902024",
     "fileExtension": "png",
-    "numOfSongs": 485
+    "numOfSongs": 485,
+    "addOn": true,
+    "indexAvailable": false
 }

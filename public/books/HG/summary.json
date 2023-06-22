@@ -4,9 +4,10 @@
         "medium": "Higher Ground",
         "long": "Higher Ground"
     },
-    "addOn": false,
     "primaryColor": "#FBBC13",
     "secondaryColor": "#BD772A",
     "fileExtension": "pdf",
-    "numOfSongs": 124
+    "numOfSongs": 124,
+    "addOn": false,
+    "indexAvailable": true
 }

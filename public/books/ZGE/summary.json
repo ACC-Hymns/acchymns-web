@@ -4,9 +4,10 @@
         "medium": "Hymns of Praise",
         "long": "Hymns of Praise (English Zbirka)"
     },
-    "addOn": true,
     "primaryColor": "#C0C0C0",
     "secondaryColor": "#7a7a7a",
     "fileExtension": "pdf",
-    "numOfSongs": 338
+    "numOfSongs": 338,
+    "addOn": true,
+    "indexAvailable": false
 }

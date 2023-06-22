@@ -4,9 +4,10 @@
         "medium": "Zion's Harp",
         "long": "Zion's Harp"
     },
-    "addOn": false,
     "primaryColor": "#494949",
     "secondaryColor": "#000000",
     "fileExtension": "pdf",
-    "numOfSongs": 346
+    "numOfSongs": 346,
+    "addOn": false,
+    "indexAvailable": true
 }

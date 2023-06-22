@@ -4,9 +4,10 @@
         "medium": "Junior Hymnal",
         "long": "Junior Hymnal"
     },
-    "addOn": false,
     "primaryColor": "#155298",
     "secondaryColor": "#17264E",
     "fileExtension": "png",
-    "numOfSongs": 162
+    "numOfSongs": 162,
+    "addOn": false,
+    "indexAvailable": true
 }
