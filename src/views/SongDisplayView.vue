@@ -4,36 +4,33 @@ import { onMounted, ref, computed, onUnmounted } from "vue";
 import { getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
-import type { BookmarkedSong } from "@/scripts/types";
+import type { SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 
-const props = defineProps<{
-    book: string;
-    song: string;
-}>();
+const props = defineProps<SongReference>();
 
 const router = useRouter();
 
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 
-const bookmarks = useLocalStorage<BookmarkedSong[]>("bookmarks", []);
+const bookmarks = useLocalStorage<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
-    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.song == props.song);
+    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
 function toggleBookmark() {
     if (!is_bookmarked.value) {
-        bookmarks.value.push(props as BookmarkedSong);
+        bookmarks.value.push(props as SongReference);
     } else {
-        const index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.song == props.song);
+        const index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
         bookmarks.value.splice(index, 1); // Remove the bookmarked song
     }
 }
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
-    notes.value = (SONG_METADATA[props.song]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+    notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
 });
 
 onUnmounted(() => {
@@ -48,7 +45,7 @@ onUnmounted(() => {
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             </div>
             <div class="title--center">
-                <h1>#{{ props.song }}</h1>
+                <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
@@ -62,6 +59,6 @@ onUnmounted(() => {
         </div>
     </div>
     <div class="w-100" style="height: 100vh">
-        <SongContainer :book="props.book" :song="props.song"></SongContainer>
+        <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
 </template>

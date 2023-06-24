@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { getAllBookMetaData } from "@/scripts/book_import";
-import type { BookSummary } from "@/scripts/types";
+import type { BookSummary, SongReference } from "@/scripts/types";
 import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
 import { ref, onMounted, readonly, computed } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
-const props = defineProps<{
-    book: string;
-    song: string;
-}>();
+const props = defineProps<SongReference>();
 
 let song_img_type = ref("");
 let panzoom_container = ref<HTMLDivElement>();
@@ -42,7 +39,7 @@ let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true)
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    const songSrc = getSongSrc(props.book, props.song, BOOK_METADATA);
+    const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
     if (panzoom_enabled.value) {

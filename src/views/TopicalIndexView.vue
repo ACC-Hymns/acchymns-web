@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref, computed, render } from "vue";
+import { onMounted, onUpdated, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
-import type { SongReference } from "@/scripts/types";
+import type { Song } from "@/scripts/types";
 
 const props = defineProps<{
     book: string;
@@ -10,10 +10,10 @@ const props = defineProps<{
 const router = useRouter();
 
 let num_of_songs = ref(0);
-let book_name = ref("");
+let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
-let topical_index = ref<{ [topic: string]: SongReference[] }>({});
+let topical_index = ref<{ [topic: string]: Song[] }>({});
 let rendered_topics = ref<Element[]>([]);
 let active_topic = ref<string>("");
 const songs_to_display = computed(() => {
@@ -27,7 +27,7 @@ onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const BOOK_SONG_METADATA = await getSongMetaData(props.book);
     num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
-    book_name.value = BOOK_METADATA[props.book].name.medium;
+    book_ref.value = BOOK_METADATA[props.book].name.short;
     primary_color.value = BOOK_METADATA[props.book].primaryColor;
     secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
     const raw_index = (await getBookIndex(BOOK_METADATA[props.book].name.short)) ?? {};
@@ -38,7 +38,6 @@ onMounted(async () => {
                 number: song_number,
                 title: BOOK_SONG_METADATA[song_number].title,
                 notes: BOOK_SONG_METADATA[song_number].notes,
-                book: BOOK_METADATA[props.book],
             });
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
@@ -94,9 +93,9 @@ onUpdated(async () => {
         <RouterLink
             v-for="song in songs_to_display"
             :key="song.title + song.number"
-            :to="`/display/${song.book.name.short}/${song.number}`"
+            :to="`/display/${book_ref}/${song.number}`"
             class="song"
-            :style="`background: linear-gradient(135deg, ${song.book.primaryColor}, ${song.book.secondaryColor})`"
+            :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
         >
             <div>
                 <div class="song__title">{{ song.title }}</div>

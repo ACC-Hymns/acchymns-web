@@ -14,21 +14,24 @@ type BookSummary = {
 };
 
 type Song = {
-    number?: string; // Numbers unfortunately can be strings: ex: 403a GH
     title: string;
-    notes: string[];
+    number?: string; // Numbers unfortunately can be strings: ex: 403a GH
+    notes?: string[];
+    firstLine?: string;
 };
 
+// Song List is a dictionary of song number to song
 type SongList = Record<string, Song>;
 
-type SongReference = Song & {
-    stripped_title?: string;
-    book: BookSummary;
+type SongReference = {
+    book: string;
+    number: string;
 };
 
-type BookmarkedSong = {
-    song: string;
-    book: string;
+type SongSearchInfo = Song & {
+    stripped_title?: string;
+    stripped_firstLine?: string;
+    book: BookSummary;
 };
 
 // Dictionary of section, and list of numbers for that section
@@ -39,4 +42,4 @@ type SearchParams = {
     bookFilters: BookSummary[];
 };
 
-export type { BookSummary, Song, SongList, BookmarkedSong, SongReference, BookIndex, SearchParams };
+export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
