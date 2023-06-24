@@ -98,3 +98,7 @@ jobs:
           name: app-release-ipa
           path: ios/App/output/*.ipa
           retention-days: 7
+          
+      - name: Publish IPA
+        run: |
+          xcrun altool -upload-app -f ios/App/output/*.ipa -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
