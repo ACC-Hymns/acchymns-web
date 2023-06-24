@@ -6,6 +6,11 @@ const config: CapacitorConfig = {
     webDir: "dist",
     ios: {
         scheme: "ACC Hymns",
+        webview: {
+            configuration: {
+              inspectable: true
+            }
+        }
     },
 };
 
