@@ -73,12 +73,16 @@ jobs:
                 <dict>
                   <key>compileBitcode</key>
                   <false/>
+                  <key>destination</key>
+                  <string>export</string>
                   <key>method</key>
                   <string>development</string>
                   <key>signingStyle</key>
                   <string>automatic</string>
+                  <key>stripSwiftSymbols</key>
+                  <true/>
                   <key>teamID</key>
-                  <string>Fred Weinhardt</string>
+                  <string>AVS62V4S24</string>
                   <key>thinning</key>
                   <string>&lt;none&gt;</string>
                 </dict>
@@ -94,3 +98,7 @@ jobs:
           name: app-release-ipa
           path: ios/App/output/*.ipa
           retention-days: 7
+          
+      - name: Publish IPA
+        run: |
+          xcrun altool --upload-app -f "ios/App/output/ACC Hymns.ipa" --type "ios" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}

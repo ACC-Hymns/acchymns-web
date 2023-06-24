@@ -45,7 +45,7 @@ const player = {
         console.log(...unref(notes));
         await Tone.loaded();
 
-        const start = Tone.Transport.now();
+        const start = Tone.context.currentTime;
         let end_time: number;
 
         if ((localStorage.getItem("staggered") ?? "true") === "true") {
