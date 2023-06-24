@@ -101,4 +101,4 @@ jobs:
           
       - name: Publish IPA
         run: |
-          xcrun altool -upload-app -f ios/App/output/*.ipa -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+          xcrun altool --upload-app -f "ios/App/output/ACC Hymns.ipa" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
