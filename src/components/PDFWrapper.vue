@@ -48,7 +48,11 @@ onMounted(async () => {
                 viewport: viewport,
             }).promise;
             canvas.style.width = "100%"; // I don't know why this fixes the PDF being rendered for the full size of the canvas
-            root.value?.appendChild(canvas);
+            const page_url = canvas.toDataURL("image/png");
+            const img = document.createElement("img");
+            img.classList.add("song-img");
+            img.src = page_url;
+            root.value?.appendChild(img);
         } catch {
             emit("error");
             return;
@@ -66,8 +70,14 @@ onMounted(async () => {
 @import "@/assets/css/book.css";
 </style>
 
-<style scoped>
+<style>
 /* This is to remove the black line between pages */
+.song-img {
+    width: 100%;
+    display:block;
+}
+
+
 .container {
     font-size: 0;
     line-height: 0;
