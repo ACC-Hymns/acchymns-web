@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref, computed } from "vue";
+import { onMounted, onUpdated, ref, computed, render } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 import type { SongReference } from "@/scripts/types";
@@ -49,6 +49,7 @@ onUpdated(async () => {
     let observer = new IntersectionObserver(
         (entries, _observer) => {
             for (const entry of entries) {
+                // console.log(entries.map(entry => entry.isIntersecting))
                 if (entry.isIntersecting) {
                     console.log(entry.target.childNodes[0].textContent);
                     active_topic.value = entry.target.childNodes[0].textContent as string;
@@ -70,11 +71,16 @@ onUpdated(async () => {
 <template>
     <div id="menu" class="menu">
         <div class="title">
-            <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            <h1>{{ book_name }} Topical Index</h1>
-
-            <!-- Empty element cause CSS too hard -->
-            <a></a>
+            <div class="title--left">
+                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>Topical Index</h1>
+            </div>
+            <div class="title--right">
+                <!-- Empty element cause CSS too hard -->
+                <a></a>
+            </div>
         </div>
     </div>
 
