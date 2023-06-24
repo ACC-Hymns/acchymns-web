@@ -4,7 +4,7 @@ import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 
 // This is retrieved from the package.json
-const version: string = import.meta.env.VITE_PROGRAM_VERSION;
+const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 </script>
 
 <template>

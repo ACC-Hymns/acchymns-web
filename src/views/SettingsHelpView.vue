@@ -7,7 +7,7 @@ import { clearOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 
 // This is retrieved from the package.json
-const version: string = import.meta.env.VITE_PROGRAM_VERSION;
+const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 const is_prerelease = version.includes("Beta") || version.includes("Alpha");
 
 function clearFetchCache() {

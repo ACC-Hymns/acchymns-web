@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllBookMetaData } from "@/scripts/book_import";
+import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 
 const props = defineProps<{
@@ -8,14 +8,16 @@ const props = defineProps<{
 }>();
 const router = useRouter();
 
-let num_of_songs = ref(0);
+const song_numbers = ref<string[]>([]);
 let book_name = ref("");
 let index_available = ref(false);
 let button_color = ref("#000000");
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
+    const songs = await getSongMetaData(props.book);
+    song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
@@ -41,7 +43,7 @@ onMounted(async () => {
 
     <div class="songs" style="margin-top: 70px">
         <!-- Buttons will be added here -->
-        <RouterLink v-for="song_num in num_of_songs" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
+        <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}
         </RouterLink>
     </div>

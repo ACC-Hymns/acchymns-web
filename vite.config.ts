@@ -16,17 +16,21 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         process.env.VITE_GIT_BRANCH = execSync("git branch --show-current").toString().trimEnd();
     }
 
-    console.log("Branch:", process.env.VITE_GIT_BRANCH);
+    process.env.VITE_APP_VERSION = process.env.npm_package_version;
 
     // Pass the package version to the program from the package.json file
     // Customize it for staging and feature branches
     if (process.env.VITE_GIT_BRANCH == "main") {
-        process.env.VITE_PROGRAM_VERSION = process.env.npm_package_version;
+        process.env.VITE_FULL_PROGRAM_VERSION = process.env.npm_package_version;
     } else if (process.env.VITE_GIT_BRANCH == "staging") {
-        process.env.VITE_PROGRAM_VERSION = "Beta " + process.env.npm_package_version;
+        process.env.VITE_FULL_PROGRAM_VERSION = "Beta " + process.env.npm_package_version;
     } else {
-        process.env.VITE_PROGRAM_VERSION = "Alpha " + process.env.npm_package_version;
+        process.env.VITE_FULL_PROGRAM_VERSION = "Alpha " + process.env.npm_package_version;
     }
+
+    console.log("Current App Version:", process.env.VITE_APP_VERSION);
+    console.log("Current Version:", process.env.VITE_FULL_PROGRAM_VERSION);
+    console.log("Branch:", process.env.VITE_GIT_BRANCH);
 
     return {
         plugins: [vue()],

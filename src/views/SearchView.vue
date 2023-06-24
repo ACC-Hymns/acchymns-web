@@ -28,16 +28,14 @@ const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
             .filter(s => {
-                const stripped_number = s.number?.toLowerCase() ?? "";
-                return (s.stripped_title?.includes(stripped_query.value) || stripped_number == stripped_query.value) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short);
+                return (s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value)) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short);
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                const stripped_number = s.number?.toLowerCase() ?? "";
-                return s.stripped_title?.includes(stripped_query.value) || stripped_number == stripped_query.value;
+                return s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }

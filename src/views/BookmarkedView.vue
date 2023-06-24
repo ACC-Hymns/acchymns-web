@@ -18,8 +18,7 @@ let available_songs = ref<SongReference[]>([]);
 let search_results = computed(() => {
     return available_songs.value
         .filter(s => {
-            let stripped_number = s.number?.toLowerCase();
-            return s.stripped_title?.includes(stripped_query.value) || stripped_number?.includes(stripped_query.value);
+            return s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
         })
         .sort((a, b) => a.title.localeCompare(b.title));
 });
