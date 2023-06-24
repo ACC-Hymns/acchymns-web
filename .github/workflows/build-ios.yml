@@ -102,3 +102,8 @@ jobs:
       - name: Publish IPA
         run: |
           xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version {{vars.IOS_BUILD_NUMBER}} --bundle-short-version-string "2.0.0" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+          echo "build_number=$(({{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
+      
+      - name: Update Build Number
+        run: |
+          curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/IOS_BUILD_NUMBER -d '{"name":"IOS_BUILD_NUMBER","value":"${{ env.build_number }}"}'
