@@ -51,8 +51,8 @@ onUpdated(async () => {
             for (const entry of entries) {
                 // console.log(entries.map(entry => entry.isIntersecting))
                 if (entry.isIntersecting) {
-                    console.log(entry.target.childNodes[0].textContent);
-                    active_topic.value = entry.target.childNodes[0].textContent as string;
+                    console.log(entry.target.childNodes[1].textContent);
+                    active_topic.value = entry.target.childNodes[1].textContent as string;
                 }
             }
         },
@@ -88,7 +88,7 @@ onUpdated(async () => {
         <!-- Each Topical Section -->
         <div class="topic-list">
             <div v-for="(_topic_songs, topic) in topical_index" ref="rendered_topics" :key="topic" class="topic" :style="{ background: primary_color }">
-                <h3 class="topic-title">{{ topic }}</h3>
+                <img class="ionicon topic-arrow" src="/assets/chevron-back-outline.svg" /><h3 class="topic-title">{{ topic }}</h3><img class="ionicon topic-arrow" src="/assets/chevron-forward-outline.svg" />
             </div>
         </div>
         <RouterLink
@@ -132,9 +132,6 @@ onUpdated(async () => {
 </style>
 
 <style scoped>
-.topic-title {
-    color: white;
-}
 .topic-list {
     scroll-snap-type: x mandatory;
     overflow-x: scroll;
@@ -186,9 +183,28 @@ onUpdated(async () => {
     color: white;
     border-radius: 15px;
     margin: 5px 15px;
-
     display: flex;
-    flex-flow: column;
-    justify-content: center;
+    justify-content:space-between;
 }
+
+.topic-arrow {
+    filter: invert(100%);
+    display:inline-block;
+    top: calc(50% - 50px/2);
+    position: relative;
+    height: 50px;
+    padding: 0px 10px;
+}
+
+.topic-title {
+    color: white;
+    display:inline-block;
+    top: calc(50% - 50px/2);
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 </style>
