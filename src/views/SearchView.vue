@@ -4,7 +4,7 @@ import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted, watch } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import type { BookSummary, Song, SongReference, SearchParams } from "@/scripts/types";
+import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
 import { darken } from "@/scripts/hex";
 
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
@@ -17,25 +17,28 @@ const stripped_query = computed(() => {
         .toLowerCase();
 });
 
-watch(stripped_query, new_query => {
+watch(search_query, new_query => {
     search_params.value.search = new_query;
 });
 
-const available_songs = ref<SongReference[]>([]);
+const available_songs = ref<SongSearchInfo[]>([]);
 const available_books = ref<BookSummary[]>([]);
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
             .filter(s => {
-                return (s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value)) && search_params.value.bookFilters.find(b => b.name.short == s.book.name.short);
+                return (
+                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value)) &&
+                    search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
+                );
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                return s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
+                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
@@ -45,6 +48,7 @@ const increment = 50;
 const display_limit = ref(increment);
 
 const limited_search_results = computed(() => {
+    // Fuzzy limiting of search results, I.E. if the limit is 50, but there are 90 songs, just show the 90 songs
     if (search_results.value.length - display_limit.value < increment) {
         return search_results.value;
     }
@@ -67,18 +71,23 @@ onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
     available_books.value.push(...Object.values(BOOK_METADATA));
-    for (const book2 of Object.keys(SONG_METADATA)) {
-        for (const song_number of Object.keys(SONG_METADATA[book2])) {
-            let song: Song = SONG_METADATA[book2][song_number];
+    for (const book of Object.keys(SONG_METADATA)) {
+        for (const song_number of Object.keys(SONG_METADATA[book])) {
+            let song: Song = SONG_METADATA[book][song_number];
             available_songs.value.push({
                 title: song?.title ?? "",
                 number: song_number,
-                book: BOOK_METADATA[book2],
-                stripped_title: song?.title
+                book: BOOK_METADATA[book],
+                stripped_title: song.title
                     .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                     .replace(/s{2,}/g, " ")
                     .toLowerCase(),
-            } as SongReference);
+                stripped_firstLine:
+                    song?.firstLine
+                        ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                        ?.replace(/s{2,}/g, " ")
+                        ?.toLowerCase() ?? "",
+            } as SongSearchInfo);
         }
     }
 });

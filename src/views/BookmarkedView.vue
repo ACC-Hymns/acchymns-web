@@ -3,7 +3,7 @@ import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted } from "vue";
 import { Capacitor } from "@capacitor/core";
-import type { BookmarkedSong, SongReference, Song } from "@/scripts/types";
+import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
 import { useLocalStorage } from "@vueuse/core";
 
 let search_query = ref("");
@@ -13,12 +13,12 @@ let stripped_query = computed(() => {
         .replace(/s{2,}/g, " ")
         .toLowerCase();
 });
-let available_songs = ref<SongReference[]>([]);
+let available_songs = ref<SongSearchInfo[]>([]);
 
 let search_results = computed(() => {
     return available_songs.value
         .filter(s => {
-            return s.stripped_title?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
+            return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
         })
         .sort((a, b) => a.title.localeCompare(b.title));
 });
@@ -26,17 +26,22 @@ let search_results = computed(() => {
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
-    for (let bookmark of useLocalStorage<BookmarkedSong[]>("bookmarks", []).value) {
-        let song: Song = SONG_METADATA[bookmark.book][bookmark.song];
+    for (let bookmark of useLocalStorage<SongReference[]>("bookmarks", []).value) {
+        let song: Song = SONG_METADATA[bookmark.book][bookmark.number];
         available_songs.value.push({
             title: song.title ?? "",
+            number: bookmark.number,
+            book: BOOK_METADATA[bookmark.book],
             stripped_title: (song?.title ?? "")
                 .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
                 .replace(/s{2,}/g, " ")
                 .toLowerCase(),
-            number: bookmark.song,
-            book: BOOK_METADATA[bookmark.book],
-        } as SongReference);
+            stripped_firstLine:
+                song?.firstLine
+                    ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                    ?.replace(/s{2,}/g, " ")
+                    ?.toLowerCase() ?? "",
+        } as SongSearchInfo);
     }
 });
 </script>

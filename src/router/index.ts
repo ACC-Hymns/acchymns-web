@@ -26,7 +26,7 @@ const router = createRouter({
         //     component: () => import("../views/AlphabeticalIndexView.vue"),
         // },
         {
-            path: "/display/:book/:song",
+            path: "/display/:book/:number",
             props: true,
             component: () => import("../views/SongDisplayView.vue"),
         },
