@@ -32,7 +32,7 @@
 
 const options_prefix = "ACCOptions.";
 
-export function clearOptions() {
+export function resetOptions() {
     for (const key in localStorage) {
         if (key.startsWith(options_prefix)) {
             localStorage.removeItem(key);

@@ -172,6 +172,11 @@ h1, h2, h3, h4, h5 {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 1;
+}
+
+.main-content {
+    margin-top: 70px !important;
 }
 
 .space {

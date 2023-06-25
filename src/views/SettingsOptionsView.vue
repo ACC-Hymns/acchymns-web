@@ -25,61 +25,68 @@ const dark_mode = computed(() => {
 </script>
 
 <template>
-    <div class="title">
-        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>Options</h1>
-        <span class="space"></span>
+    <div class="menu">
+        <div class="title">
+            <div class="title--left">
+                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>Options</h1>
+            </div>
+        </div>
     </div>
 
-    <h2>Theme</h2>
-    <div class="settings">
-        <div class="settings-option">
-            <span>Enable Pan & Zoom</span>
-            <label class="switch">
-                <input v-model="panzoom_enabled" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
+    <div class="main-content">
+        <h2>Theme</h2>
+        <div class="settings">
+            <div class="settings-option">
+                <span>Enable Pan & Zoom</span>
+                <label class="switch">
+                    <input v-model="panzoom_enabled" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <span>Override System Theme</span>
+                <label class="switch">
+                    <input v-model="override_system_theme" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div v-show="override_system_theme" class="settings-option">
+                <span>Dark Mode</span>
+                <label class="switch">
+                    <input v-model="user_prefers_dark_mode" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div v-show="dark_mode" class="settings-option">
+                <span>Invert Song Colors</span>
+                <label class="switch">
+                    <input v-model="song_invert" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
-        <div class="settings-option">
-            <span>Override System Theme</span>
-            <label class="switch">
-                <input v-model="override_system_theme" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div v-show="override_system_theme" class="settings-option">
-            <span>Dark Mode</span>
-            <label class="switch">
-                <input v-model="user_prefers_dark_mode" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div v-show="dark_mode" class="settings-option">
-            <span>Invert Song Colors</span>
-            <label class="switch">
-                <input v-model="song_invert" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-    <h2>Starting Notes</h2>
-    <div class="settings">
-        <div class="settings-option">
-            <span>Staggered Playback</span>
-            <label class="switch">
-                <input v-model="staggered_notes" type="checkbox" />
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div v-show="staggered_notes" class="settings-option">
-            <span class="setting-label">Playback Interval</span>
-            <input v-model="playback_interval" class="slider-setting" type="range" step="0.05" min="0.1" max="1" />
-            <span class="slider-value">{{ playback_interval * 1000 }} ms</span>
-        </div>
-        <div class="settings-option">
-            <span class="setting-label">Playback Duration</span>
-            <input v-model="playback_duration" class="slider-setting" type="range" step="0.5" min="0.5" max="5" />
-            <span class="slider-value">{{ playback_duration }} sec</span>
+        <h2>Starting Notes</h2>
+        <div class="settings">
+            <div class="settings-option">
+                <span>Staggered Playback</span>
+                <label class="switch">
+                    <input v-model="staggered_notes" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div v-show="staggered_notes" class="settings-option">
+                <span class="setting-label">Playback Interval</span>
+                <input v-model="playback_interval" class="slider-setting" type="range" step="0.05" min="0.1" max="1" />
+                <span class="slider-value">{{ playback_interval * 1000 }} ms</span>
+            </div>
+            <div class="settings-option">
+                <span class="setting-label">Playback Duration</span>
+                <input v-model="playback_duration" class="slider-setting" type="range" step="0.5" min="0.5" max="5" />
+                <span class="slider-value">{{ playback_duration }} sec</span>
+            </div>
         </div>
     </div>
 

@@ -8,23 +8,30 @@ const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 </script>
 
 <template>
-    <div class="title">
-        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>About App</h1>
-        <span class="space"></span>
+    <div class="menu">
+        <div class="title">
+            <div class="title--left">
+                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>About App</h1>
+            </div>
+        </div>
     </div>
 
-    <h2>ACC Hymns Version {{ version }}</h2>
+    <div class="main-content">
+        <h2>ACC Hymns Version {{ version }}</h2>
 
-    <div class="settings">
-        <RouterLink to="/settings/about/attributions" class="settings-option">
-            <span>Attributions</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
-        </RouterLink>
-        <RouterLink to="/settings/about/changelog" class="settings-option">
-            <span>Changelog</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
-        </RouterLink>
+        <div class="settings">
+            <RouterLink to="/settings/about/attributions" class="settings-option">
+                <span>Attributions</span>
+                <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            </RouterLink>
+            <RouterLink to="/settings/about/changelog" class="settings-option">
+                <span>Changelog</span>
+                <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            </RouterLink>
+        </div>
     </div>
 
     <nav class="nav">
@@ -50,4 +57,3 @@ const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 <style>
 @import "@/assets/css/settings.css";
 </style>
-@/router/navigator

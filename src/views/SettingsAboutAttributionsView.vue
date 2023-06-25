@@ -5,13 +5,18 @@ const { back } = useNavigator();
 </script>
 
 <template>
-    <div class="title">
-        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>Attributions</h1>
-        <span class="space"></span>
+    <div class="menu">
+        <div class="title">
+            <div class="title--left">
+                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>Attributions</h1>
+            </div>
+        </div>
     </div>
 
-    <div class="settings">
+    <div class="settings main-content">
         <a href="https://tonejs.github.io" class="attribution">
             <h3 class="release">Tone.js</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">14.7.77</h5>

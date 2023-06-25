@@ -4,18 +4,23 @@ import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import { useConsoleStore } from "@/stores/console";
 
-const console = useConsoleStore();
+const console_store = useConsoleStore();
 </script>
 
 <template>
-    <div class="title">
-        <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-        <h1>Application Logs</h1>
-        <span class="space"></span>
+    <div class="menu">
+        <div class="title">
+            <div class="title--left">
+                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            </div>
+            <div class="title--center">
+                <h1>Application Logs</h1>
+            </div>
+        </div>
     </div>
 
-    <div class="settings">
-        <div class="internal-console" v-html="console.logs.replaceAll('\n', '<br>')"></div>
+    <div class="main-content settings">
+        <div class="internal-console" v-html="console_store.logs.replaceAll('\n', '<br>')"></div>
     </div>
 
     <nav class="nav">
