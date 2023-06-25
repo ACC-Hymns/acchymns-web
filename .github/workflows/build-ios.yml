@@ -43,10 +43,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: XCodeBuild Help
-        run: |
-          xcodebuild --help
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -63,7 +59,7 @@ jobs:
         run: |
           npx cap sync
           cd ios/App
-          xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive
+          xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
           
       - name: Export IPA
         run: |
