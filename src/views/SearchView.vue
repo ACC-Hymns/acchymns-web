@@ -87,27 +87,18 @@ onMounted(async () => {
 });
 
 const filter_content = ref<Element>();
-const sort_content = ref<Element>();
 
-function resetModals(event: Event) {
-    if (!event.target.closest("#modal")) {
-    }
-}
 
-function showDropdown(option: string) {
-    if (option == "filter") {
-        if (filter_content.value?.classList.contains("dropdown-content-active")) filter_content.value?.classList.remove("dropdown-content-active");
-        else filter_content.value?.classList.add("dropdown-content-active");
-    }
-    if (option == "sort") {
-        if (sort_content.value?.classList.contains("dropdown-content-active")) sort_content.value?.classList.remove("dropdown-content-active");
-        else sort_content.value?.classList.add("dropdown-content-active");
-    }
+function showDropdown() {
+    if (filter_content.value?.classList.contains("dropdown-content-active")) 
+        filter_content.value?.classList.remove("dropdown-content-active");
+    else 
+        filter_content.value?.classList.add("dropdown-content-active");
 }
 </script>
 
 <template>
-    <div @click="resetModals">
+    <div>
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -130,7 +121,7 @@ function showDropdown(option: string) {
             >
                 <div>{{ book.name.medium }}</div>
             </a>-->
-            <a @click="showDropdown('filter')" class="dropdown">
+            <a @click="showDropdown()" class="dropdown">
                 <p class="dropdown-text">All</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
