@@ -87,7 +87,9 @@ onUpdated(async () => {
         <!-- Each Topical Section -->
         <div class="topic-list">
             <div v-for="(_topic_songs, topic) in topical_index" ref="rendered_topics" :key="topic" class="topic" :style="{ background: primary_color }">
-                <img class="ionicon topic-arrow" src="/assets/chevron-back-outline.svg" /><h3 class="topic-title">{{ topic }}</h3><img class="ionicon topic-arrow" src="/assets/chevron-forward-outline.svg" />
+                <img class="ionicon topic-arrow" src="/assets/chevron-back-outline.svg" />
+                <h3 class="topic-title">{{ topic }}</h3>
+                <img class="ionicon topic-arrow" src="/assets/chevron-forward-outline.svg" />
             </div>
         </div>
         <RouterLink
@@ -183,13 +185,13 @@ onUpdated(async () => {
     border-radius: 15px;
     margin: 5px 15px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
 .topic-arrow {
     filter: invert(100%);
-    display:inline-block;
-    top: calc(50% - 50px/2);
+    display: inline-block;
+    top: calc(50% - 50px / 2);
     position: relative;
     height: 50px;
     padding: 0px 10px;
@@ -197,13 +199,12 @@ onUpdated(async () => {
 
 .topic-title {
     color: white;
-    display:inline-block;
-    top: calc(50% - 50px/2);
+    display: inline-block;
+    top: calc(50% - 50px / 2);
     position: relative;
     height: 50px;
     line-height: 50px;
     margin-top: 0px;
     margin-bottom: 0px;
 }
-
 </style>

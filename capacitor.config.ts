@@ -8,9 +8,9 @@ const config: CapacitorConfig = {
         scheme: "ACC Hymns",
         webview: {
             configuration: {
-              inspectable: true
-            }
-        }
+                inspectable: true,
+            },
+        },
     },
 };
 

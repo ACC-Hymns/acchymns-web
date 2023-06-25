@@ -74,9 +74,8 @@ onMounted(async () => {
 /* This is to remove the black line between pages */
 .song-img {
     width: 100%;
-    display:block;
+    display: block;
 }
-
 
 .container {
     font-size: 0;
