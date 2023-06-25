@@ -41,7 +41,7 @@ onMounted(async () => {
         </div>
     </div>
 
-    <div class="songs" style="margin-top: 70px">
+    <div class="songs" >
         <!-- Buttons will be added here -->
         <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}
@@ -74,6 +74,7 @@ onMounted(async () => {
     justify-content: center;
     flex-wrap: wrap;
     padding: 0px 10px 110px 10px;
+    margin-top: 10px;
 }
 
 .song-btn {

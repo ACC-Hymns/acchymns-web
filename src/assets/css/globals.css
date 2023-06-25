@@ -213,7 +213,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .title--right > * {
-    padding-left: var(--button-spacing)
+    margin-left:25px;
 }
 
 ion-icon {

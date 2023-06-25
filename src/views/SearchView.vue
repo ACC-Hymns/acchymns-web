@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch } from "vue";
+import { computed, ref, onMounted, watch, onUpdated } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
@@ -29,16 +29,16 @@ const search_results = computed(() => {
         return available_songs.value
             .filter(s => {
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value)) &&
+                    ((s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
                     search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
-                );
+                ));
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
+                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value;
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
@@ -91,60 +91,95 @@ onMounted(async () => {
         }
     }
 });
+
+const filter_content = ref<Element>();
+const sort_content = ref<Element>();
+
+function resetModals(event: Event) {
+    if(!event.target.closest("#modal")) {
+        
+    }
+}
+
+function showDropdown(option: string) {
+    if(option == "filter") {
+        if(filter_content.value?.classList.contains("dropdown-content-active"))
+            filter_content.value?.classList.remove("dropdown-content-active");
+        else
+            filter_content.value?.classList.add("dropdown-content-active");
+    }
+    if(option == "sort") {
+        if(sort_content.value?.classList.contains("dropdown-content-active"))
+            sort_content.value?.classList.remove("dropdown-content-active");
+        else
+            sort_content.value?.classList.add("dropdown-content-active");
+    }
+}
 </script>
 
 <template>
-    <h1 class="pagetitle">Search</h1>
-    <div class="search-bar">
-        <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
-        <button disabled>
-            <svg viewBox="0 0 1024 1024">
-                <path
-                    class="path1"
-                    d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"
-                ></path>
-            </svg>
-        </button>
-    </div>
-
-    <h2>Filter by Hymnal</h2>
-    <div class="hymnalfilters">
-        <a
-            v-for="book in available_books"
-            :key="book.name.medium"
-            class="hymnalfilterbutton"
-            :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
-            @click="filterBook(book)"
-        >
-            <div>{{ book.name.medium }}</div>
-        </a>
-    </div>
-
-    <h2 v-if="search_results.length > 0">Search Results ({{ search_results.length }})</h2>
-    <div class="songlist">
-        <RouterLink
-            v-for="song in limited_search_results"
-            :key="song.title + song.number + song.book.name.short"
-            :to="`/display/${song.book.name.short}/${song.number}`"
-            class="song"
-            :style="`background: linear-gradient(135deg, ${song.book.primaryColor}, ${song.book.secondaryColor})`"
-        >
-            <div>
-                <div class="song__title">{{ song.title }}</div>
-                <div class="book__title">{{ song.book.name.medium }}</div>
+    <div @click="resetModals">
+        <h1 class="pagetitle">Search</h1>
+        <div class="search-bar">
+            <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
+            <button disabled>
+                <svg viewBox="0 0 1024 1024">
+                    <path
+                        class="path1"
+                        d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"
+                    ></path>
+                </svg>
+            </button>
+        </div>
+        <div class="filters">
+            <!--<a
+                v-for="book in available_books"
+                :key="book.name.medium"
+                class="hymnalfilterbutton"
+                :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
+                @click="filterBook(book)"
+            >
+                <div>{{ book.name.medium }}</div>
+            </a>-->
+            <a @click="showDropdown('filter')" class="dropdown">
+                <p class="dropdown-text">All</p>
+                <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
+            </a>
+            <div class="dropdown-content" id="modal" ref="filter_content">
+                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)">
+                    <div>{{ book.name.medium }}</div>
+                </a>
             </div>
-            <div class="booktext--right">
-                <div class="song__number">#{{ song.number }}</div>
-                <img
-                    v-if="song.book.addOn && Capacitor.getPlatform() !== 'web'"
-                    class="ionicon"
-                    style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
-                    src="/assets/wifi.svg"
-                />
+        </div>
+
+        <h2 v-if="search_results.length > 0" style="margin-top: 10px;">Search Results ({{ search_results.length }})</h2>
+        <div class="songlist">
+            <RouterLink
+                v-for="song in limited_search_results"
+                :key="song.title + song.number + song.book.name.short"
+                :to="`/display/${song.book.name.short}/${song.number}`"
+                class="song"
+                :style="`background: linear-gradient(135deg, ${song.book.primaryColor}, ${song.book.secondaryColor})`"
+            >
+                <div>
+                    <div class="song__title">{{ song.title }}</div>
+                    <div class="book__title">{{ song.book.name.medium }}</div>
+                </div>
+                <div class="booktext--right">
+                    <div class="song__number">#{{ song.number }}</div>
+                    <img
+                        v-if="song.book.addOn && Capacitor.getPlatform() !== 'web'"
+                        class="ionicon"
+                        style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
+                        src="/assets/wifi.svg"
+                    />
+                </div>
+            </RouterLink>
+            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="justify-content: center">
+                <div>
+                    <img class="ionicon show-more" src="/assets/add-circle-outline.svg" />
+                </div>
             </div>
-        </RouterLink>
-        <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">
-            <div class="song__title">Show more results</div>
         </div>
     </div>
 
@@ -171,4 +206,46 @@ onMounted(async () => {
 <style>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    min-width: 160px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown-content-active {
+    display: block;
+}
+
+.dropdown {
+    background-color: white;
+    padding: 5px 15px;
+    border-radius: 30px;
+    border-width: 2px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.dropdown-text {
+    display: inline-block;
+    margin: 0 auto;
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+}
+
+.filter-icon {
+    filter: brightness(0);
+    display: inline-block;
+    position: relative;
+    margin: auto auto;
+    padding-left: 15px;
+}
 </style>

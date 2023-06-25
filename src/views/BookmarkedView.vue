@@ -60,7 +60,7 @@ onMounted(async () => {
         </button>
     </div>
 
-    <h2>Bookmark Search Results</h2>
+    <h2>Bookmarked Songs</h2>
     <div class="songlist">
         <RouterLink
             v-for="song in search_results"
