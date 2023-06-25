@@ -10,12 +10,8 @@ const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 <template>
     <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>About App</h1>
-            </div>
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">About App</h1>
         </div>
     </div>
 

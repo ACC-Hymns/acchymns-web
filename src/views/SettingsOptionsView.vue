@@ -27,12 +27,8 @@ const dark_mode = computed(() => {
 <template>
     <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>Options</h1>
-            </div>
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">Options</h1>
         </div>
     </div>
 

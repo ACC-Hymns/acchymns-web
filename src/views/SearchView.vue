@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch, onUpdated } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
-import { darken } from "@/scripts/hex";
 
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
@@ -29,9 +28,9 @@ const search_results = computed(() => {
         return available_songs.value
             .filter(s => {
                 return (
-                    ((s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
+                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
                     search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
-                ));
+                );
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
@@ -60,11 +59,6 @@ function filterBook(book: BookSummary) {
         let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
         if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
     } else search_params.value.bookFilters.push(book);
-}
-
-function check_selected(book: BookSummary) {
-    if (search_params.value.bookFilters.length == 0) return false;
-    return search_params.value.bookFilters.find(b => b.name.short == book.name.short);
 }
 
 onMounted(async () => {
@@ -96,23 +90,18 @@ const filter_content = ref<Element>();
 const sort_content = ref<Element>();
 
 function resetModals(event: Event) {
-    if(!event.target.closest("#modal")) {
-        
+    if (!event.target.closest("#modal")) {
     }
 }
 
 function showDropdown(option: string) {
-    if(option == "filter") {
-        if(filter_content.value?.classList.contains("dropdown-content-active"))
-            filter_content.value?.classList.remove("dropdown-content-active");
-        else
-            filter_content.value?.classList.add("dropdown-content-active");
+    if (option == "filter") {
+        if (filter_content.value?.classList.contains("dropdown-content-active")) filter_content.value?.classList.remove("dropdown-content-active");
+        else filter_content.value?.classList.add("dropdown-content-active");
     }
-    if(option == "sort") {
-        if(sort_content.value?.classList.contains("dropdown-content-active"))
-            sort_content.value?.classList.remove("dropdown-content-active");
-        else
-            sort_content.value?.classList.add("dropdown-content-active");
+    if (option == "sort") {
+        if (sort_content.value?.classList.contains("dropdown-content-active")) sort_content.value?.classList.remove("dropdown-content-active");
+        else sort_content.value?.classList.add("dropdown-content-active");
     }
 }
 </script>
@@ -152,7 +141,7 @@ function showDropdown(option: string) {
             </div>
         </div>
 
-        <h2 v-if="search_results.length > 0" style="margin-top: 10px;">Search Results ({{ search_results.length }})</h2>
+        <h2 v-if="search_results.length > 0" style="margin-top: 10px">Search Results ({{ search_results.length }})</h2>
         <div class="songlist">
             <RouterLink
                 v-for="song in limited_search_results"
@@ -213,7 +202,7 @@ function showDropdown(option: string) {
     background-color: #f9f9f9;
     border-radius: 15px;
     min-width: 160px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 12px 16px;
     z-index: 1;
 }

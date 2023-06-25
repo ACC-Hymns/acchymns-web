@@ -10,12 +10,8 @@ const console_store = useConsoleStore();
 <template>
     <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>Application Logs</h1>
-            </div>
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">Application Logs</h1>
         </div>
     </div>
 

@@ -94,12 +94,8 @@ function removeImportedURL(to_remove: string) {
 <template>
     <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>Import Books</h1>
-            </div>
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">Import Books</h1>
         </div>
     </div>
 

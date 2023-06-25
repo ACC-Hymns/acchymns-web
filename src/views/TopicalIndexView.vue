@@ -68,22 +68,14 @@ onUpdated(async () => {
 </script>
 
 <template>
-    <div id="menu" class="menu">
+    <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>Topical Index</h1>
-            </div>
-            <div class="title--right">
-                <!-- Empty element cause CSS too hard -->
-                <a></a>
-            </div>
+            <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">Topical Index</h1>
         </div>
     </div>
 
-    <div style="margin-top: 70px">
+    <div class="main-content">
         <!-- Each Topical Section -->
         <div class="topic-list">
             <div v-for="(_topic_songs, topic) in topical_index" ref="rendered_topics" :key="topic" class="topic" :style="{ background: primary_color }">

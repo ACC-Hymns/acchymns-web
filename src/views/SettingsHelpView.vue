@@ -63,35 +63,29 @@ async function clearAllData() {
 <template>
     <div class="menu">
         <div class="title">
-            <div class="title--left">
-                <img @click="back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-            </div>
-            <div class="title--center">
-                <h1>Help</h1>
-            </div>
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <h1 class="title--center">Help</h1>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="settings">
-            <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
-                <span>Report a Bug</span>
-                <img class="ionicon" src="/assets/link-outline.svg" />
-            </a>
-            <RouterLink v-if="is_prerelease" to="/settings/about/console" class="settings-option">
-                <span>Debug Console</span>
-                <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
-            </RouterLink>
-            <a class="settings-option" @click="clearFetchCache()">
-                <span>Clear Cache</span>
-            </a>
-            <a class="settings-option" @click="resetAllOptions()">
-                <span>Reset Options</span>
-            </a>
-            <a class="settings-option" @click="clearAllData()">
-                <span>Clear All Data</span>
-            </a>
-        </div>
+    <div class="settings main-content">
+        <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
+            <span>Report a Bug</span>
+            <img class="ionicon" src="/assets/link-outline.svg" />
+        </a>
+        <RouterLink v-if="is_prerelease" to="/settings/about/console" class="settings-option">
+            <span>Debug Console</span>
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+        </RouterLink>
+        <a class="settings-option" @click="clearFetchCache()">
+            <span>Clear Cache</span>
+        </a>
+        <a class="settings-option" @click="resetAllOptions()">
+            <span>Reset Options</span>
+        </a>
+        <a class="settings-option" @click="clearAllData()">
+            <span>Clear All Data</span>
+        </a>
     </div>
 
     <nav class="nav">
