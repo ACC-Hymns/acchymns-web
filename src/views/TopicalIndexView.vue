@@ -44,7 +44,7 @@ onMounted(async () => {
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
-    console.log(scroll_topic_list.value?.scrollTop);
+    console.log(raw_index);
 });
 
 function disableSwipingAndShowTopicList(topic: string) {
@@ -57,7 +57,6 @@ function disableSwipingAndShowTopicList(topic: string) {
 
 function enableSwipingAndHideTopicList(topic: string) {
     const desired_topic_element = rendered_topics.value.find(t => t.children[0].innerHTML === topic);
-    console.log("desired_topic_element:", desired_topic_element);
     window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -114,7 +113,8 @@ onUpdated(async () => {
                     <h3 class="topic-title">{{ topic }}</h3>
                 </div>
             </div>
-            <RouterLink v-show="swiping_enabled"
+            <RouterLink
+                v-show="swiping_enabled"
                 v-for="song in songs_to_display"
                 :key="song.title + song.number"
                 :to="`/display/${book_ref}/${song.number}`"

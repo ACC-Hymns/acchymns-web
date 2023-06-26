@@ -73,6 +73,10 @@ async function clearAllData() {
             <span>Report a Bug</span>
             <img class="ionicon" src="/assets/link-outline.svg" />
         </a>
+        <a href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA" class="settings-option">
+            <span>Privacy Policy</span>
+            <img class="ionicon" src="/assets/link-outline.svg" />
+        </a>
         <RouterLink v-if="is_prerelease" to="/settings/about/console" class="settings-option">
             <span>Debug Console</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
