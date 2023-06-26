@@ -15,13 +15,7 @@ jobs:
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v3
-      
-      # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
-      - name: Set GitHub Actions as Commit Author
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          
+
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
@@ -30,7 +24,7 @@ jobs:
       - name: Build
         run: |
           cd build
-          echo "VITE_BASE_URL=/" > .env # We deploy to acchymns.app, which we serve on the root
+          echo "VITE_BASE_URL=/acchymns-dev/" > .env # We deploy to github.io/acchyms-dev, which we serve on the root
           npm i
           npm run build
           npx cap copy web # This runs our helper script to compress the song book info
@@ -39,19 +33,17 @@ jobs:
       - name: Checkout Dev Target
         uses: actions/checkout@v3
         with:
-          repository: ACC-Hymns/acchymns-web
+          repository: ACC-Hymns/acchymns-dev
           path: 'deploy'
           token: ${{ secrets.DEPLOYMENT_PAT }}
       
       - name: Push files to target
         run: |
+          rm -r deploy/*
+          cp -r build/* deploy
           cd deploy
-          git checkout -b gh-pages
-          git pull origin gh-pages
-          rm -r *
-          cp -r ../build/dist/* .
-          cp index.html 404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
+          cp deploy/index.html deploy/404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
           touch .nojekyll
           git add .
           git commit -m $GITHUB_SHA
-          git push origin gh-pages
+          git push
