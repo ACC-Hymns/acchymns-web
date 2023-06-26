@@ -68,27 +68,26 @@ jobs:
                 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
                 <plist version="1.0">
                 <dict>
-                  <key>compileBitcode</key>
-                  <false/>
                   <key>destination</key>
                   <string>export</string>
+                  <key>manageAppVersionAndBuildNumber</key>
+                  <true/>
                   <key>method</key>
-                  <string>development</string>
+                  <string>app-store</string>
                   <key>provisioningProfiles</key>
                   <dict>
                     <key>com.ChristopherW.acchmns</key>
-                    <string>Development Profile</string>
+                    <string>Publishing Profile</string>
                   </dict>
                   <key>signingCertificate</key>
-                  <string>Apple Development</string>
+                  <string>Apple Distribution</string>
                   <key>signingStyle</key>
                   <string>manual</string>
                   <key>stripSwiftSymbols</key>
                   <true/>
                   <key>teamID</key>
                   <string>AVS62V4S24</string>
-                  <key>thinning</key>
-                  <string>&lt;none&gt;</string>
+                  <key>uploadSymbols</key>
                 </dict>
                 </plist>' > archive.plist
 
