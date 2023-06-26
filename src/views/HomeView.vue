@@ -3,6 +3,12 @@ import { RouterLink } from "vue-router";
 import { getBookUrls } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
+import { onMounted, ref } from "vue";
+
+const available_books = ref<string[]>([]);
+onMounted(async () => {
+    available_books.value = await getBookUrls();
+});
 </script>
 
 <template>
@@ -10,7 +16,7 @@ import HomeBookBox from "@/components/HomeBookBox.vue";
         <h1 class="pagetitle">Home</h1>
     </div>
     <div id="appsection">
-        <HomeBookBox v-for="url in getBookUrls()" :key="url" :src="url"></HomeBookBox>
+        <HomeBookBox v-for="url in available_books" :key="url" :src="url"></HomeBookBox>
         <template v-if="Capacitor.getPlatform() === 'web'">
             <a class="app-button-container play-store-width" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
                 <img class="app-button" src="/assets/en_badge_web_generic.png" />

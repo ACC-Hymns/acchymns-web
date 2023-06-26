@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useLocalStorage } from "@vueuse/core";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
+import { useCapacitorPreferences } from "@/composables/preferences";
 
 // Not watching deeply, must assign new array
-const imported_book_urls = useLocalStorage<string[]>("externalBooks", []);
+
+const imported_book_urls = useCapacitorPreferences<string[]>("externalBooks", []);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books_urls = computed(() => {

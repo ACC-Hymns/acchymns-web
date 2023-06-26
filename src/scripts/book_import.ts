@@ -1,9 +1,11 @@
 import { fetchCachedJSON } from "@/composables/cached_fetch";
 import type { BookSummary, SongList, BookIndex } from "@/scripts/types";
-import { prepackaged_book_urls, prepackaged_books } from "@/scripts/constants";
+import { prepackaged_book_urls } from "@/scripts/constants";
+import { Preferences } from "@capacitor/preferences";
 
-function getBookUrls() {
-    return prepackaged_book_urls.concat(JSON.parse(window.localStorage.getItem("externalBooks") ?? "[]"));
+async function getBookUrls() {
+    const imported_book_urls = await Preferences.get({ key: "externalBooks" });
+    return prepackaged_book_urls.concat(JSON.parse(imported_book_urls.value ?? "[]"));
 }
 
 async function fetchBookSummary(url: string, options: RequestInit & { timeout?: number } = { timeout: 500 }) {
@@ -11,7 +13,6 @@ async function fetchBookSummary(url: string, options: RequestInit & { timeout?: 
         if (book == null) {
             return null;
         }
-        book.addOn = !prepackaged_books.includes(book.name.short);
         book.srcUrl = url;
         return book;
     });
@@ -19,7 +20,7 @@ async function fetchBookSummary(url: string, options: RequestInit & { timeout?: 
 
 async function getAllBookMetaData() {
     const now = performance.now();
-    const book_urls = getBookUrls();
+    const book_urls = await getBookUrls();
     const to_fetch = book_urls.map(url => fetchBookSummary(url));
 
     const bookSummary = (await Promise.all(to_fetch)).filter(summary => summary != null) as BookSummary[];
@@ -31,7 +32,7 @@ async function getAllBookMetaData() {
 
 async function getAllSongMetaData() {
     const now = performance.now();
-    const book_urls = getBookUrls();
+    const book_urls = await getBookUrls();
     const to_fetch = book_urls.map(url => fetchCachedJSON<SongList>(`${url}/songs.json`, {}));
 
     const bookSongs = (await Promise.all(to_fetch)).filter(list => list != null) as SongList[];
