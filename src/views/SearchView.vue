@@ -92,25 +92,20 @@ const filter_content = ref<Element>();
 var isOpen = false;
 
 function resetModals() {
-    
-    if(filter_content.value?.classList.contains("dropdown-content-active") && !isOpen)
-    filter_content.value?.classList.remove("dropdown-content-active");
-        else
-        console.log("CLOSED");
-    isOpen = false
+    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
+    else console.log("CLOSED");
+    isOpen = false;
 }
 
 function showDropdown() {
-        if(filter_content.value?.classList.contains("dropdown-content-active")) {
-            filter_content.value?.classList.remove("dropdown-content-active");
-            isOpen = false;
-        } else {
-            isOpen = true;
-            filter_content.value?.classList.add("dropdown-content-active");
-        }  
+    if (filter_content.value?.classList.contains("dropdown-content-active")) {
+        filter_content.value?.classList.remove("dropdown-content-active");
+        isOpen = false;
+    } else {
+        isOpen = true;
+        filter_content.value?.classList.add("dropdown-content-active");
+    }
 }
-
-
 </script>
 
 <template>
@@ -147,19 +142,17 @@ function showDropdown() {
                         <img class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
-                    
                 </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)">
                     <div class="dropdown-content-item">
                         <img class="ionicon" src="/assets/ellipse-outline.svg" />
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
-                    
                 </a>
             </div>
         </div>
 
-        <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px;">Search Results ({{ search_results.length }})</h2>
+        <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px">Search Results ({{ search_results.length }})</h2>
         <div class="songlist">
             <RouterLink
                 v-for="song in limited_search_results"
@@ -220,7 +213,7 @@ function showDropdown() {
     left: 0;
     bottom: 0;
     right: 0;
-    content: ' ';
+    content: " ";
 }
 
 .dropdown-content {
@@ -230,7 +223,7 @@ function showDropdown() {
     color: var(--color);
     border-radius: 15px;
     min-width: 160px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding-bottom: 5px;
     margin: 10px 0px 0px 0px;
     z-index: 0.5;
@@ -253,7 +246,6 @@ function showDropdown() {
     visibility: visible;
     opacity: 1;
     display: inline-block;
-    
 }
 
 .dropdown-content-item {

@@ -41,7 +41,7 @@ onMounted(async () => {
         </div>
     </div>
 
-    <div class="songs">
+    <div class="songs main-content">
         <!-- Buttons will be added here -->
         <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}

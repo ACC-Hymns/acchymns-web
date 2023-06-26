@@ -9,6 +9,8 @@ const props = defineProps<{
 }>();
 const router = useRouter();
 
+const swiping_enabled = ref(true);
+const scroll_topic_list = ref<Element | null>(null);
 let num_of_songs = ref(0);
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
@@ -42,25 +44,47 @@ onMounted(async () => {
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
+    console.log(scroll_topic_list.value?.scrollTop);
 });
 
-onUpdated(async () => {
-    let observer = new IntersectionObserver(
-        (entries, _observer) => {
+function disableSwipingAndShowTopicList(topic: string) {
+    if (swiping_enabled.value) {
+        swiping_enabled.value = false;
+    } else {
+        enableSwipingAndHideTopicList(topic);
+    }
+}
+
+function enableSwipingAndHideTopicList(topic: string) {
+    const desired_topic_element = rendered_topics.value.find(t => t.children[0].innerHTML === topic);
+    console.log("desired_topic_element:", desired_topic_element);
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+    desired_topic_element?.children[0]?.scrollIntoView({ block: "start", inline: "start" });
+    swiping_enabled.value = true;
+}
+
+const observer = new IntersectionObserver(
+    (entries, _observer) => {
+        if (swiping_enabled.value) {
             for (const entry of entries) {
-                // console.log(entries.map(entry => entry.isIntersecting))
                 if (entry.isIntersecting) {
-                    console.log(entry.target.childNodes[1].textContent);
-                    active_topic.value = entry.target.childNodes[1].textContent as string;
+                    console.log(entry.target.childNodes[0].textContent);
+                    active_topic.value = entry.target.childNodes[0].textContent as string;
                 }
             }
-        },
-        {
-            root: null,
-            rootMargin: "0px",
-            threshold: 0.8,
         }
-    );
+    },
+    {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.8,
+    }
+);
+
+onUpdated(async () => {
     for (const element of rendered_topics.value) {
         observer.observe(element);
     }
@@ -77,27 +101,44 @@ onUpdated(async () => {
 
     <div class="main-content">
         <!-- Each Topical Section -->
-        <div class="topic-list">
-            <div v-for="(_topic_songs, topic) in topical_index" ref="rendered_topics" :key="topic" class="topic" :style="{ background: primary_color }">
-                <img class="ionicon topic-arrow" src="/assets/chevron-back-outline.svg" />
-                <h3 class="topic-title">{{ topic }}</h3>
-                <img class="ionicon topic-arrow" src="/assets/chevron-forward-outline.svg" />
+        <div>
+            <div class="topic-list" ref="scroll_topic_list">
+                <div
+                    v-for="(_topic_songs, topic) in topical_index"
+                    ref="rendered_topics"
+                    :key="topic"
+                    class="topic"
+                    :style="{ background: primary_color }"
+                    @click="disableSwipingAndShowTopicList(topic as string)"
+                >
+                    <h3 class="topic-title">{{ topic }}</h3>
+                </div>
             </div>
+            <RouterLink v-show="swiping_enabled"
+                v-for="song in songs_to_display"
+                :key="song.title + song.number"
+                :to="`/display/${book_ref}/${song.number}`"
+                class="song"
+                :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
+            >
+                <div>
+                    <div class="song__title">{{ song.title }}</div>
+                </div>
+                <div class="booktext--right">
+                    <div class="song__number">#{{ song.number }}</div>
+                </div>
+            </RouterLink>
         </div>
-        <RouterLink
-            v-for="song in songs_to_display"
-            :key="song.title + song.number"
-            :to="`/display/${book_ref}/${song.number}`"
-            class="song"
-            :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
-        >
-            <div>
-                <div class="song__title">{{ song.title }}</div>
-            </div>
-            <div class="booktext--right">
-                <div class="song__number">#{{ song.number }}</div>
-            </div>
-        </RouterLink>
+        <div v-show="!swiping_enabled">
+            <!-- <div class="topic" :style="{ background: primary_color }" @click="enableSwipingAndHideTopicList(active_topic)">
+                <h3 class="topic-title">{{ active_topic }}</h3>
+            </div> -->
+            <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
+                <div v-if="topic != active_topic" class="topic expanded-topic" :style="{ background: primary_color }" @click="enableSwipingAndHideTopicList(topic as string)">
+                    <h3 class="topic-title">{{ topic }}</h3>
+                </div>
+            </template>
+        </div>
     </div>
 
     <nav class="nav">
@@ -131,13 +172,10 @@ onUpdated(async () => {
     overflow-y: hidden;
     display: flex;
     align-items: center;
-    /* padding: 5px 20px 20px 20px; */
     scrollbar-width: none;
     width: 100%;
+    margin: 10px 0;
 }
-/* .topic-list::-webkit-scrollbar {
-    display: none;
-} */
 
 /**
  * Fix overflow scroll ignoring margin/padding.
@@ -165,19 +203,18 @@ onUpdated(async () => {
 
 .topic {
     height: 80px;
-    /* width: 300px; */
     min-width: calc(100vw - 30px);
-    /* flex: 1 0 100%; */
     scroll-snap-stop: always;
     scroll-snap-align: center;
 
-    /* padding: 10px; */
     text-align: center;
     color: white;
     border-radius: 15px;
-    margin: 5px 15px;
-    display: flex;
-    justify-content: space-between;
+    margin: 0px 15px;
+}
+
+.expanded-topic {
+    margin: 10px 15px !important;
 }
 
 .topic-arrow {
