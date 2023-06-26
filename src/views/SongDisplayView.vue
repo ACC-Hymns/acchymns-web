@@ -3,10 +3,10 @@ import SongContainer from "@/components/SongContainer.vue";
 import { onMounted, ref, computed, onUnmounted } from "vue";
 import { getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
 import type { SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
+import { useCapacitorPreferences } from "@/composables/preferences";
 
 const props = defineProps<SongReference>();
 
@@ -15,7 +15,7 @@ const router = useRouter();
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 
-const bookmarks = useLocalStorage<SongReference[]>("bookmarks", []);
+const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });

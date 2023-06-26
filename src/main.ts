@@ -21,3 +21,6 @@ registerConsoleStore();
 defineCustomElements(window);
 
 app.mount("#app");
+
+import { migrate } from "@/scripts/migrate";
+migrate();

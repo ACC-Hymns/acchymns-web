@@ -5,6 +5,9 @@ import { computed, ref, onMounted } from "vue";
 import { Capacitor } from "@capacitor/core";
 import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
 import { useLocalStorage } from "@vueuse/core";
+import { Preferences } from "@capacitor/preferences";
+
+import { useCapacitorPreferences } from "@/composables/preferences";
 
 let search_query = ref("");
 let stripped_query = computed(() => {
@@ -23,11 +26,14 @@ let search_results = computed(() => {
         .sort((a, b) => a.title.localeCompare(b.title));
 });
 
+const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
-    for (let bookmark of useLocalStorage<SongReference[]>("bookmarks", []).value) {
-        let song: Song = SONG_METADATA[bookmark.book][bookmark.number];
+
+    for (const bookmark of bookmarks.value) {
+        const song: Song = SONG_METADATA[bookmark.book][bookmark.number];
         available_songs.value.push({
             title: song.title ?? "",
             number: bookmark.number,
