@@ -63,6 +63,7 @@ jobs:
           npx cap sync
           cd ios/App
           xcrun agvtool new-version -all ${{ env.SHORT_SHA }}
+          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
           xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
           
       - name: Export IPA
@@ -109,6 +110,4 @@ jobs:
           
       - name: Publish IPA
         run: |
-          echo "BUILD_VERSION=$(xcrun agvtool what-version -terse)" >> "$GITHUB_ENV"
-          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
-          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.BUILD_NUMBER }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.SHORT_SHA }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
