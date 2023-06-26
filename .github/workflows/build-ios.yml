@@ -98,16 +98,16 @@ jobs:
 
           xcodebuild -exportArchive -archivePath App.xcarchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/AuthKey_${{ secrets.AUTH_KEY_ID }}.p8"
 
+      - name: Publish IPA
+        run: |
+          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.build_number }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+
       - name: Upload release IPA
         uses: actions/upload-artifact@v3
         with:
           name: app-release-ipa
           path: ios/App/output/*.ipa
           retention-days: 7
-          
-      - name: Publish IPA
-        run: |
-          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.build_number }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
 
       - name: Update Build Number
         run: |
