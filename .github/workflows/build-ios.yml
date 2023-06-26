@@ -16,6 +16,7 @@ jobs:
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
       - name: Install the Apple certificate and provisioning profile
         run: |
+          echo "build_number=$((${{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
 
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -60,7 +61,6 @@ jobs:
         run: |
           npx cap sync
           cd ios/App
-          echo "build_number=$((${{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
           xcrun agvtool new-version -all ${{ env.build_number }}
           echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
           xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
