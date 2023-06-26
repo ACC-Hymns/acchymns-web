@@ -116,14 +116,11 @@ function clearFilters() {
     search_params.value.bookFilters = [];
 }
 
-function checkmarked(selected: boolean , element: HTMLImageElement) {
-    if(!element)
-        return;
-
+function checkmarked(selected: boolean) {
     if (selected) {
-        element.src = "/assets/checkmark-circle.svg";
+        return "/assets/checkmark-circle.svg";
     } else {
-        element.src = "/assets/ellipse-outline.svg";
+        return "/assets/ellipse-outline.svg";
     }
 }
 
@@ -139,15 +136,6 @@ onUpdated(async () => {
         const solver = new Solver(color);
         const result = solver.solve();
         img?.setAttribute("style", `${result.filter}`);
-        if(search_params.value.bookFilters) {
-            let object = available_books.value.at(i);
-            if(object)
-                checkmarked(search_params.value.bookFilters.includes(object.name.short), img as HTMLImageElement);
-        }
-    }
-    let all_hymnals_img = all_hymnals_filter.value?.children[0];
-    if(all_hymnals_img) {
-        checkmarked(search_params.value.bookFilters.length == 0, all_hymnals_img as HTMLImageElement);
     }
 });
 </script>
@@ -174,13 +162,13 @@ onUpdated(async () => {
             <div class="dropdown-content" ref="filter_content">
                 <a>
                     <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
-                        <img class="ionicon checkmark-icon" />
+                        <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon"/>
+                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>
