@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import type { SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
+import { Toast } from "@capacitor/toast";
 
 const props = defineProps<SongReference>();
 
@@ -19,17 +20,25 @@ const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
-function toggleBookmark() {
+async function toggleBookmark() {
     if (!is_bookmarked.value) {
         bookmarks.value.push(props as SongReference);
+        await Toast.show({
+            text: `#${props.number} added to Bookmarks`,
+        });
     } else {
         const index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
         bookmarks.value.splice(index, 1); // Remove the bookmarked song
+        await Toast.show({
+            text: `#${props.number} removed from Bookmarks`,
+        });
     }
 }
 
+
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
+
     notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
 });
 

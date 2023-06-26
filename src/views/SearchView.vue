@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch } from "vue";
+import { computed, ref, onMounted, watch, onUpdated } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
+import { hexToRgb, Color, Solver } from "@/scripts/color";
 
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
@@ -54,14 +55,6 @@ const limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
-function filterBook(book: BookSummary) {
-    isOpen = true;
-    if (search_params.value.bookFilters.find(b => b.name.short == book.name.short)) {
-        let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
-        if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
-    } else search_params.value.bookFilters.push(book);
-}
-
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
@@ -92,9 +85,11 @@ const filter_content = ref<Element>();
 var isOpen = false;
 
 function resetModals() {
-    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
-    else console.log("CLOSED");
-    isOpen = false;
+    
+    if(filter_content.value?.classList.contains("dropdown-content-active") && !isOpen)
+        filter_content.value?.classList.remove("dropdown-content-active");
+
+    isOpen = false
 }
 
 function showDropdown() {
@@ -106,10 +101,60 @@ function showDropdown() {
         filter_content.value?.classList.add("dropdown-content-active");
     }
 }
+
+let book_filters = ref<Element[]>();
+let all_hymnals_filter = ref<Element>();
+
+function filterBook(book: BookSummary) {
+    isOpen = true;
+    if (search_params.value.bookFilters.find(b => b.name.short == book.name.short)) {
+        let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
+        if (foundBook) {
+            search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
+        }
+    } else {
+        search_params.value.bookFilters.push(book);
+    }
+}
+
+function clearFilters() {
+    search_params.value.bookFilters = [];
+}
+
+onUpdated(async () => {
+    for(var i = 0; i < book_filters.value?.length; i++) {
+        let img = book_filters.value?.at(i)?.childNodes[0].childNodes[0];
+        const rgb = hexToRgb(available_books.value.at(i).primaryColor);
+        if (rgb.length !== 3) {
+            alert('Invalid format!');
+            return;
+        }
+        const color = new Color(rgb[0], rgb[1], rgb[2]);
+        const solver = new Solver(color);
+        const result = solver.solve();
+        img.setAttribute("style", `${result.filter}`);
+        img.src = "/assets/ellipse-outline.svg";
+        img.classList.remove("checkmark-icon");
+        for(let b = 0; b < search_params.value.bookFilters.length; b++) {
+            if(search_params.value.bookFilters.at(b).name.short == available_books.value.at(i)?.name.short) {
+                img.src = "/assets/checkmark-circle.svg";
+                img.classList.add("checkmark-icon");
+            }
+        }
+    }
+    if(search_params.value.bookFilters.length > 0) {
+        let img = all_hymnals_filter.value?.childNodes[0];
+        img.src = "/assets/ellipse-outline.svg";
+    } else {
+        let img = all_hymnals_filter.value?.childNodes[0];
+        img.src = "/assets/checkmark-circle.svg";
+    }
+});
+
 </script>
 
 <template>
-    <div class="blocker" @click="resetModals">
+    <div @click="resetModals" class="blocker">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -133,19 +178,19 @@ function showDropdown() {
                 <div>{{ book.name.medium }}</div>
             </a>-->
             <a @click="showDropdown()" class="dropdown">
-                <p class="dropdown-text">All Hymnals</p>
+                <p class="dropdown-text">Filters</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
             <div class="dropdown-content" id="modal" ref="filter_content">
                 <a>
-                    <div class="dropdown-content-top-item">
+                    <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
                         <img class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)">
+                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon" src="/assets/ellipse-outline.svg" />
+                        <img class="ionicon " src="/assets/ellipse-outline.svg" />
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>
@@ -208,11 +253,12 @@ function showDropdown() {
 @import "@/assets/css/song.css";
 
 .blocker {
-    position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     content: " ";
 }
 
