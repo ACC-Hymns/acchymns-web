@@ -59,7 +59,8 @@ jobs:
         run: |
           npx cap sync
           cd ios/App
-          xcrun agvtool next-version -all
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+          xcrun agvtool new-version -all ${{ env.SHORT_SHA }}
           xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
           
       - name: Export IPA
