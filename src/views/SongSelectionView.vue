@@ -35,7 +35,7 @@ onMounted(async () => {
             </div>
             <div class="title--right">
                 <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
-                    <img class="ionicon" src="/assets/list-bulleted.svg" />
+                    <img class="ionicon" src="/assets/book-outline.svg" />
                 </RouterLink>
             </div>
         </div>

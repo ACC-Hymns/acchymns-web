@@ -118,9 +118,9 @@ function clearFilters() {
 
 function checkmarked(selected: boolean) {
     if (selected) {
-        return "/assets/checkmark-circle.svg";
+        return "./assets/checkmark-circle.svg";
     } else {
-        return "/assets/ellipse-outline.svg";
+        return "./assets/ellipse-outline.svg";
     }
 }
 

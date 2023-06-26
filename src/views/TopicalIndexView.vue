@@ -9,14 +9,13 @@ const props = defineProps<{
 }>();
 const router = useRouter();
 
-const swiping_enabled = ref(true);
+const show_list = ref(true);
 const scroll_topic_list = ref<Element | null>(null);
 let num_of_songs = ref(0);
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: Song[] }>({});
-let rendered_topics = ref<Element[]>([]);
 let active_topic = ref<string>("");
 const songs_to_display = computed(() => {
     if (active_topic.value in topical_index.value) {
@@ -44,56 +43,45 @@ onMounted(async () => {
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
-    console.log(raw_index);
 });
 
-function disableSwipingAndShowTopicList(topic: string) {
-    if (swiping_enabled.value) {
-        swiping_enabled.value = false;
+function hideList(topic: string) {
+    if (show_list.value) {
+        show_list.value = false;
+        active_topic.value = topic;
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
     } else {
-        enableSwipingAndHideTopicList(topic);
+        showList();
     }
 }
 
-function enableSwipingAndHideTopicList(topic: string) {
-    const desired_topic_element = rendered_topics.value.find(t => t.children[0].innerHTML === topic);
+function showList() {
+    show_list.value = true;
+    active_topic.value = "";
     window.scrollTo({
         top: 0,
         behavior: "smooth",
     });
-    desired_topic_element?.children[0]?.scrollIntoView({ block: "start", inline: "start" });
-    swiping_enabled.value = true;
 }
 
-const observer = new IntersectionObserver(
-    (entries, _observer) => {
-        if (swiping_enabled.value) {
-            for (const entry of entries) {
-                if (entry.isIntersecting) {
-                    console.log(entry.target.childNodes[0].textContent);
-                    active_topic.value = entry.target.childNodes[0].textContent as string;
-                }
-            }
-        }
-    },
-    {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.8,
-    }
-);
 
-onUpdated(async () => {
-    for (const element of rendered_topics.value) {
-        observer.observe(element);
+function goBack() {
+    if(show_list.value) {
+        router.back();
+    } else {
+        showList();
     }
-});
+}
+
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <img @click="goBack()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Topical Index</h1>
         </div>
     </div>
@@ -101,24 +89,23 @@ onUpdated(async () => {
     <div class="main-content">
         <!-- Each Topical Section -->
         <div>
-            <div class="topic-list" ref="scroll_topic_list">
+            <div ref="scroll_topic_list">
                 <div
-                    v-for="(_topic_songs, topic) in topical_index"
-                    ref="rendered_topics"
-                    :key="topic"
+                    :key="active_topic"
+                    v-if="!show_list"
                     class="topic"
                     :style="{ background: primary_color }"
-                    @click="disableSwipingAndShowTopicList(topic as string)"
+                    @click="showList"
                 >
-                    <h3 class="topic-title">{{ topic }}</h3>
+                    <h3 class="topic-title">{{ active_topic }}</h3>
                 </div>
             </div>
             <RouterLink
-                v-show="swiping_enabled"
+                v-show="!show_list"
                 v-for="song in songs_to_display"
                 :key="song.title + song.number"
                 :to="`/display/${book_ref}/${song.number}`"
-                class="song"
+                class="song topic-song"
                 :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
             >
                 <div>
@@ -129,12 +116,9 @@ onUpdated(async () => {
                 </div>
             </RouterLink>
         </div>
-        <div v-show="!swiping_enabled">
-            <!-- <div class="topic" :style="{ background: primary_color }" @click="enableSwipingAndHideTopicList(active_topic)">
-                <h3 class="topic-title">{{ active_topic }}</h3>
-            </div> -->
+        <div class="topic-list">
             <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
-                <div v-if="topic != active_topic" class="topic expanded-topic" :style="{ background: primary_color }" @click="enableSwipingAndHideTopicList(topic as string)">
+                <div v-if="show_list" class="topic expanded-topic" :style="{ background: primary_color }" @click="hideList(topic as string)">
                     <h3 class="topic-title">{{ topic }}</h3>
                 </div>
             </template>
@@ -166,46 +150,19 @@ onUpdated(async () => {
 </style>
 
 <style scoped>
-.topic-list {
-    scroll-snap-type: x mandatory;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    display: flex;
-    align-items: center;
-    scrollbar-width: none;
-    width: 100%;
-    margin: 10px 0;
-}
 
-/**
- * Fix overflow scroll ignoring margin/padding.
- * @see https://chenhuijing.com/blog/flexbox-and-padding/
- * @see https://itnext.io/horizontal-overflow-with-flexbox-css-64f530495303
- */
-.topic-list::before,
-.topic-list::after {
-    content: "";
-    display: inline-block;
-    flex: 0 0 auto;
-    width: 300px;
-    margin-left: -1px;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.topic-list::-webkit-scrollbar {
-    display: none;
-}
 
 .topic-list {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
+}
+
+.topic-song {
+    margin-top: 10px;
 }
 
 .topic {
     height: 80px;
     min-width: calc(100vw - 30px);
-    scroll-snap-stop: always;
-    scroll-snap-align: center;
 
     text-align: center;
     color: white;
@@ -214,7 +171,7 @@ onUpdated(async () => {
 }
 
 .expanded-topic {
-    margin: 10px 15px !important;
+    margin: 0px 15px 10px 15px !important;
 }
 
 .topic-arrow {
