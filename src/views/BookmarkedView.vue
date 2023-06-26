@@ -4,8 +4,6 @@ import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted } from "vue";
 import { Capacitor } from "@capacitor/core";
 import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
-import { useLocalStorage } from "@vueuse/core";
-import { Preferences } from "@capacitor/preferences";
 
 import { useCapacitorPreferences } from "@/composables/preferences";
 

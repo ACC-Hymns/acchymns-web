@@ -35,7 +35,6 @@ async function toggleBookmark() {
     }
 }
 
-
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
 

@@ -30,7 +30,7 @@ const search_results = computed(() => {
             .filter(s => {
                 return (
                     (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
-                    search_params.value.bookFilters.find(b => b.name.short == s.book.name.short)
+                    search_params.value.bookFilters.find(b => b == s.book.name.short)
                 );
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
@@ -85,11 +85,8 @@ const filter_content = ref<Element>();
 var isOpen = false;
 
 function resetModals() {
-    
-    if(filter_content.value?.classList.contains("dropdown-content-active") && !isOpen)
-        filter_content.value?.classList.remove("dropdown-content-active");
-
-    isOpen = false
+    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
+    isOpen = false;
 }
 
 function showDropdown() {
@@ -102,18 +99,16 @@ function showDropdown() {
     }
 }
 
-let book_filters = ref<Element[]>();
+let book_filters = ref<Element[]>([]);
 let all_hymnals_filter = ref<Element>();
 
-function filterBook(book: BookSummary) {
+function filterBook(short_book_name: string) {
     isOpen = true;
-    if (search_params.value.bookFilters.find(b => b.name.short == book.name.short)) {
-        let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
-        if (foundBook) {
-            search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
-        }
+    if (search_params.value.bookFilters.includes(short_book_name)) {
+        let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
+        search_params.value.bookFilters.splice(index, 1);
     } else {
-        search_params.value.bookFilters.push(book);
+        search_params.value.bookFilters.push(short_book_name);
     }
 }
 
@@ -121,36 +116,28 @@ function clearFilters() {
     search_params.value.bookFilters = [];
 }
 
+function checkmarked(selected: boolean) {
+    if (selected) {
+        return "/assets/checkmark-circle.svg";
+    } else {
+        return "/assets/ellipse-outline.svg";
+    }
+}
+
 onUpdated(async () => {
-    for(var i = 0; i < book_filters.value?.length; i++) {
-        let img = book_filters.value?.at(i)?.childNodes[0].childNodes[0];
-        const rgb = hexToRgb(available_books.value.at(i).primaryColor);
-        if (rgb.length !== 3) {
-            alert('Invalid format!');
+    for (var i = 0; i < book_filters.value?.length; i++) {
+        const img = book_filters.value?.at(i)?.children[0].children[0];
+        const rgb = hexToRgb(available_books.value.at(i)?.primaryColor ?? "#000000");
+        if (rgb?.length !== 3) {
+            alert("Invalid format!");
             return;
         }
         const color = new Color(rgb[0], rgb[1], rgb[2]);
         const solver = new Solver(color);
         const result = solver.solve();
-        img.setAttribute("style", `${result.filter}`);
-        img.src = "/assets/ellipse-outline.svg";
-        img.classList.remove("checkmark-icon");
-        for(let b = 0; b < search_params.value.bookFilters.length; b++) {
-            if(search_params.value.bookFilters.at(b).name.short == available_books.value.at(i)?.name.short) {
-                img.src = "/assets/checkmark-circle.svg";
-                img.classList.add("checkmark-icon");
-            }
-        }
-    }
-    if(search_params.value.bookFilters.length > 0) {
-        let img = all_hymnals_filter.value?.childNodes[0];
-        img.src = "/assets/ellipse-outline.svg";
-    } else {
-        let img = all_hymnals_filter.value?.childNodes[0];
-        img.src = "/assets/checkmark-circle.svg";
+        img?.setAttribute("style", `${result.filter}`);
     }
 });
-
 </script>
 
 <template>
@@ -168,29 +155,20 @@ onUpdated(async () => {
             </button>
         </div>
         <div class="filters">
-            <!--<a
-                v-for="book in available_books"
-                :key="book.name.medium"
-                class="hymnalfilterbutton"
-                :style="`background-color: ${check_selected(book) ? darken(book.primaryColor) : book.primaryColor}`"
-                @click="filterBook(book)"
-            >
-                <div>{{ book.name.medium }}</div>
-            </a>-->
             <a @click="showDropdown()" class="dropdown">
                 <p class="dropdown-text">Filters</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
-            <div class="dropdown-content" id="modal" ref="filter_content">
+            <div class="dropdown-content" ref="filter_content">
                 <a>
                     <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
-                        <img class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
+                        <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)" ref="book_filters">
+                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon " src="/assets/ellipse-outline.svg" />
+                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>

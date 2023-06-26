@@ -39,7 +39,7 @@ type BookIndex = Record<string, string[]>;
 
 type SearchParams = {
     search: string;
-    bookFilters: BookSummary[];
+    bookFilters: string[]; // Short names of books
 };
 
 export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
