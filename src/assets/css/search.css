@@ -26,6 +26,7 @@ svg {
     width: 20px;
     height: 20px;
     padding: 10px;
+    transform: translateY(1px);
 }
 
 input {
@@ -56,9 +57,8 @@ input {
 }
 
 .filters {
-    display: flex;
-    align-items: center;
-    padding: 5px 20px 20px 20px;
+    display: inline-block;
+    padding: 0px 20px 20px 20px;
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;

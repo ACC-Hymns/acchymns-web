@@ -74,7 +74,7 @@ onMounted(async () => {
     justify-content: center;
     flex-wrap: wrap;
     padding: 0px 10px 110px 10px;
-    margin-top: 10px;
+    margin-top: 80px;
 }
 
 .song-btn {

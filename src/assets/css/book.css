@@ -7,14 +7,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 .book_title {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 700; 
     position: relative;
-    bottom: 0;
+    top: 1px;
 }
 
 .book_title_small {

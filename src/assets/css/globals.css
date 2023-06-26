@@ -31,7 +31,7 @@ a, img {
     --back-color: #818181;
     --toolbar: #ffffff;
     --color: black;
-    --svg-color: invert(0%) sepia(99%) saturate(0%) hue-rotate(304deg) brightness(101%) contrast(104%);
+    --svg-color: invert(0%) sepia(93%) saturate(28%) hue-rotate(112deg) brightness(106%) contrast(106%);
     --subtext-color: rgb(100, 100, 100);
     --search-color: #dfdede;
     --toolbar-text: #636363;
@@ -128,17 +128,17 @@ h1, h2, h3, h4, h5 {
     width: 23px;
 }
 
-.nav__icon--active {
-    font-size: 23px;
-    margin-bottom: 3px;
-    width: 23px;
-    filter: var(--svg-color);
-}
-
 .ionicon {
     filter: var(--svg-back-filter);
     width: 25px;
     height: 25px;
+}
+
+.nav__icon--active {
+    font-size: 25px;
+    margin-bottom: 3px;
+    width: 25px;
+    filter: var(--svg-color);
 }
 
 .entrypoint {
@@ -176,7 +176,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .main-content {
-    margin-top: 70px !important;
+    margin-top: 100px !important;
 }
 
 .space {

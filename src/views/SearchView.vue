@@ -55,6 +55,7 @@ const limited_search_results = computed(() => {
 });
 
 function filterBook(book: BookSummary) {
+    isOpen = true;
     if (search_params.value.bookFilters.find(b => b.name.short == book.name.short)) {
         let foundBook = search_params.value.bookFilters.find(b => b.name.short == book.name.short);
         if (foundBook) search_params.value.bookFilters.splice(search_params.value.bookFilters.indexOf(foundBook), 1);
@@ -88,17 +89,32 @@ onMounted(async () => {
 
 const filter_content = ref<Element>();
 
+var isOpen = false;
+
+function resetModals() {
+    
+    if(filter_content.value?.classList.contains("dropdown-content-active") && !isOpen)
+    filter_content.value?.classList.remove("dropdown-content-active");
+        else
+        console.log("CLOSED");
+    isOpen = false
+}
 
 function showDropdown() {
-    if (filter_content.value?.classList.contains("dropdown-content-active")) 
-        filter_content.value?.classList.remove("dropdown-content-active");
-    else 
-        filter_content.value?.classList.add("dropdown-content-active");
+        if(filter_content.value?.classList.contains("dropdown-content-active")) {
+            filter_content.value?.classList.remove("dropdown-content-active");
+            isOpen = false;
+        } else {
+            isOpen = true;
+            filter_content.value?.classList.add("dropdown-content-active");
+        }  
 }
+
+
 </script>
 
 <template>
-    <div>
+    <div class="blocker" @click="resetModals">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -122,17 +138,28 @@ function showDropdown() {
                 <div>{{ book.name.medium }}</div>
             </a>-->
             <a @click="showDropdown()" class="dropdown">
-                <p class="dropdown-text">All</p>
+                <p class="dropdown-text">All Hymnals</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
             <div class="dropdown-content" id="modal" ref="filter_content">
+                <a>
+                    <div class="dropdown-content-top-item">
+                        <img class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
+                        <div class="dropdown-content-text">All Hymnals</div>
+                    </div>
+                    
+                </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book)">
-                    <div>{{ book.name.medium }}</div>
+                    <div class="dropdown-content-item">
+                        <img class="ionicon" src="/assets/ellipse-outline.svg" />
+                        <div class="dropdown-content-text">{{ book.name.medium }}</div>
+                    </div>
+                    
                 </a>
             </div>
         </div>
 
-        <h2 v-if="search_results.length > 0" style="margin-top: 10px">Search Results ({{ search_results.length }})</h2>
+        <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px;">Search Results ({{ search_results.length }})</h2>
         <div class="songlist">
             <RouterLink
                 v-for="song in limited_search_results"
@@ -187,45 +214,89 @@ function showDropdown() {
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
 
+.blocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: ' ';
+}
+
 .dropdown-content {
-    display: none;
+    visibility: hidden;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: var(--button-color);
+    color: var(--color);
     border-radius: 15px;
     min-width: 160px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    padding: 12px 16px;
-    z-index: 1;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+    margin: 10px 0px 0px 0px;
+    z-index: 0.5;
+    opacity: 0;
+    transform: translate(0px, -10px);
+    transition: all 0.2s ease;
+}
+
+.dropdown-content-top-item {
+    cursor: pointer;
+    border-bottom: var(--border-color);
+    padding: 0px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .dropdown-content-active {
-    display: block;
+    transform: translateY(0px);
+    visibility: visible;
+    opacity: 1;
+    display: inline-block;
+    
+}
+
+.dropdown-content-item {
+    cursor: pointer;
+    padding: 0px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dropdown-content-text {
+    padding: 15px;
 }
 
 .dropdown {
-    background-color: white;
-    padding: 5px 15px;
+    cursor: pointer;
+    background-color: var(--button-color);
+    color: var(--color);
+    padding: 10px 15px;
     border-radius: 30px;
     border-width: 2px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     margin-right: 10px;
+    z-index: 1;
 }
 
 .dropdown-text {
-    display: inline-block;
-    margin: 0 auto;
+    margin: 0;
     height: 25px;
     line-height: 25px;
-    position: relative;
 }
 
 .filter-icon {
-    filter: brightness(0);
+    filter: var(--change-svg-filter);
     display: inline-block;
     position: relative;
     margin: auto auto;
     padding-left: 15px;
+}
+
+.checkmark-icon {
+    filter: var(--svg-color);
 }
 </style>
