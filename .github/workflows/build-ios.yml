@@ -16,7 +16,7 @@ jobs:
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
       - name: Install the Apple certificate and provisioning profile
         run: |
-          echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
+          echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-8)" >> "$GITHUB_ENV"
           echo "${{ env.SHORT_SHA }}"
 
           # create variables
@@ -109,6 +109,6 @@ jobs:
           
       - name: Publish IPA
         run: |
-          echo "BUILD_VERSION=$(xcrun agvtool what-version -terse)" >> $GITHUB_ENV
-          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> $GITHUB_ENV
+          echo "BUILD_VERSION=$(xcrun agvtool what-version -terse)" >> "$GITHUB_ENV"
+          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
           xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.BUILD_NUMBER }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
