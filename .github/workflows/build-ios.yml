@@ -16,8 +16,6 @@ jobs:
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
       - name: Install the Apple certificate and provisioning profile
         run: |
-          echo "SHORT_SHA=$(echo $(( $RANDOM + 1 )))" >> "$GITHUB_ENV"
-          echo "${{ env.SHORT_SHA }}"
 
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -62,7 +60,8 @@ jobs:
         run: |
           npx cap sync
           cd ios/App
-          xcrun agvtool new-version -all ${{ env.SHORT_SHA }}
+          echo "build_number=$((${{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
+          xcrun agvtool new-version -all ${{ env.build_number }}
           echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
           xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
           
@@ -110,4 +109,8 @@ jobs:
           
       - name: Publish IPA
         run: |
-          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.SHORT_SHA }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.build_number }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+
+      - name: Update Build Number
+        run: |
+          curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/IOS_BUILD_NUMBER -d '{"name":"IOS_BUILD_NUMBER","value":"${{ env.build_number }}"}'
