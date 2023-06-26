@@ -48,11 +48,6 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 19.x
-
       - name: Build web app
         run: |
           pwd
