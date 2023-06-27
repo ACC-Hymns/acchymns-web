@@ -42,7 +42,7 @@ jobs:
       - name: Push files to target
         run: |
           rm -r deploy/*
-          cp -r build/* deploy
+          mv -r build/dist/* deploy
           cp deploy/index.html deploy/404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
           cd deploy
           touch .nojekyll
