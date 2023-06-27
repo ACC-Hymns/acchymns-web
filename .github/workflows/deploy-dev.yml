@@ -3,7 +3,6 @@ on:
   push:
     branches: [ staging ]
     paths-ignore:
-      - '.github/workflows/**'
       - 'ios/**'
       - 'android/**'
       - '.vscode/**'
