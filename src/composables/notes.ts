@@ -17,8 +17,9 @@ for (const note of notes_to_load) {
     });
 }
 
-const interval = useLocalStorage<number>("playbackInterval", 0.25);
-const duration = useLocalStorage<number>("playbackDuration", 3);
+const interval = useLocalStorage<number>("ACCOptions.playbackInterval", 0.25);
+const duration = useLocalStorage<number>("ACCOptions.playbackDuration", 3);
+const staggered = useLocalStorage<boolean>("ACCOptions.staggered", true);
 
 const isPlaying = ref(false);
 let cancel_interval_id: number | undefined = undefined;
@@ -48,7 +49,7 @@ const player = {
         const start = Tone.context.currentTime;
         let end_time: number;
 
-        if ((localStorage.getItem("staggered") ?? "true") === "true") {
+        if (staggered.value === true) {
             // Schedule all the notes
             for (const [index, note] of unref(notes).entries()) {
                 sampler.triggerAttack(note, start + interval.value * index);
