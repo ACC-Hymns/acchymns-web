@@ -50,6 +50,7 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
     /* Styling */
     height: 50px;
     width: 80%;
+    border-style: none;
     background-color: #2196f3;
     border-radius: 15px;
 

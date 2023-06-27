@@ -2,16 +2,20 @@
 import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
+import { useLocalStorage } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
 }>();
 const router = useRouter();
 
+let topical_index_tooltip_status = useLocalStorage<boolean>("topical_index_tooltip_complete", false);
+
 const song_numbers = ref<string[]>([]);
 let book_name = ref("");
 let index_available = ref(false);
 let button_color = ref("#000000");
+let tooltip = ref<Element>();
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -22,6 +26,12 @@ onMounted(async () => {
     button_color.value = BOOK_METADATA[props.book].primaryColor;
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
 });
+
+function hideTooltip() {
+    tooltip.value?.classList.add("tooltiphidden");
+    tooltip.value?.classList.add("tooltip");
+    setTimeout(() => {  topical_index_tooltip_status.value = true}, 1000);
+}
 </script>
 
 <template>
@@ -34,9 +44,15 @@ onMounted(async () => {
                 <h1>{{ book_name }}</h1>
             </div>
             <div class="title--right">
-                <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
-                    <img class="ionicon" src="/assets/book-outline.svg" />
-                </RouterLink>
+                <div @click="hideTooltip">
+                    <RouterLink v-if="index_available" :to="`/topical/${props.book}`" @click="topical_index_tooltip_status = true">
+                        <img class="ionicon" src="/assets/book-outline.svg" />
+                    </RouterLink>
+                    <div v-if:="!topical_index_tooltip_status" class="tooltip" ref="tooltip">
+                        <p class="tooltiptext">New! Topical Index</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -88,5 +104,53 @@ onMounted(async () => {
     align-items: center;
     justify-content: center;
     margin: 5px;
+}
+
+.tooltip {
+    min-width: 120px;
+    height: 25px;
+    background-color: #2196F3;
+    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 60%;
+    top: 90%;
+    opacity: 1;
+}
+
+.tooltiphidden {
+    height: 25px;
+    background-color: #2196F3;
+    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 60%;
+    top: 90%;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 75%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #2196F3 transparent;
+}
+
+.tooltiptext {
+    margin: 0px 10px;
+    line-height: 25px;
+    font-size: 15px;
+    color: white;
 }
 </style>

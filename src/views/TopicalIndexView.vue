@@ -50,9 +50,9 @@ function hideList(topic: string) {
         show_list.value = false;
         active_topic.value = topic;
         window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-    });
+            top: 0,
+            behavior: "smooth",
+        });
     } else {
         showList();
     }

@@ -7,6 +7,7 @@ import type { SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
+import { useLocalStorage } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
 
@@ -44,6 +45,21 @@ onMounted(async () => {
 onUnmounted(() => {
     player.stop();
 });
+
+let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
+let tooltip = ref<Element>();
+
+function play() {
+    player.play(notes);
+    hideTooltip();
+}
+
+function hideTooltip() {
+    tooltip.value?.classList.add("tooltiphidden");
+    tooltip.value?.classList.add("tooltip");
+    setTimeout(() => {  starting_notes_tooltip_status.value = true}, 1000);
+}
+
 </script>
 
 <template>
@@ -57,8 +73,11 @@ onUnmounted(() => {
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img v-if="!isPlaying" @click="player.play(notes)" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-if="!isPlaying" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
                     <img v-else class="ionicon" src="/assets/musical-notes.svg" />
+                    <div v-if:="!starting_notes_tooltip_status" class="tooltip" ref="tooltip" @click="hideTooltip()">
+                        <p class="tooltiptext">New! Starting Notes</p>
+                    </div>
                 </template>
 
                 <img v-if="is_bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
@@ -70,3 +89,53 @@ onUnmounted(() => {
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
 </template>
+
+<style>
+.tooltip {
+    min-width: 120px;
+    height: 25px;
+    background-color: #2196F3;
+    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 49%;
+    top: 90%;
+    opacity: 1;
+}
+
+.tooltiphidden {
+    height: 25px;
+    background-color: #2196F3;
+    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    left: 49%;
+    top: 90%;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #2196F3 transparent;
+}
+
+.tooltiptext {
+    margin: 0px 10px;
+    line-height: 25px;
+    font-size: 15px;
+    color: white;
+}
+</style>
