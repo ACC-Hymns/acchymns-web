@@ -1,0 +1,12 @@
+{
+    "name": {
+        "short": "ZG",
+        "medium": "Zbirka",
+        "long": "Zbirka Slavopoja Gospodu Bogu"
+    },
+    "primaryColor": "#CF0F17",
+    "secondaryColor": "#902024",
+    "fileExtension": "png",
+    "addOn": true,
+    "indexAvailable": false
+}

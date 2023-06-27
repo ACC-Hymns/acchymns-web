@@ -1,0 +1,93 @@
+h2 {
+    margin: 30px 20px 5px 30px;
+    font-size: 20px;
+}
+
+.search-bar {
+    background-color: var(--search-color);
+    height: 40px;
+    border-radius: 15px;
+    margin: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+  
+svg {
+    color: rgb(122, 122, 122);
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    transform: translateY(1px);
+}
+
+input {
+    all: unset;
+    font: 16px;
+    color: var(--color);
+    height: 100%;
+    width: 100%;
+    padding: 6px 15px;
+}
+
+::placeholder {
+    color: var(--color);
+    opacity: 0.7;
+    font-family: 'Lato', sans-serif;
+}
+
+.songlist {
+    padding-inline-start: 0;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
+    display: flex;
+    flex-direction: column;
+}
+
+.hymnalfilterheading {
+    margin: 30px 20px 0px 30px;
+    font-size: 20px;
+}
+
+.filters {
+    display: inline-block;
+    padding: 0px 20px 20px 20px;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hymnalfilters::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-text {
+    padding: 10px 0px;
+}
+
+.hymnalfilterbutton {
+    height: 70px;
+    min-width: 70px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 15px;
+    margin-right: 15px;
+    background-color: var(--topical-color);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.show-more {
+    width: 50px;
+    height: 50px;
+}

@@ -1,0 +1,114 @@
+name: Build IOS
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - ".github/.workflows/**"
+
+jobs:
+  build:
+    name: Build IOS
+    runs-on: macos-latest
+    environment: development
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+        
+      # Setup Apple certs for building
+      # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
+      - name: Install the Apple certificate and provisioning profile
+        run: |
+          echo "build_number=$((${{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
+
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "${{ secrets.BUILD_CERTIFICATE_BASE64 }}" | base64 --decode -o $CERTIFICATE_PATH
+          echo -n "${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}" | base64 --decode -o $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "${{ secrets.P12_PASSWORD }}" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build web app
+        run: |
+          pwd
+          echo "$(pwd)"
+          npm install
+          npm run build
+        
+      - name: Build app bundle
+        run: |
+          npx cap sync
+          cd ios/App
+          xcrun agvtool new-version -all ${{ env.build_number }}
+          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
+          xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
+          
+      - name: Export IPA
+        run: |
+          cd ios/App       
+          echo '<?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                <plist version="1.0">
+                <dict>
+                  <key>destination</key>
+                  <string>export</string>
+                  <key>manageAppVersionAndBuildNumber</key>
+                  <true/>
+                  <key>method</key>
+                  <string>app-store</string>
+                  <key>provisioningProfiles</key>
+                  <dict>
+                    <key>com.ChristopherW.acchmns</key>
+                    <string>Publishing Profile</string>
+                  </dict>
+                  <key>signingCertificate</key>
+                  <string>Apple Distribution</string>
+                  <key>signingStyle</key>
+                  <string>manual</string>
+                  <key>stripSwiftSymbols</key>
+                  <true/>
+                  <key>teamID</key>
+                  <string>AVS62V4S24</string>
+                  <key>uploadSymbols</key>
+                  <true/>
+                </dict>
+                </plist>' > archive.plist
+
+          echo -n "${{ secrets.AUTH_KEY_BASE64 }}" | base64 --decode -o AuthKey_${{ secrets.AUTH_KEY_ID }}.p8
+
+          xcodebuild -exportArchive -archivePath App.xcarchive -exportOptionsPlist archive.plist -exportPath output -allowProvisioningUpdates -authenticationKeyIssuerID ${{ secrets.AUTH_KEY_ISSUER_ID }} -authenticationKeyID ${{ secrets.AUTH_KEY_ID }} -authenticationKeyPath "$(pwd)/AuthKey_${{ secrets.AUTH_KEY_ID }}.p8"
+
+      - name: Publish IPA
+        run: |
+          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.build_number }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+
+      - name: Upload release IPA
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-ipa
+          path: ios/App/output/*.ipa
+          retention-days: 7
+
+      - name: Update Build Number
+        run: |
+          curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/IOS_BUILD_NUMBER -d '{"name":"IOS_BUILD_NUMBER","value":"${{ env.build_number }}"}'

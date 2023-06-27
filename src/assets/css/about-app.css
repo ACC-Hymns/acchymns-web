@@ -1,0 +1,34 @@
+.changelog {
+    align-items: center;
+    padding: 0px 20px;
+    color: #000;
+    border-bottom: var(--border-color);
+}
+
+.changelog:last-child {
+    border-bottom: none;
+}
+
+.attribution {
+    align-items: center;
+    padding: 0px 20px;
+    color: #000;
+    border-bottom: var(--border-color);
+}
+
+.attribution:last-child {
+    border-bottom: none;
+}
+
+.change {
+    color: var(--subtext-color);
+}
+
+.release, .releaseDate {
+    display: inline-block;
+    padding: 0px, 5px;
+}
+
+.releaseDate {
+    float: right;
+}

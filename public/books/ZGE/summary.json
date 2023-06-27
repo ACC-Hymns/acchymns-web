@@ -1,0 +1,12 @@
+{
+    "name": {
+        "short": "ZGE",
+        "medium": "Hymns of Praise",
+        "long": "Hymns of Praise (English Zbirka)"
+    },
+    "primaryColor": "#C0C0C0",
+    "secondaryColor": "#7a7a7a",
+    "fileExtension": "pdf",
+    "addOn": true,
+    "indexAvailable": false
+}

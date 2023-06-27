@@ -1,0 +1,12 @@
+{
+    "name": {
+        "short": "ZH",
+        "medium": "Zion's Harp",
+        "long": "Zion's Harp"
+    },
+    "primaryColor": "#494949",
+    "secondaryColor": "#000000",
+    "fileExtension": "pdf",
+    "addOn": false,
+    "indexAvailable": true
+}

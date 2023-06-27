@@ -13,15 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-      
-      # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
-      - name: Set GitHub Actions as Commit Author
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          
+
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
@@ -30,8 +22,10 @@ jobs:
       - name: Build
         run: |
           cd build
-          #npm i
-          #npm run build
+          echo "VITE_BASE_URL=/acchymns-dev/" > .env # We deploy to github.io/acchyms-dev, which we serve on the root
+          npm i
+          npm run build
+          npx cap copy web # This runs our helper script to compress the song book info
           cd ..
       
       - name: Checkout Dev Target
@@ -46,6 +40,7 @@ jobs:
           rm -r deploy/*
           cp -r build/* deploy
           cd deploy
+          cp deploy/index.html deploy/404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
           touch .nojekyll
           git add .
           git commit -m $GITHUB_SHA
