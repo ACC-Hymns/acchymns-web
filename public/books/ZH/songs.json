@@ -1,1386 +1,1732 @@
 {
     "1": {
         "title": "Hallelujah, praise ye the Lord",
+        "first_line": "hallelujah praise ye the lord with harps and psaltery in accord",
         "notes": ["F4", "A3", "F3"]
     }, 
     "2": {
         "title": "Hallelujah, to God now sing",
+        "first_line": "hallelujah to god now sing o zions children gladly bring praise honor adoration",
         "notes": ["F4", "A3", "F3"]
     },
     "3": {
         "title": "The heavens all glorify God’s Name",
+        "first_line": "the heavens all glorify gods name the land and sea his might proclaim",
         "notes": ["F4", "A3", "F3"]
     },
     "4": {
         "title": "Oh, be ye lifted up, ye gates",
+        "first_line": "oh be yea lifted up ye gates that here may enter",
         "notes": ["F4", "A3", "F3"]
     },
     "5": {
         "title": "Praise thou the Lord, the Almighty",
+        "first_line": "praise thou the lord the almighty the king of creation ",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "6": {
         "title": "Jesus! My Life, my Fond Hope",
+        "first_line": "jesus my life my fond hope my true faith my endeavor",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "7": {
         "title": "My praise, ascend to God today",
+        "first_line": "my praise ascend to god today to whom the angels sang their lay",
         "notes": ["F4", "A3", "F3"]
     },
     "8": {
         "title": "My praises to His throne now mount",
+        "first_line": "my praises to his throne now mount to christ the lord of life the fount",
         "notes": ["F4", "A3", "F3"]
     },
     "9": {
         "title": "Glory to God in His Heaven!",
+        "first_line": "glory be to god in his heaven and on earth let praise be given",
         "notes": ["F4", "A3", "F3"]
     },
     "10": {
         "title": "Holy God, behold, my heart is turning",
+        "first_line": "holy god behold my heart is turning unto thee to find its rest",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "11": {
         "title": "We who here in Jesus’ Name now gather",
+        "first_line": "we who here in jesus name now gather give our hand in sacred love",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "12": {
         "title": "Lord Jesus, Thou art King",
+        "first_line": "lord jesus thou art king at gods right hand thou reignest",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "13": {
         "title": "Lord God, all laud to Thee",
+        "first_line": "lord god all laud to thee thy goodness we are praising",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "14": {
         "title": "Lord Jesus, all our thanks and praise",
+        "first_line": "lord jesus all out thanks and praise be unto thee through all our days",
         "notes": ["D4", "B3", "G3"]
     },
     "15": {
         "title": "Do you see the Shepherd wandering",
+        "first_line": "do you see the shepherd wandering oer gods wide and shadowed plain",
         "notes": ["F4", "A3", "F3"]
     },
     "16": {
         "title": "How good to be a lamb of Christ the Savior",
+        "first_line": "how good to be a lamb of christ the savior to stand in grace with him the faithful lord",
         "notes": ["G4", "E4", "G3", "C3"]
     },
     "17": {
         "title": "I am Jesus’ little lamb",
+        "first_line": "i am jesus little lamb ever glad at heart i am",
         "notes": ["A4", "F#4", "A3", "D3"]
     },
     "18": {
         "title": "Who is He that careth for us",
+        "first_line": "who is he that careth for us and for our salvation now",
         "notes": ["C5", "G4", "E4", "C3"]
     },
     "19": {
         "title": "Jesus, our sweet Rest",
+        "first_line": "jesus our sweet rest who like thee is blest",
         "notes": ["A4", "E4", "C#4", "A2"]
     },
     "20": {
         "title": "Forward still! Forward still!",
+        "first_line": "forward still forward still zion forward to the light",
         "notes": ["D4", "D3"]
     },
     "21": {
         "title": "To the fray! To the fray!",
+        "first_line": "to the fray to the fray brethren join the holy strife",
         "notes": ["D4", "D3"]
     },
     "22": {
         "title": "Holy Lord, holy Lord",
+        "first_line": "holy lord holy lord holy and almighty lord thou the god of all creation",
         "notes": ["D4", "D3"]
     },
     "23": {
         "title": "Holiest, Holiest",
+        "first_line": "holiest holiest glorious immanuel faiths tru author and beginner",
         "notes": ["D4", "D3"]
     },
     "24": {
         "title": "Lord, come in! Lord, come in!",
+        "first_line": "lord come in lord come in thou who art thy peoples head",
         "notes": ["D4", "D3"]
     },
     "25": {
         "title": "We worship Thee with tears of gladness",
+        "first_line": "we worship thee with tears of gladness for thy great love lord jesus christ",
         "notes": ["F4", "A3", "F3"]
     },
     "26": {
         "title": "Jesus, in the night of His betrayal",
+        "first_line": "jesus in the night of his betrayal when in love he formed his covenant new",
         "notes": ["A4", "F4", "C4", "F3"]
     },
     "27": {
         "title": "Up, ye Christians, Christ’s own members",
+        "first_line": "up ye christiaans chris",
         "notes": ["D4", "B3", "G3"]
     },
     "28": {
         "title": "Jesus, blessed Friends and Savior",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "29": {
         "title": "Jesus, our great Mediator",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "30": {
         "title": "Hear and understand the lessons",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "31": {
         "title": "God the Father of Christ Jesus",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "32": {
         "title": "Who shall in Thy tabernacle",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "33": {
         "title": "Heart to heart united closely",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "34": {
         "title": "Glory be to God in heaven",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "35": {
         "title": "O Deliv’rer from all bondage",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "36": {
         "title": "Sowing tears brings joyous harvest",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D3"]
     },
     "37": {
         "title": "Love, O greatest blessing given",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D3"]
     },
     "38": {
         "title": "Blessed Zion, be contented",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "39": {
         "title": "Battling on and ever striving",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "40": {
         "title": "When God wrought the world’s creation",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "41": {
         "title": "Baptized into Thy name most holy",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "42": {
         "title": "Unto Bethesda’s pool",
+        "first_line": "",
         "notes": ["A4", "C#4", "E3", "A2"]
     },
     "43": {
         "title": "Baptized, O Lord, in Thee",
+        "first_line": "",
         "notes": ["A4", "C#4", "E3", "A2"]
     },
     "44": {
         "title": "The Lord most surely bore the sorrow",
+        "first_line": "",
         "notes": ["A4", "C#4", "E3", "A2"]
     },
     "45": {
         "title": "Lord Jesus, look on me",
+        "first_line": "",
         "notes": ["A4", "C#4", "E3", "A2"]
     },
     "46": {
         "title": "Cast sorrow and grief",
+        "first_line": "",
         "notes": ["E4", "E3"]
     },
     "47": {
         "title": "Bravely strive when God doth call thee",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "48": {
         "title": "Lord, again the sun is risen",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "49": {
         "title": "Lord, again a day is closing",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "50": {
         "title": "Arise, all ye believers",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "51": {
         "title": "Unto Zion’s Mount assemble",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "52": {
         "title": "Haste to save thy soul forever",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "53": {
         "title": "O Jerusalem, the golden",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "54": {
         "title": "O come hither, all ye nations!",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "55": {
         "title": "Lord Jesus, dearest of all friends",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "56": {
         "title": "The Lord is coming! He is near",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "57": {
         "title": "Come, follow Me, the Savior spake",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "58": {
         "title": "How bright is the Christian’s own innermost living",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "59": {
         "title": "Truly, still in God is hidden",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "60": {
         "title": "Praise to Jesus Christ, the Risen!",
+        "first_line": "",
         "notes": ["Db4", "Ab3", "F3", "Db3"]
     },
     "61": {
         "title": "Gracious Lord, to Thee we hold us",
+        "first_line": "",
         "notes": ["Db4", "Ab3", "F3", "Db3"]
     },
     "62": {
         "title": "Lord, give to me faith’s light and power",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "63": {
         "title": "Thy Word, O Lord, draws us together",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "64": {
         "title": "O Lord, with heart and soul we praise Thee",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "65": {
         "title": "One thing’s needful; Lord this treasure",
+        "first_line": "",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "66": {
         "title": "O teach me, Lord, to cease complaining",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "67": {
         "title": "Ye mighty ones, give God all honor",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "68": {
         "title": "God is present with us!",
+        "first_line": "",
         "notes": ["B4", "G4", "D4", "G3"]
     },
     "69": {
         "title": "Enter in love’s kingdom",
+        "first_line": "",
         "notes": ["B4", "G4", "D4", "G3"]
     },
     "70": {
         "title": "What a precious ground of grace",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "71": {
         "title": "Sing a new song unto God",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "72": {
         "title": "Holy love, thou Flame from heaven",
+        "first_line": "",
         "notes": ["A4", "F4", "C4", "F3"]
     },
     "73": {
         "title": "May soon Thy fire be burning brightly",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "74": {
         "title": "I bow before love’s power unending",
+        "first_line": "",
         "notes": ["A4", "D4", "F#3", "D3"]
     },
     "75": {
         "title": "O, Lord of mercy, pure and holy",
+        "first_line": "",
         "notes": ["E4", "C#4", "A3", "A2"]
     },
     "76": {
         "title": "O Lord, wherever love is waning",
+        "first_line": "",
         "notes": ["E4", "C#4", "A3", "A2"]
     },
     "77": {
         "title": "Jesus, Savior, come to me!",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "78": {
         "title": "Faith and hope and charity",
+        "first_line": "",
         "notes": ["A4", "E4", "A3", "F3"]
     },
     "79": {
         "title": "When heart and heart in love",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "80": {
         "title": "Love Divine, Thou once didst make me",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "81": {
         "title": "Now the precious hour appeareth",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "82": {
         "title": "Blessed is the man",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "83": {
         "title": "This life to gloom is given",
+        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "C3"]
     },
     "84": {
         "title": "My thoughts are ever turning",
+        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "C3"]
     },
     "85": {
         "title": "O Father, now we seek Thee",
+        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "C3"]
     },
     "86": {
         "title": "Though trouble assail",
+        "first_line": "",
         "notes": ["B4", "G#4", "E4", "E3"]
     },
     "87": {
         "title": "The Lord, my fear saith, \"Thy needs will deny\"",
+        "first_line": "",
         "notes": ["B4", "G#4", "E4", "E3"]
     },
     "88": {
         "title": "Though at times our pilgrimage",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D3"]
     },
     "89": {
         "title": "To Christ on Golgatha",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "90": {
         "title": "Mid life’s anguish I am not complaining",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "91": {
         "title": "Heavenward, still heavenward",
+        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
     },
     "92": {
         "title": "Forward! Strive to gain the goal!",
+        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
     },
     "93": {
         "title": "God, my Hope, my Expectation",
+        "first_line": "",
         "notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "94": {
         "title": "When our ship of faith is drifting",
+        "first_line": "",
         "notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "95": {
         "title": "Follow Me, the Lord is pleading",
+        "first_line": "",
         "notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "96": {
         "title": "Though their foes my try them",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "97": {
         "title": "Word of God from heaven",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "98": {
         "title": "Though the foes would harm you",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "99": {
         "title": "Steep and thorny is the way",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "100": {
         "title": "God with us! We need not fear",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "101": {
         "title": "Hold God , we laud Thy name",
+        "first_line": "",
         "notes": ["G4", "B3", "G3"]
     },
     "102": {
         "title": "My faith gives peace and rest to me",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "103": {
         "title": "Eternity, thou joyful word",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "104": {
         "title": "Mortal body, take thy rest",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "105": {
         "title": "Be thou faithful unto death!",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "106": {
         "title": "Two ways, O man, before thee lie",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "107": {
         "title": "Forsake the world with its vain show",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "108": {
         "title": "O man, what virtue now adorns",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "109": {
         "title": "Were God not with us in these days",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "110": {
         "title": "O Lord, my Light",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "111": {
         "title": "O spirit of the martyrs, waken!",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "112": {
         "title": "Cry aloud, ye watchmen’s voices",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "113": {
         "title": "Ought I for fear of mockery",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "114": {
         "title": "We tarry here in calm and peaceful union",
+        "first_line": "",
         "notes": ["Bb4", "D4", "Bb3", "F3"]
     },
     "115": {
         "title": "Put on God’s mighty armor to protect you",
+        "first_line": "",
         "notes": ["Bb4", "D4", "Bb3", "F3"]
     },
     "116": {
         "title": "The Lord my faithful Shepherd is",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "117": {
         "title": "Dost thou love Me? the Lord did ask",
+        "first_line": "",
         "notes": ["A4", "C4", "A3", "F3"]
     },
     "118": {
         "title": "O Lord, our God, Thy name is great and glorious",
+        "first_line": "",
         "notes": ["Bb4", "D4", "Bb3", "F3"]
     },
     "119": {
         "title": "One true Shepherd, one true fold!",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb3"]
     },
     "120": {
         "title": "Jesus lives! And with Him I!",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb3"]
     },
     "121": {
         "title": "O Mighty Hero, welcome",
+        "first_line": "",
         "notes": ["G4", "E4", "C4"]
     },
     "122": {
         "title": "Thine is the light",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "123": {
         "title": "All praise, Lord Jesus Christ, to Thee",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "124": {
         "title": "O Risen Lord, now let this day be holy",
+        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "125": {
         "title": "Draw us to Thee, Thus hasten we",
+        "first_line": "",
         "notes": ["C4", "A3", "F3"]
     },
     "126": {
         "title": "Festal day, with joy I greet thee",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "127": {
         "title": "Every spirit prove, O prove ye",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "128": {
         "title": "All praise to God upon His throne",
+        "first_line": "",
         "notes": ["C4", "A3", "F3"]
     },
     "129": {
         "title": "O Lord of hosts, how lovely",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "130": {
         "title": "O Thou Holy One",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "131": {
         "title": "O Thou Holy One, Thou All-gracious One",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "132": {
         "title": "Savior, thankfully we meet",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "133": {
         "title": "Triumph thou, God’s city fair",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "134": {
         "title": "His grace may God be giving",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "135": {
         "title": "Abide, O Lord and Savior",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "136": {
         "title": "Come, pilgrims, join in singing",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "137": {
         "title": "True charity shall never grow less",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "138": {
         "title": "Now we have heard the Savior",
+        "first_line": "",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "139": {
         "title": "What could be lovelier ever",
+        "first_line": "",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "140": {
         "title": "Holy Spirit, Comforter",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "141": {
         "title": "Be praised and adored",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "142": {
         "title": "O brethren, as our mirror bright",
+        "first_line": "",
         "notes": ["F4", "F3"]
     },
     "143": {
         "title": "Beloved friends, we now must part",
+        "first_line": "",
         "notes": ["F4", "F3"]
     },
     "144": {
         "title": "Faithful Savior, we are here",
+        "first_line": "",
         "notes": ["Ab4", "Eb4", "C4", "Ab3"]
     },
     "145": {
         "title": "Our lot is found in pleasant places",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "146": {
         "title": "O joy sublime, when finally is ended",
+        "first_line": "",
         "notes": ["D4", "D3"]
     },
     "147": {
         "title": "Sweet death, come thou",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "148": {
         "title": "Noah’s ark had drifted",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "149": {
         "title": "Can it be a pleasure?",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "150": {
         "title": "Heart, why dost thou for the morrow",
+        "first_line": "",
         "notes": ["Ab4", "Eb4", "C4", "Ab3"]
     },
     "151": {
         "title": "Why should crosses ever grieve me",
+        "first_line": "",
         "notes": ["Ab4", "Eb4", "C4", "Ab3"]
     },
     "152": {
         "title": "Hear Thou me, Blessed Jesus, hear Thou me",
+        "first_line": "",
         "notes": ["G4", "E4", "G3", "C3"]
     },
     "153": {
         "title": "Jehovah is my Shepherd true",
+        "first_line": "",
         "notes": ["F4", "D4", "B3"]
     },
     "154": {
         "title": "Awake, thy thanks to render",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "155": {
         "title": "What mean ye by this weeping",
+        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "156": {
         "title": "O suffer with good cheer!",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "157": {
         "title": "As the hart for water panteth",
+        "first_line": "",
         "notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "158": {
         "title": "My heart is glad its songs to sing Thee",
+        "first_line": "",
         "notes": ["Db5", "F4", "Ab3", "Db3"]
     },
     "159": {
         "title": "Offer up your life and being",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "160": {
         "title": "My house and I are ready now",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "161": {
         "title": "Grateful are Thy members ever",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D4"]
     },
     "162": {
         "title": "From His wounds flow blessings gracious",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "163": {
         "title": "My God, this heart I bring to Thee",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "164": {
         "title": "Dear Jesus, would that I could be",
+        "first_line": "",
         "notes": ["G#4", "E4", "B3", "E3"]
     },
     "165": {
         "title": "O let us now praise our dear Savior and Friend",
+        "first_line": "",
         "notes": ["F4", "F3"]
     },
     "166": {
         "title": "O how lovely is the morning",
+        "first_line": "",
         "notes": ["C4", "Ab3", "E4", "A2"]
     },
     "167": {
         "title": "Let me be, my Maker",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "168": {
         "title": "Blossoming youth, thou our hope",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "169": {
         "title": "Most surely it is not so hard",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A2"]
     },
     "170": {
         "title": "At home ‘tis good",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "171": {
         "title": "O’er all the earth the cross is spreading",
+        "first_line": "",
         "notes": ["G#4", "B3", "E3"]
     },
     "172": {
         "title": "O faithful be",
+        "first_line": "",
         "notes": ["C5", "Eb4", "A3"]
     },
     "173": {
         "title": "We now greet you, our companions blest",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "174": {
         "title": "Pray, ye Christians, hallowed be",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "175": {
         "title": "Spirit, Thou of faith, of power",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "176": {
         "title": "Word of Life, thou Fount of crystal",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D3"]
     },
     "177": {
         "title": "I place myself in Jesus’ hands",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "178": {
         "title": "O Jesus, Light and Treasure",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "179": {
         "title": "This is the mark of love’s devotion",
+        "first_line": "",
         "notes": ["D5", "F4", "B3"]
     },
     "180": {
         "title": "O Father-hand, that hath my path directed",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "181": {
         "title": "Low, how pleasant and how fair",
+        "first_line": "",
         "notes": ["E5", "G4", "E4", "C4"]
     },
     "182": {
         "title": "Lord, I think of Thee, and joy of heaven",
+        "first_line": "",
         "notes": ["E5", "G4", "C4", "C3"]
     },
     "183": {
         "title": "Rise, my soul",
+        "first_line": "",
         "notes": ["E4", "B3", "E3"]
     },
     "184": {
         "title": "Thou Lamb once slain",
+        "first_line": "",
         "notes": ["A4", "D4", "F#3", "D3"]
     },
     "185": {
         "title": "Up, brethren, onward pressing!",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "186": {
         "title": "Meekness is a virtue gracious",
+        "first_line": "",
         "notes": ["F4", "D4", "B3", "B2"]
     },
     "187": {
         "title": "Who by water and the Spirit",
+        "first_line": "",
         "notes": ["F4", "D4", "B3", "B2"]
     },
     "188": {
         "title": "Time flies and death comes speedily",
+        "first_line": "",
         "notes": ["G#4", "E4", "B3", "E3"]
     },
     "189": {
         "title": "Jesus, Head and Ruler solely",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "190": {
         "title": "Jesus reigns, let us adore Him",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "191": {
         "title": "Sing praise to God, all ye who love the Savior",
+        "first_line": "",
         "notes": ["D4", "D3"]
     },
     "192": {
         "title": "Wake, witness-spirit! O inspire Thou",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "193": {
         "title": "O Thou Eternal One, to Thee be hallowed",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "194": {
         "title": "Zion stands securely grounded",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "195": {
         "title": "Live peaceably! Thus said the Lord",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "196": {
         "title": "Care will I not borrow!",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "197": {
         "title": "Jesus, Thou art mine forever",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "198": {
         "title": "Our true Homeland is in heaven!",
+        "first_line": "",
         "notes": ["D5", "F4", "A3", "D3"]
     },
     "199": {
         "title": "We sing to Thee, O Son divine!",
+        "first_line": "",
         "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "200": {
         "title": "O Holy Ghost, Thou Source of might",
+        "first_line": "",
         "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "201": {
         "title": "O Jesus Christ, my Lord",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "202": {
         "title": "O Fount of love mine own",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "203": {
         "title": "O how joyous is the hour",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "204": {
         "title": "O faithful Savior, thanks to Thee",
+        "first_line": "",
         "notes": ["C5", "E4", "C4", "C3"]
     },
     "205": {
         "title": "Lord, I would be Thine forever",
+        "first_line": "",
         "notes": ["B4", "G4", "B3", "G3"]
     },
     "206": {
         "title": "How blest are we whom God doth love",
+        "first_line": "",
         "notes": ["Eb", "Bb3", "G3", "Eb3"]
     },
     "207": {
         "title": "O brethren in the Savior",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "208": {
         "title": "Praise thou the Lord!",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G2"]
     },
     "209": {
         "title": "Ah, now it is done! – I no more am mine own",
+        "first_line": "",
         "notes": ["F4", "F3"]
     },
     "210": {
         "title": "Ye shepherds, who the Savior love",
+        "first_line": "",
         "notes": ["Bb4","G4", "G3", "Eb3"]
     },
     "211": {
         "title": "A rest remaineth for the weary",
+        "first_line": "",
         "notes": ["Bb4","G4", "Bb3", "Eb3"]
     },
     "212": {
         "title": "The Lord is my Shepherd, I shall not want",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "213": {
         "title": "The Grace of our Lord and Savior Jesus Christ",
+        "first_line": "",
         "notes": ["A4", "F4", "A3", "D3"]
     },
     "214": {
         "title": "Lift your hearts in songs immortal",
+        "first_line": "",
         "notes": ["A4", "E4", "C#4", "A3"]
     },
     "215": {
         "title": "Thou great High Priest and Savior",
+        "first_line": "",
         "notes": ["C5", "Eb4", "Ab3"]
     },
     "216": {
         "title": "We are assembled here, O Lord",
+        "first_line": "",
         "notes": ["G4", "E4", "G3", "C3"]
     },
     "217": {
         "title": "Let us with deep meditation",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "218": {
         "title": "Holy, blessed is the hour",
+        "first_line": "",
         "notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "219": {
         "title": "Look Thou today with grace and favor",
+        "first_line": "",
         "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "220": {
         "title": "To me free grace has been accorded",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "221": {
         "title": "Now I have found the one foundation",
+        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
     },
     "222": {
         "title": "O holy, heavenly hour",
+        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
     },
     "223": {
         "title": "How lovely shines the Morning Star",
+        "first_line": "",
 		"notes": ["F4", "A3", "F3"]
     },
     "224": {
         "title": "O Man of sorrows, Thou",
+        "first_line": "",
 		"notes": ["A4", "C#4", "E3", "A2"]
     },
     "225": {
         "title": "Would ye know my glory true?",
+        "first_line": "",
 		"notes": ["A4", "F#4", "D4", "D3"]
     },
     "226": {
         "title": "O lift up mine eyes, my spirit",
+        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
     },
     "227": {
         "title": "Eternal Love, I love Thee only",
+        "first_line": "",
 		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "228": {
         "title": "Jesus will I never leave",
+        "first_line": "",
 		"notes": ["G4", "B3", "G3"]
     },
     "229": {
         "title": "This causeth pain and grieveth me",
+        "first_line": "",
 		"notes": ["F4", "A3", "F3"]
     },
     "230": {
         "title": "Whoever knows our King of kings",
+        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
     },
     "231": {
         "title": "Not for earth and not for heaven",
+        "first_line": "",
 		"notes": ["Bb4", "F4", "D4", "Bb2"]
     },
     "232": {
         "title": "O how I long to love my Lord with fervor",
+        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
     },
     "233": {
         "title": "Praise the Lord! To join in singing",
+        "first_line": "",
 		"notes": ["C4", "E3", "C3"]
     },
     "234": {
         "title": "The Lord Who all things guideth",
+        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
     },
     "235": {
         "title": "It is so good the Father to be nearing",
+        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
     },
     "236": {
         "title": "Now thank we all our God",
+        "first_line": "",
 		"notes": ["D5", "G4", "B3", "G3"]
     },
     "237": {
         "title": "Let us all in peace and concord",
+        "first_line": "",
 		"notes": ["C5", "G4", "E4", "C3"]
     },
     "238": {
         "title": "Blessed Savior, come to me",
+        "first_line": "",
 		"notes": ["F#4", "D4", "A3", "D3"]
     },
     "239": {
         "title": "Come Thou, O my Friend, I pray Thee",
+        "first_line": "",
 		"notes": ["E4", "C#4", "B3", "E3"]
     },
     "240": {
         "title": "Gentle Lamb and Prince of Peace!",
+        "first_line": "",
 		"notes": ["C5", "F4", "A3", "F3"]
     },
     "241": {
         "title": "My soul, why so troubled",
+        "first_line": "",
 		"notes": ["D4", "F#4", "F#3", "D3"]
     },
     "242": {
         "title": "I am so sad and weary!",
+        "first_line": "",
 		"notes": ["G4", "E4", "C4"]
     },
     "243": {
         "title": "Love it is that we here share",
+        "first_line": "",
 		"notes": ["Bb4", "F4", "D4", "Bb3"]
     },
     "244": {
         "title": "Waiting is the school that here beginneth",
+        "first_line": "",
 		"notes": ["E5", "G4", "C4", "C3"]
     },
     "245": {
         "title": "Faith at last its seal receiveth",
+        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
     },
     "246": {
         "title": "True simplicity of spirit",
+        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
     },
     "247": {
         "title": "To Jesus I commend my spirit",
+        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
     },
     "248": {
         "title": "Now lay this body in the ground",
+        "first_line": "",
 		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "249": {
         "title": "There, before God’s throne appearing",
+        "first_line": "",
         "notes": ["E4", "B3", "E3"]
     },
     "250": {
         "title": "O Majesty! We bow before Thee",
+        "first_line": "",
         "notes": ["Db4", "Ab3", "F4", "Db3"]
     },
     "251": {
         "title": "Jehovah! Jehovah! Jehovah! Thee we honor!",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "252": {
         "title": "The Christian’s glory on this earth",
+        "first_line": "",
         "notes": ["F4", "F3"]
     },
     "253": {
         "title": "Fleeting is my span of years",
+        "first_line": "",
         "notes": ["F4", "C4", "A3", "F3"]
     },
     "254": {
         "title": "It is a good thing to give thanks unto the Lord",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "255": {
         "title": "When the Lord turns again the captivity of Zion",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "256": {
         "title": "The Lord is my Shepherd",
+        "first_line": "",
         "notes": ["C#5", "A4", "E4", "A3"]
     },
     "257": {
         "title": "This is the day of rest and gladness",
+        "first_line": "",
         "notes": ["D5", "F4", "Bb3", "Bb2"]
     },
     "258": {
         "title": "There were shepherds abiding in the fields",
+        "first_line": "",
         "notes": ["G4", "G3"]
     },
     "259": {
         "title": "There is a truly blessed land",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "260": {
         "title": "Be thou faithful unto death",
+        "first_line": "",
         "notes": ["A4", "C#4", "A3", "A2"]
     },
     "261": {
         "title": "Life’s true gladness is in heaven",
+        "first_line": "",
         "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "262": {
         "title": "Praise ye the Lord",
+        "first_line": "",
         "notes": ["E4", "G#3", "E3"]
     },
     "263": {
         "title": "O where is the haven of rest for the soul",
+        "first_line": "",
         "notes": ["B4", "G#4", "E4", "E3"]
     },
     "264": {
         "title": "Beloved brethren, fare ye well!",
+        "first_line": "",
         "notes": ["A4", "F#4", "D4", "D3"]
     },
     "265": {
         "title": "Let me go, let me go",
+        "first_line": "",
         "notes": ["A4", "F#4", "A3", "D3"]
     },
     "266": {
         "title": "Jesus, Lover of my Soul",
+        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
     },
     "267": {
         "title": "If any soul forsake His way",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "268": {
         "title": "Hallelujah, lovely morning",
+        "first_line": "",
         "notes": ["A4", "D4", "F#3", "D3"]
     },
     "269": {
         "title": "Praise God in His sanctuary",
+        "first_line": "",
         "notes": ["A4", "F4", "C4", "F3"]
     },
     "270": {
         "title": "O lift up mine eyes, my spirit",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "271": {
         "title": "We will not leave the Bible",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "272": {
         "title": "When comes the time, Lord, oh, when may I go",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "273": {
         "title": "Joyfully, joyfully onward I move",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "274": {
         "title": "Here I have no abiding city",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "275": {
         "title": "Thoughtful, in anticipation",
+        "first_line": "",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "276": {
         "title": "Soul, cease thy repining",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "277": {
         "title": "Hark! How the angel host",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "278": {
         "title": "I will strive here that I’ll live there",
+        "first_line": "",
         "notes": ["A4", "F4", "C4", "F3"]
     },
     "279": {
         "title": "Thank ye the Lord!",
+        "first_line": "",
         "notes": ["C4", "E3", "C3"]
     },
     "280": {
         "title": "A rest remaineth for the weary",
+        "first_line": "",
         "notes": ["B4", "E4", "G#3", "E3"]
     },
     "281": {
         "title": "Precious in God’s eyes",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "282": {
         "title": "There, before God’s throne appearing",
+        "first_line": "",
         "notes": ["F#4", "D4", "A3", "D3"]
     },
     "283": {
         "title": "For the homeland’s blessed stillness",
+        "first_line": "",
         "notes": ["G#4", "E4", "B3", "E3"]
     },
     "284": {
         "title": "Christ, my King, draws near in glory",
+        "first_line": "",
         "notes": ["E4", "C4", "C3"]
     },
     "285": {
         "title": "What mean ye by this weeping",
+        "first_line": "",
         "notes": ["D4", "D3"]
     },
     "286": {
         "title": "Go and slumber",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "287": {
         "title": "Forsake me not, O God, hear Thou my crying",
+        "first_line": "",
         "notes": ["G4", "G3"]
     },
     "288": {
         "title": "O abide, True Friend Divine",
+        "first_line": "",
         "notes": ["A4", "F4", "C4", "F3"]
     },
     "289": {
         "title": "Behold the tomb is vacant now",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "290": {
         "title": "O, joy, how well it is with me",
+        "first_line": "",
         "notes": ["E4", "C#4", "A3", "A2"]
     },
     "291": {
         "title": "Jesus, Thou my soul’s true Rest",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "292": {
         "title": "My heart doth ask: \"What is Thy goal?\"",
+        "first_line": "",
         "notes": ["C5", "E4", "G3", "C3"]
     },
     "293": {
         "title": "Shall we meet again in heaven",
+        "first_line": "",
         "notes": ["C#4", "A3", "E3", "A2"]
     },
     "294": {
         "title": "Thou shalt rise; yea, thou shalt rise, my dust",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "295": {
         "title": "Blessed rest when toiling here is ended",
+        "first_line": "",
         "notes": ["B4", "G4", "D4", "G3", "G2"]
     },
     "296": {
         "title": "Toward home, unto the heavenly land",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "297": {
         "title": "What could be lovelier ever",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "298": {
         "title": "Soon wilt Thou come in glory",
+        "first_line": "",
         "notes": ["E4", "C#4", "A3", "A2"]
     },
     "299": {
         "title": "Know ye the Son, the mighty Son of God?",
+        "first_line": "",
         "notes": ["F4"]
     },
     "300": {
         "title": "Know ye the land?",
+        "first_line": "",
         "notes": ["F4"]
     },
     "301": {
         "title": "To the hall’s of heavenly splendor",
+        "first_line": "",
         "notes": ["F4", "Db4", "Ab3", "Db3"]
     },
     "302": {
         "title": "O joy , my Savior liveth",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "303": {
         "title": "O Jesus, of all light the best",
+        "first_line": "",
         "notes": ["G4", "E4", "G3", "C3"]
     },
     "304": {
         "title": "Who overcometh shall the fruit be eating",
+        "first_line": "",
         "notes": ["F4", "A3", "F3"]
     },
     "305": {
         "title": "Awake ye, for past is the spiritual night",
+        "first_line": "",
         "notes": ["C4", "C3"]
     },
     "306": {
         "title": "Oh, were I now in heaven",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "307": {
         "title": "We are all gathered here",
+        "first_line": "",
         "notes": ["F4", "D4", "F3", "Bb2"]
     },
     "308": {
         "title": "God is my song",
+        "first_line": "",
         "notes": ["D5", "F#4", "A3", "D3"]
     },
     "309": {
         "title": "Behold! There in Gethsemane",
+        "first_line": "",
         "notes": ["Ab4", "C4", "A3"]
     },
     "310": {
         "title": "Wait, oh, wait, my spirit",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "311": {
         "title": "When past are these short days of trial",
+        "first_line": "",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "312": {
         "title": "O Jesus Christ, Life-Given",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "313": {
         "title": "My Savior is my Pilot true",
+        "first_line": "",
         "notes": ["G4", "G3"]
     },
     "314": {
         "title": "Nearer, my God to Thee",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "315": {
         "title": "Tune thy harp to joyful singing",
+        "first_line": "",
         "notes": ["A4", "F#4", "D4", "D3"]
     },
     "316": {
         "title": "Truly lovely, calm, and gentle",
+        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
     },
     "317": {
         "title": "Art thou fearful? See the Pilot",
+        "first_line": "",
         "notes": ["C#5", "A4", "E4", "A3"]
     },
     "318": {
         "title": "Jesus will I never leave",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "319": {
         "title": "Coming to Christ’s tomb at dawning",
+        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
     },
     "320": {
         "title": "All Hail the Pow’r of Jesus’ Name",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "321": {
         "title": "Safe in the arms of Jesus",
+        "first_line": "",
         "notes": ["B4", "D4", "G3"]
     },
     "322": {
         "title": "Thee alone, beloved Savior",
+        "first_line": "",
         "notes": ["Bb4", "D4", "F3", "B2"]
     },
     "323": {
         "title": "Glorious and loveliest Zion",
+        "first_line": "",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "324": {
         "title": "Take my life and let it be",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
     },
     "325": {
         "title": "When peace in my Savior my soul overflows",
+        "first_line": "",
         "notes": ["Ab4", "F4", "Ab3", "Db3"]
     },
     "326": {
         "title": "Forever with the Lord",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "327": {
         "title": "Behold how beauteous, how good and pleasant",
+        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
     },
     "328": {
         "title": "Thee will I praise, O great Jehovah",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "329": {
         "title": "O that I had a thousand voices",
+        "first_line": "",
         "notes": ["D5", "G4", "B3", "G3"]
     },
     "330": {
         "title": "We now greet you, brothers, sisters",
+        "first_line": "",
         "notes": ["Ab4", "Eb4", "C4", "Ab2"]
     },
     "331": {
         "title": "The homeland in heaven draws me from this earth",
+        "first_line": "",
         "notes": ["C4", "C3"]
     },
     "332": {
         "title": "O take my hands, dear Savior",
+        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
     },
     "333": {
         "title": "The Lord my faithful Shepherd is",
+        "first_line": "",
         "notes": ["G4", "G3"]
     },
     "334": {
         "title": "Oh, my soul, by pain surrounded",
+        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
     },
     "335": {
         "title": "Commit whatever grieves thee",
+        "first_line": "",
         "notes": ["Ab4", "F4", "Ab3", "Db3"]
     },
     "336": {
         "title": "My heart is glad its songs to sing Thee",
+        "first_line": "",
         "notes": ["D4", "B3", "G3"]
     },
     "337": {
         "title": "Meekness is a virtue gracious",
+        "first_line": "",
         "notes": ["Eb4", "G3", "Eb3"]
     },
     "338": {
         "title": "O Paradise, O Paradise",
+        "first_line": "",
         "notes": ["E4", "E3"]
     },
     "339": {
         "title": "Blessed, blessed, blessed are they",
+        "first_line": "",
         "notes": ["Ab4", "C4", "Ab3", "Ab2"]
     },
     "340": {
         "title": "Now lay this body in the ground (Alt)",
+        "first_line": "",
         "notes": ["C5", "A4", "C4", "F3"]
     },
     "341": {
         "title": "We gather together to ask the Lord’s blessing",
+        "first_line": "",
         "notes": ["A4", "D4", "F#3", "D3"]
     },
     "342": {
         "title": "Farewell, farewell, my morning dawns",
+        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "343": {
         "title": "Homeland dear, homeland dear",
+        "first_line": "",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "344": {
         "title": "Love, O greatest blessing given (Alt)",
+        "first_line": "",
         "notes": ["G4", "D4", "B3", "G2"]
     },
     "345": {
         "title": "Can it be a pleasure?",
+        "first_line": "",
         "notes": ["B4", "G4", "D4", "G3"]
     },
     "346": {
         "title": "His grace may God be giving",
+        "first_line": "",
         "notes": ["G4", "E4", "G3", "C3"]
     }
 }

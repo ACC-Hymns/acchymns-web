@@ -1,1016 +1,1697 @@
 {
     "1": {
-        "title": "IN DEPTHS OF DARKNESS"
+        "title": "IN DEPTHS OF DARKNESS",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "2": {
-        "title": "O GRACIOUS GOD"
+        "title": "O GRACIOUS GOD",
+        "first_line": "",
+        "notes": ["Ab4", "Eb4", "C4", "Ab3"]
     },
     "3": {
-        "title": "THE EARTH IS THE LORD'S"
+        "title": "THE EARTH IS THE LORD'S",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "4": {
-        "title": "I HAVE READ OF A BEAUTIFUL CITY"
+        "title": "I HAVE READ OF A BEAUTIFUL CITY",
+        "first_line": "",
+        "notes": ["E4"]
     },
     "5": {
-        "title": "O JERUSALEM THE GOLDEN"
+        "title": "O JERUSALEM THE GOLDEN",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "6": {
-        "title": "O MY SOUL, BLESS THE LORD"
+        "title": "O MY SOUL, BLESS THE LORD",
+        "first_line": "",
+        "notes": ["C5", "G4", "E4", "C3"]
     },
     "7": {
-        "title": "WAKE THE SONG OF JUBILEE"
+        "title": "WAKE THE SONG OF JUBILEE",
+        "first_line": "",
+        "notes": ["C5", "E4", "G3", "C3"]
     },
     "8": {
-        "title": "O COME ALL AND PRAISE YE THE LORD"
+        "title": "O COME ALL AND PRAISE YE THE LORD",
+        "first_line": "",
+        "notes": ["Bb3"]
     },
     "9": {
-        "title": "SING TO THE LORD A JOYFUL NEW SONG"
+        "title": "SING TO THE LORD A JOYFUL NEW SONG",
+        "first_line": "",
+        "notes": ["C5", "E4"]
     },
     "10": {
-        "title": "O THOU MY SOUL, BLESS GOD THE LORD"
+        "title": "O THOU MY SOUL, BLESS GOD THE LORD",
+        "first_line": "",
+        "notes": ["C#5", "E4", "A3", "A2"]
     },
     "11": {
-        "title": "TUNE THY HARP TO JOYFUL SINGING"
+        "title": "TUNE THY HARP TO JOYFUL SINGING",
+        "first_line": "",
+        "notes": ["Bb3"]
     },
     "12": {
-        "title": "STAND UP FOR JESUS, CHRISTIAN, STAND"
+        "title": "STAND UP FOR JESUS, CHRISTIAN, STAND",
+        "first_line": "",
+        "notes": ["C#4", "E3", "A3"]
     },
     "13": {
-        "title": "O FOR A THOUSAND TONGUES TO SING"
+        "title": "O FOR A THOUSAND TONGUES TO SING",
+        "first_line": "",
+        "notes": ["A3", "C#3", "A3"]
     },
     "14": {
-        "title": "COME, LET US ALL UNITE TO SING"
+        "title": "COME, LET US ALL UNITE TO SING",
+        "first_line": "",
+        "notes": ["D4", "F#3", "D3"]
     },
     "15": {
-        "title": "THE HEAVENS ARE TELLING"
+        "title": "THE HEAVENS ARE TELLING",
+        "first_line": "",
+        "notes": ["C4"]
     },
     "16": {
-        "title": "HOLY, HOLY, HOLY IS THE LORD"
+        "title": "HOLY, HOLY, HOLY IS THE LORD",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "17": {
-        "title": "UNMEASURED IS THY GOODNESS, LORD"
+        "title": "UNMEASURED IS THY GOODNESS, LORD",
+        "first_line": "",
+        "notes": ["D4", "B4", "G3"]
     },
     "18": {
-        "title": "PRAISE YE THE LORD"
+        "title": "PRAISE YE THE LORD",
+        "first_line": "",
+        "notes": ["F4", "F3"]
     },
     "19": {
-        "title": "COME AND WORSHIP, ALL YE HEIRS OF HEAVEN"
+        "title": "COME AND WORSHIP, ALL YE HEIRS OF HEAVEN",
+        "first_line": "",
+        "notes": ["C5", "C4"]
     },
     "20": {
-        "title": "ALL HAIL THE POWER OF JESUS' NAME"
+        "title": "ALL HAIL THE POWER OF JESUS' NAME",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "21": {
-        "title": "HALLELUJAH"
+        "title": "HALLELUJAH",
+        "first_line": "",
+        "notes": ["D4", "A4", "F#4", "D3"]
     },
     "22": {
-        "title": "BLESS THOU THE LORD"
+        "title": "BLESS THOU THE LORD",
+        "first_line": "",
+        "notes": ["A4"]
     },
     "23": {
-        "title": "THE MIGHT OF GOD"
+        "title": "THE MIGHT OF GOD",
+        "first_line": "",
+        "notes": ["F3"]
     },
     "24": {
-        "title": "HOW GENTLE GOD'S COMMANDS"
+        "title": "HOW GENTLE GOD'S COMMANDS",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "25": {
-        "title": "THANK YOU, LORD"
+        "title": "THANK YOU, LORD",
+        "first_line": "",
+        "notes": ["B4", "D4", "A3", "A2"]
     },
     "26": {
-        "title": "O HAPPY DAY"
+        "title": "O HAPPY DAY",
+        "first_line": "",
+        "notes": ["D4", "D3"]
+    },
+    "26a": {
+        "title": "O HAPPY DAY",
+        "first_line": "",
+        "notes": ["A3", "C3"]
     },
     "27": {
-        "title": "JEHOVAH REIGNS IN MAJESTY"
+        "title": "JEHOVAH REIGNS IN MAJESTY",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "28": {
-        "title": "ALL THE HEAVENS PRAISE JEHOVAH"
+        "title": "ALL THE HEAVENS PRAISE JEHOVAH",
+        "first_line": "",
+        "notes": ["Bb4", "D4", "F3", "Bb2"]
     },
     "29": {
-        "title": "RISE, YE CHILDREN OF SALVATION"
+        "title": "RISE, YE CHILDREN OF SALVATION",
+        "first_line": "",
+        "notes": ["Bb3", "Bb2"]
     },
     "30": {
-        "title": "PRAISE YE JEHOVAH"
+        "title": "PRAISE YE JEHOVAH",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4"]
     },
     "31": {
-        "title": "WORTHY IS THE LAMB"
+        "title": "WORTHY IS THE LAMB",
+        "first_line": "",
+        "notes": ["D5", "A4", "F4", "D4"]
     },
     "32": {
-        "title": "OH, LET US SOUND THE PRAISE"
+        "title": "OH, LET US SOUND THE PRAISE",
+        "first_line": "",
+        "notes": ["C4", "E3", "C3"]
     },
     "33": {
-        "title": "O TAKE MY HANDS, DEAR SAVIOR"
+        "title": "O TAKE MY HANDS, DEAR SAVIOR",
+        "first_line": "",
+        "notes": ["C5", "F4", "A3", "F3"]
     },
     "34": {
-        "title": "GREAT IS THE LORD"
+        "title": "GREAT IS THE LORD",
+        "first_line": "",
+        "notes": ["Eb5", "G4", "Bb3", "Eb3"]
     },
     "35": {
-        "title": "THINE BE THE GLORY"
+        "title": "THINE BE THE GLORY",
+        "first_line": "",
+        "notes": ["C5", "A4", "F4"]
     },
     "36": {
-        "title": "I AM SO GLAD THAT OUR FATHER IN HEAVEN"
+        "title": "I AM SO GLAD THAT OUR FATHER IN HEAVEN",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "37": {
-        "title": "WOULD YE KNOW MY GLORY TRUE?"
+        "title": "WOULD YE KNOW MY GLORY TRUE?",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "38": {
-        "title": "DEAREST LORD, OUR GOD"
+        "title": "DEAREST LORD, OUR GOD",
+        "first_line": "",
+        "notes": ["D5", "F4", "Bb3", "Bb2"]
     },
     "39": {
-        "title": "GLORY TO GOD"
+        "title": "GLORY TO GOD",
+        "first_line": "",
+        "notes": ["F#5", "A4", "B3"]
     },
     "40": {
-        "title": "BREAK FORTH, O BEAUTEOUS HEAVENLY LIGHT"
+        "title": "BREAK FORTH, O BEAUTEOUS HEAVENLY LIGHT",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "41": {
-        "title": "REJOICE AND SING"
+        "title": "REJOICE AND SING",
+        "first_line": "",
+        "notes": ["F#4", "C#4", "A3", "F#3"]
     },
     "42": {
-        "title": "HARK! THE HERALD ANGELS SING"
+        "title": "HARK! THE HERALD ANGELS SING",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "43": {
-        "title": "SILENT NIGHT! HOLY NIGHT!"
+        "title": "SILENT NIGHT! HOLY NIGHT!",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "44": {
-        "title": "THERE'S LIFE IN A LOOK AT THE SACRED CROSS"
+        "title": "THERE'S LIFE IN A LOOK AT THE SACRED CROSS",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "45": {
-        "title": "HARK! THE HERALD ANGELS SING"
+        "title": "HARK! THE HERALD ANGELS SING",
+        "first_line": "",
+        "notes": ["A4", "A3"]
     },
     "46": {
-        "title": "BLESSED NIGHT"
+        "title": "BLESSED NIGHT",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "47": {
-        "title": "SHALL WE GATHER AT THE RIVER?"
+        "title": "SHALL WE GATHER AT THE RIVER?",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "48": {
-        "title": "GLORY TO GOD IN THE HIGHEST"
+        "title": "GLORY TO GOD IN THE HIGHEST",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3"]
     },
     "49": {
-        "title": "HAVE THINE OWN WAY, LORD"
+        "title": "HAVE THINE OWN WAY, LORD",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "50": {
-        "title": "WHO IS WORTHY?"
+        "title": "WHO IS WORTHY?",
+        "first_line": "",
+        "notes": ["F4", "F3"]
     },
     "51": {
-        "title": "THY GLORY DRIVES ALL GLOOM AWAY"
+        "title": "THY GLORY DRIVES ALL GLOOM AWAY",
+        "first_line": "",
+        "notes": ["A4", "F#4", "C#4", "F#3"]
     },
     "52": {
-        "title": "WHAT A FRIEND WE HAVE IN JESUS"
+        "title": "WHAT A FRIEND WE HAVE IN JESUS",
+        "first_line": "",
+        "notes": ["C5", "F4", "A3", "F3"]
     },
     "53": {
-        "title": "(E) HOW I LOVE THE GREAT REDEEMER"
+        "title": "(E) HOW I LOVE THE GREAT REDEEMER",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "54": {
-        "title": "IN SORROW DEEP"
+        "title": "IN SORROW DEEP",
+        "first_line": "",
+        "notes": ["A4", "D4", "Bb3", "F3"]
     },
     "55": {
-        "title": "COME, BEHOLD THE VERDANT PASTURES"
+        "title": "COME, BEHOLD THE VERDANT PASTURES",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "56": {
-        "title": "O GALILEE, SWEET GALILEE"
+        "title": "O GALILEE, SWEET GALILEE",
+        "first_line": "",
+        "notes": ["E4"]
     },
     "57": {
-        "title": "O WONDROUS LOVE"
+        "title": "O WONDROUS LOVE",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "58": {
-        "title": "IN THE UPPER ROOM"
+        "title": "IN THE UPPER ROOM",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "59": {
-        "title": "MY DYING SAVIOR"
+        "title": "MY DYING SAVIOR",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "60": {
-        "title": "O COULD I SING THE MATCHLESS WORTH"
+        "title": "O COULD I SING THE MATCHLESS WORTH",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "61": {
-        "title": "ON CALVARY'S BROW"
+        "title": "ON CALVARY'S BROW",
+        "first_line": "",
+        "notes": ["D5"]
     },
     "62": {
-        "title": "WEEP, MY SPIRIT, WEEP IN SORROW"
+        "title": "WEEP, MY SPIRIT, WEEP IN SORROW",
+        "first_line": "",
+        "notes": ["C5", "A4", "C4", "F3"]
     },
     "63": {
-        "title": "A LAMB FROM JESUS' PASTURE"
+        "title": "A LAMB FROM JESUS' PASTURE",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "64": {
-        "title": "HEAR THE LOVING VOICE OF MERCY"
+        "title": "HEAR THE LOVING VOICE OF MERCY",
+        "first_line": "",
+        "notes": ["D4", "D3", "F2"]
     },
     "65": {
-        "title": "THERE IS A BETTER WORLD"
+        "title": "THERE IS A BETTER WORLD",
+        "first_line": "",
+        "notes": ["D4", "F#3", "D3"]
     },
     "66": {
-        "title": "(E) LIFT UP YOUR HEARTS, YE PEOPLE"
+        "title": "(E) LIFT UP YOUR HEARTS, YE PEOPLE",
+        "first_line": "",
+        "notes": ["C4", "E3", "C3"]
     },
     "67": {
-        "title": "THERE WAS ONE WHO WAS WILLING TO DIE"
+        "title": "THERE WAS ONE WHO WAS WILLING TO DIE",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "68": {
-        "title": "COME BEHOLD ONE"
+        "title": "COME BEHOLD ONE",
+        "first_line": "",
+        "notes": ["F4", "F3"]
     },
     "69": {
-        "title": "PRAISE THE LORD"
+        "title": "PRAISE THE LORD",
+        "first_line": "",
+        "notes": ["D4", "F3", "D3"]
     },
     "70": {
-        "title": "TO GOD BE THE GLORY"
+        "title": "TO GOD BE THE GLORY",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "71": {
-        "title": "LOW IN THE GRA VE HE LAY"
+        "title": "LOW IN THE GRA VE HE LAY",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "72": {
-        "title": "JESUS OUR SAVIOR ROSE"
+        "title": "JESUS OUR SAVIOR ROSE",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "73": {
-        "title": "TO JESUS' TOMB, BEFORE THE EARLY DAWNING"
+        "title": "TO JESUS' TOMB, BEFORE THE EARLY DAWNING",
+        "first_line": "",
+        "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "74": {
-        "title": "HE LIVES"
+        "title": "HE LIVES",
+        "first_line": "",
+        "notes": ["A4", "F#4"]
     },
     "75": {
-        "title": "O PRAISE THE LORD, FOR JESUS LIVES!"
+        "title": "O PRAISE THE LORD, FOR JESUS LIVES!",
+        "first_line": "",
+        "notes": ["Ab4", "F4", "D3"]
     },
     "76": {
-        "title": "HALLELUJAH, JESUS SENDS THE COMFORTER"
+        "title": "HALLELUJAH, JESUS SENDS THE COMFORTER",
+        "first_line": "",
+        "notes": ["C4", "C3"]
     },
     "77": {
-        "title": "O CHILDREN OF THE LORD, BEHOLD"
+        "title": "O CHILDREN OF THE LORD, BEHOLD",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "78": {
-        "title": "AND THE GLORY OF THE LORD"
+        "title": "AND THE GLORY OF THE LORD",
+        "first_line": "",
+        "notes": ["C#4"]
     },
     "79": {
-        "title": "FAR IN THE WILDERNESS OF SIN"
+        "title": "FAR IN THE WILDERNESS OF SIN",
+        "first_line": "",
+        "notes": ["B4"]
     },
     "80": {
-        "title": "BLESSED GOD, WE BOW IN WORSHIP"
+        "title": "BLESSED GOD, WE BOW IN WORSHIP",
+        "first_line": "",
+        "notes": ["C4", "C3"]
     },
     "81": {
-        "title": "WHEN CHRIST'S OWN SHEEP ARE LEA VING"
+        "title": "WHEN CHRIST'S OWN SHEEP ARE LEA VING",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "82": {
-        "title": "RESCUE THE PERISHING"
+        "title": "RESCUE THE PERISHING",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb3"]
     },
     "83": {
-        "title": "TO SINNERS GOD IS CALLING"
+        "title": "TO SINNERS GOD IS CALLING",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "84": {
-        "title": "COME TO THE SAVIOR"
+        "title": "COME TO THE SAVIOR",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "85": {
-        "title": "HAVE YOU ANY ROOM FOR JESUS?"
+        "title": "HAVE YOU ANY ROOM FOR JESUS?",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "86": {
-        "title": "WHY NOT NOW?"
+        "title": "WHY NOT NOW?",
+        "first_line": "",
+        "notes": ["A4", "F#4", "A3", "D3"]
     },
     "87": {
-        "title": "O PARADISE"
+        "title": "O PARADISE",
+        "first_line": "",
+        "notes": ["E4", "E3"]
     },
     "88": {
-        "title": "CHRIST RECEIVETH SINFUL MEN"
+        "title": "CHRIST RECEIVETH SINFUL MEN",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "89": {
-        "title": "HARK, THE VOICE OF JESUS CALLING"
+        "title": "HARK, THE VOICE OF JESUS CALLING",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "90": {
-        "title": "COME WITH THY SINS TO THE FOUNTAIN"
+        "title": "COME WITH THY SINS TO THE FOUNTAIN",
+        "first_line": "",
+        "notes": ["C5", "A4", "C4", "F3"]
     },
     "91": {
-        "title": "ABUNDANTLY ABLE TO SAVE"
+        "title": "ABUNDANTLY ABLE TO SAVE",
+        "first_line": "",
+        "notes": ["E4", "E3"]
     },
     "92": {
-        "title": "THERE'S A STRANGER AT THE DOOR"
+        "title": "THERE'S A STRANGER AT THE DOOR",
+        "first_line": "",
+        "notes": ["F4", "Db4", "Ab3", "Db3"]
     },
     "93": {
-        "title": "BEHOLD ME STANDING AT THE DOOR"
+        "title": "BEHOLD ME STANDING AT THE DOOR",
+        "first_line": "",
+        "notes": ["D4", "Bb4", "G3", "G2"]
     },
     "94": {
-        "title": "HEAR THE SAVIOR CALLING YOU TODAY"
+        "title": "HEAR THE SAVIOR CALLING YOU TODAY",
+        "first_line": "",
+        "notes": ["C4", "Ab3", "Eb3", "Ab2"]
     },
     "95": {
-        "title": "BLESSED BE THE FOUNTAIN"
+        "title": "BLESSED BE THE FOUNTAIN",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "96": {
-        "title": "THERE'S A WAY FOR THE SOUL"
+        "title": "THERE'S A WAY FOR THE SOUL",
+        "first_line": "",
+        "notes": ["F4", "D4"]
     },
     "97": {
-        "title": "WAIT ON THE LORD"
+        "title": "WAIT ON THE LORD",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "98": {
-        "title": "MY HEAVENLY MANSION"
+        "title": "MY HEAVENLY MANSION",
+        "first_line": "",
+        "notes": ["c4", "E3", "C3"]
     },
     "99": {
-        "title": "THERE IS LIFE FOR A LOOK"
+        "title": "THERE IS LIFE FOR A LOOK",
+        "first_line": "",
+        "notes": ["G4", "B3", "G3"]
     },
     "100": {
-        "title": "WHY DO YOU WAIT?"
+        "title": "WHY DO YOU WAIT?",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "101": {
-        "title": "IN THIS VAIN WORLD'S RACE"
+        "title": "IN THIS VAIN WORLD'S RACE",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "102": {
-        "title": "WHY THAT LOOK OF SADNESS?"
+        "title": "WHY THAT LOOK OF SADNESS?",
+        "first_line": "",
+        "notes": ["C5", "A4", "C4", "F3"]
     },
     "103": {
-        "title": "O, HOW I LONG TO SERVE MY SAVIOR"
+        "title": "O, HOW I LONG TO SERVE MY SAVIOR",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G3"]
     },
     "104": {
-        "title": "GO BURY THY SORROW"
+        "title": "GO BURY THY SORROW",
+        "first_line": "",
+        "notes": ["Bb3", "D4", "B3", "B2"]
     },
     "105": {
-        "title": "WHEN IN MY GRIEF"
+        "title": "WHEN IN MY GRIEF",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "106": {
-        "title": "ARE YOU WASHED IN THE BLOOD?"
+        "title": "ARE YOU WASHED IN THE BLOOD?",
+        "first_line": "",
+        "notes": ["C4", "Ab3", "Eb3", "Ab2"]
     },
     "107": {
-        "title": "UP ARISE AND WORK FOR ZION"
+        "title": "UP ARISE AND WORK FOR ZION",
+        "first_line": "",
+        "notes": ["Ab4", "F4", "Db4", "Db3"]
     },
     "108": {
-        "title": "O COME TO THE STREAM"
+        "title": "O COME TO THE STREAM",
+        "first_line": "",
+        "notes": ["B3"]
     },
     "109": {
-        "title": "I LIFT MINE EYES UNTO THE HILLS"
+        "title": "I LIFT MINE EYES UNTO THE HILLS",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "110": {
-        "title": "FATHER, O HEAR MY PRAYER"
+        "title": "FATHER, O HEAR MY PRAYER",
+        "first_line": "",
+        "notes": ["G3"]
     },
     "111": {
-        "title": "BOW DOWN THINE EAR"
+        "title": "BOW DOWN THINE EAR",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "112": {
-        "title": "AS THE HART"
+        "title": "AS THE HART",
+        "first_line": "",
+        "notes": ["F4"]
     },
     "113": {
-        "title": "SWEET REPOSE, THE PEACE OF HEAVEN"
+        "title": "SWEET REPOSE, THE PEACE OF HEAVEN",
+        "first_line": "",
+        "notes": ["F4"]
     },
     "114": {
-        "title": "FATHER, O HEAR US"
+        "title": "FATHER, O HEAR US",
+        "first_line": "",
+        "notes": ["C4"]
     },
     "115": {
-        "title": "HEAR US, O FATHER, GOD!"
+        "title": "HEAR US, O FATHER, GOD!",
+        "first_line": "",
+        "notes": ["E5", "C5", "G3", "C3"]
     },
     "116": {
-        "title": "GUIDE ME, O THOU GREAT JEHOVAH"
+        "title": "GUIDE ME, O THOU GREAT JEHOVAH",
+        "first_line": "",
+        "notes": ["Ab4"]
     },
     "117": {
-        "title": "UPON THINE ALTAR, NOW WE BRING"
+        "title": "UPON THINE ALTAR, NOW WE BRING",
+        "first_line": "",
+        "notes": ["B4", "B3", "B2"]
     },
     "118": {
-        "title": "ROCK OF AGES"
+        "title": "ROCK OF AGES",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "119": {
-        "title": "JUST AS I AM"
+        "title": "JUST AS I AM",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "120": {
-        "title": "I WILL"
+        "title": "I WILL",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "121": {
-        "title": "BLESSED KING AND LORD OF HOSTS"
+        "title": "BLESSED KING AND LORD OF HOSTS",
+        "first_line": "",
+        "notes": ["C5", "E4", "G3", "C3"]
     },
     "122": {
-        "title": "I AM COMING"
+        "title": "I AM COMING",
+        "first_line": "",
+        "notes": ["C4", "A3", "F3"]
     },
     "123": {
-        "title": "SAVIOR, LEAD ME, LEST I STRAY"
+        "title": "SAVIOR, LEAD ME, LEST I STRAY",
+        "first_line": "",
+        "notes": ["Ab4", "F4", "Db4", "Db3"]
     },
     "124": {
-        "title": "MAKE ME, LORD, MORE STILL AND HUMBLE"
+        "title": "MAKE ME, LORD, MORE STILL AND HUMBLE",
+        "first_line": "",
+        "notes": ["F4", "A3", "F3"]
     },
     "125": {
-        "title": "THOU GREAT HIGH PRIEST AND SAVIOR"
+        "title": "THOU GREAT HIGH PRIEST AND SAVIOR",
+        "first_line": "",
+        "notes": ["A4", "F4", "c4", "F3"]
     },
     "126": {
-        "title": "ROCK OF AGES"
+        "title": "ROCK OF AGES",
+        "first_line": "",
+        "notes": ["C5"]
     },
     "127": {
-        "title": "SHALL WE MEET?"
+        "title": "SHALL WE MEET?",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "128": {
-        "title": "BLESSED SAVIOR, COME TO ME"
+        "title": "BLESSED SAVIOR, COME TO ME",
+        "first_line": "",
+        "notes": ["E3"]
     },
     "129": {
-        "title": "JESUS, THOU MY SOUL'S BEST FRIEND"
+        "title": "JESUS, THOU MY SOUL'S BEST FRIEND",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "130": {
-        "title": "JESUS, THOU MY SOUL'S BEST FRIEND"
+        "title": "JESUS, THOU MY SOUL'S BEST FRIEND",
+        "first_line": "",
+        "notes": ["D5", "G4", "D4", "B3"]
     },
     "131": {
-        "title": "EVER-LIVING SAVIOR, THOU ART MINE!"
+        "title": "EVER-LIVING SAVIOR, THOU ART MINE!",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "132": {
-        "title": "O LET HIM WHOSE SORROW"
+        "title": "O LET HIM WHOSE SORROW",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "133": {
-        "title": "GENTLY LORD, O GENTLY LEAD US"
+        "title": "GENTLY LORD, O GENTLY LEAD US",
+        "first_line": "",
+        "notes": ["C4", "A3", "F3"]
     },
     "134": {
-        "title": "THE LORD'S PRAYER"
+        "title": "THE LORD'S PRAYER",
+        "first_line": "",
+        "notes": ["Eb4", "Bb3", "G3", "Eb3"]
     },
     "135": {
-        "title": "FATHER, LORD!"
+        "title": "FATHER, LORD!",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "136": {
-        "title": "OUR FATHER"
+        "title": "OUR FATHER",
+        "first_line": "",
+        "notes": ["B4", "D4", "B3", "G3"]
     },
     "137": {
-        "title": "O DELIV'RER FROM ALL BONDAGE"
+        "title": "O DELIV'RER FROM ALL BONDAGE",
+        "first_line": "",
+        "notes": ["A4", "F#4", "A3", "D3"]
     },
     "138": {
-        "title": "SAVIOR, THANKFULLY WE MEET"
+        "title": "SAVIOR, THANKFULLY WE MEET",
+        "first_line": "",
+        "notes": ["Eb4"]
     },
     "139": {
-        "title": "THOUGH THE FOES WOULD HARM YOU"
+        "title": "THOUGH THE FOES WOULD HARM YOU",
+        "first_line": "",
+        "notes": ["B4", "G4", "E4", "E3"]
     },
     "140": {
-        "title": "TIME FLIES AND DEATH COMES SPEEDILY"
+        "title": "TIME FLIES AND DEATH COMES SPEEDILY",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "141": {
-        "title": "FATHER, IN HIGH HEAVEN DWELLING"
+        "title": "FATHER, IN HIGH HEAVEN DWELLING",
+        "first_line": "",
+        "notes": ["B4", "G4", "G3", "G2"]
     },
     "142": {
-        "title": "TEACH ME THY WAY"
+        "title": "TEACH ME THY WAY",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "143": {
-        "title": "O PRAISE THE LORD"
+        "title": "O PRAISE THE LORD",
+        "first_line": "",
+        "notes": ["G4", "E4", "G3", "C3"]
     },
     "144": {
-        "title": "MAY OUR HEARTS BE JOYFUL EVER"
+        "title": "MAY OUR HEARTS BE JOYFUL EVER",
+        "first_line": "",
+        "notes": ["G#4", "E4", "B3", "E3"]
     },
     "145": {
-        "title": "DWELL IN ME, O BLESSED SPIRIT"
+        "title": "DWELL IN ME, O BLESSED SPIRIT",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G3"]
     },
     "146": {
-        "title": "RING THE BELLS OF HEAVEN"
+        "title": "RING THE BELLS OF HEAVEN",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "147": {
-        "title": "AH, NOW IT IS DONE!"
+        "title": "AH, NOW IT IS DONE!",
+        "first_line": "",
+        "notes": ["D4", "B3", "G2"]
     },
     "148": {
-        "title": "BRIGHTLY BEAMS OUR FATHER'S MERCY"
+        "title": "BRIGHTLY BEAMS OUR FATHER'S MERCY",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "149": {
-        "title": "WHO'LL BE THE NEXT?"
+        "title": "WHO'LL BE THE NEXT?",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "150": {
-        "title": "HOW SWIFTLY FLY THESE DAYS"
+        "title": "HOW SWIFTLY FLY THESE DAYS",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "151": {
-        "title": "COME HOME"
+        "title": "COME HOME",
+        "first_line": "",
+        "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "152": {
-        "title": "I WILL ARISE"
+        "title": "I WILL ARISE",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "153": {
-        "title": "NOW I AM PERSUADED"
+        "title": "NOW I AM PERSUADED",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "154": {
-        "title": "O HOW SHALL I RECEIVE THEE?"
+        "title": "O HOW SHALL I RECEIVE THEE?",
+        "first_line": "",
+        "notes": ["E4", "G#3", "E3"]
     },
     "155": {
-        "title": "WHO ARE ALL THE HOST OF HEAVEN?"
+        "title": "WHO ARE ALL THE HOST OF HEAVEN?",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "156": {
-        "title": "I WAS GLAD WHEN THEY SAID UNTO ME"
+        "title": "I WAS GLAD WHEN THEY SAID UNTO ME",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G3"]
     },
     "157": {
-        "title": "BLESSED"
+        "title": "BLESSED",
+        "first_line": "",
+        "notes": ["Ab4", "Eb4", "C4", "Ab3"]
     },
     "158": {
-        "title": "MY JESUS, I LOVE THEE"
+        "title": "MY JESUS, I LOVE THEE",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "159": {
-        "title": "LORD, LEAD ME HOME!"
+        "title": "LORD, LEAD ME HOME!",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "160": {
-        "title": "JESUS, MY LORD, TO THEE I CRY"
+        "title": "JESUS, MY LORD, TO THEE I CRY",
+        "first_line": "",
+        "notes": ["E4", "G#3", "E3"]
     },
     "161": {
-        "title": "THERE IS CONSTANT JOY ABIDING"
+        "title": "THERE IS CONSTANT JOY ABIDING",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "162": {
-        "title": "REDEEMED, HOW I LOVE TO PROCLAIM IT"
+        "title": "REDEEMED, HOW I LOVE TO PROCLAIM IT",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "163": {
-        "title": "LORD, OPEN THOU BOTH HEART AND EAR"
+        "title": "LORD, OPEN THOU BOTH HEART AND EAR",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "164": {
-        "title": "HOW LOVELY IS ZION"
+        "title": "HOW LOVELY IS ZION",
+        "first_line": "",
+        "notes": ["D4", "Bb3", "F3", "Bb2"]
     },
     "165": {
-        "title": "ART THOU WEARY?"
+        "title": "ART THOU WEARY?",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3", "G2"]
     },
     "166": {
-        "title": "THE LORD IS MY LIGHT"
+        "title": "THE LORD IS MY LIGHT",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "167": {
-        "title": "I HAVE HEARD OF A LAND"
+        "title": "I HAVE HEARD OF A LAND",
+        "first_line": "",
+        "notes": ["G4", "D4", "Bb3", "G3"]
     },
     "168": {
-        "title": "THE LORD IS MY LIGHT"
+        "title": "THE LORD IS MY LIGHT",
+        "first_line": "",
+        "notes": ["G4"]
     },
     "169": {
-        "title": "A SHELTER IN THE TIME OF STORM"
+        "title": "A SHELTER IN THE TIME OF STORM",
+        "first_line": "",
+        "notes": ["C4", "A3", "F3"]
     },
     "170": {
-        "title": "WHEN THE LORD WILL BREAK THE FETTERS"
+        "title": "WHEN THE LORD WILL BREAK THE FETTERS",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "171": {
-        "title": "IN THE SEA OF EVERLASTING"
+        "title": "IN THE SEA OF EVERLASTING",
+        "first_line": "",
+        "notes": ["G4", "A3", "F3"]
     },
     "172": {
-        "title": "WHO ARE THESE?"
+        "title": "WHO ARE THESE?",
+        "first_line": "",
+        "notes": ["G4"]
     },
     "173": {
-        "title": "FOUNTAIN OF PURITY"
+        "title": "FOUNTAIN OF PURITY",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "174": {
-        "title": "JESUS, LOVER OF MY SOUL"
+        "title": "JESUS, LOVER OF MY SOUL",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "175": {
-        "title": "CAN IT BE A PLEASURE?"
+        "title": "CAN IT BE A PLEASURE?",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G3"]
     },
     "176": {
-        "title": "WOULD WE BE JOYFUL IN THE LORD?"
+        "title": "WOULD WE BE JOYFUL IN THE LORD?",
+        "first_line": "",
+        "notes": ["F4", "D4", "B3", "B2"]
     },
     "177": {
-        "title": "LEAD ME GENTLY HOME"
+        "title": "LEAD ME GENTLY HOME",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "178": {
-        "title": "LEAD ME TO THE CRYSTAL FOUNTAIN"
+        "title": "LEAD ME TO THE CRYSTAL FOUNTAIN",
+        "first_line": "",
+        "notes": ["G#4", "E4", "B3", "E3"]
     },
     "179": {
-        "title": "PEACE, PERFECT PEACE"
+        "title": "PEACE, PERFECT PEACE",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "180": {
-        "title": "UP YONDER IN HEAVEN"
+        "title": "UP YONDER IN HEAVEN",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "181": {
-        "title": "MY LIFE FLOWS ON IN ENDLESS SONG"
+        "title": "MY LIFE FLOWS ON IN ENDLESS SONG",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "182": {
-        "title": "(E) TAKE MY LIFE AND LET IT BE"
+        "title": "(E) TAKE MY LIFE AND LET IT BE",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "183": {
-        "title": "HOW JOYFUL IS THE CHILD"
+        "title": "HOW JOYFUL IS THE CHILD",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "184": {
-        "title": "O OUR PRECIOUS GOD"
+        "title": "O OUR PRECIOUS GOD",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "185": {
-        "title": "O CITY OF THE JASPER WALL"
+        "title": "O CITY OF THE JASPER WALL",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "186": {
-        "title": "LORD, TAKE MY HEART"
+        "title": "LORD, TAKE MY HEART",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3"]
     },
     "187": {
-        "title": "I KNOW MY SAVIOR LOVES ME"
+        "title": "I KNOW MY SAVIOR LOVES ME",
+        "first_line": "",
+        "notes": ["F4", "A3", "F3"]
     },
     "188": {
-        "title": "IN THE SHADOW OF HIS WINGS"
+        "title": "IN THE SHADOW OF HIS WINGS",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "189": {
-        "title": "BE LIFTED"
+        "title": "BE LIFTED",
+        "first_line": "",
+        "notes": ["A4", "F#4", "A3", "D3"]
     },
     "190": {
-        "title": "WHOEVER KNOWS OUR KING OF KINGS"
+        "title": "WHOEVER KNOWS OUR KING OF KINGS",
+        "first_line": "",
+        "notes": ["Ab4", "Eb4", "C4", "Ab2"]
     },
     "191": {
-        "title": "LOVE, O GREATEST BLESSING GIVEN"
+        "title": "LOVE, O GREATEST BLESSING GIVEN",
+        "first_line": "",
+        "notes": ["F4", "D4", "B3", "B2"]
     },
     "192": {
-        "title": "ETERNAL LOVE, I LOVE THEE ONLY"
+        "title": "ETERNAL LOVE, I LOVE THEE ONLY",
+        "first_line": "",
+        "notes": ["A4", "F4"]
     },
     "193": {
-        "title": "HALLELUJAH FOR THE CROSS"
+        "title": "HALLELUJAH FOR THE CROSS",
+        "first_line": "",
+        "notes": ["F4", "F3"]
     },
     "194": {
-        "title": "WHO IS KNOCKING AT YOUR HEART TODAY?"
+        "title": "WHO IS KNOCKING AT YOUR HEART TODAY?",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "195": {
-        "title": "BE THOU FAITHFUL UNTO DEATH"
+        "title": "BE THOU FAITHFUL UNTO DEATH",
+        "first_line": "",
+        "notes": ["F4", "Eb3"]
     },
     "196": {
-        "title": "GOD WITH US"
+        "title": "GOD WITH US",
+        "first_line": "",
+        "notes": ["F4", "D4", "F3", "D3"]
     },
     "197": {
-        "title": "TRUST IN GOD WITH ALL THY MIGHT"
+        "title": "TRUST IN GOD WITH ALL THY MIGHT",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "198": {
-        "title": "HOLD THE FORT"
+        "title": "HOLD THE FORT",
+        "first_line": "",
+        "notes": ["A4", "F4", "D4", "D3"]
     },
     "199": {
-        "title": "COME WAIT ON THE LORD"
+        "title": "COME WAIT ON THE LORD",
+        "first_line": "",
+        "notes": ["G4", "G3"]
     },
     "200": {
-        "title": "EACH DAY I'LL DO A GOLDEN DEED"
+        "title": "EACH DAY I'LL DO A GOLDEN DEED",
+        "first_line": "",
+        "notes": ["C5", "E4"]
     },
     "201": {
-        "title": "BLESSED, BLESSED ARE THEY"
+        "title": "BLESSED, BLESSED ARE THEY",
+        "first_line": "",
+        "notes": ["A4", "C#4", "A3", "A2"]
     },
     "202": {
-        "title": "ANGRY WORDS"
+        "title": "ANGRY WORDS",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Eb4", "Eb3"]
     },
     "203": {
-        "title": "THERE ARE LONELY HEARTS TO CHERISH"
+        "title": "THERE ARE LONELY HEARTS TO CHERISH",
+        "first_line": "",
+        "notes": ["C#4", "A3", "E3", "A2"]
     },
     "204": {
-        "title": "THERE'S A LAND THAT IS FAIRER THAN DAY"
+        "title": "THERE'S A LAND THAT IS FAIRER THAN DAY",
+        "first_line": "",
+        "notes": ["B4", "D4", "B3", "G3"]
     },
     "205": {
-        "title": "ALTHOUGH I NOW AM FAR FROM HOME"
+        "title": "ALTHOUGH I NOW AM FAR FROM HOME",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "206": {
-        "title": "WE SHALL MEET IN THE EDEN ABOVE"
+        "title": "WE SHALL MEET IN THE EDEN ABOVE",
+        "first_line": "",
+        "notes": ["Ab4", "C4", "A3", "A2"]
     },
     "207": {
-        "title": "ON JORDAN'S STORMY BANKS I STAND"
+        "title": "ON JORDAN'S STORMY BANKS I STAND",
+        "first_line": "",
+        "notes": ["B4", "D4", "G3"]
     },
     "208": {
-        "title": "O LORD, MY GOD, MOST EARNESTLY"
+        "title": "O LORD, MY GOD, MOST EARNESTLY",
+        "first_line": "",
+        "notes": ["Bb4", "D4", "F3", "Bb3"]
     },
     "209": {
-        "title": "FIERCE AND WILD THE STORM IS RAGING"
+        "title": "FIERCE AND WILD THE STORM IS RAGING",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "210": {
-        "title": "TAKE THE NAME OF JESUS WITH YOU"
+        "title": "TAKE THE NAME OF JESUS WITH YOU",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "A3", "A2"]
     },
     "211": {
-        "title": "TO THE WORK"
+        "title": "TO THE WORK",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "212": {
-        "title": "WORK FOR THE NIGHT IS COMING"
+        "title": "WORK FOR THE NIGHT IS COMING",
+        "first_line": "",
+        "notes": ["C5", "A4", "F4", "F3"]
     },
     "213": {
-        "title": "COME, BRETHREN, LET US HASTEN"
+        "title": "COME, BRETHREN, LET US HASTEN",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "214": {
-        "title": "SOWING THE SEED"
+        "title": "SOWING THE SEED",
+        "first_line": "",
+        "notes": ["E4", "C4", "C3"]
     },
     "215": {
-        "title": "HOLY SPIRIT, FAITHFUL GUIDE"
+        "title": "HOLY SPIRIT, FAITHFUL GUIDE",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "216": {
-        "title": "I WILL SING THE WONDROUS STORY"
+        "title": "I WILL SING THE WONDROUS STORY",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "217": {
-        "title": "BLESSED ASSURANCE"
+        "title": "BLESSED ASSURANCE",
+        "first_line": "",
+        "notes": ["F#4", "D4", "A3", "D3"]
     },
     "218": {
-        "title": "STAR, WHOSE LIGHT SHINES O'ER ME"
+        "title": "STAR, WHOSE LIGHT SHINES O'ER ME",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "219": {
-        "title": "I KNOW THAT MY REDEEMER LIVES"
+        "title": "I KNOW THAT MY REDEEMER LIVES",
+        "first_line": "",
+        "notes": ["A4", "A3"]
     },
     "220": {
-        "title": "MY THOUGHTS ARE EVER TURNING"
+        "title": "MY THOUGHTS ARE EVER TURNING",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "221": {
-        "title": "ARE YOU DOWN-HEARTED?"
+        "title": "ARE YOU DOWN-HEARTED?",
+        "first_line": "",
+        "notes": ["D4", "Bb3", "F3", "Bb2"]
     },
     "222": {
-        "title": "O THINK OF THE HOME OVER THERE"
+        "title": "O THINK OF THE HOME OVER THERE",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "223": {
-        "title": "THERE THE TREE OF LIFE IS BLOOMING"
+        "title": "THERE THE TREE OF LIFE IS BLOOMING",
+        "first_line": "",
+        "notes": ["C#5", "E4", "A3", "A2"]
     },
     "224": {
-        "title": "O CHILDREN, COME WITH ONE ACCORD"
+        "title": "O CHILDREN, COME WITH ONE ACCORD",
+        "first_line": "",
+        "notes": ["D5", "B4", "D4", "G3"]
     },
     "225": {
-        "title": "FOR THE HOMELAND'S BLESSED STILLNESS"
+        "title": "FOR THE HOMELAND'S BLESSED STILLNESS",
+        "first_line": "",
+        "notes": ["F#4", "D4"]
     },
     "226": {
-        "title": "THERE IS THE HOLY CITY"
+        "title": "THERE IS THE HOLY CITY",
+        "first_line": "",
+        "notes": ["G4", "G3"]
     },
     "227": {
-        "title": "WHAT COULD BE LOVELIER EVER?"
+        "title": "WHAT COULD BE LOVELIER EVER?",
+        "first_line": "",
+        "notes": ["D4", "F3", "D3"]
     },
     "228": {
-        "title": "I'VE REACHED THE LAND OF CORN AND WINE"
+        "title": "I'VE REACHED THE LAND OF CORN AND WINE",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "229": {
-        "title": "THERE IS A LAND FULL OF SWEET JUBILATION"
+        "title": "THERE IS A LAND FULL OF SWEET JUBILATION",
+        "first_line": "",
+        "notes": ["G#4", "E4", "B3", "E3"]
     },
     "230": {
-        "title": "HOW BLESS\u00c9D ARE THEY"
+        "title": "HOW BLESS\u00c9D ARE THEY",
+        "first_line": "",
+        "notes": ["E4", "B3", "G3", "E3"]
     },
     "231": {
-        "title": "MY MAKER AND MY KING"
+        "title": "MY MAKER AND MY KING",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "232": {
-        "title": "OH, WHERE ARE THE REAPERS?"
+        "title": "OH, WHERE ARE THE REAPERS?",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "233": {
-        "title": "OH, WHEN SHALL I SWEEP THROUGH THE GATES?"
+        "title": "OH, WHEN SHALL I SWEEP THROUGH THE GATES?",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "234": {
-        "title": "FADING AWAY LIKE THE STARS"
+        "title": "FADING AWAY LIKE THE STARS",
+        "first_line": "",
+        "notes": ["Bb4", "Eb4", "G3", "Eb3"]
     },
     "235": {
-        "title": "BEYOND THE DARK AND DISMAL TOMB"
+        "title": "BEYOND THE DARK AND DISMAL TOMB",
+        "first_line": "",
+        "notes": ["Bb3", "Bb2"]
     },
     "236": {
-        "title": "FROM JESUS' WOUNDS FLOWED HOLY BLOOD"
+        "title": "FROM JESUS' WOUNDS FLOWED HOLY BLOOD",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G2"]
     },
     "237": {
-        "title": "I LIVE FOR THEE, SAVIOR"
+        "title": "I LIVE FOR THEE, SAVIOR",
+        "first_line": "",
+        "notes": ["A4", "A3"]
     },
     "238": {
-        "title": "WHEN AT LAST WE CROSS THE RIVER JORDAN"
+        "title": "WHEN AT LAST WE CROSS THE RIVER JORDAN",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "239": {
-        "title": "O WATCH AND PRAY"
+        "title": "O WATCH AND PRAY",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4"]
     },
     "240": {
-        "title": "SHALL WE MEET BEYOND THE RIVER?"
+        "title": "SHALL WE MEET BEYOND THE RIVER?",
+        "first_line": "",
+        "notes": ["A4", "C#4", "A3", "A2"]
     },
     "241": {
-        "title": "O WANDERING SOULS, WHY WILL YOU ROAM?"
+        "title": "O WANDERING SOULS, WHY WILL YOU ROAM?",
+        "first_line": "",
+        "notes": ["C4", "A3", "F3"]
     },
     "242": {
-        "title": "IN THAT CRYSTAL CITY"
+        "title": "IN THAT CRYSTAL CITY",
+        "first_line": "",
+        "notes": ["E4", "G#3", "E3"]
     },
     "243": {
-        "title": "JESUS, LOVER OF MY SOUL"
+        "title": "JESUS, LOVER OF MY SOUL",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "244": {
-        "title": "NIGHT IS FALLING O'ER THE SKY"
+        "title": "NIGHT IS FALLING O'ER THE SKY",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "245": {
-        "title": "THE WOMAN OF SAMARIA"
+        "title": "THE WOMAN OF SAMARIA",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "246": {
-        "title": "OFFER UP YOUR LIFE AND BEING"
+        "title": "OFFER UP YOUR LIFE AND BEING",
+        "first_line": "",
+        "notes": ["B4", "G4", "D4", "G3"]
     },
     "247": {
-        "title": "WE PRAISE THEE, O GOD!"
+        "title": "WE PRAISE THEE, O GOD!",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "248": {
-        "title": "YE ARE BLESS\u00c9D, FAITHFUL CHILDREN"
+        "title": "YE ARE BLESS\u00c9D, FAITHFUL CHILDREN",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "249": {
-        "title": "O MY SOUL, BY PAIN SURROUNDED"
+        "title": "O MY SOUL, BY PAIN SURROUNDED",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "250": {
-        "title": "YESTERDAY, TODAY, FOREVER"
+        "title": "YESTERDAY, TODAY, FOREVER",
+        "first_line": "",
+        "notes": ["C5", "Eb4", "Ab3", "Ab2"]
     },
     "251": {
-        "title": "'TIS THE FINAL HOUR"
+        "title": "'TIS THE FINAL HOUR",
+        "first_line": "",
+        "notes": ["D4", "Bb3", "Bb2"]
     },
     "252": {
-        "title": "FAIREST LORD JESUS"
+        "title": "FAIREST LORD JESUS",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "253": {
-        "title": "THE PILGRIM AND THE STRANGER"
+        "title": "THE PILGRIM AND THE STRANGER",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "254": {
-        "title": "THOU ART WORTHY, MY DEAR LORD"
+        "title": "THOU ART WORTHY, MY DEAR LORD",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "255": {
-        "title": "O FOUNT OF LOVE, MINE OWN"
+        "title": "O FOUNT OF LOVE, MINE OWN",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "256": {
-        "title": "I AM SO SAD AND WEARY"
+        "title": "I AM SO SAD AND WEARY",
+        "first_line": "",
+        "notes": ["C4", "C3"]
     },
     "257": {
-        "title": "O TROUBLED HEART, THERE IS A HOME"
+        "title": "O TROUBLED HEART, THERE IS A HOME",
+        "first_line": "",
+        "notes": ["G4", "F4", "G3", "C3"]
     },
     "258": {
-        "title": "COMING HOME, ALL WEARY"
+        "title": "COMING HOME, ALL WEARY",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "259": {
-        "title": "WHEN SORROWS STRIKE ME HARD"
+        "title": "WHEN SORROWS STRIKE ME HARD",
+        "first_line": "",
+        "notes": ["Eb4", "C4"]
     },
     "260": {
-        "title": "STARS OF EVENING"
+        "title": "STARS OF EVENING",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "261": {
-        "title": "THE LORD WHO ALL THINGS GUIDETH"
+        "title": "THE LORD WHO ALL THINGS GUIDETH",
+        "first_line": "",
+        "notes": ["C5", "Ab4", "Eb4", "Ab3"]
     },
     "262": {
-        "title": "GOD, THE ALL-LOVING"
+        "title": "GOD, THE ALL-LOVING",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "263": {
-        "title": "HEAVENLY SUNLIGHT"
+        "title": "HEAVENLY SUNLIGHT",
+        "first_line": "",
+        "notes": ["C5", "A4", "F4", "F3"]
     },
     "264": {
-        "title": "NEARER, MY GOD, TO THEE"
+        "title": "NEARER, MY GOD, TO THEE",
+        "first_line": "",
+        "notes": ["B4", "D4", "G3"]
     },
     "265": {
-        "title": "THE SHIP OF GRACE IS SAILING"
+        "title": "THE SHIP OF GRACE IS SAILING",
+        "first_line": "",
+        "notes": ["E4", "E3"]
     },
     "266": {
-        "title": "LIFT YOUR HEARTS IN SONGS IMMORTAL"
+        "title": "LIFT YOUR HEARTS IN SONGS IMMORTAL",
+        "first_line": "",
+        "notes": ["Ab4"]
     },
     "267": {
-        "title": "THOU MY EVERLASTING PORTION"
+        "title": "THOU MY EVERLASTING PORTION",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "268": {
-        "title": "HEAR GOD'S WORD"
+        "title": "HEAR GOD'S WORD",
+        "first_line": "",
+        "notes": ["F4", "A3", "F3"]
     },
     "269": {
-        "title": "WILL THERE BE ANY STARS IN MY CROWN?"
+        "title": "WILL THERE BE ANY STARS IN MY CROWN?",
+        "first_line": "",
+        "notes": ["D4", "Bb3", "F3", "Bb2"]
     },
     "270": {
-        "title": "GOD IS MERCIFUL AND GRACIOUS"
+        "title": "GOD IS MERCIFUL AND GRACIOUS",
+        "first_line": "",
+        "notes": ["A4", "F#4", "D4", "D3"]
     },
     "271": {
-        "title": "I KNOW MY JESUS LIVES"
+        "title": "I KNOW MY JESUS LIVES",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "272": {
-        "title": "PRAISE OUR SAVIOR"
+        "title": "PRAISE OUR SAVIOR",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "273": {
-        "title": "O THOU THAT TELLEST GOOD TIDINGS TO ZION"
+        "title": "O THOU THAT TELLEST GOOD TIDINGS TO ZION",
+        "first_line": "",
+        "notes": ["A4"]
     },
     "274": {
-        "title": "WE SING OF THE REALMS OF THE BLEST"
+        "title": "WE SING OF THE REALMS OF THE BLEST",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "275": {
-        "title": "SURELY HE HATH BORNE OUR GRIEFS"
+        "title": "SURELY HE HATH BORNE OUR GRIEFS",
+        "first_line": "",
+        "notes": ["C5", "Ab4", "F4", "C3"]
     },
     "276": {
-        "title": "JERUSALEM"
+        "title": "JERUSALEM",
+        "first_line": "",
+        "notes": ["G4", "D4", "B3", "G3"]
     },
     "277": {
-        "title": "SHACKLED UP IN CHAINS"
+        "title": "SHACKLED UP IN CHAINS",
+        "first_line": "",
+        "notes": ["F4"]
     },
     "278": {
-        "title": "AS THE DAY WAS DAWNING"
+        "title": "AS THE DAY WAS DAWNING",
+        "first_line": "",
+        "notes": ["D4", "B3", "G3"]
     },
     "279": {
-        "title": "FROM EGYPT'S LAND WE JOURNEY"
+        "title": "FROM EGYPT'S LAND WE JOURNEY",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "280": {
-        "title": "WITH JOY TO GOD'S HOUSE I WOULD GO"
+        "title": "WITH JOY TO GOD'S HOUSE I WOULD GO",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "281": {
-        "title": "O BROTHER, LIFE'S JOURNEY BEGINNING"
+        "title": "O BROTHER, LIFE'S JOURNEY BEGINNING",
+        "first_line": "",
+        "notes": ["E4"]
     },
     "282": {
-        "title": "TELL ME THE OLD, OLD STORY"
+        "title": "TELL ME THE OLD, OLD STORY",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "283": {
-        "title": "THERE ARE TIMES WHEN HEAVY BURDENS OPPRESS"
+        "title": "THERE ARE TIMES WHEN HEAVY BURDENS OPPRESS",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "284": {
-        "title": "I KNOW OF A PLACE"
+        "title": "I KNOW OF A PLACE",
+        "first_line": "",
+        "notes": ["A4", "F#4", "A3", "D3"]
     },
     "285": {
-        "title": "THE GREAT PHYSICIAN"
+        "title": "THE GREAT PHYSICIAN",
+        "first_line": "",
+        "notes": ["Bb4", "G4", "Bb3", "Eb3"]
     },
     "286": {
-        "title": "WHO ARE ALL THE MEMBERS?"
+        "title": "WHO ARE ALL THE MEMBERS?",
+        "first_line": "",
+        "notes": ["D5", "F4", "Bb3", "Bb2"]
     },
     "287": {
-        "title": "LO, IN HEAVEN 'TIS WONDROUS FAIR"
+        "title": "LO, IN HEAVEN 'TIS WONDROUS FAIR",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "288": {
-        "title": "PRAISE YE THE LORD, ALL YE NATIONS!"
+        "title": "PRAISE YE THE LORD, ALL YE NATIONS!",
+        "first_line": "",
+        "notes": ["E4", "C#4", "A3", "A2"]
     },
     "289": {
-        "title": "HALLELUJAH, I AM REDEEMED"
+        "title": "HALLELUJAH, I AM REDEEMED",
+        "first_line": "",
+        "notes": ["C5", "Eb4", "Ab3", "Ab2"]
     },
     "290": {
-        "title": "THERE IS A PLACE SO DEAR TO ME"
+        "title": "THERE IS A PLACE SO DEAR TO ME",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "291": {
-        "title": "I KNOW THAT THERE'S A LAND"
+        "title": "I KNOW THAT THERE'S A LAND",
+        "first_line": "",
+        "notes": ["D4", "G3"]
     },
     "292": {
-        "title": "O HAVE YOU NOT HEARD?"
+        "title": "O HAVE YOU NOT HEARD?",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "293": {
-        "title": "COME, LET US PRAISE OUR DEAR SAVIOR"
+        "title": "COME, LET US PRAISE OUR DEAR SAVIOR",
+        "first_line": "",
+        "notes": ["Bb4", "D4", "Bb3", "Bb2"]
     },
     "294": {
-        "title": "GOD LOVED THE WORLD OF SINNERS LOST"
+        "title": "GOD LOVED THE WORLD OF SINNERS LOST",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3", "C3"]
     },
     "295": {
-        "title": "I NEED THEE EVERY HOUR"
+        "title": "I NEED THEE EVERY HOUR",
+        "first_line": "",
+        "notes": ["Ab4", "C4", "Eb3", "Ab2"]
     },
     "296": {
-        "title": "THANK THE LORD AND YOU, BELOVED"
+        "title": "THANK THE LORD AND YOU, BELOVED",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "297": {
-        "title": "MY SHIP CASTS OFF FROM EARTH'S STRAND"
+        "title": "MY SHIP CASTS OFF FROM EARTH'S STRAND",
+        "first_line": "",
+        "notes": ["D4", "D3"]
     },
     "298": {
-        "title": "FAREWELL, FAREWELL, MY MORNING DAWNS"
+        "title": "FAREWELL, FAREWELL, MY MORNING DAWNS",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "299": {
-        "title": "BE NEAR ME, LORD, WHEN DYING"
+        "title": "BE NEAR ME, LORD, WHEN DYING",
+        "first_line": "",
+        "notes": ["E4", "C4", "G3"]
     },
     "300": {
-        "title": "THERE BEYOND THIS VALE OF SADNESS"
+        "title": "THERE BEYOND THIS VALE OF SADNESS",
+        "first_line": "",
+        "notes": ["B4", "G4", "G3"]
     },
     "301": {
-        "title": "MY LATEST SUN IS SINKING FAST"
+        "title": "MY LATEST SUN IS SINKING FAST",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "302": {
-        "title": "WITH HEAVY HEARTS WE NOW MUST PART"
+        "title": "WITH HEAVY HEARTS WE NOW MUST PART",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "303": {
-        "title": "NOW THE LIGHT HAS GONE AWAY"
+        "title": "NOW THE LIGHT HAS GONE AWAY",
+        "first_line": "",
+        "notes": ["F4", "C4", "A3", "F3"]
     },
     "304": {
-        "title": "BELOVED FRIENDS, WE NOW MUST PART"
+        "title": "BELOVED FRIENDS, WE NOW MUST PART",
+        "first_line": "",
+        "notes": ["G4", "B3", "G3"]
     },
     "305": {
-        "title": "(E) JESUS, KEEP ME NEAR THE CROSS"
+        "title": "(E) JESUS, KEEP ME NEAR THE CROSS",
+        "first_line": "",
+        "notes": ["A4", "F4", "C4", "F3"]
     },
     "306": {
-        "title": "GOD BE WITH YOU"
+        "title": "GOD BE WITH YOU",
+        "first_line": "",
+        "notes": ["F4", "Db4", "Ab3", "Db3"]
     },
     "307": {
-        "title": "HEAVENLY FATHER, WE BESEECH THEE"
+        "title": "HEAVENLY FATHER, WE BESEECH THEE",
+        "first_line": "",
+        "notes": ["Ab4", "C4", "Ab3", "Ab2"]
     },
     "308": {
-        "title": "LORD, AGAIN A DAY IS CLOSING"
+        "title": "LORD, AGAIN A DAY IS CLOSING",
+        "first_line": "",
+        "notes": ["F4", "A3"]
     },
     "309": {
-        "title": "MAY THE GRACE AND GOODNESS"
+        "title": "MAY THE GRACE AND GOODNESS",
+        "first_line": "",
+        "notes": ["D4", "F#3", "D3"]
     },
     "310": {
-        "title": "SOUND THE BATTLE CRY"
+        "title": "SOUND THE BATTLE CRY",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "311": {
-        "title": "HOW EXCELLENT THY NAME"
+        "title": "HOW EXCELLENT THY NAME",
+        "first_line": "",
+        "notes": ["G4", "E4", "C4", "C3"]
     },
     "312": {
-        "title": "O LORD, THY GOODNESS"
+        "title": "O LORD, THY GOODNESS",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "313": {
-        "title": "EXODUS"
+        "title": "EXODUS",
+        "first_line": "",
+        "notes": ["C5", "G4", "Eb4", "C4"]
     },
     "314": {
-        "title": "WHAT A FRIEND WE HAVE IN JESUS"
+        "title": "WHAT A FRIEND WE HAVE IN JESUS",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "315": {
-        "title": "WHO DWELLS IN THE SECRET PLACE"
+        "title": "WHO DWELLS IN THE SECRET PLACE",
+        "first_line": "",
+        "notes": ["Eb4", "Eb3"]
     },
     "316": {
-        "title": "COME UNTO ME"
+        "title": "COME UNTO ME",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "317": {
-        "title": "FATHER, THY GRACE IS SO WONDERFUL"
+        "title": "FATHER, THY GRACE IS SO WONDERFUL",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "318": {
-        "title": "MY HOPE IS BUILT ON NOTHING LESS"
+        "title": "MY HOPE IS BUILT ON NOTHING LESS",
+        "first_line": "",
+        "notes": ["B4", "D4", "G3"]
     },
     "319": {
-        "title": "THOU KNOWEST LORD"
+        "title": "THOU KNOWEST LORD",
+        "first_line": "",
+        "notes": ["D4", "F3", "Bb2"]
     },
     "320": {
-        "title": "O LORD MY GOD"
+        "title": "O LORD MY GOD",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "321": {
-        "title": "SHALL WE MEET AGAIN IN HEAVEN?"
+        "title": "SHALL WE MEET AGAIN IN HEAVEN?",
+        "first_line": "",
+        "notes": ["C4"]
     },
     "322": {
-        "title": "THERE IS A LAND THAT LIES AFAR"
+        "title": "THERE IS A LAND THAT LIES AFAR",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "323": {
-        "title": "THIS IS THE MARK OF LOVE'S DEVOTION"
+        "title": "THIS IS THE MARK OF LOVE'S DEVOTION",
+        "first_line": "",
+        "notes": ["F4", "Bb3", "Bb2"]
     },
     "324": {
-        "title": "IF IN LIFE YOU WOULD HAVE PEACE"
+        "title": "IF IN LIFE YOU WOULD HAVE PEACE",
+        "first_line": "",
+        "notes": ["D4", "Bb3", "F3", "Bb2"]
     },
     "325": {
-        "title": "ABIDE WITH ME"
+        "title": "ABIDE WITH ME",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "326": {
-        "title": "I KNOW NOT WHY GOD'S WONDROUS GRACE"
+        "title": "I KNOW NOT WHY GOD'S WONDROUS GRACE",
+        "first_line": "",
+        "notes": ["Eb4", "G3", "Eb3"]
     },
     "327": {
-        "title": "O THE DEEP, DEEP LOVE OF JESUS"
+        "title": "O THE DEEP, DEEP LOVE OF JESUS",
+        "first_line": "",
+        "notes": ["G4", "D4", "Bb3", "G3"]
     },
     "328": {
-        "title": "HE LEADETH ME"
+        "title": "HE LEADETH ME",
+        "first_line": "",
+        "notes": ["A4", "F#4", "A3", "D3"]
     },
     "329": {
-        "title": "WHEN THE ROLL IS CALLED UP YONDER"
+        "title": "WHEN THE ROLL IS CALLED UP YONDER",
+        "first_line": "",
+        "notes": ["Ab4", "C4", "Ab3", "Ab2"]
     },
     "330": {
-        "title": "ALL TO JESUS I SURRENDER"
+        "title": "ALL TO JESUS I SURRENDER",
+        "first_line": "",
+        "notes": ["G4", "Eb4", "Bb3", "Eb3"]
     },
     "331": {
-        "title": "THIS IS MY FATHER'S WORLD"
+        "title": "THIS IS MY FATHER'S WORLD",
+        "first_line": "",
+        "notes": ["EB4", "Bb3", "G3", "Eb3"]
     },
     "332": {
-        "title": "THY KINGDOM COME"
+        "title": "THY KINGDOM COME",
+        "first_line": "",
+        "notes": ["B3", "G#3", "E3"]
     },
     "333": {
-        "title": "NEVER ALONE"
+        "title": "NEVER ALONE",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "334": {
-        "title": "THERE IS COMING A DAY"
+        "title": "THERE IS COMING A DAY",
+        "first_line": "",
+        "notes": ["Eb4", "C4", "Ab3", "Ab2"]
     },
     "335": {
-        "title": "THE NAIL-SCARRED HAND"
+        "title": "THE NAIL-SCARRED HAND",
+        "first_line": "",
+        "notes": ["C4", "A3", "F3"]
     },
     "336": {
-        "title": "SEEKING THE LOST"
+        "title": "SEEKING THE LOST",
+        "first_line": "",
+        "notes": ["F4", "D4", "Bb3", "Bb2"]
     },
     "337": {
-        "title": "DAY BY DAY"
+        "title": "DAY BY DAY",
+        "first_line": "",
+        "notes": ["G4", "Bb3", "Eb3"]
     },
     "338": {
-        "title": "PANU BOHU"
+        "title": "PANU BOHU",
+        "first_line": "",
+        "notes": ["D5", "B4", "D4", "G3"]
     }
 }
