@@ -71,9 +71,7 @@ jobs:
       - name: Push files to target
         run: |
           cd deploy
-          git checkout -b gh-pages
-          git pull origin gh-pages
-          rm -r *
+          git checkout -B gh-pages
           cp -r ../build/dist/* .
           cp index.html 404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
           touch .nojekyll
