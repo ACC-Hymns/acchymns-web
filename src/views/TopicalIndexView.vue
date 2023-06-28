@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref, computed } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 import type { Song } from "@/scripts/types";
@@ -67,15 +67,13 @@ function showList() {
     });
 }
 
-
 function goBack() {
-    if(show_list.value) {
+    if (show_list.value) {
         router.back();
     } else {
         showList();
     }
 }
-
 </script>
 
 <template>
@@ -90,13 +88,7 @@ function goBack() {
         <!-- Each Topical Section -->
         <div>
             <div ref="scroll_topic_list">
-                <div
-                    :key="active_topic"
-                    v-if="!show_list"
-                    class="topic"
-                    :style="{ background: primary_color }"
-                    @click="showList"
-                >
+                <div :key="active_topic" v-if="!show_list" class="topic" :style="{ background: primary_color }" @click="showList">
                     <h3 class="topic-title">{{ active_topic }}</h3>
                 </div>
             </div>
@@ -150,8 +142,6 @@ function goBack() {
 </style>
 
 <style scoped>
-
-
 .topic-list {
     padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
 }

@@ -1,0 +1,12 @@
+{
+    "name": {
+        "short": "ZHR",
+        "medium": "Zion's Harp (Rom.)",
+        "long": "Zion's Harp (Romanian)"
+    },
+    "primaryColor": "#002B7F",
+    "secondaryColor": "#CE1126",
+    "fileExtension": "pdf",
+    "addOn": true,
+    "indexAvailable": false
+}
