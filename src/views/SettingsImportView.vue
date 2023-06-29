@@ -7,10 +7,13 @@ const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
+import { useLocalStorage } from "@vueuse/core";
 
 // Not watching deeply, must assign new array
 
 const imported_book_urls = useCapacitorPreferences<string[]>("externalBooks", []);
+let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
+import_books_tooltip_status.value = true;
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books_urls = computed(() => {
@@ -32,7 +35,7 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
     } catch (e: any) {
         if (e.name == "TypeError") {
             await Toast.show({
-                text: `Failed to load book!`,
+                text: `Failed to load hymnal!`,
             });
             return false;
         }
@@ -43,7 +46,7 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
 
     if (resp == null || !resp.ok || resp.status != 200) {
         await Toast.show({
-            text: `Failed to load book!`,
+            text: `Failed to load hymnal!`,
         });
         return false;
     }
@@ -52,13 +55,13 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
         imported_book_urls.value.push(url);
         if (show_on_success) {
             await Toast.show({
-                text: `Successfully imported book!`,
+                text: `Successfully imported hymnal!`,
             });
         }
         return true;
     } else {
         await Toast.show({
-            text: `Book already imported!`,
+            text: `Hymnal already imported!`,
         });
         return false;
     }
@@ -70,19 +73,19 @@ async function addImportedBookByCode(short_book_name: string) {
         // Check for duplicate url
         if (imported_book_urls.value.includes(to_import_url)) {
             await Toast.show({
-                text: `Book (${short_book_name}) already imported!`,
+                text: `Hymnal (${short_book_name}) already imported!`,
             });
         } else {
             if (await addImportedURL(to_import_url, false)) {
                 await Toast.show({
-                    text: `Successfully imported book (${short_book_name})!`,
+                    text: `Successfully imported hymnal (${short_book_name})!`,
                 });
             }
         }
     } else {
         // Unknown code
         await Toast.show({
-            text: `Unknown book reference (${short_book_name})!`,
+            text: `Unknown hymnal reference (${short_book_name})!`,
         });
     }
 }
@@ -96,13 +99,13 @@ function removeImportedURL(to_remove: string) {
     <div class="menu">
         <div class="title">
             <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Import Books</h1>
+            <h1 class="title--center">Import Hymnals</h1>
         </div>
     </div>
 
     <div class="main-content">
         <div style="display: flex; justify-content: center">
-            <h5 style="margin: 0 auto">The song books below require an internet connection</h5>
+            <h5 style="margin: 0 auto">The hymnals below require an internet connection</h5>
         </div>
         <div class="settings">
             <div class="input-option">
@@ -115,7 +118,7 @@ function removeImportedURL(to_remove: string) {
         </div>
 
         <!-- Publicly available, but not imported books -->
-        <h2 v-if="preview_books_urls.length != 0">Available Books</h2>
+        <h2 v-if="preview_books_urls.length != 0">Available Hymnals</h2>
         <div>
             <HomeBookBox v-for="url in preview_books_urls" :key="url" :src="url" :with-link="false">
                 <button @click="addImportedURL(url)">
@@ -125,7 +128,7 @@ function removeImportedURL(to_remove: string) {
         </div>
 
         <!-- Imported Books -->
-        <h2 v-if="imported_book_urls.length != 0">Imported Books</h2>
+        <h2 v-if="imported_book_urls.length != 0">Imported Hymnals</h2>
         <div style="padding-bottom: 200px">
             <HomeBookBox v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
                 <button @click="removeImportedURL(url)">
