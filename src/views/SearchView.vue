@@ -14,7 +14,9 @@ const stripped_query = computed(() => {
     return search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
         .replace(/s{2,}/g, " ")
-        .toLowerCase();
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "");
 });
 
 watch(search_query, new_query => {
@@ -70,12 +72,16 @@ onMounted(async () => {
                 stripped_title: song.title
                     .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                     .replace(/s{2,}/g, " ")
-                    .toLowerCase(),
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/\p{Diacritic}/gu, ""),
                 stripped_firstLine:
                     song?.firstLine
                         ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                         ?.replace(/s{2,}/g, " ")
-                        ?.toLowerCase() ?? "",
+                        ?.toLowerCase()
+                        ?.normalize("NFD")
+                        ?.replace(/\p{Diacritic}/gu, "") ?? "",
             } as SongSearchInfo);
         }
     }
