@@ -20,7 +20,7 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" src="/assets/book-outline.svg" />
-                        <span class="changetext">More Song Books</span>
+                        <span class="changetext">More Hymnals</span>
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" src="/assets/bug-outline.svg" />
@@ -30,12 +30,14 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
             </div>
         </div>
         <button class="start-button" @click="landing_complete = true">
-            <span style="color: white">Continue</span>
+            <div class="song__title">Continue</div>
         </button>
     </div>
 </template>
 
 <style scoped>
+@import "@/assets/css/song.css";
+
 .change-listings {
     text-align: center;
 }

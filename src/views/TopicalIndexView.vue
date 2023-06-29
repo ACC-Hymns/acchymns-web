@@ -49,10 +49,12 @@ function hideList(topic: string) {
     if (show_list.value) {
         show_list.value = false;
         active_topic.value = topic;
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }, 10);
     } else {
         showList();
     }
@@ -61,10 +63,12 @@ function hideList(topic: string) {
 function showList() {
     show_list.value = true;
     active_topic.value = "";
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-    });
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, 10);
 }
 
 
