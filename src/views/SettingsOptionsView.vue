@@ -7,7 +7,7 @@ const { back } = useNavigator();
 
 let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
-let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 3);
+let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
 let panzoom_enabled = useLocalStorage("ACCOptions.panzoomEnable", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");

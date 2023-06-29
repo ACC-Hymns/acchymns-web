@@ -50,7 +50,7 @@ function hideTooltip() {
                     <RouterLink v-if="index_available" :to="`/topical/${props.book}`" @click="topical_index_tooltip_status = true">
                         <img class="ionicon" src="/assets/book-outline.svg" />
                     </RouterLink>
-                    <div v-if:="!topical_index_tooltip_status" class="tooltip" ref="tooltip">
+                    <div v-if:="!topical_index_tooltip_status && index_available" class="tooltip" ref="tooltip">
                         <p class="tooltiptext">New! Topical Index</p>
                     </div>
                 </div>
