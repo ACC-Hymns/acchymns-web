@@ -2,7 +2,7 @@ name: Build and Deploy Development Branch
 on:
   pull_request:
     branches: [ staging ]
-    types: [ opened, synchronize ]
+    types: [ opened, synchronize, closed ]
     paths-ignore:
       - 'ios/**'
       - 'android/**'
