@@ -77,4 +77,4 @@ jobs:
           touch .nojekyll
           git add .
           git commit -m $GITHUB_SHA
-          git push origin gh-pages
+          git push --force -u origin gh-pages
