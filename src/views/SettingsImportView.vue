@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
@@ -13,7 +13,6 @@ import { useLocalStorage } from "@vueuse/core";
 
 const imported_book_urls = useCapacitorPreferences<string[]>("externalBooks", []);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
-import_books_tooltip_status.value = true;
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books_urls = computed(() => {
@@ -90,6 +89,11 @@ async function addImportedBookByCode(short_book_name: string) {
     }
 }
 
+onUpdated(() => {
+    if(!import_books_tooltip_status.value)
+        import_books_tooltip_status.value = true;
+});
+
 function removeImportedURL(to_remove: string) {
     imported_book_urls.value = imported_book_urls.value.filter(url => url != to_remove);
 }
@@ -104,25 +108,23 @@ function removeImportedURL(to_remove: string) {
     </div>
 
     <div class="main-content">
-        <div style="display: flex; justify-content: center">
-            <h5 style="margin: 0 auto">The hymnals below require an internet connection</h5>
-        </div>
-        <div class="settings">
-            <div class="input-option">
-                <span>Reference</span>
-                <input v-model.trim="reference_input" type="text" class="input-text" />
-                <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
-                    <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
-                </button>
-            </div>
+        <div class="input-option reference-option">
+            <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Reference" />
+            <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
+                <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
+            </a>
         </div>
 
         <!-- Publicly available, but not imported books -->
         <h2 v-if="preview_books_urls.length != 0">Available Hymnals</h2>
+        <div v-if="preview_books_urls.length != 0" class="warning-label-container">
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
+        </div>
         <div>
             <HomeBookBox v-for="url in preview_books_urls" :key="url" :src="url" :with-link="false">
                 <button @click="addImportedURL(url)">
-                    <img class="ionicon ionicon-custom" src="/assets/add-circle-outline.svg" />
+                    <img class="ionicon ionicon-custom booktext--right" src="/assets/add-circle-outline.svg" />
                 </button>
             </HomeBookBox>
         </div>
@@ -130,7 +132,7 @@ function removeImportedURL(to_remove: string) {
         <!-- Imported Books -->
         <h2 v-if="imported_book_urls.length != 0">Imported Hymnals</h2>
         <div style="padding-bottom: 200px">
-            <HomeBookBox v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
+            <HomeBookBox id="import-book" v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
                 <button @click="removeImportedURL(url)">
                     <img class="ionicon ionicon-custom" src="/assets/close.svg" />
                 </button>
@@ -164,11 +166,56 @@ function removeImportedURL(to_remove: string) {
 </style>
 
 <style scoped>
+.warning-icon {
+    width: 20px;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+.warning-label-container {
+    margin: 10px 30px;
+    display: flex; 
+    justify-content: left;
+    text-align:left;
+}
+
+.warning-label {
+    color: var(--toolbar-text);
+    display: inline-block;
+    margin: 0 0;
+    line-height: 25px;
+}
+
 .ionicon-custom {
     filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%);
 }
 
 .book {
     max-height: 50px;
+}
+
+.reference-option {
+    border-bottom: 0;
+}
+
+.enter-button-icon {
+    translate: -2px 4px;
+}
+
+.reference-button {
+    background-color: var(--div-color);
+    border-radius: 15px;
+    padding: 5px 10px;
+    box-shadow: 0 0 15px rgb(0,0,0,0.1);
+    height: 32px;
+}
+
+.search-bar {
+    background-color: var(--search-color);
+    height: 30px;
+    border-radius: 15px;
+    margin: 0px 15px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 </style>
