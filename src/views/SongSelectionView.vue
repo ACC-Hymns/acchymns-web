@@ -108,7 +108,7 @@ function hideTooltip() {
 }
 
 .tooltip {
-    min-width: 120px;
+    min-width: 150px;
     height: 25px;
     background-color: #2196f3;
     box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
@@ -117,13 +117,11 @@ function hideTooltip() {
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    left: 60%;
-    top: 90%;
+    translate: -105px 10px;
     opacity: 1;
 }
 
 .tooltiphidden {
-    height: 25px;
     background-color: #2196f3;
     box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
     text-align: center;
@@ -131,8 +129,6 @@ function hideTooltip() {
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    left: 60%;
-    top: 90%;
     opacity: 0;
     transition: opacity 500ms ease;
 }
