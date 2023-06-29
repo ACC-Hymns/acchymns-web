@@ -32,7 +32,7 @@ const search_results = computed(() => {
         return available_songs.value
             .filter(s => {
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
+                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
                     search_params.value.bookFilters.find(b => b == s.book.name.short)
                 );
             })
@@ -41,7 +41,7 @@ const search_results = computed(() => {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value;
+                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value;
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
@@ -75,8 +75,8 @@ onMounted(async () => {
                     .toLowerCase()
                     .normalize("NFD")
                     .replace(/\p{Diacritic}/gu, ""),
-                stripped_firstLine:
-                    song?.firstLine
+                stripped_first_line:
+                    song?.first_line
                         ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                         ?.replace(/s{2,}/g, " ")
                         ?.toLowerCase()
