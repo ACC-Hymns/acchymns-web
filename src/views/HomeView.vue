@@ -115,7 +115,6 @@ function tooltipVisible(visible: boolean) {
     position: absolute;
     translate: 0 10px;
     margin: 0 calc(50% - 80px);
-    z-index: 1;
     opacity: 1;
 }
 
@@ -128,7 +127,6 @@ function tooltipVisible(visible: boolean) {
     position: absolute;
     translate: 0 10px;
     margin: 0 calc(50% - 80px);
-    z-index: 1;
     opacity: 0;
     transition: opacity 500ms ease;
 }
