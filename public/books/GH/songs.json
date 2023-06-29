@@ -3509,8 +3509,8 @@
         "first_line": "",
 		"notes": ["G4", "C4", "E3", "C3"]
 	},
-	"700": {Tune - 
-		"title": "Rathbun",
+	"700": {
+		"title": "Tune - Rathbun",
         "first_line": "",
 		"notes": ["G4", "C4", "E3", "C3"]
 	},
@@ -3550,7 +3550,7 @@
 		"notes": ["G4", "B3", "G3"]
 	},
 	"708": {
-		"title": "/"Looking Home/"",
+		"title": "\"Looking Home\"",
         "first_line": "",
 		"notes": ["B4", "G4", "G3"]
 	},
