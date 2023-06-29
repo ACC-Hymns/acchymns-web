@@ -124,17 +124,21 @@ function removeImportedURL(to_remove: string) {
         <div>
             <HomeBookBox v-for="url in preview_books_urls" :key="url" :src="url" :with-link="false">
                 <button @click="addImportedURL(url)">
-                    <img class="ionicon ionicon-custom booktext--right" src="/assets/add-circle-outline.svg" />
+                    <img class="ionicon ionicon-custom booktext--right add-button-icon" src="/assets/add-circle-outline.svg" />
                 </button>
             </HomeBookBox>
         </div>
 
         <!-- Imported Books -->
         <h2 v-if="imported_book_urls.length != 0">Imported Hymnals</h2>
+        <div v-if="imported_book_urls.length != 0 && preview_books_urls.length == 0" class="warning-label-container">
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
+        </div>
         <div style="padding-bottom: 200px">
             <HomeBookBox id="import-book" v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
                 <button @click="removeImportedURL(url)">
-                    <img class="ionicon ionicon-custom" src="/assets/close.svg" />
+                    <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
                 </button>
             </HomeBookBox>
         </div>
@@ -166,6 +170,10 @@ function removeImportedURL(to_remove: string) {
 </style>
 
 <style scoped>
+
+.add-button-icon {
+    vertical-align: middle;
+}
 .warning-icon {
     width: 20px;
     display: inline-block;
