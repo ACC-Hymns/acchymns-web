@@ -57,9 +57,10 @@ function play() {
 function hideTooltip() {
     tooltip.value?.classList.add("tooltiphidden");
     tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {  starting_notes_tooltip_status.value = true}, 1000);
+    setTimeout(() => {
+        starting_notes_tooltip_status.value = true;
+    }, 1000);
 }
-
 </script>
 
 <template>
@@ -94,8 +95,8 @@ function hideTooltip() {
 .tooltip {
     min-width: 155px;
     height: 25px;
-    background-color: #2196F3;
-    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    background-color: #2196f3;
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -107,8 +108,8 @@ function hideTooltip() {
 
 .tooltiphidden {
     height: 25px;
-    background-color: #2196F3;
-    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    background-color: #2196f3;
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -126,7 +127,7 @@ function hideTooltip() {
     margin-left: -5px;
     border-width: 10px;
     border-style: solid;
-    border-color: transparent transparent #2196F3 transparent;
+    border-color: transparent transparent #2196f3 transparent;
 }
 
 .tooltiptext {
