@@ -28,7 +28,6 @@ const available_books = ref<BookSummary[]>([]);
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
-        if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
                 return (
