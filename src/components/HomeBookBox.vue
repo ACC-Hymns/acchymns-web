@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useBookSummary } from "@/composables/book_metadata";
+import router from "@/router";
 import { Capacitor } from "@capacitor/core";
 
 const props = withDefaults(
@@ -30,7 +31,7 @@ const {
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
             <!-- Only show wifi symbol if it's a wifi only book and we're on mobile -->
-            <img v-if="book.addOn && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
+            <img v-if="book.addOn && router.currentRoute.value.path != '/settings/import' && Capacitor.getPlatform() !== 'web'" class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
         </component>
     </template>
     <template v-else-if="!isFinished && isSlowFetch">

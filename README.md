@@ -75,6 +75,7 @@ Thanks for supplying PDFs, scans, advice, or assistance.
 - Bro. Ceda Bekic
 - Bro. Peter Denzinger
 - Sis. Rosina Stefan
+- Seby Nitz
 - Joey Nitz
 - Susie Nitz
 - Neven Jokic

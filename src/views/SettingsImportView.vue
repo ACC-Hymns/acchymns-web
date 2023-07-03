@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
@@ -7,10 +7,12 @@ const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
+import { useLocalStorage } from "@vueuse/core";
 
 // Not watching deeply, must assign new array
 
 const imported_book_urls = useCapacitorPreferences<string[]>("externalBooks", []);
+let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books_urls = computed(() => {
@@ -32,7 +34,7 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
     } catch (e: any) {
         if (e.name == "TypeError") {
             await Toast.show({
-                text: `Failed to load book!`,
+                text: `Failed to load hymnal!`,
             });
             return false;
         }
@@ -43,7 +45,7 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
 
     if (resp == null || !resp.ok || resp.status != 200) {
         await Toast.show({
-            text: `Failed to load book!`,
+            text: `Failed to load hymnal!`,
         });
         return false;
     }
@@ -52,13 +54,13 @@ async function addImportedURL(url: string, show_on_success: boolean = true): Pro
         imported_book_urls.value.push(url);
         if (show_on_success) {
             await Toast.show({
-                text: `Successfully imported book!`,
+                text: `Successfully imported hymnal!`,
             });
         }
         return true;
     } else {
         await Toast.show({
-            text: `Book already imported!`,
+            text: `Hymnal already imported!`,
         });
         return false;
     }
@@ -70,22 +72,27 @@ async function addImportedBookByCode(short_book_name: string) {
         // Check for duplicate url
         if (imported_book_urls.value.includes(to_import_url)) {
             await Toast.show({
-                text: `Book (${short_book_name}) already imported!`,
+                text: `Hymnal (${short_book_name}) already imported!`,
             });
         } else {
             if (await addImportedURL(to_import_url, false)) {
                 await Toast.show({
-                    text: `Successfully imported book (${short_book_name})!`,
+                    text: `Successfully imported hymnal (${short_book_name})!`,
                 });
             }
         }
     } else {
         // Unknown code
         await Toast.show({
-            text: `Unknown book reference (${short_book_name})!`,
+            text: `Unknown hymnal reference (${short_book_name})!`,
         });
     }
 }
+
+onUpdated(() => {
+    if(!import_books_tooltip_status.value)
+        import_books_tooltip_status.value = true;
+});
 
 function removeImportedURL(to_remove: string) {
     imported_book_urls.value = imported_book_urls.value.filter(url => url != to_remove);
@@ -96,40 +103,42 @@ function removeImportedURL(to_remove: string) {
     <div class="menu">
         <div class="title">
             <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Import Books</h1>
+            <h1 class="title--center">Import Hymnals</h1>
         </div>
     </div>
 
     <div class="main-content">
-        <div style="display: flex; justify-content: center">
-            <h5 style="margin: 0 auto">The song books below require an internet connection</h5>
-        </div>
-        <div class="settings">
-            <div class="input-option">
-                <span>Reference</span>
-                <input v-model.trim="reference_input" type="text" class="input-text" />
-                <button :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)">
-                    <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
-                </button>
-            </div>
+        <div class="input-option reference-option">
+            <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Reference" />
+            <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
+                <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
+            </a>
         </div>
 
         <!-- Publicly available, but not imported books -->
-        <h2 v-if="preview_books_urls.length != 0">Available Books</h2>
+        <h2 v-if="preview_books_urls.length != 0">Available Hymnals</h2>
+        <div v-if="preview_books_urls.length != 0" class="warning-label-container">
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
+        </div>
         <div>
             <HomeBookBox v-for="url in preview_books_urls" :key="url" :src="url" :with-link="false">
                 <button @click="addImportedURL(url)">
-                    <img class="ionicon ionicon-custom" src="/assets/add-circle-outline.svg" />
+                    <img class="ionicon ionicon-custom booktext--right add-button-icon" src="/assets/add-circle-outline.svg" />
                 </button>
             </HomeBookBox>
         </div>
 
         <!-- Imported Books -->
-        <h2 v-if="imported_book_urls.length != 0">Imported Books</h2>
+        <h2 v-if="imported_book_urls.length != 0">Imported Hymnals</h2>
+        <div v-if="imported_book_urls.length != 0 && preview_books_urls.length == 0" class="warning-label-container">
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
+        </div>
         <div style="padding-bottom: 200px">
-            <HomeBookBox v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
+            <HomeBookBox id="import-book" v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
                 <button @click="removeImportedURL(url)">
-                    <img class="ionicon ionicon-custom" src="/assets/close.svg" />
+                    <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
                 </button>
             </HomeBookBox>
         </div>
@@ -161,11 +170,60 @@ function removeImportedURL(to_remove: string) {
 </style>
 
 <style scoped>
+
+.add-button-icon {
+    vertical-align: middle;
+}
+.warning-icon {
+    width: 20px;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+.warning-label-container {
+    margin: 10px 30px;
+    display: flex; 
+    justify-content: left;
+    text-align:left;
+}
+
+.warning-label {
+    color: var(--toolbar-text);
+    display: inline-block;
+    margin: 0 0;
+    line-height: 25px;
+}
+
 .ionicon-custom {
     filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%);
 }
 
 .book {
     max-height: 50px;
+}
+
+.reference-option {
+    border-bottom: 0;
+}
+
+.enter-button-icon {
+    translate: -2px 4px;
+}
+
+.reference-button {
+    background-color: var(--div-color);
+    border-radius: 15px;
+    padding: 5px 10px;
+    box-shadow: 0 0 15px rgb(0,0,0,0.1);
+    height: 32px;
+}
+
+.search-bar {
+    background-color: var(--search-color);
+    height: 30px;
+    border-radius: 15px;
+    margin: 0px 15px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 </style>

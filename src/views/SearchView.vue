@@ -28,7 +28,6 @@ const available_books = ref<BookSummary[]>([]);
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
-        if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
                 return (
@@ -205,10 +204,8 @@ onUpdated(async () => {
                     />
                 </div>
             </RouterLink>
-            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="justify-content: center">
-                <div>
-                    <img class="ionicon show-more" src="/assets/add-circle-outline.svg" />
-                </div>
+            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">
+                <div class="song__title">Show more</div>
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@ import { RouterLink } from "vue-router";
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
-            <span>Import Books</span>
+            <span>Import Hymnals</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>
