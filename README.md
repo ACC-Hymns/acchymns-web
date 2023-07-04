@@ -1,7 +1,11 @@
-# ACCHymnal
+# ACC Hymns
 
 Central ACC Hymnal for many song books used across the ACC
 
+## Using ACC Hymns
+| Android | iOS | Web |
+|:-:|:-:|:-:|
+| [<img src="/public/assets/en_badge_web_generic.png" height="75"/>](https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns) | [<img src="/public/assets/Appstore_badge.svg" height="50"/>](https://apps.apple.com/us/app/acc-hymns/id1634426405) | [acchymns.app](https://www.acchymns.app) |
 ## Project Setup
 
 ```sh
