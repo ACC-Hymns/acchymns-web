@@ -27,6 +27,7 @@ async function getAllBookMetaData() {
 
     const temp = Object.fromEntries(bookSummary.map((summary, _) => [summary.name.short, summary]));
     console.log("BOOK_METADATA:", performance.now() - now);
+    console.log(temp)
     return temp;
 }
 
@@ -42,12 +43,12 @@ async function getAllSongMetaData() {
     return temp;
 }
 
-async function getSongMetaData(book_short_name: string): Promise<SongList> {
+async function getSongMetaData(book_short_name: string): Promise<SongList | null> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
-        return (await fetchCachedJSON(`${BOOK_METADATA[book_short_name].srcUrl}/songs.json`, {})) ?? {};
+        return (await fetchCachedJSON(`${BOOK_METADATA[book_short_name].srcUrl}/songs.json`, {})) ?? null;
     }
-    return {};
+    return null;
 }
 
 async function getBookIndex(book_short_name: string): Promise<BookIndex> {

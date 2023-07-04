@@ -11,6 +11,8 @@ const router = useRouter();
 
 let topical_index_tooltip_status = useLocalStorage<boolean>("topical_index_tooltip_complete", false);
 
+const error_active = ref(false);
+
 const song_numbers = ref<string[]>([]);
 let book_name = ref("");
 let index_available = ref(false);
@@ -20,6 +22,11 @@ let tooltip = ref<Element>();
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const songs = await getSongMetaData(props.book);
+
+    if (songs == null) {
+        error_active.value = true;
+        return;
+    }
     song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
@@ -43,7 +50,7 @@ function hideTooltip() {
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             </div>
             <div class="title--center">
-                <h1>{{ book_name }}</h1>
+                <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
                 <div @click="hideTooltip">
@@ -58,7 +65,10 @@ function hideTooltip() {
         </div>
     </div>
 
-    <div class="songs main-content">
+    <div v-if="error_active" class="fallback-container">
+        <img class="wifi-fallback" src="/assets/wifi_off.svg" />
+    </div>
+    <div v-else class="songs main-content">
         <!-- Buttons will be added here -->
         <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
             {{ song_num }}
@@ -149,5 +159,19 @@ function hideTooltip() {
     line-height: 25px;
     font-size: 15px;
     color: white;
+}
+
+.wifi-fallback {
+    filter: var(--svg-back-filter);
+    display: block;
+    width: 50%;
+    z-index: -1;
+}
+
+.fallback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 </style>

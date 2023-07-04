@@ -38,8 +38,9 @@ async function toggleBookmark() {
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
-
-    notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+    if (SONG_METADATA != null) {
+        notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+    }
 });
 
 onUnmounted(() => {

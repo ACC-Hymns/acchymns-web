@@ -39,6 +39,11 @@ let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true)
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
+    console.log(BOOK_METADATA[props.book])
+    if (BOOK_METADATA[props.book] == undefined) {
+        error_is_active.value = true;
+        return;
+    }
     const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
@@ -78,6 +83,7 @@ onMounted(async () => {
 }
 
 .wifi-fallback {
+    filter: var(--svg-back-filter);
     display: block;
     width: 50%;
     z-index: -1;
@@ -86,6 +92,7 @@ onMounted(async () => {
 .fallback-container {
     display: flex;
     justify-content: center;
+    height: 100vh;
 }
 
 .panzoom-container {
