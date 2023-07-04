@@ -4,7 +4,7 @@ import { getBookUrls } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { onMounted, ref } from "vue";
-import { Network } from '@capacitor/network';
+import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
 
 var hasConnection = ref<boolean>(false);
@@ -21,13 +21,14 @@ onMounted(async () => {
 function hideTooltip() {
     tooltip.value?.classList.add("tooltiphidden");
     tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {  import_books_tooltip_status.value = true}, 1000);
+    setTimeout(() => {
+        import_books_tooltip_status.value = true;
+    }, 1000);
 }
 
 function tooltipVisible(visible: boolean) {
     return visible ? "padding-top: 50px;" : "";
 }
-
 </script>
 
 <template>
@@ -107,8 +108,8 @@ function tooltipVisible(visible: boolean) {
 .tooltip {
     min-width: 160px;
     height: 25px;
-    background-color: #2196F3;
-    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    background-color: #2196f3;
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -119,8 +120,8 @@ function tooltipVisible(visible: boolean) {
 }
 
 .tooltiphidden {
-    background-color: #2196F3;
-    box-shadow: 0 0 15px rgb(0,0,0,0.25);
+    background-color: #2196f3;
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
@@ -138,7 +139,7 @@ function tooltipVisible(visible: boolean) {
     margin-left: -10px;
     border-width: 10px;
     border-style: solid;
-    border-color: transparent transparent #2196F3 transparent;
+    border-color: transparent transparent #2196f3 transparent;
 }
 
 .tooltiptext {

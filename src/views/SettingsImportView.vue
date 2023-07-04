@@ -90,8 +90,7 @@ async function addImportedBookByCode(short_book_name: string) {
 }
 
 onUpdated(() => {
-    if(!import_books_tooltip_status.value)
-        import_books_tooltip_status.value = true;
+    if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
 });
 
 function removeImportedURL(to_remove: string) {
@@ -170,7 +169,6 @@ function removeImportedURL(to_remove: string) {
 </style>
 
 <style scoped>
-
 .add-button-icon {
     vertical-align: middle;
 }
@@ -181,9 +179,9 @@ function removeImportedURL(to_remove: string) {
 }
 .warning-label-container {
     margin: 10px 30px;
-    display: flex; 
+    display: flex;
     justify-content: left;
-    text-align:left;
+    text-align: left;
 }
 
 .warning-label {
@@ -213,7 +211,7 @@ function removeImportedURL(to_remove: string) {
     background-color: var(--div-color);
     border-radius: 15px;
     padding: 5px 10px;
-    box-shadow: 0 0 15px rgb(0,0,0,0.1);
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.1);
     height: 32px;
 }
 

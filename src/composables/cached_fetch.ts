@@ -70,16 +70,10 @@ export async function fetchCachedJSON<T>(url: RequestInfo | URL, options: UseCac
             return json;
         }
     } catch (ex: any) {
-        // Any extra errors should get propagated, aborts we can ignore
+        // Any extra errors should get reported, aborts we can ignore
         const e = ex as DOMException;
-        // Early exit on weird Apple "TypeError: Load Failed" <- Only Dallas has experienced this so far
-        if (e.name == "TypeError") {
-            console.error("Failed to fetch, IOS?:", e);
-            return null;
-        }
         if (e.name != "AbortError") {
-            console.error(e);
-            throw e;
+            console.error(e, e.stack);
         }
 
         // If we want to fail soft, bestAttempt should be set, and it will return the last cached value
@@ -130,7 +124,7 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
                 const json: T = await resp.json();
                 result.value = json;
             } else {
-                // When no timeout is set, a slow fetch is 20% of the timeout duration, or past the threshold if used
+                // When a timeout is set, a slow fetch is 20% of the timeout duration, or past the threshold if used
                 const slow_fetch_id = setTimeout(() => (isSlowFetch.value = true), options.slowFetchThreshold ?? 0.2 * options.timeout);
 
                 // Set up an abort controller to abort the request if desired
@@ -154,17 +148,10 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
             isFetching.value = false;
             isSlowFetch.value = false;
 
-            // Any extra errors should get propagated, aborts we can ignore
+            // Any extra errors should be reported, aborts we can ignore
             const e = ex as DOMException;
-            // Early exit on weird Apple "TypeError: Load Failed" <- Only Dallas has experienced this so far
-            if (e.name == "TypeError") {
-                console.error("Failed to fetch, IOS?:", e);
-                return null;
-            }
-
             if (e.name != "AbortError") {
-                console.log(e);
-                throw e;
+                console.error(e, e.stack);
             }
 
             // If we want to fail soft, bestAttempt should be set, and it will return the last cached value
@@ -173,6 +160,8 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
                 // Cached values are out of date, but can still be used when the network fails
                 result.value = cached.data;
                 isCached.value = true;
+            } else {
+                result.value = null;
             }
         }
         isFinished.value = true;
