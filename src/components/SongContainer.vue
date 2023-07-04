@@ -39,7 +39,7 @@ let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true)
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    console.log(BOOK_METADATA[props.book])
+    console.log(BOOK_METADATA[props.book]);
     if (BOOK_METADATA[props.book] == undefined) {
         error_is_active.value = true;
         return;

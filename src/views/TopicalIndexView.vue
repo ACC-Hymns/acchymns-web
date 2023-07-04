@@ -10,6 +10,7 @@ const props = defineProps<{
 const router = useRouter();
 
 const show_list = ref(true);
+const error_active = ref(false);
 const scroll_topic_list = ref<Element | null>(null);
 let num_of_songs = ref(0);
 let book_ref = ref("");
@@ -31,7 +32,11 @@ onMounted(async () => {
     book_ref.value = BOOK_METADATA[props.book].name.short;
     primary_color.value = BOOK_METADATA[props.book].primaryColor;
     secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
-    const raw_index = (await getBookIndex(BOOK_METADATA[props.book].name.short)) ?? {};
+    const raw_index = await getBookIndex(BOOK_METADATA[props.book].name.short);
+    if (raw_index == null || BOOK_SONG_METADATA == null) {
+        error_active.value = true;
+        return;
+    }
     for (let [topic_name, numbers] of Object.entries(raw_index)) {
         topical_index.value[topic_name] = [];
         for (let song_number of numbers) {
@@ -88,7 +93,10 @@ function goBack() {
         </div>
     </div>
 
-    <div class="main-content">
+    <div v-if="error_active" class="fallback-container">
+        <img class="wifi-fallback" src="/assets/wifi_off.svg" />
+    </div>
+    <div v-else class="main-content">
         <!-- Each Topical Section -->
         <div>
             <div ref="scroll_topic_list">
@@ -186,5 +194,18 @@ function goBack() {
     line-height: 50px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+.wifi-fallback {
+    filter: var(--svg-back-filter);
+    display: block;
+    width: 50%;
+    z-index: -1;
+}
+
+.fallback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 </style>
