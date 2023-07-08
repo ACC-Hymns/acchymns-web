@@ -34,8 +34,8 @@ jobs:
       - name: Build app bundle
         run: |
           chmod +x ./android/gradlew
-          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias release --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype APK
-          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias release --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype AAB
+          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias upload-keystore --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype APK
+          npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias upload-keystore --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype AAB
 
       - name: Upload release AAB
         uses: actions/upload-artifact@v3
