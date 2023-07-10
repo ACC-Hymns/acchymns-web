@@ -8,5 +8,5 @@
     "secondaryColor": "#04491b",
     "fileExtension": "pdf",
     "addOn": true,
-    "indexAvailable": false
+    "indexAvailable": true
 }
