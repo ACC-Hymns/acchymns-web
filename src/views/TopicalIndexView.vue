@@ -165,7 +165,7 @@ function goBack() {
 .topic {
     height: 80px;
     min-width: calc(100vw - 30px);
-    display: table;
+
     text-align: center;
     color: white;
     border-radius: 15px;
@@ -191,12 +191,9 @@ function goBack() {
     top: calc(50% - 50px / 2);
     position: relative;
     height: 50px;
-    overflow-wrap: break-word;
-    display: table-cell;
-    vertical-align: middle;
+    line-height: 50px;
     margin-top: 0px;
     margin-bottom: 0px;
-    white-space: normal;
 }
 .wifi-fallback {
     filter: var(--svg-back-filter);
