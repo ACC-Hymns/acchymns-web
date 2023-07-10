@@ -2,7 +2,8 @@
 import { onMounted, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
-import type { Song } from "@/scripts/types";
+import type { Song, BookSummary } from "@/scripts/types";
+import { useSessionStorage } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
@@ -12,23 +13,31 @@ const router = useRouter();
 const show_list = ref(true);
 const error_active = ref(false);
 const scroll_topic_list = ref<Element | null>(null);
-let num_of_songs = ref(0);
+
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: Song[] }>({});
 let active_topic = ref<string>("");
+
+let BOOK_SONG_METADATA: any = null;
+let BOOK_METADATA: any = null;
 const songs_to_display = computed(() => {
-    if (active_topic.value in topical_index.value) {
-        return topical_index.value[active_topic.value];
+    if(isAlphabetical.value) {
+        return alphabeticalSongs.value;
+    }
+    else {
+        if (active_topic.value in topical_index.value) {
+            return topical_index.value[active_topic.value];
+        }
     }
     return [];
 });
 
+
 onMounted(async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    const BOOK_SONG_METADATA = await getSongMetaData(props.book);
-    num_of_songs.value = BOOK_METADATA[props.book].numOfSongs;
+    BOOK_METADATA = await getAllBookMetaData();
+    BOOK_SONG_METADATA = await getSongMetaData(props.book);
     book_ref.value = BOOK_METADATA[props.book].name.short;
     primary_color.value = BOOK_METADATA[props.book].primaryColor;
     secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
@@ -48,6 +57,19 @@ onMounted(async () => {
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
+    for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
+        let song: Song = BOOK_SONG_METADATA[song_number];
+        alphabeticalSongs.value.push({
+            title: song?.title ?? "",
+            number: song_number,
+            notes: song?.notes,
+            firstLine: song?.firstLine
+        });
+    }
+    alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+
+    title.value = "Topical Index";
+    icon.value = "../assets/text.svg";
 });
 
 function hideList(topic: string) {
@@ -83,13 +105,37 @@ function goBack() {
         showList();
     }
 }
+
+let isAlphabetical = useSessionStorage<boolean>("isAlphabetical", false);
+const alphabeticalSongs = ref<Song[]>([]);
+let title = ref("Topical Index");
+let icon = ref("../assets/text.svg");
+function toggleAlphabetical() {
+    isAlphabetical.value = !isAlphabetical.value;
+    if(isAlphabetical.value) {
+        title.value = "Alphabetical Index";
+        icon.value = "../assets/list-bulleted.svg";
+    }
+    else {
+        title.value = "Topical Index";
+        icon.value = "../assets/text.svg";
+    }
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, 10);
+}
+
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
             <img @click="goBack()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Topical Index</h1>
+            <h1 class="title--center">{{title}}</h1>
+            <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
         </div>
     </div>
 
@@ -98,7 +144,7 @@ function goBack() {
     </div>
     <div v-else class="main-content">
         <!-- Each Topical Section -->
-        <div>
+        <div v-if="!isAlphabetical">
             <div ref="scroll_topic_list">
                 <div :key="active_topic" v-if="!show_list" class="topic" :style="{ background: primary_color }" @click="showList">
                     <h3 class="topic-title">{{ active_topic }}</h3>
@@ -119,13 +165,29 @@ function goBack() {
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
             </RouterLink>
+            <div class="topic-list">
+                <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
+                    <div v-if="show_list" class="topic expanded-topic" :style="{ background: primary_color }" @click="hideList(topic as string)">
+                        <h3 class="topic-title">{{ topic }}</h3>
+                    </div>
+                </template>
+            </div>
         </div>
-        <div class="topic-list">
-            <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
-                <div v-if="show_list" class="topic expanded-topic" :style="{ background: primary_color }" @click="hideList(topic as string)">
-                    <h3 class="topic-title">{{ topic }}</h3>
+        <div v-else>
+            <RouterLink
+                v-for="song in songs_to_display"
+                :key="song.title + song.number"
+                :to="`/display/${book_ref}/${song.number}`"
+                class="song topic-song"
+                :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
+            >
+                <div>
+                    <div class="song__title">{{ song.title }}</div>
                 </div>
-            </template>
+                <div class="booktext--right">
+                    <div class="song__number">#{{ song.number }}</div>
+                </div>
+            </RouterLink>
         </div>
     </div>
 
