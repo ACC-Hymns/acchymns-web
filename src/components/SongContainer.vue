@@ -47,15 +47,16 @@ onMounted(async () => {
     const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
+    var isMobile = Capacitor.getPlatform() !== "web";
     if (panzoom_enabled.value) {
         createPanZoom(panzoom_container.value as HTMLDivElement, {
             beforeWheel: e => {
                 return e.shiftKey;
             },
             maxZoom: 3,
-            minZoom: Capacitor.getPlatform() !== "web" ? 1 : 0.25,
+            minZoom: isMobile ? 1 : 0.25,
             bounds: true,
-            boundsPadding: 0.5,
+            boundsPadding: isMobile ? 1 : 0.5,
         });
     }
 });
