@@ -63,7 +63,7 @@ onMounted(async () => {
             title: song?.title ?? "",
             number: song_number,
             notes: song?.notes,
-            firstLine: song?.firstLine
+            first_line: song?.first_line
         });
     }
     alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
