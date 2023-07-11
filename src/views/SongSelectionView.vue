@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
@@ -32,6 +32,8 @@ onMounted(async () => {
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
+
+    useSessionStorage<boolean>("isAlphabetical", false).value = false;
 });
 
 function hideTooltip() {
