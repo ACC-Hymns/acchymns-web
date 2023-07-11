@@ -1,17 +1,14 @@
 {
 	"1": {
 		"title": "Sladký pokoj v nebi",
-        "first_line": "",
         "notes": ["D4", "B3", "G3"]
 	},
 	"2": {
 		"title": "Vedeni duchem svatým",
-        "first_line": "",
         "notes": ["D4", "B3", "G3"]
 	},
 	"3": {
 		"title": "Zemĕ pokoje",
-        "first_line": "",
         "notes": ["G4", "D4", "B3", "G3"]
 	},
 	"4": {
@@ -24,17 +21,14 @@
 	},
 	"6": {
 		"title": "Nalezl sem spaseni!",
-        "first_line": "",
         "notes": ["E4", "C4", "G3", "C3"]
 	},
 	"7": {
 		"title": "Ježis vĕrný pritel v sauženi",
-        "first_line": "",
         "notes": ["C5", "F4", "A3", "F3"]
 	},
 	"8": {
 		"title": "Malé svetlá",
-        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"9": {
@@ -47,42 +41,34 @@
 	},
 	"11": {
 		"title": "Bratri zde na brehu čekejme!",
-        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"12": {
 		"title": "Odpočinuti pro unavených!",
-        "first_line": "",
         "notes": ["E4", "C4", "C3"]
 	},
 	"13": {
 		"title": "Téch devadesát devĕt!",
-        "first_line": "",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"14": {
 		"title": "Což bude táto žeň?",
-        "first_line": "",
         "notes": ["E4", "C4", "C3"]
 	},
 	"15": {
 		"title": "Pocitĕni po križem!",
-        "first_line": "",
         "notes": ["D5", "B4", "G3"]
 	},
 	"16": {
 		"title": "Jedna ovĕčka s pastvy",
-        "first_line": "",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"17": {
 		"title": "Na vĕky doma",
-        "first_line": "",
         "notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"18": {
 		"title": "Chvatle Hospodina",
-        "first_line": "",
         "notes": ["D4", "F#3", "D3"]
 	},
 	"19": {
@@ -91,32 +77,26 @@
 	},
 	"20": {
 		"title": "Hrobový odpočinek",
-        "first_line": "",
         "notes": ["D4", "D3"]
 	},
 	"21": {
 		"title": "Upomináni",
-        "first_line": "",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"22": {
 		"title": "Ježiš-dité",
-        "first_line": "",
         "notes": ["B4", "G4", "D4", "G3"]
 	},
 	"23": {
 		"title": "Navráceni",
-        "first_line": "",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"24": {
 		"title": "Ježiš vysvoboditel",
-        "first_line": "",
         "notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"25": {
 		"title": "Nemámli já zde spivati?",
-        "first_line": "",
         "notes": ["D4", "D3"]
 	}
 }

@@ -1,812 +1,650 @@
 {
 	"1": {
 		"title": "Lord Jesus Christ, Be Present Now",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"2": {
 		"title": "Lord Jesus, Thou Art King",
-        "first_line": "",
 		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"3": {
 		"title": "We Are Assembled Here, O Lord",
-        "first_line": "",
 		"notes": ["G4", "E4", "G3", "C3"]
 	},
 	"4": {
 		"title": "How Sweet The Name Of Jesus Sounds",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "E3"]
 	},
 	"5": {
 		"title": "Jesus Reigns, Let Us Adore Him",
-        "first_line": "",
 		"notes": ["C4", "E3", "C3"]
 	},
 	"6": {
 		"title": "Jesus, Lover Of My Soul",
-        "first_line": "",
 		"notes": ["E4", "C4", "E3", "C3"]
 	},
 	"7": {
 		"title": "Christ, My King, Draws Near In Glory",
-        "first_line": "",
 		"notes": ["E4", "C4", "C3"]
 	},
 	"8": {
 		"title": "Do Ye See The Shepherd Wandering?",
-        "first_line": "",
 		"notes": ["F4", "A3", "F3"]
 	},
 	"9": {
 		"title": "Behold, How Good And Pleasant",
-        "first_line": "",
 		"notes": ["C4", "C3"]
 	},
 	"10": {
 		"title": "Thou Wilt Return In Glory",
-        "first_line": "",
 		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"11": {
 		"title": "My God And Father",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3"]
 	},
 	"12": {
 		"title": "When His Salvation Bringing",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"13": {
 		"title": "Blossoming Youth",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"14": {
 		"title": "Peace, This Is The Dearest Good",
-        "first_line": "",
 		"notes": ["Bb4", "D4", "F3", "Bb2"]
 	},
 	"15": {
 		"title": "I Will Sing Of My Redeemer",
-        "first_line": "",
 		"notes": ["Eb4", "Eb3"]
 	},
 	"16": {
 		"title": "O Come, All Ye Faithful",
-        "first_line": "",
 		"notes": ["A4", "E4", "C#4", "A3"]
 	},
 	"17": {
 		"title": "Come, Thou Almighty King",
-        "first_line": "",
 		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"18": {
 		"title": "Holy Spirit, Faithful Guide",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"19": {
 		"title": "Rock Of Ages",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"20": {
 		"title": "Abide With Me",
-        "first_line": "",
 		"notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"21": {
 		"title": "Jesus, The Very Thought Of Thee",
-        "first_line": "",
 		"notes": ["B4", "D4", "B3", "G3"]
 	},
 	"22": {
 		"title": "Fairest Lord Jesus",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"23": {
 		"title": "My Hope Is Built On Nothing Less",
-        "first_line": "",
 		"notes": ["B4", "D4", "G3"]
 	},
 	"24": {
 		"title": "The Lord Is My Shepherd",
-        "first_line": "",
 		"notes": ["G4", "B3", "G3", "G2"]
 	},
 	"25": {
 		"title": "O Praise The Lord",
-        "first_line": "",
 		"notes": ["A4", "F4", "A3"]
 	},
 	"26": {
 		"title": "A Rest Remaineth For The Weary",
-        "first_line": "",
 		"notes": ["B4", "E4", "G#3", "E3"]
 	},
 	"27": {
 		"title": "I Love To Tell The Story",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"28": {
 		"title": "God Is Merciful And Gracious",
-        "first_line": "",
 		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"29": {
 		"title": "O Where Is The Haven Of Rest",
-        "first_line": "",
 		"notes": ["B4", "G4", "E4", "E3"]
 	},
 	"30": {
 		"title": "My Jesus, As Thou Wilt",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"31": {
 		"title": "In The Cross Of Christ I Glory",
-        "first_line": "",
 		"notes": ["G4", "E4", "G3", "C3"]
 	},
 	"32": {
 		"title": "O Lift Up Mine Eyes, My Spirit",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"33": {
 		"title": "Shepherd Of Tender Youth",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"34": {
 		"title": "Arise, My Soul, Arise",
-        "first_line": "",
 		"notes": ["Bb4", "D4", "F3", "Bb2"]
 	},
 	"35": {
 		"title": "The Lord My Faithful Shepherd Is",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"36": {
 		"title": "O Sacred Head, No Wounded",
-        "first_line": "",
 		"notes": ["E4", "C4", "G3", "C3"]
 	},
 	"37": {
 		"title": "From Every Stormy Wind That Blows",
-        "first_line": "",
 		"notes": ["E4", "C4", "G3", "C3"]
 	},
 	"38": {
 		"title": "My Jesus, I Love Thee",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"39": {
 		"title": "Jesus, Savior, Pilot Me",
-        "first_line": "",
 		"notes": ["D5", "F4", "Bb3", "Bb2"]
 	},
 	"40": {
 		"title": "Lord, Take My Heart",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3"]
 	},
 	"41": {
 		"title": "Teach Me, O Lord, Thy Holy Way",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"42": {
 		"title": "Hear The Loving Voice Of Jesus",
-        "first_line": "",
 		"notes": ["D4", "D3", "F#2"]
 	},
 	"43": {
 		"title": "Like The Clouds In The Sky",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"44": {
 		"title": "May Our Hearts Be Joyful Ever",
-        "first_line": "",
 		"notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"45": {
 		"title": "Lord, Open Thou Both Heart And Ear",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"46": {
 		"title": "Behold The Tomb Is Vacant Now",
-        "first_line": "",
 		"notes": ["C5", "E4", "G3", "C3"]
 	},
 	"47": {
 		"title": "O Worship The King",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"48": {
 		"title": "Joyfully, Joyfully Onward I Move",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"49": {
 		"title": "I Gave My Life For Thee",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"50": {
 		"title": "I Need Thee Every Hour",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"51": {
 		"title": "Jesus, Thou My Soul's Best Friend",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"52": {
 		"title": "God Is Love",
-        "first_line": "",
 		"notes": ["Bb4", "D4", "Bb3", "Bb2"]
 	},
 	"53": {
 		"title": "Unmeasured Is Thy Goodness, Lord",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"54": {
 		"title": "Softly And Tenderly",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"55": {
 		"title": "Jesus, Savior, Come To Me",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"56": {
 		"title": "Precious Promise God Hath Given",
-        "first_line": "",
 		"notes": ["D4", "D3"]
 	},
 	"57": {
 		"title": "My Faith Looks Up To Thee",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"58": {
 		"title": "Hallelujah, Lovely Morning",
-        "first_line": "",
 		"notes": ["A4", "D4", "F#3", "D3"]
 	},
 	"59": {
 		"title": "Lo, In Heaven 'tis Wondrous Fair",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"60": {
 		"title": "Softly Now The Light Of Day",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"61": {
 		"title": "Let Us With Deep Meditation",
-        "first_line": "",
 		"notes": ["Bb4", "D4", "F3", "Bb2"]
 	},
 	"62": {
 		"title": "When I Survey The Wondrous Cross",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"63": {
 		"title": "As With Gladness, Men Of Old",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"64": {
 		"title": "Be Praised And Adored",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"65": {
 		"title": "Weep, My Spirit, Weep In Sorrow",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"66": {
 		"title": "Guide Me, O Thou Great Jehovah",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"67": {
 		"title": "Sweet Hour Of Prayer",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"68": {
 		"title": "Faith Is A Living Power",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"69": {
 		"title": "Joy To The World",
-        "first_line": "",
 		"notes": ["D5", "F#4", "D4", "D3"]
 	},
 	"70": {
 		"title": "Behold The Master Passeth By",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"71": {
 		"title": "He Leadeth Me, O Blessed Thought",
-        "first_line": "",
 		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"72": {
 		"title": "O Love That Wilt Not Let Me Go",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"73": {
 		"title": "Savior, Like A Shepherd Lead Us",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "B3", "Eb3"]
 	},
 	"74": {
 		"title": "Christ The Lord Is Risen Today",
-        "first_line": "",
 		"notes": ["E4", "B3", "G#3", "E3"]
 	},
 	"75": {
 		"title": "God, The All-Loving",
-        "first_line": "",
 		"notes": ["F4", "A3", "F3"]
 	},
 	"76": {
 		"title": "Jesus Shall Reign Where'er The Sun",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"77": {
 		"title": "Safe In The Arms Of Jesus",
-        "first_line": "",
 		"notes": ["D5", "D4", "G3"]
 	},
 	"78": {
 		"title": "The Pilgrim And The Stranger",
-        "first_line": "",
 		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"79": {
 		"title": "Jerusalem, My Happy Home",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"80": {
 		"title": "Weary From The Heavy Burden",
-        "first_line": "",
 		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"81": {
 		"title": "Hark, Hark, My Soul",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"82": {
 		"title": "I Love Thy Kingdom, Lord",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"83": {
 		"title": "How Great The Joy To Be A Lamb Of Jesus",
-        "first_line": "",
 		"notes": ["F4", "F3"]
 	},
 	"84": {
 		"title": "How Solemn Are The Words",
-        "first_line": "",
 		"notes": ["G4", "E4", "G3", "C3"]
 	},
 	"85": {
 		"title": "All The Way My Savior Leads Me",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"86": {
 		"title": "I Heard The Voice Of Jesus Say",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"87": {
 		"title": "I've Found A Friend, Oh, Such A Friend",
-        "first_line": "",
 		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"88": {
 		"title": "Savior, Breathe An Evening Blessing",
-        "first_line": "",
 		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"89": {
 		"title": "What A Friend We Have In Jesus",
-        "first_line": "",
 		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"90": {
 		"title": "I Think When I Read That Sweet Story Of Old",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"91": {
 		"title": "How Firm A Foundation, Ye Saints Of The Lord",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"92": {
 		"title": "Jesus, Tender Shepherd, Hear Me",
-        "first_line": "",
 		"notes": ["F4", "A4", "F3"]
 	},
 	"93": {
 		"title": "Hark, How The Angel Host",
-        "first_line": "",
 		"notes": ["C5", "E4", "G3", "C3"]
 	},
 	"94": {
 		"title": "God Moves In A Mysterious Way",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"95": {
 		"title": "Bravely Strive When God Doth Call Thee",
-        "first_line": "",
 		"notes": ["G4", "B3", "G3"]
 	},
 	"96": {
 		"title": "Walk In The Light! So Shalt Thou Know",
-        "first_line": "",
 		"notes": ["Ab4", "Eb4", "C4", "Ab2"]
 	},
 	"97": {
 		"title": "Who Is He That Careth For Us",
-        "first_line": "",
 		"notes": ["C4", "G4", "E4", "C3"]
 	},
 	"98": {
 		"title": "Praise God, From Whom All Blessings Flow",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"99": {
 		"title": "Know Ye The Son, The Mighty Son Of God",
-        "first_line": "",
 		"notes": ["F4"]
 	},
 	"100": {
 		"title": "How Gentle God's Commands",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"101": {
 		"title": "Beautiful Valley Of Eden",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"102": {
 		"title": "Pass Me Not O Gentle Savior",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"103": {
 		"title": "Glorious Things Of Thee Are Spoken",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"104": {
 		"title": "O Perfect Life Of Love",
-        "first_line": "",
 		"notes": ["G4", "E4", "G3", "C3"]
 	},
 	"105": {
 		"title": "There Is A Truly Blessed Land",
-        "first_line": "",
 		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"106": {
 		"title": "I Say To All Men Far And Near",
-        "first_line": "",
 		"notes": ["Eb4", "Eb3"]
 	},
 	"107": {
 		"title": "Come With Thy Sins To The Fountain",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F3"]
 	},
 	"108": {
 		"title": "I Know That My Redeemer Lives",
-        "first_line": "",
 		"notes": ["A4", "F#4", "D4", "D3"]
 	},
 	"109": {
 		"title": "We Sing To Thee, O Son Divine",
-        "first_line": "",
 		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"110": {
 		"title": "O My Soul, Bless Thou Jehovah",
-        "first_line": "",
 		"notes": ["G4", "C4", "E3", "C3"]
 	},
 	"111": {
 		"title": "O, How Shall I Receive Thee",
-        "first_line": "",
 		"notes": ["C5", "A4", "C4", "F4"]
 	},
 	"112": {
 		"title": "Lord, Jesus, All Our Thanks And Praise",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"113": {
 		"title": "My Praise, Ascent To God Today",
-        "first_line": "",
 		"notes": ["F4", "A3", "F3"]
 	},
 	"114": {
 		"title": "Mighty God, We Bring Thee Praise",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"115": {
 		"title": "Praise Thou The Lord, O My Soul",
-        "first_line": "",
 		"notes": ["Bb4", "F4", "D4", "Bb3"]
 	},
 	"116": {
 		"title": "All Hail The Power Of Jesus' Name",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"117": {
 		"title": "Praise God In His Sanctuary",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"118": {
 		"title": "Lord Jesus, I Long To Be Perfectly Whole",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"119": {
 		"title": "For The Beauty Of The Earth",
-        "first_line": "",
 		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
 	},
 	"120": {
 		"title": "Lord, Again The Sun Is Risen",
-        "first_line": "",
 		"notes": ["G4", "B3", "G3"]
 	},
 	"121": {
 		"title": "Holy, Holy, Holy, Lord God Almighty",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"122": {
 		"title": "Take Thou My Hand And Lead Me",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"123": {
 		"title": "Low In The Grave He Lay",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "E3"]
 	},
 	"124": {
 		"title": "Salvation, Full, Eternal, Free",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"125": {
 		"title": "To Sunday School We Happy Go",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"126": {
 		"title": "Gentle Savior, God Of Love",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"127": {
 		"title": "Oh, Let Us Now Praise Our Dear Savior",
-        "first_line": "",
 		"notes": ["F4", "F3"]
 	},
 	"128": {
 		"title": "Jesus Loves Me, This I Know",
-        "first_line": "",
 		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"129": {
 		"title": "Let The Little Ones Come Unto Me",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"130": {
 		"title": "God Is Always Near Me",
-        "first_line": "",
 		"notes": ["Ab4", "F4", "Ab3", "Db3"]
 	},
 	"131": {
 		"title": "O Children, Come With One Accord",
-        "first_line": "",
 		"notes": ["D5", "B4", "D4", "G3"]
 	},
 	"132": {
 		"title": "Savior, We Thank You For The Night",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"133": {
 		"title": "Take The Name Of Jesus With You",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"134": {
 		"title": "Jesus, Hear Thy Child",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "F#2"]
 	},
 	"135": {
 		"title": "I Am So Glad That Our Father In Heaven",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"136": {
 		"title": "The Whole Bright World Rejoices Now",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D4"]
 	},
 	"137": {
 		"title": "When He Cometh",
-        "first_line": "",
 		"notes": ["E4", "G#3", "E3"]
 	},
 	"138": {
 		"title": "I Am Jesus' Little Lamb",
-        "first_line": "",
 		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"139": {
 		"title": "O Little Town Of Bethlehem",
-        "first_line": "",
 		"notes": ["D5", "D4", "G3"]
 	},
 	"140": {
 		"title": "Away In A Manger, No Crib For His Bed",
-        "first_line": "",
 		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"141": {
 		"title": "Silent Night, Holy Night",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"142": {
 		"title": "While Shepherds Watched Their Flocks By Night",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"143": {
 		"title": "Hard, The Herald Angels Sing",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"144": {
 		"title": "God Is Great, And God Is Good",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D4"]
 	},
 	"145": {
 		"title": "It Came Upon The Midnight Clear",
-        "first_line": "",
 		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"146": {
 		"title": "Fairest Lord Jesus (Male Voices)",
-        "first_line": "",
 		"notes": ["Eb5", "Bb4", "G3", "Eb3"]
 	},
 	"147": {
 		"title": "Now Let Every Tongue Adore Thee (Male Voices)",
-        "first_line": "",
 		"notes": ["D4", "D3"]
 	},
 	"148": {
 		"title": "Now Sing We, Now Rejoice",
-        "first_line": "",
 		"notes": ["A4", "A3"]
 	},
 	"149": {
 		"title": "O God, Our Help In Ages Past",
-        "first_line": "",
 		"notes": ["A4", "F#3", "D3"]
 	},
 	"150": {
 		"title": "Praise Thou The Lord, The Almighty",
-        "first_line": "",
 		"notes": ["F5", "A4", "F3"]
 	},
 	"151": {
 		"title": "He Who Would Valiant Be",
-        "first_line": "",
 		"notes": ["A4", "A3"]
 	},
 	"152": {
 		"title": "How Bright Appears The Morning Star",
-        "first_line": "",
 		"notes": ["F#4", "G3"]
 	},
 	"153": {
 		"title": "Wake, Awake, For The Night Is Flying (Male Voices)",
-        "first_line": "",
 		"notes": ["D4", "D3"]
 	},
 	"154": {
 		"title": "Lift Thine Eyes (Women's Voices)",
-        "first_line": "",
 		"notes": ["Ab4", "F4", "D4"]
 	},
 	"155": {
 		"title": "Fairest Lord Jesus (Women's Voices)",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3"]
 	},
 	"156": {
 		"title": "Wake, Awake, For The Night Is Flying (Women's Voices)",
-        "first_line": "",
 		"notes": ["Eb4", "G2"]
 	},
 	"157": {
 		"title": "Worthy Is The Lamb That Was Slain",
-        "first_line": "",
 		"notes": ["D5", "A4", "F4", "D4"]
 	},
 	"158": {
 		"title": "The Heavens Are Telling",
-        "first_line": "",
 		"notes": ["F4", "F3"]
 	},
 	"159": {
 		"title": "Jerusalem",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"160": {
 		"title": "Now Let Every Tongue Adore Thee (Mixed Voices)",
-        "first_line": "",
 		"notes": ["Db4", "C4", "F3", "Db3"]
 	},
 	"161": {
 		"title": "Praise And Honor",
-        "first_line": "",
 		"notes": ["D5", "F4", "Bb3", "Bb2"]
 	},
 	"162": {
 		"title": "Hark, The Angel Choir Is Singing",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	}
 }

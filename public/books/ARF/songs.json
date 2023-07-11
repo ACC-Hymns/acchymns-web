@@ -1,663 +1,531 @@
 {
 	"1": {
 		"title": "He Leadeth Me",
-        "first_line": "he leadeth me, O blessed thought! o words with heavenly comfort fraught!",
         "notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"2": {
 		"title": "When He Cometh",
-        "first_line": "when he cometh, when he cometh to make up his jewels,",
         "notes": ["E4", "G#3", "E3"]
 	},
 	"3": {
 		"title": "My Jesus, I Love Thee",
-        "first_line": "my jesus i love tee i know thow are mine",
         "notes": ["F4", "C4", "A3", "F3"]
 	},
 	"4": {
 		"title": "Since Jesus Came Into My Heart",
-        "first_line": "what a wonderful change in my life has been wrought since jesus came into my heart",
         "notes": ["C#4", "A3", "E3", "A2"]
 	},
 	"5": {
 		"title": "In the Garden",
-        "first_line": "i come to the garden alone while the dew is still on the roses",
         "notes": ["Eb4", "C4"]
 	},
 	"6": {
 		"title": "All Hail the Pow'r of Jesus' Name",
-        "first_line": "all hail the power of jesus name! let angels prostrate fall",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"7": {
 		"title": "Have You Any Room for Jesus?",
-        "first_line": "have you any room for jesus he who bore your load of sin",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"8": {
 		"title": "All the Way My Saviour Leads",
-        "first_line": "all the way my saviour leads me what have i to ask beside",
         "notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"9": {
 		"title": "Holy is the Lord",
-        "first_line": "holy holy holy is the lord",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"10": {
 		"title": "Dwelling in Beulah Land",
-        "first_line": "far away the noise of strife upon my ear is falling",
         "notes": ["Bb4", "D4", "Bb3", "Bb2"]
 	},
 	"11": {
 		"title": "More About Jesus",
-        "first_line": "more about jesus would i know more of his grace to others show",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"12": {
 		"title": "Lead me, Saviour",
-        "first_line": "saviour lead lest i stray gently lead me all the way",
         "notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"13": {
 		"title": "Beautiful River",
-        "first_line": "shall we gather at the river where bright angel feet have trod",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"14": {
 		"title": "Trust and Obey",
-        "first_line": "when we walk with the lord in the light of his word what a glory he sheds on our way",
         "notes": ["F4", "C4", "A3", "F3"]
 	},
 	"15": {
 		"title": "I Know Whom I Have Believed",
-        "first_line": "i know not why gods wondrous grace to me he hath made known",
         "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"16": {
 		"title": "The Solid Rock",
-        "first_line": "my hope is built on nothing less than jesus blood and righteousness",
         "notes": ["D4", "B3", "G3"]
 	},
 	"17": {
 		"title": "Come, Thou Fount",
-        "first_line": "come thou fount of every blessing tune my heart to sing thy grace",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"18": {
 		"title": "Lord, I'm Coming Home",
-        "first_line": "ive wandered far away from god now im coming home",
         "notes": ["Eb4", "C4", "Ab3"]
 	},
 	"19": {
 		"title": "What a Friend",
-        "first_line": "what a friend we have in jesus all our sins and griefs to bear",
         "notes": ["C5", "F4", "A3", "F3"]
 	},
 	"20": {
 		"title": "I Love to Tell the Story",
-        "first_line": "i have to tell the story of unseen things above of jesus and his glory of jesus and his love",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"21": {
 		"title": "How I Love Jesus",
-        "first_line": "there is a name i love to hear i love to sing its worth it sounds like music in my ear the sweetest name on earth",
         "notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"22": {
 		"title": "Sweet Hour of Prayer",
-        "first_line": "sweet hour of prayer sweet hour of prayer that calls me from a world of care",
         "notes": ["D4", "F#3", "D3"]
 	},
 	"23": {
 		"title": "I Will Sing the Wondrous Story",
-        "first_line": "i will sing the wondrous story of the christ who died for me",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"24": {
 		"title": "My Faith Looks up to Thee",
-        "first_line": "my faith looks up to thee thou lamb of calvary saviour divine",
         "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"25": {
 		"title": "Work, for the Night is Coming",
-        "first_line": "work for the night is coming work through the morning hours",
         "notes": ["C5", "A4", "F3"]
 	},
 	"26": {
 		"title": "Why Not Now?",
-        "first_line": "while we pray and while we plead while you see your souls deep need",
         "notes": ["A4", "F4", "A3", "D3"]
 	},
 	"27": {
 		"title": "Jesus is Calling",
-        "first_line": "jesus is tenderly calling thee home calling today calling today calling today",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"28": {
 		"title": "Holy Spirit, Faithful Guide",
-        "first_line": "holy spirit faithful guide ever near the christian side",
         "notes": ["D4", "B3", "G3"]
 	},
 	"29": {
 		"title": "Love Lifted Me",
-        "first_line": "i was sinking deep in sin far from the peaceful shore",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"30": {
 		"title": "Come to the Fountain",
-        "first_line": "come with thy sins to the fountain come with thy burden of grief",
         "notes": ["C5", "A4", "C4", "F3"]
 	},
 	"31": {
 		"title": "Is My Name Written There?",
-        "first_line": "lord i care not for riches neither silver nor gold",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"32": {
 		"title": "Let the Saviour in!",
-        "first_line": "theres a stranger at the door let the saviour in",
         "notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"33": {
 		"title": "Count Your Blessings",
-        "first_line": "when upon lifes billows you are tempest tossed when you are discouraged thinking all is lost",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"34": {
 		"title": "The Home Over There",
-        "first_line": "oh think of the home over there by the side of the river of light",
         "notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"35": {
 		"title": "Sweet By-and-By",
-        "first_line": "theres a land that is fairer than day and by faith we can see it afar",
         "notes": ["G4", "D4", "B3", "G3"]
 	},
 	"36": {
 		"title": "What Did He Do?",
-        "first_line": "o listen to our wondrous story counted once among the lost",
         "notes": ["Db5", "F4", "Ab3", "Db3"]
 	},
 	"37": {
 		"title": "Blessed Assurance",
-        "first_line": "blessed assurance jesus is mine o what a foretaste of glory divine",
         "notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"38": {
 		"title": "To the Work",
-        "first_line": "to the work to the work we are servants of god let us follow the path that our master has trod",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"39": {
 		"title": "At the Cross",
-        "first_line": "alas and did my saviour bleed and did my sovereign die",
         "notes": ["E4", "G#3", "E3"]
 	},
 	"40": {
 		"title": "Take the Name of Jesus With You",
-        "first_line": "take the name of jesus with you child of sorrow and of woe",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"41": {
 		"title": "There is a Fountain",
-        "first_line": "there is a fountain filled with blood drawn from immanuel's veins",
         "notes": ["C4", "E3", "C3"]
 	},
 	"42": {
 		"title": "Are You Washed in the Blood?",
-        "first_line": "have you been to jesus for the cleansing power are you washed in the blood of the lamb",
         "notes": ["C4", "Ab3", "Eb3", "Ab2"]
 	},
 	"43": {
 		"title": "Rescue the Perishing",
-        "first_line": "rescue the perishing care for the dying snatch them in pity from sin and the grave",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"44": {
 		"title": "God Will Take Care of You",
-        "first_line": "be not dismayed what eer betide god will take care of you beneath his wings of love abide god will take care of you",
         "notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"45": {
 		"title": "Face to Face",
-        "first_line": "face to face with christ my saviour face to face what will it be",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"46": {
 		"title": "Standing on the Promises",
-        "first_line": "standing on the promises of christ my king through eternal ages let his praises ring",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"47": {
 		"title": "Love Divine",
-        "first_line": "love divine all loves excelling joy of heaven to earth come down",
         "notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"48": {
 		"title": "Angry Words! O Let Them Never",
-        "first_line": "angry words o let them never from the tongue unbridled slip",
         "notes": ["Bb4", "G4"]
 	},
 	"49": {
 		"title": "Tell Mother I'll Be There",
-        "first_line": "when i was but a little child how well i recollect how i would grieve my mother with my folly and neglect",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"50": {
 		"title": "I Must Tell Jesus",
-        "first_line": "i must tell jesus all of my trials i cannot bear these burdens alone",
         "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"51": {
 		"title": "There Is Power in The Blood",
-        "first_line": "would you be free from the burden of sin there's power in the blood power in the blood",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"52": {
 		"title": "God Be With You",
-        "first_line": "god be with you till we meet again by his counsels guide uphold you",
         "notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"53": {
 		"title": "'Tis So Sweet to Trust in Jesus",
-        "first_line": "tis so sweet to trust in jesus just to take him at his word",
         "notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"54": {
 		"title": "Must I Go and Empty Handed?",
-        "first_line": "must i go and empty handed thus my dear redeemer meet",
         "notes": ["A4", "F#4"]
 	},
 	"55": {
 		"title": "There Shall Be Showers of Blessing",
-        "first_line": "there shall be showers of blessing this is the promise of love",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"56": {
 		"title": "Precious Promise",
-        "first_line": "precious promise god hath given to the weary passer by",
         "notes": ["D4", "D3"]
 	},
 	"57": {
 		"title": "The Old Rugged Cross",
-        "first_line": "on a hill far away stood an old rugged cross the emblem of suffering and shame",
         "notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"58": {
 		"title": "My Redeemer",
-        "first_line": "i will sing of my redeemer and his wondrous love to me",
         "notes": ["Eb4", "C4", "Ab3"]
 	},
 	"59": {
 		"title": "Where is my Boy Tonight?",
-        "first_line": "where is my wandring boy tonight tho boy of my tenderest care",
         "notes": ["B4"]
 	},
 	"60": {
 		"title": "Onward, Christian Soldiers",
-        "first_line": "onward christian soldiers marching as to war with the cross of jesus going on before",
         "notes": ["C5", "A4", "F3"]
 	},
 	"61": {
 		"title": "We're Marching to Zion",
-        "first_line": "come ye that love the lord and let your joys be known join in a song with sweet accord",
         "notes": ["G4", "D4", "B3", "G3"]
 	},
 	"62": {
 		"title": "I'll Stand by You",
-        "first_line": "fierce and wild tho storm is raging round a helpless bark",
         "notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"63": {
 		"title": "Stepping in the Light",
-        "first_line": "trying to walk in the steps of the saviour trying to follow our saviour and king",
         "notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"64": {
 		"title": "I am Thine, O Lord",
-        "first_line": "i am thine o lord i have heard thy voice and it told thy love to me",
         "notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"65": {
 		"title": "May Our Hearts be Joyful Ever",
-        "first_line": "may our hearts be joyful ever glad and joyful in the lord",
         "notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"66": {
 		"title": "Softly and Tenderly",
-        "first_line": "softly and tenderly jesus is calling calling for you and for me",
         "notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"67": {
 		"title": "Leaning On the Everlasting Arms",
-        "first_line": "what a fellowship what a joy divine leaning on the everlasting arms",
         "notes": ["C#5", "E4", "A3", "A2"]
 	},
 	"68": {
 		"title": "Christ Receiveth Sinful Men",
-        "first_line": "sinners jesus will receive sound this word of grace to all who the heavenly pathway",
         "notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"69": {
 		"title": "Bring Them In",
-        "first_line": "hark tis the shepherd's voice i hear out in the desert dark and drear",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"70": {
 		"title": "The Prodigal Child",
-        "first_line": "come home come home you are weary at heart",
         "notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"71": {
 		"title": "Take Time to be Holy",
-        "first_line": "take time to be holy speak oft with thy lord abide in him always and feed on his word",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"72": {
 		"title": "Behold Mesiah Come",
-        "first_line": "oh joy great joy wonderful precious news heralded by angels above",
         "notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"73": {
 		"title": "Christ Arose!",
-        "first_line": "low in the grave he lay jesus my saviour waiting the coming day jesus my lord",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"74": {
 		"title": "Christ, the Lord is Risen Today",
-        "first_line": "christ the lord is risen today alleluia",
         "notes": ["C4", "E3", "C3"]
 	},
 	"75": {
 		"title": "Have Thine Own Way, Lord",
-        "first_line": "have thine own way lord have thine own way thou art the potter i am the clay",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"76": {
 		"title": "I Need Thee Every Hour",
-        "first_line": "i need thee every hour most gracious lord no tender voice like thine can peace afford",
         "notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"77": {
 		"title": "O Paradise, O Paradise",
-        "first_line": "o paradise o paradise who doth not long for rest",
         "notes": ["E4", "E3"]
 	},
 	"78": {
 		"title": "The Church in the Wildwood",
-        "first_line": "there's a church in the valley by the wildwood no lovelier spot in the dale",
         "notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"79": {
 		"title": "Tell it to Jesus Alone",
-        "first_line": "are you weary are you heavy hearted tell it to jesus tell it to jesus",
         "notes": ["Bb4", "D4", "F3", "Bb2"]
 	},
 	"80": {
 		"title": "Faith of Our Fathers",
-        "first_line": "faith of our fathers living still in spite of dungeon fire and sword",
         "notes": ["C5", "Eb4", "Ab3"]
 	},
 	"81": {
 		"title": "Jesus Loves Me",
-        "first_line": "jesus loves me this i know for the bible tells me so little ones to him belong they are weak but he is strong",
         "notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"82": {
 		"title": "Pass Me Not, O Gentle Savior",
-        "first_line": "pass me not o gentle savior hear my humble cry while on others thou art smiling do not pass me by",
         "notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"83": {
 		"title": "Nearer, My God to Thee",
-        "first_line": "nearer my god to thee nearer to thee e'en though it be a cross that raiseth me",
         "notes": ["B4", "D4", "G3"]
 	},
 	"84": {
 		"title": "Let the Lower Lights be Burning",
-        "first_line": "brightly beams our father's mercy from his lighthouse evermore but to us he gives the keeping of the lights along the shore",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"85": {
 		"title": "Just as I Am",
-        "first_line": "just as i am without one plea but that thy blood was shed for me and that thou bidst me come to thee o lamb of god i come i come",
         "notes": ["Eb4", "G3", "Eb3"]
 	},
 	"86": {
 		"title": "Happy Day",
-        "first_line": "o happy day that fixed my choice on thee my savior and my god",
         "notes": ["D4", "B3", "G3"]
 	},
 	"87": {
 		"title": "Nothing but the Blood of Jesus",
-        "first_line": "what can wash away my sin nothing but the blood of jesus what can make me whole again nothing but the blood of jesus",
         "notes": ["G4", "D4", "B3", "G3"]
 	},
 	"88": {
 		"title": "The Great Physician",
-        "first_line": "the great physician now is near the sympathizing jesus he speaks the drooping heart to cheer oh hear the voice of jesus",
         "notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"89": {
 		"title": "Knocking, Knocking",
-        "first_line": "knocking knocking who is there waiting waiting oh how fair 'tis a pilgrim strange and kingly never such was seen before",
         "notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"90": {
 		"title": "Jesus, Saviour, Pilot Me",
-        "first_line": "jesus saviour pilot me over life's tempestuous sea unknown waves before me roll hiding rock and treacherous shoal",
         "notes": ["D5", "F4", "Bb3", "Bb2"]
 	},
 	"91": {
 		"title": "Stand up for Jesus",
-        "first_line": "stand up stand up for jesus ye soldiers of the cross lift high his royal banner it must not suffer loss",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"92": {
 		"title": "Almost Persuaded",
-        "first_line": "almost persuaded now to believe almost persuaded christ to receive",
         "notes": ["B4", "D4", "G3"]
 	},
 	"93": {
 		"title": "How Gentle God's Commands",
-        "first_line": "how gentle gods commands how kind his precepts are come cast your burdens on the lord and trust his constant care",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"94": {
 		"title": "O Praise the Lord",
-        "first_line": "o praise the lord with happy childrens voices",
         "notes": ["A4", "F#4", "A3"]
 	},
 	"95": {
 		"title": "Rock of Ages",
-        "first_line": "rock of ages cleft for me let me hide myself in thee let the water and the blood from thy wounded side which flowed",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"96": {
 		"title": "Revive Us Again",
-        "first_line": "we praise thee o god for the son of thy love for jesus who died and is now gone above",
         "notes": ["D4", "B3", "G3"]
 	},
 	"97": {
 		"title": "O Worship the King",
-        "first_line": "o worship the king all glorious above and gratefully sing his wonderful love",
         "notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"98": {
 		"title": "How Great Thou Art",
-        "first_line": "o lord my god when i in awesome wonder consider all the worlds thy hands have made",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"99": {
 		"title": "Holy, Holy, Holy. Lord God Almighty",
-        "first_line": "holy holy holy lord god almighty early in the morning our song shall rise to thee",
         "notes": ["E4", "B3", "G#3", "E3"]
 	},
 	"100": {
 		"title": "Jesus Saves",
-        "first_line": "we have heard the joyful sound jesus saves jesus saves spread the tidings all around jesus saves jesus saves",
         "notes": ["D4", "B3", "G3", "G2"]
 	},
 	"101": {
 		"title": "Jesus, I Come",
-        "first_line": "out of my bondage sorrow and night jesus i come jesus i come into thy freedom gladness and light jesus i come to thee",
         "notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"102": {
 		"title": "Faith is the Victory",
-        "first_line": "encamped along the hills of light ye christian soldiers rise and press the battle ere the night shall veil the glowing skies",
         "notes": ["C5", "F4", "A3", "F3"]
 	},
 	"103": {
 		"title": "Tell Me the Old, Old Story",
-        "first_line": "tell me the old old story of unseen things above of jesus and his glory of jesus and his love",
         "notes": ["E4", "C4", "G3", "C3"]
 	},
 	"104": {
 		"title": "When the Roll is Called Up Yonder",
-        "first_line": "when the trumpet of the lord shall sound and time shall be no more and the morning breaks eternal bright and fair",
         "notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"105": {
 		"title": "All Hail the Power",
-        "first_line": "all hail the power of jesus name! let angels prostrate fall",
         "notes": ["D4", "B3", "G3"]
 	},
 	"106": {
 		"title": "He Will Hide Me",
-        "first_line": "when the storms of life are raging tempests wild on sea and land i will seek a place of refuge in the shadow of gods hand",
         "notes": ["G4", "B3", "G3"]
 	},
 	"107": {
 		"title": "O That Will Be Glory",
-        "first_line": "when all my labors and trials are oer and i am safe on the beautiful shore",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"108": {
 		"title": "When We All Get to Heaven",
-        "first_line": "sing the wondrous love of jesus sing his mercy and his grace",
         "notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"109": {
 		"title": "Bringing In the Sheaves",
-        "first_line": "sowing in the morning sowing seeds of kindness sowing in the noontide and the dew",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"110": {
 		"title": "Silent Night! Holy Night",
-        "first_line": "silent night holy night all is calm all is bright round yon virgin mother and child holy infant so tender and mild",
         "notes": ["G4", "E4", "C4", "C3"]
 	},
 	"111": {
 		"title": "A Shelter in the Time of Storm",
-        "first_line": "the lords sour rock in him we hide a shelter in the time of storm secure whatever ill betide",
         "notes": ["C4", "A3", "G3"]
 	},
 	"112": {
 		"title": "Joy to the World",
-        "first_line": "joy to the world the lord is come let earth receive her king let every heart prepare him room and heaven and nature sing",
         "notes": ["D5", "F#4", "D4", "D3"]
 	},
 	"113": {
 		"title": "Ring the Bells of Heaven",
-        "first_line": "ring the bells of heaven there is joy today for a soul returning from the wild",
         "notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"114": {
 		"title": "Will There Be Any Stars?",
-        "first_line": "i am thinking today of that beautiful land i shall reach when the sun goeth down",
         "notes": ["C#4", "A3", "E3", "A2"]
 	},
 	"115": {
 		"title": "No, Not One",
-        "first_line": "theres not a friend like the lowly jesus no not one",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"116": {
 		"title": "Jesus Lover of My Soul",
-        "first_line": "jesus lover of my soul let me to thy bosom fly while the nearer waters roll while the tempest still is high",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"117": {
 		"title": "Though your Sins be as Scarlet",
-        "first_line": "tho you sins be as scarlet they shall be as white as snow tho they be red like crimson they shall be as wool",
         "notes": ["Eb4", "C4", "Ab3"]
 	},
 	"118": {
 		"title": "The Song of the Soldier",
-        "first_line": "rise ye children of salvation all who cleave to christ the head wake arise o mighty nation ere the foe on zion tread",
         "notes": ["Bb3", "Bb2"]
 	},
 	"119": {
 		"title": "Glorious Things of Thee Are Spoken",
-        "first_line": "glorious things of thee are spoken zion city of our god he whose word cannot be broken formed thee for his own abode",
         "notes": ["F4", "C4", "A3", "F3"]
 	},
 	"120": {
 		"title": "Galilea",
-        "first_line": "galilea galilea galilea galilea wondrous witness wondrous witness of precious times of precious times",
         "notes": ["E4"]
 	},
 	"121": {
 		"title": "A Mighty Fortress",
-        "first_line": "a mighty fortress is our god a bulwark never failing our helper he amid the flood of mortal ills prevailing",
         "notes": ["D5", "F#4", "A3", "D3"]
 	},
 	"122": {
 		"title": "Abide With Me!",
-        "first_line": "abide with me fast falls the eventide the darkness deepens lord with me abide",
         "notes": ["G#4", "E4", "B3", "E3"]
 	},
 	"123": {
 		"title": "Hark, the Herald Angels Sing",
-        "first_line": "hark the herald angels sing glory to the newborn king peace on earth and mercy mild god and sinners reconciled",
         "notes": ["D4", "B3", "G3"]
 	},
 	"124": {
 		"title": "Behold, How Good and Pleasant",
-        "first_line": "behold how good and pleasant for brethren all to be like children of the father to dwell in unity",
         "notes": ["C4", "C3"]
 	},
 	"125": {
 		"title": "Nearer, Still Nearer",
-        "first_line": "nearer still nearer close to thy heart draw me my savior so precious thou art",
         "notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"126": {
 		"title": "Near the Cross",
-        "first_line": "jesus keep me near the cross there a precious fountain free to all a healing stream flows from calvarys mountain",
         "notes": ["A4", "F4", "C4", "F3"]
 	},
 	"127": {
 		"title": "Where He Leads Me",
-        "first_line": "i can hear my saviour calling i can hear my saviour calling i can hear my saviour calling take thy cross and follow follow me",
         "notes": ["C4", "A3", "F3"]
 	},
 	"128": {
 		"title": "Yield Not to Temptation",
-        "first_line": "yield not to temptation for yielding is sin each victory will help you some other to win",
         
         "notes": ["D5", "Bb4", "Bb3"] 
 	},
 	"129": {
 		"title": "Higher Ground",
-        "first_line": "im pressing on the upward way new heights im gaining every day still praying as im onward bound lord plant my feet on higher ground",
         "notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"130": {
 		"title": "The First Noel",
-        "first_line": "the first noel the angel did say was to certain poor shepherds in fields as they lay",
         "notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"131": {
 		"title": "My Father in Heaven",
-        "first_line": "my father in heaven keeps watch over me securely i say day or night where i be",
         "notes": ["Db4", "F3", "Db3"]
 	},
 	"132": {
 		"title": "Our Life is Like Summer",
-        "first_line": "fleeting like summer is our life lights and shadows here change",
         "notes": ["Eb4", "G3", "Eb3"]
 	}
 }

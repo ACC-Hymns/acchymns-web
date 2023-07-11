@@ -1,622 +1,498 @@
 {
 	"1": {
 		"title": "How Great Thou Art!",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"2": {
 		"title": "Because He Lives",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"3": {
 		"title": "O Worship the King",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"4": {
 		"title": "Our Great Savior",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"5": {
 		"title": "To God Be the Glory",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"6": {
 		"title": "How Firm a Foundation",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"7": {
 		"title": "The Solid Rock",
-        "first_line": "",
 		"notes": ["C4", "C3"]
 	},
 	"8": {
 		"title": "My Tribute",
-        "first_line": "",
 		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"9": {
 		"title": "Thou Art Worthy",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"10": {
 		"title": "Holy, Holy, Holy, Lord God Almighty",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"11": {
 		"title": "Arise, My Soul, Arise",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"12": {
 		"title": "Crown Him with Many Crowns",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"13": {
 		"title": "We Have Come into His House",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "C3"]
 	},
 	"14": {
 		"title": "I Have Decided to Follow Jesus",
-        "first_line": "",
 		"notes": ["C4", "E3", "C3"]
 	},
 	"15": {
 		"title": "He Lives",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"16": {
 		"title": "Blessed Be the Name",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"17": {
 		"title": "And Can It Be That I Should Gain?",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "E3", "Ab2"]
 	},
 	"18": {
 		"title": "Lord, Lay Some Soul upon My Heart",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"19": {
 		"title": "O for a Thousand Toungues!",
-        "first_line": "",
 		"notes": ["E4", "E3"]
 	},
 	"20": {
 		"title": "Where He Leads Me",
-        "first_line": "",
 		"notes": ["C4", "A3", "F3"]
 	},
 	"21": {
 		"title": "Blessed Assurance",
-        "first_line": "",
 		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"22": {
 		"title": "Jesus Is Lord",
-        "first_line": "",
 		"notes": ["C4"]
 	},
 	"23": {
 		"title": "My Wonderful Lord",
-        "first_line": "",
 		"notes": ["B4", "G4", "G3"]
 	},
 	"24": {
 		"title": "All That Thrills My Soul",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"25": {
 		"title": "His Name Is Wonderful",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"26": {
 		"title": "Great is Thy Faithfulness",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"27": {
 		"title": "The Church's One Foundation",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"28": {
 		"title": "The Bond of Love",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"29": {
 		"title": "We're Marching to Zion",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"30": {
 		"title": "It Is Truly Wonderful",
-        "first_line": "",
 		"notes": ["Ab4", "F4", "Ab3", "Db3"]
 	},
 	"31": {
 		"title": "He Took My Sins Away",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"32": {
 		"title": "Heaven Came Down",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"33": {
 		"title": "He Is Lord",
-        "first_line": "",
 		"notes": ["E4", "C4", "G3", "C3"]
 	},
 	"34": {
 		"title": "The Longer I Serve Him",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"35": {
 		"title": "All Hail the Power",
-        "first_line": "",
 		"notes": ["D4", "D3"]
 	},
 	"36": {
 		"title": "Victory in Jesus",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"37": {
 		"title": "Bless His Holy Name",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"38": {
 		"title": "Wonderful Grace of Jesus",
-        "first_line": "",
 		"notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"39": {
 		"title": "He Keeps Me Singing",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"40": {
 		"title": "Saved, Saved!",
-        "first_line": "",
 		"notes": ["Eb4"]
 	},
 	"41": {
 		"title": "He Bought Me Out",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"42": {
 		"title": "Love Lifted Me",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"43": {
 		"title": "He Hideth My Soul",
-        "first_line": "",
 		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"44": {
 		"title": "Grace Greater than Our Sin",
-        "first_line": "",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"45": {
 		"title": "My Soul Is Filled with Glory",
-        "first_line": "",
 		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"46": {
 		"title": "I Will Sing of My Redeemer",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3"]
 	},
 	"47": {
 		"title": "It's Just like His Great Love",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"48": {
 		"title": "Amazing Grace",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"49": {
 		"title": "Ho! Everyone That Is Thirsty",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3"]
 	},
 	"50": {
 		"title": "Satisfied",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"51": {
 		"title": "Covered by the Blood",
-        "first_line": "",
 		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"52": {
 		"title": "Fill Me Now",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"53": {
 		"title": "The Old Account Settled",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"54": {
 		"title": "O How I Love Jesus",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"55": {
 		"title": "Wonderful",
-        "first_line": "",
 		"notes": ["B4", "D4", "G3", "G2"]
 	},
 	"56": {
 		"title": "Where the Spirit of the Lord Is",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"57": {
 		"title": "Since Jesus Came into My Heart",
-        "first_line": "",
 		"notes": ["C4", "Ab3", "Eb3", "Ab2"]
 	},
 	"58": {
 		"title": "Spirit of the Living God",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"59": {
 		"title": "Oh, How He Loves You and Me",
-        "first_line": "",
 		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"60": {
 		"title": "Glory to His Name",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"61": {
 		"title": "Praise Him! Praise Him!",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3"]
 	},
 	"62": {
 		"title": "When I Survey",
-        "first_line": "",
 		"notes": ["F4", "C4", "A3", "F3"]
 	},
 	"63": {
 		"title": "I Will Praise Him",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"64": {
 		"title": "There Is a Fountain",
-        "first_line": "",
 		"notes": ["Bb3", "D3", "Bb2"]
 	},
 	"65": {
 		"title": "At the Cross",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"66": {
 		"title": "Such Love",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"67": {
 		"title": "At Calvary",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"68": {
 		"title": "The Cleansing Wave",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"69": {
 		"title": "The Blood Will Never Lose Its Power",
-        "first_line": "",
 		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"70": {
 		"title": "There Is Power in the Blood",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"71": {
 		"title": "Holiness unto the Lord",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"72": {
 		"title": "Jesus Paid it All",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"73": {
 		"title": "Holy Spirit, Be My Guide",
-        "first_line": "",
 		"notes": ["Db4", "F3", "Db3"]
 	},
 	"74": {
 		"title": "Come, Holy Spirit",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"75": {
 		"title": "The Comforter Has Come!",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"76": {
 		"title": "Have Thine Own Way, Lord",
-        "first_line": "",
 		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
 	},
 	"77": {
 		"title": "He Abides",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"78": {
 		"title": "Pass Me Not",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"79": {
 		"title": "Glorious Freedom",
-        "first_line": "",
 		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
 	},
 	"80": {
 		"title": "Love Divine, All Loves Excelling",
-        "first_line": "",
 		"notes": ["F4", "D4", "F3", "Bb2"]
 	},
 	"81": {
 		"title": "Sanctifying Power",
-        "first_line": "",
 		"notes": ["C4", "Ab3", "Eb3", "Ab2"]
 	},
 	"82": {
 		"title": "Cleanse Me",
-        "first_line": "",
 		"notes": ["A4", "C4", "F3"]
 	},
 	"83": {
 		"title": "I Am Thine, O Lord",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"84": {
 		"title": "I'd Rather Have Jesus",
-        "first_line": "",
 		"notes": ["Db4", "F3", "Db3"]
 	},
 	"85": {
 		"title": "I'll Go Where You Want Me to Go",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"86": {
 		"title": "Let the Beauty of Jesus Be Seen in Me",
-        "first_line": "",
 		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"87": {
 		"title": "O to Be like Thee",
-        "first_line": "",
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"88": {
 		"title": "I Want to Be like Jesus",
-        "first_line": "",
 		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"89": {
 		"title": "Higher Ground",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "G2"]
 	},
 	"90": {
 		"title": "Deeper, Deeper",
-        "first_line": "",
 		"notes": ["D4", "D3"]
 	},
 	"91": {
 		"title": "Sweeping This Way",
-        "first_line": "",
 		"notes": ["B4", "G4", "D4", "G3"]
 	},
 	"92": {
 		"title": "There Shall Be Showers of Blessing",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"93": {
 		"title": "I Love to Tell the Story",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"94": {
 		"title": "Jesus Saves",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"95": {
 		"title": "We've a Story to Tell to the Nations",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"96": {
 		"title": "Send the Light",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"97": {
 		"title": "It Is Well with My Soul",
-        "first_line": "",
 		"notes": ["Ab4", "F4", "Ab3", "Db3"]
 	},
 	"98": {
 		"title": "I Will Serve Thee",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"99": {
 		"title": "God Leads Us Along",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"100": {
 		"title": "He Leadeth Me",
-        "first_line": "",
 		"notes": ["A4", "F#4", "A3", "D3"]
 	},
 	"101": {
 		"title": "He Giveth More Grace",
-        "first_line": "",
 		"notes": ["Bb3", "G3", "Eb3"]
 	},
 	"102": {
 		"title": "The Family of God",
-        "first_line": "",
 		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"103": {
 		"title": "His Grace Is Sufficient for Me",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"104": {
 		"title": "Faith in God Can Move a Mountain",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"105": {
 		"title": "The Love of God",
-        "first_line": "",
 		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"106": {
 		"title": "Revive us Again",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3"]
 	},
 	"107": {
 		"title": "What a Friend We Have in Jesus",
-        "first_line": "",
 		"notes": ["C5", "F4", "A3", "F3"]
 	},
 	"108": {
 		"title": "I Know Whom I Have Believed",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"109": {
 		"title": "Guide Me, O Thou Great Jehovah",
-        "first_line": "",
 		"notes": ["D4", "B3", "G3", "F#2"]
 	},
 	"110": {
 		"title": "A Glorious Church",
-        "first_line": "",
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"111": {
 		"title": "Faith Is the Victory",
-        "first_line": "",
 		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"112": {
 		"title": "Coming Again",
-        "first_line": "",
 		"notes": ["E4", "C4", "G3", "C3"]
 	},
 	"113": {
 		"title": "When the Roll Is Called Up Yonder",
-        "first_line": "",
 		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
 	},
 	"114": {
 		"title": "'Tis So Sweet to Trust In Jesus",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"115": {
 		"title": "When We All Get to Heaven",
-        "first_line": "",
 		"notes": ["G4", "E4", "C4", "C3"]
 	},
 	"116": {
 		"title": "Just as I Am",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"117": {
 		"title": "Blest Be the Tie That Binds",
-        "first_line": "",
 		"notes": ["A4", "F4", "C4", "F3"]
 	},
 	"118": {
 		"title": "Room at the Cross for You",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"119": {
 		"title": "I Surrender All",
-        "first_line": "",
 		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"120": {
 		"title": "Don't Turn Him Away",
-        "first_line": "",
 		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
 	},
 	"121": {
 		"title": "Softly and Tenderly",
-        "first_line": "",
 		"notes": ["B4", "D4", "G3", "F#2"]
 	},
 	"122": {
 		"title": "Is Your All on the Altar?",
-        "first_line": "",
 		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"123": {
 		"title": "Whiter than Snow",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"124": {
 		"title": "Jesus, I Come",
-        "first_line": "",
 		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	}
 }

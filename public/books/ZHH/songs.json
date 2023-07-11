@@ -1,2162 +1,1730 @@
 {
     "1": {
         "title": "Hangoljátok szíveteket",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "2": {
         "title": "Ó, jertek testvérek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "3": {
         "title": "Kit áldva áldnak",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "4": {
         "title": "Sötét, mély éj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "5": {
         "title": "Szólt az Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "6": {
         "title": "Az égbolt beszéli",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "7": {
         "title": "Ó, nagy Isten, műved ó, mily",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "8": {
         "title": "Nagy Istenem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "9": {
         "title": "A hajnal pírja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "10": {
         "title": "Ha jõ a nap az égre",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "11": {
         "title": "Tekints szemeiddel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "12": {
         "title": "Az Úré a föld",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "13": {
         "title": "Mily szép vagy Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "14": {
         "title": "Mily szép az Ő neve",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "15": {
         "title": "Mily édes a te neved",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "16": {
         "title": "Hol Jézus úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "17": {
         "title": "Úr Jézus, győztes nagy Király",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "18": {
         "title": "Uram csak rólad zengek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "19": {
         "title": "Szabadítómról zengjen az ének",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "20": {
         "title": "Én énekelni akarok",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "21": {
         "title": "Fel, Krisztus népe, zengjetek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "22": {
         "title": "Jöjjetek vígan",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "23": {
         "title": "Zengjétek Jézus nagy voltát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "24": {
         "title": "Jézusról szól ma énekünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "25": {
         "title": "Megváltás művét ó, zengjétek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "26": {
         "title": "Jézus oly csodálatos",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "27": {
         "title": "Hirdessétek hangos szóval",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "28": {
         "title": "Az Úr légyen áldott",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "29": {
         "title": "Az Úr légyen áldott",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "30": {
         "title": "Ó, jertek, elbeszélem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "31": {
         "title": "Még szól az üdv szava",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "32": {
         "title": "Ím áldunk, nagy Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "33": {
         "title": "Zengje nyelvünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "34": {
         "title": "Áldjátok Őt minden népek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "35": {
         "title": "Áldjad lelkem Őt!",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "36": {
         "title": "Szent vagy, szent vagy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "37": {
         "title": "Az ének Néked szól",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "38": {
         "title": "Új ének zengjen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "39": {
         "title": "Jöjjetek el",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "40": {
         "title": "Dicsérjed Őt, a nagy Istent",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "41": {
         "title": "Téged dicsér minden ajk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "42": {
         "title": "Ó, Ábrahám Ura",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "43": {
         "title": "Zengjen hálaének",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "44": {
         "title": "Szent, szent, szent, nagy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "45": {
         "title": "Az Úrnak irgalmát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "46": {
         "title": "Az Úrnak zengek ",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "47": {
         "title": "Testvérek, jertek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "48": {
         "title": "Az Úrnak hála, tisztelet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "49": {
         "title": "Ó, mily nagy, ó, mily végtelen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "50": {
         "title": "Dicsérd az Urat én lelkem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "51": {
         "title": "Az Úrban örvendjetek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "52": {
         "title": "Hogyne dicsérném az Istent",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "53": {
         "title": "Én lelkem zengjél szépen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "54": {
         "title": "Uram, jóságod végtelen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "55": {
         "title": "Mert úgy szerette Isten e világot",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "56": {
         "title": "Jézus Krisztus erre megy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "57": {
         "title": "Minden szerinted legyen Uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "58": {
         "title": "Ó, vezess a hűs forráshoz",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "59": {
         "title": "Egyetlen forrása",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "60": {
         "title": "Jöjj, Jézusom!",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "61": {
         "title": "Szelíd szemed, Úr Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "62": {
         "title": "Te hívtál ó, Uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "63": {
         "title": "Hozzád kiáltok, Istenem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "64": {
         "title": "Ó, Jézus, árva csendben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "65": {
         "title": "Vándorutam roskadozva járom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "66": {
         "title": "Mint látod, hűtlen szolgaként",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "67": {
         "title": "Térj be hozzám",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "68": {
         "title": "Ó, jöjj, ha bűnöd éget",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "69": {
         "title": " Bűnbánó szívemet elhoztam",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "70": {
         "title": "Az Úr szent Bárányára",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "71": {
         "title": "Tiéd e szív",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "72": {
         "title": "Már keresztem vállra vettem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "73": {
         "title": "Már keresztem vállra vettem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "74": {
         "title": "Szeretlek Jézusom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "75": {
         "title": "Elmegyek most",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "76": {
         "title": "Kik ezek itt fehérben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "77": {
         "title": "Oly szép az ember, ki",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "78": {
         "title": "Ó, Jézus megígértem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "79": {
         "title": "Bűnnek tengerében",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "80": {
         "title": "Sokáig tévelyegtem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "81": {
         "title": "Egy nap hallám",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "82": {
         "title": "Hallám Jézus hívó szavát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "83": {
         "title": "Az áldott orvos már közel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "84": {
         "title": "Ó, Jézus, drágább vagy nekem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "85": {
         "title": "Ó, forrongó, gazdag árja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "86": {
         "title": "Ó, boldog nap",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "87": {
         "title": "Óh, boldog nap",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "88": {
         "title": "Üdvteli érzet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "89": {
         "title": "Jézus csodás kegyelme",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "90": {
         "title": "Öröm van Nálad",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "91": {
         "title": "Tenálad mily jó",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "92": {
         "title": "Legdrágább kincsem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "93": {
         "title": "Mily szépen cseng",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "94": {
         "title": "Ha körülvesz csönd és magány",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "95": {
         "title": "Az áldott égi szó vezet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "96": {
         "title": "Én Jézusban vagyok elrejtve",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "97": {
         "title": "Az Úr az én jó pásztorom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "98": {
         "title": "Védő szárnyaid alatt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "99": {
         "title": "Hogyha hajt a szélvész",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "100": {
         "title": "Hogyha zúg a lét viharja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "101": {
         "title": "Mentsváram énnékem az Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "102": {
         "title": "Ahol ott a Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "103": {
         "title": "Kereszt ha van",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "104": {
         "title": "Ha néha, néha bús vagyok",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "105": {
         "title": "Ha szívem néha elszorul",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "106": {
         "title": "Őrá bízom magamat",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "107": {
         "title": "Bízom benned, uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "108": {
         "title": "Te szent kezedre bízom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "109": {
         "title": "Ha az Úr nem volna velünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "110": {
         "title": "Az Úr csodásan működik",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "111": {
         "title": "Sasszárnyon hordozol",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "112": {
         "title": "Bízva nézz a bércre fel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "113": {
         "title": "Hűséged végtelen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "114": {
         "title": "Az Úr irgalma végtelen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "115": {
         "title": "Minden élet Tőled jő",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "116": {
         "title": "Vége van már a szolgaságnak",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "117": {
         "title": "Istenben bízom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "118": {
         "title": "Csillag, égi fényem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "119": {
         "title": "Atyám a mennyekben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "120": {
         "title": "Tiszta égi béke",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "121": {
         "title": "Uram, veled kívánkozom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "122": {
         "title": "Ó, Uram taníts",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "123": {
         "title": "Jézusomnak nagy voltáért",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "124": {
         "title": "E zarándoklat völgyében",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "125": {
         "title": "Ott lenn a völgyben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "126": {
         "title": "Jézusom, én követlek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "127": {
         "title": "Dicső Személyed, mely velem jár",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "128": {
         "title": "Jézus, lelkem barátja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "129": {
         "title": "Fénysugár tört át",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "130": {
         "title": "Jézusom azt kéri tőlem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "131": {
         "title": "Ha minden nap jót cselekszem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "132": {
         "title": "Ha bú és gond",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "133": {
         "title": "Téged szeretlek Megváltóm",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "134": {
         "title": "Szeretet a fő ajándék",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "135": {
         "title": "A szeretet ne fogyjon",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "136": {
         "title": "Kéz a kézben, egyetértve",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "137": {
         "title": "",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "138": {
         "title": "Mely minket egyesít",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "139": {
         "title": "Lélek által indíttatva",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "140": {
         "title": "Mi Atyánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "141": {
         "title": "Ó, jöjjön el Urunk a Te országod",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "142": {
         "title": "Ó, nagy Isten",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "143": {
         "title": "Téged Isten imádunk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "144": {
         "title": "Áldott légy, mert megváltottál",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "145": {
         "title": "Áldott légy, mert megváltottál",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "146": {
         "title": "Előtted, Atyánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "147": {
         "title": "Halld meg imánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "148": {
         "title": "Vezess minket",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "149": {
         "title": "Hajolj hozzánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "150": {
         "title": "Áldjad meg",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "151": {
         "title": "Áldjon meg az Úr téged",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "152": {
         "title": "Áldásod gazdag folyóit",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "153": {
         "title": "A Te nevedben mi együtt vagyunk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "154": {
         "title": "Végtelen nagy Király",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "155": {
         "title": "Hogyha szép kedvesen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "156": {
         "title": "Hálával áldozom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "157": {
         "title": "Ó, lenne bár oltár szívem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "158": {
         "title": "Ó, mily hű barátunk Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "159": {
         "title": "Ó, áhítat időszaka",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "160": {
         "title": "Az Úr őrizőm",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "161": {
         "title": "Az Úr üdvöm nékem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "162": {
         "title": "Nagy Isten, Jó Atyánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "163": {
         "title": "Ha komor felhők",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "164": {
         "title": "Bősz haraggal zúg a hab",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "165": {
         "title": "Égi Atyám, segíts!",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "166": {
         "title": "Halld meg hő imám",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "167": {
         "title": "Próbálj meg jól",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "168": {
         "title": "Bánatban, könnyben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "169": {
         "title": "Fájó az éltem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "170": {
         "title": "Ó, mit tettem, Istenem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "171": {
         "title": "Ím, nagy Isten, most előtted",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "172": {
         "title": "Jézusom, ki árva lelkem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "173": {
         "title": "El ne távozz tőlem Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "174": {
         "title": "Vonj Uram, vonj engemet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "175": {
         "title": "Úgy szeretnék én szent lenni",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "176": {
         "title": "Ó, jöjj szívembe",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "177": {
         "title": "Rejts magadba sziklaszál",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "178": {
         "title": "Rád tekint már hitem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "179": {
         "title": "Ó, Uram Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "180": {
         "title": "Vonj öröm és búbánaton át",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "181": {
         "title": "Mélyen meghajlok",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "182": {
         "title": "Nyájas világ",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "183": {
         "title": "Jézus, vezesd gyermeked",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "184": {
         "title": "Ó, hogy szeresselek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "185": {
         "title": "Ó, fogd kezem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "186": {
         "title": "Mester, hadd járjak ó, veled",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "187": {
         "title": "Tüzed Uram Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "188": {
         "title": "Tégy foglyoddá Uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "189": {
         "title": "Tégy foglyoddá Uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "190": {
         "title": "Hinni taníts, Uram",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "191": {
         "title": "Új küzdelemre fel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "192": {
         "title": "Napnyugtakor mentem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "193": {
         "title": "Pásztor keresi a juhát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "194": {
         "title": "Börtönökben, bilincsekben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "195": {
         "title": "Őrálló szólj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "196": {
         "title": "Tündököl Jézus szent fénye",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "197": {
         "title": "Magvető, szórjad a jó magot",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "198": {
         "title": "Jézusunkért lett szelíd szó",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "199": {
         "title": "Menjetek szét e világba",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "200": {
         "title": "Mentsd, aki elmerül",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "201": {
         "title": "Testvérek, fel munkára",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "202": {
         "title": "Az Úr ma ifjakat hív",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "203": {
         "title": "Jöjj még most az ifjú korban",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "204": {
         "title": "Indulj el a szőlőbe",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "205": {
         "title": "Nagyon szeret engem Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "206": {
         "title": "Segítsünk Siont építni",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "207": {
         "title": "Végezd a munkát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "208": {
         "title": "Mint a szép csillagok",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "209": {
         "title": "Fel, mert közelg az éjjel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "210": {
         "title": "Nyárhoz hasonlít életünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "211": {
         "title": "Üres kézzel menjek-é el?",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "212": {
         "title": "Hát csak levél",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "213": {
         "title": "Az Úr éjfélkor érkezik",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "214": {
         "title": "Megmérettél, ó",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "215": {
         "title": "Térj magadhoz",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "216": {
         "title": "Testvérek, menjünk bátran",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "217": {
         "title": "Rögös az élet útja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "218": {
         "title": "Te csak az Istennek országát keresd",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "219": {
         "title": "Az Úrra bízzad sorsod",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "220": {
         "title": "Az Úrra hagyjad utad",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "221": {
         "title": "Az Úr segíti terhünk vinni",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "222": {
         "title": "Legyen szívünk mindig vidám",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "223": {
         "title": "Ha koronát akarsz nyerni",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "224": {
         "title": "Oly csüggedő a lélek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "225": {
         "title": "Ne aggodalmaskodjál",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "226": {
         "title": "A gondjaidat",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "227": {
         "title": "Jöjj, töröld le könnyed",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "228": {
         "title": "Ne rettegj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "229": {
         "title": "Szíved retteg",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "230": {
         "title": "Nézd csak Dánielt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "231": {
         "title": "Míg szobádat el nem hagytad",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "232": {
         "title": "Légy éber",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "233": {
         "title": "Életnek harcától elfáradtan",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "234": {
         "title": "Te fáradt szív",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "235": {
         "title": "Oly sok fájdalom van",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "236": {
         "title": "Bús vagyok és fáradt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "237": {
         "title": "Miért oly bús a te szíved",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "238": {
         "title": "Szegény szívünk reménye",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "239": {
         "title": "Golgotán ha megpihen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "240": {
         "title": "Ha már e földi élet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "241": {
         "title": "Ó, jöjj te égi harmat",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "242": {
         "title": "Szent érzelem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "243": {
         "title": "Örvendtem, mikor mondták",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "244": {
         "title": "Mint szarvas hűs vízforrásra",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "245": {
         "title": "Mint szomjas szarvas",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "246": {
         "title": "Hadd menjek Istenem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "247": {
         "title": "Most még sötét",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "248": {
         "title": "Hallottam, van egy mennyei város",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "249": {
         "title": "Mily kedves a Sion",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "250": {
         "title": "Mennyei Jeruzsálem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "251": {
         "title": "Ó, boldogságnak szép hona",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "252": {
         "title": "Haza vágyom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "253": {
         "title": "Gyönyörű a menny, ó",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "254": {
         "title": "A menny örök otthona vár",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "255": {
         "title": "Hol már felhő nem tornyosul",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "256": {
         "title": "Egy drága, csendes békehon",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "257": {
         "title": "Fénylő, szép égi hon",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "258": {
         "title": "Te üdvös égi hajlék",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "259": {
         "title": "Fenn az életfája alatt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "260": {
         "title": "Ó, Te áldott, dicső, szép haza",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "261": {
         "title": "Az én hazámról",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "262": {
         "title": "Hazám, hazám",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "263": {
         "title": "Szép virányok hol vannak",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "264": {
         "title": "A mennyben otthonom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "265": {
         "title": "Ahol nem jön tavaszra tél",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "266": {
         "title": "A szív honába fel üdén",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "267": {
         "title": "Ha földi szenvedés",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "268": {
         "title": "Ama szép hon felé",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "269": {
         "title": "Nem a kincset sóvárgom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "270": {
         "title": "A kegy hajója evez",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "271": {
         "title": "Jordán partján állok",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "272": {
         "title": "Majd ha általlépünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "273": {
         "title": "Ó, mily dicső lesz az a nap",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "274": {
         "title": "Ama kristály városban",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "275": {
         "title": "Égi harsonák",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "276": {
         "title": "Ó, mily szép az Úrnak hajléka",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "277": {
         "title": "Az örök sziklán áll hitem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "278": {
         "title": "Az emberektől bűneim",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "279": {
         "title": "Ó, hogy volt idő",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "280": {
         "title": "Isten kegyében",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "281": {
         "title": "Szeret az Isten",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "282": {
         "title": "Szeret az Isten",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "283": {
         "title": "Úttalan úton",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "284": {
         "title": "Kőszirt a pusztán",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "285": {
         "title": "Hű Jézusom kezébe",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "286": {
         "title": "Az Úr vezet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "287": {
         "title": "Ó, ne félj, ne rettegj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "288": {
         "title": "Én vándorutam",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "289": {
         "title": "Nincs Jézushoz hasonló jó barát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "290": {
         "title": "Nem csábít földi kincs",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "291": {
         "title": "A halált nem félem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "292": {
         "title": "Messzi hegytetőn fent",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "293": {
         "title": "Én jól tudom, Megváltóm él",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "294": {
         "title": "Jézus, én bizodalmam",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "295": {
         "title": "Széjjel jártam a világban",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "296": {
         "title": "Mondd, merre tart",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "297": {
         "title": "Halljátok, Jézus hívogat",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "298": {
         "title": "Tudok egy szerelmes hajlékot",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "299": {
         "title": "Hallod-e az idegent",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "300": {
         "title": "Hallod, mi kopog",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "301": {
         "title": "Lélek halld, ki zörget",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "302": {
         "title": "Én zörgetek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "303": {
         "title": "Nincs helyed Jézus számára?",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "304": {
         "title": "Hív már az Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "305": {
         "title": "Halld, az Üdvözítő hívogat",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "306": {
         "title": "Jöjj szent közelébe",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "307": {
         "title": "Ott, a messze földön",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "308": {
         "title": "Ó, jöjj haza gyermek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "309": {
         "title": "Nyájasan, gyengéden szól",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "310": {
         "title": "Égi szózat szállt a földre",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "311": {
         "title": "Jöjj Megváltódhoz",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "312": {
         "title": "Sürget a hívás",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "313": {
         "title": "Időnk fut egyre sebesen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "314": {
         "title": "Ha földi utad véget ér",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "315": {
         "title": "Bűneid ha bántnak",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "316": {
         "title": "Ifjú, hallgasd meg",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "317": {
         "title": "Távozzál a bűntől",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "318": {
         "title": "Hogyha vérpiros a bűnöd",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "319": {
         "title": "Jézushoz jöjj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "320": {
         "title": "Halld ó, bűnös",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "321": {
         "title": "Lélek, akit bűne bánt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "322": {
         "title": "Tudok egy drága szócskát",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "323": {
         "title": "Nem sújt a törvény",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "324": {
         "title": "Tiszta-e már szíved?",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "325": {
         "title": "Vágyod-e elhagyni bűneidet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "326": {
         "title": "Ó, gyermekem, boldog leszel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "327": {
         "title": "Én ismerek egy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "328": {
         "title": "Ó, jöjj az élet vizéhez",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "329": {
         "title": "Életige, tiszta forrás",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "330": {
         "title": "Egy bő forrás",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "331": {
         "title": "Ott látlak-e a forrásnál",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "332": {
         "title": "Ott a folyónak túloldalán",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "333": {
         "title": "De nem lesz mindig sötét",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "334": {
         "title": "Ó, te üdvadó",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "335": {
         "title": "Ó, jöjjetek népek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "336": {
         "title": "Csendes éj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "337": {
         "title": "Csendes éjjel Betlehemben",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "338": {
         "title": "Angyal szózat hangja kél",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "339": {
         "title": "Dicsének hangja szárnyra kél",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "340": {
         "title": "Halld, angyalkarok zengenek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "341": {
         "title": "Halld, angyalkar zengedez",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "342": {
         "title": "Halld, az angyalkarok zengnek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "343": {
         "title": "Halld, mint hangzik mennyekből",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "344": {
         "title": "Szerettem volna látni",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "345": {
         "title": "Betlehem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "346": {
         "title": "Csillagfényes, csöndes éjjel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "347": {
         "title": "Sötét éjszakán",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "348": {
         "title": "Ó, mily nagy öröm",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "349": {
         "title": "Itt állok jászlad mellett",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "352": {
         "title": "Mester, a bősz vihar",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "353": {
         "title": "Samariának leánya",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "354": {
         "title": "Egy főember jött",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "355": {
         "title": "Galilea",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "357": {
         "title": "Hozsiánna",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "358": {
         "title": "Pálmákat szórjunk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "360": {
         "title": "A  jöttöd miként várjam",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "361": {
         "title": "Én Istenem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "362": {
         "title": "Ó, nézd a Golgotát!",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "363": {
         "title": "Már én utaztam",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "364": {
         "title": "Szemembe' könnyel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "365": {
         "title": "Van egy kútfő",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "366": {
         "title": "Gyásznak helye",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "367": {
         "title": "Ismered-e azt a helyet",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "368": {
         "title": "Mondd, úgy van-é",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "369": {
         "title": "Mondjátok, meghalt-e",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "370": {
         "title": "Mély csend honolt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "371": {
         "title": "\"Ámde Jézus feltámadt\"",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "372": {
         "title": "Húsvét van",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "373": {
         "title": "Feltámadt a Krisztus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "374": {
         "title": "Feltámadt Hős",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "375": {
         "title": "Diadal, diadal, Jézus, Megváltóm! Zengjen a hála dal",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "376": {
         "title": "Dicsőség Néked, Istenünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "377": {
         "title": "Ragyogva tűz a napsugár",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "378": {
         "title": "Szentlélek Isten, tűz és fény",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "379": {
         "title": "Isten élő Lelke, jöjj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "380": {
         "title": "Küldd Szentlelked",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "381": {
         "title": "Üdvözítőnk ég felé száll",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "382": {
         "title": "Visszajön Jézus",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "383": {
         "title": "Istennek Szent fia, jöjj",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "384": {
         "title": "Jöjj el áldott Üdvözítő",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "385": {
         "title": "Ó, jöjj le Messiásunk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "386": {
         "title": "Méltó a Bárány",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "387": {
         "title": "Zengj éneket",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "388": {
         "title": "Jertek, örvendezzünk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "389": {
         "title": "Íme egy ifjú pár",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "390": {
         "title": "A szívünk telve örömmel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "391": {
         "title": "Szól örömének",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "392": {
         "title": "Mindenható, ki magad vagy a lét",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "393": {
         "title": "A Te trónod előtt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "394": {
         "title": "Előtted ó, menny áldandó Istene",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "395": {
         "title": "Két kéz fonódik egybe itt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "396": {
         "title": "Két hű szív",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "397": {
         "title": "Házasságnak alkotója",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "398": {
         "title": "Velünk az Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "399": {
         "title": "Vezesd",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "400": {
         "title": "Ünnepre jöttünk ma",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "401": {
         "title": "Égi Pásztor, halld meg imánk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "402": {
         "title": "Ó, ünnepélyes, áldott óra",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "403": {
         "title": "Megváltónk gondvisel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "404": {
         "title": "Két szív ha frigyre lépett",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "405": {
         "title": "Szól hálaének Istennek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "406": {
         "title": "Ha a virágos mezők",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "407": {
         "title": "Ó, mily boldogok a lelkek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "408": {
         "title": "Két kezünk fogd meg",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "409": {
         "title": "Hová te mégy', oda megyek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "410": {
         "title": "Áldott legyen a frigy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "411": {
         "title": "Gyönyörű az élet ott",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "412": {
         "title": "Ó, boldog ház",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "413": {
         "title": "Múló földi éveink eltünnek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "414": {
         "title": "Évezredek tengerében",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "415": {
         "title": "Az óesztendő már letűnt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "416": {
         "title": "Mindeddig segített nékünk az Úr",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "417": {
         "title": "Ha alkonypír bíborba vonja",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "418": {
         "title": "Már nyugosznak a völgyek",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "419": {
         "title": "Csillog még a napnak fénye",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "420": {
         "title": "Légy ó, Isten, légy velem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "421": {
         "title": "Hogyha este fent az égen",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "422": {
         "title": "A nap elmúlt, az est leszállt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "423": {
         "title": "Uram Isten, már meggyújtom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "424": {
         "title": "A nap már újra véget ért",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "425": {
         "title": "Már a napnak vége",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "426": {
         "title": "Maradj velem",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "427": {
         "title": "Ó, terjeszd ki Jézusom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "428": {
         "title": "Ó, terjeszd ki Jézusom",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "429": {
         "title": "Itt az este",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "430": {
         "title": "Áldott legyen a frigy",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "431": {
         "title": "Isten velünk, viszontlátásra",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "432": {
         "title": "Búcsúra fel, a nap leszállt",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "433": {
         "title": "Fájó szívvel",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "434": {
         "title": "Hogyha szíved fáradt nagyon",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "435": {
         "title": "Az est szelíd csendjében",
-        "first_line": "",
         "notes": ["", "", "", ""]
     },
     "436": {
         "title": "A mi Urunk",
-        "first_line": "",
         "notes": ["", "", "", ""]
     }
 }
