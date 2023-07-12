@@ -57,6 +57,7 @@ jobs:
           export VITE_BASE_URL="/${{ env.PR_REPO_NAME }}/"
           export VITE_GIT_BRANCH="$GITHUB_HEAD_REF"
           npm i
+          npm run deploy-check
           npm run build
           npx cap copy web
           cd ..

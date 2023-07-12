@@ -28,6 +28,7 @@ jobs:
           cd build
           echo "VITE_BASE_URL=/acchymns-dev/" > .env # We deploy to github.io/acchyms-dev, which we serve on the root
           npm i
+          npm run deploy-check
           npm run build
           npx cap copy web # This runs our helper script to compress the song book info
           cd ..
