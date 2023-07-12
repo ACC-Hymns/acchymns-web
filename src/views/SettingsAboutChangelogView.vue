@@ -15,16 +15,23 @@ const { back } = useNavigator();
     <div class="settings main-content">
         <a class="changelog">
             <h3 class="release" style="margin-bottom: 0px">[v2.0]</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2022-06-01</h5>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2023-07-14</h5>
             <ul style="margin-top: 5px">
                 <li class="change">Storage savings</li>
                 <li class="change">Increased visual fidelity</li>
                 <li class="change">Zoom and pan on songs</li>
-                <li class="change">Capability to import books</li>
+                <li class="change">Importable books</li>
+                <li class="change">Added Celebration Hymnal</li>
                 <li class="change">Added Hymns of Zion</li>
                 <li class="change">Added Zbirka</li>
-                <li class="change">Added Pisne Chorale</li>
+                <li class="change">Added Hymns of Praise</li>
                 <li class="change">Added Japanese Zion's Harp</li>
+                <li class="change">Added German Zion's Harp</li>
+                <li class="change">Added Hungarian Zion's Harp</li>
+                <li class="change">Added Romanian Zion's Harp</li>
+                <li class="change">Added Spanish Zion's Harp</li>
+                <li class="change">Added Hangoljátok Szíveteket</li>
+                <li class="change">Added Pisne Chorale</li>
                 <li class="change">Bug fixes</li>
             </ul>
         </a>

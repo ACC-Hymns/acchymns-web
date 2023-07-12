@@ -4,8 +4,8 @@
 		"medium": "Hangoljátok",
 		"long": "Hangoljátok szíveteket"
 	},
-	"primaryColor": "#477050",
-	"secondaryColor": "#2C4732",
+	"primaryColor": "#33523a",
+	"secondaryColor": "#213625",
 	"fileExtension": "pdf",
 	"addOn": true,
 	"indexAvailable": false
