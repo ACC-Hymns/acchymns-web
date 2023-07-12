@@ -26,6 +26,8 @@ odd = True
 for filename in os.listdir("joined"):
     writer = PdfWriter()
     reader = PdfReader(f"joined/{filename}")
+    if (filename == "244.pdf"): # We're missing 243 right now
+        odd = not odd
     print("Cropping " + filename, "- is odd:", odd)
     for page in reader.pages:
         horizontal_crop = page.mediabox.width * 0.10
