@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { getAllBookMetaData } from "@/scripts/book_import";
 import type { BookSummary, SongReference } from "@/scripts/types";
+import type { PanZoom } from "panzoom";
 import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
-import { ref, onMounted, readonly, computed } from "vue";
+import { ref, onMounted, readonly, computed, onUpdated } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
@@ -36,6 +37,8 @@ const dark_mode = computed(() => {
 const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
 let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
+let panzoom: PanZoom;
+var isMobile = Capacitor.getPlatform() !== "web";
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -47,9 +50,8 @@ onMounted(async () => {
     const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
-    var isMobile = Capacitor.getPlatform() !== "web";
     if (panzoom_enabled.value) {
-        createPanZoom(panzoom_container.value as HTMLDivElement, {
+        panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
             beforeWheel: e => {
                 return e.shiftKey;
             },
@@ -59,7 +61,65 @@ onMounted(async () => {
             boundsPadding: isMobile ? 1 : 0.5,
         });
     }
+    if(isMobile) {
+        setInterval(() => {
+            observer.refresh();
+        }, 10);
+    }
 });
+
+class IntersectionObserverManager { 
+    _observer;
+    _observedNodes;
+
+    constructor(observer: IntersectionObserver) {
+        this._observer = observer;
+        this._observedNodes = new Set<Element>();
+    }
+    observe(node: Element) {
+        this._observedNodes.add(node);
+        this._observer.observe(node);
+    }
+    unobserve(node: Element) {
+        this._observedNodes.delete(node);
+        this._observer.unobserve(node);
+    }
+    disconnect() {
+        this._observedNodes.clear();
+        this._observer.disconnect();
+    }
+    refresh() {
+        for (let node of this._observedNodes) {
+            this._observer.unobserve(node);
+            this._observer.observe(node);
+        }
+    }
+}
+
+const observer = new IntersectionObserverManager(new IntersectionObserver((entries, _observer) => 
+        {
+            for (const entry of entries) {
+                let rootRect = entry.boundingClientRect;
+                let visibleRect = entry.intersectionRect;
+                if(visibleRect.height < rootRect.height)
+                    panzoom.setVerticalPan(true);
+                else
+                    panzoom.setVerticalPan(false);
+            }
+        },
+        {
+            root: null,
+            rootMargin: "0px",
+            threshold: 1,
+        }
+    )
+);
+
+onUpdated(async () => {
+    if(isMobile)
+        observer.observe(panzoom_container.value as Element);
+});
+
 </script>
 
 <template>
