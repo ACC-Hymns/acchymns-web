@@ -1938,5 +1938,54 @@
 	"485": {
 		"title": "Tamo u nebu",
 		"notes": ["Ab4", "F4", "Db4", "Db3"]
-	}
+    },
+    "486": {
+        "title": "Divan Dan",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+    },
+    "487": {
+        "title": "Zakrilje u Isusu",
+		"notes": ["Eb4"]
+    },
+    "488": {
+        "title": "Jedno želim",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+    },
+    "489": {
+        "title": "Miloš li se ti?",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+    },
+    "490": {
+        "title": "O pobedo kroz Hrista",
+		"notes": ["G4", "B3", "D3", "G2"]
+    },
+    "491": {
+        "title": "Psalam 32",
+		"notes": ["C5", "A4", "F4"]
+    },
+    "492": {
+        "title": "Glava i u dovi",
+		"notes": ["Eb4", "G3", "Eb3"]
+    },
+    "493": {
+        "title": "Jedini izvor",
+		"notes": ["B4", "D4"]
+    },
+    "494": {
+        "title": "Kada ću moći",
+		"notes": ["F4", "C4", "A3", "F3"]
+    },
+    "495": {
+        "title": "Za mnom, o deco",
+		"notes": ["F4", "F3"]
+    },
+    "496": {
+        "title": "Sine Božji",
+		"notes": ["Eb4", "C4", "Ab3"]
+    },
+    "497": {
+        "title": "Rasplamti se srce",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+    }
 }
+
