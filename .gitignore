@@ -31,3 +31,7 @@ android/release.jks.base64
 
 resources/ios/**/*
 resources/android/**/*
+
+joined
+cropped
+PDFAnalyzer/songs
