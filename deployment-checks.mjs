@@ -58,7 +58,7 @@ if (missing_images.length > 0) {
 }
 
 if (missing_number.length > 0) {
-    console.log("Missing references:");
+    console.log("Missing numbers:");
     console.log(missing_number.join("\n"));
 }
 

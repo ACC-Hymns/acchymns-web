@@ -81,7 +81,7 @@
 	},
 	"21": {
 		"title": "Fel, Krisztus népe, zengjetek",
-		"notes": []
+		"notes": ["F4", "F3"]
 	},
 	"22": {
 		"title": "Jöjjetek vígan",
@@ -573,17 +573,10 @@
 	},
 	"144": {
 		"title": "Áldott légy, mert megváltottál",
-		"notes": ["",    "",
-			"",
-			""
-		]
+		"notes": ["B4", "D4", "G3", "G2"]
 	},
 	"145": {
-		"title": "Áldott légy, mert megváltottál",
-		"notes": ["",    "",
-			"",
-			""
-		]
+		"title": "Hála Néked az ételért"
 	},
 	"146": {
 		"title": "Előtted, Atyánk",
@@ -663,7 +656,7 @@
 	},
 	"165": {
 		"title": "Égi Atyám, segíts!",
-		"notes": []
+		"notes": ["G3"]
 	},
 	"166": {
 		"title": "Halld meg hő imám",
@@ -779,7 +772,7 @@
 	},
 	"194": {
 		"title": "Börtönökben, bilincsekben",
-		"notes": []
+		"notes": ["F4"]
 	},
 	"195": {
 		"title": "Őrálló szólj",
@@ -1055,7 +1048,7 @@
 	},
 	"263": {
 		"title": "Szép virányok hol vannak",
-		"notes": []
+		"notes": ["Eb5", "C5"]
 	},
 	"264": {
 		"title": "A mennyben otthonom",
@@ -1575,7 +1568,7 @@
 	},
 	"397": {
 		"title": "Házasságnak alkotója",
-		"notes": []
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
 	},
 	"398": {
 		"title": "Velünk az Úr",
@@ -1627,7 +1620,7 @@
 	},
 	"410": {
 		"title": "Áldott legyen a frigy",
-		"notes": []
+		"notes": ["C#5", "E4", "A3", "A2"]
 	},
 	"411": {
 		"title": "Gyönyörű az élet ott",
