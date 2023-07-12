@@ -10,12 +10,10 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-const branch_name = execSync("git branch --show-current").toString().trimEnd();
-const is_production_or_staging = branch_name == "staging" || branch_name == "main";
-
 const books = fs.readdirSync("public/books");
 const missing_images = [];
 const missing_number = [];
+const blank_notes = [];
 for (const book of books) {
     console.log("Checking", book);
 
@@ -49,6 +47,7 @@ for (const book of books) {
     for (const [song_number, song_reference] of Object.entries(song_references)) {
         if (song_reference["notes"] != undefined && song_reference["notes"].join("").trim() == "") {
             console.log(`Blank notes for song #${song_number}`);
+            blank_notes.push(book + " - " + song_number);
         }
     }
 }
@@ -63,8 +62,16 @@ if (missing_number.length > 0) {
     console.log(missing_number.join("\n"));
 }
 
+const branch_name = execSync("git branch --show-current").toString().trimEnd();
+const is_production_or_staging = branch_name == "staging" || branch_name == "main";
+
+if (blank_notes.length > 0) {
+    console.log("Blank notes:");
+    console.log(blank_notes.join("\n"));
+}
+
 // Fail if there are missing references or images
-if (missing_images.length > 0 || missing_number.length > 0) {
+if (missing_images.length > 0 || missing_number.length > 0 || (blank_notes.length > 0 && is_production_or_staging)) {
     process.exit(1);
 }
 process.exit(0);
