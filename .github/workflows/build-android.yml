@@ -23,6 +23,7 @@ jobs:
       - name: Build web app
         run: |
           npm install
+          npm run deploy-check
           npm run build
           npx cap sync
 
