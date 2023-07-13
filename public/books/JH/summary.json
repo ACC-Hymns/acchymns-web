@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "JH",
+		"medium": "Junior Hymnal",
+		"long": "Junior Hymnal"
+	},
+	"primaryColor": "#155298",
+	"secondaryColor": "#17264E",
+	"fileExtension": "png",
+	"addOn": false,
+	"indexAvailable": true
+}

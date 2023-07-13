@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "PC",
+		"medium": "Pisne Chorale",
+		"long": "Pisne Chorale"
+	},
+	"primaryColor": "#99D9EA",
+	"secondaryColor": "#80C5D0",
+	"fileExtension": "png",
+	"addOn": true,
+	"indexAvailable": false
+}

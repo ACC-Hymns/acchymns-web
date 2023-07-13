@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "ZHG",
+		"medium": "Zion's Harp (Ger.)",
+		"long": "Zion's Harp (German)"
+	},
+	"primaryColor": "#757575",
+	"secondaryColor": "#404040",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}

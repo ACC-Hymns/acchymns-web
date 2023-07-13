@@ -1,0 +1,93 @@
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
+import { App } from "@capacitor/app";
+import type { URLOpenListenerEvent } from "@capacitor/app";
+
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        {
+            path: "/",
+            component: HomeView,
+        },
+        {
+            path: "/selection/:book",
+            props: true,
+            component: () => import("../views/SongSelectionView.vue"),
+        },
+        {
+            path: "/topical/:book",
+            props: true,
+            component: () => import("../views/TopicalIndexView.vue"),
+        },
+        // {
+        //     path: "/alphabetical/:book",
+        //     props: true,
+        //     component: () => import("../views/AlphabeticalIndexView.vue"),
+        // },
+        {
+            path: "/display/:book/:number",
+            props: true,
+            component: () => import("../views/SongDisplayView.vue"),
+        },
+        {
+            path: "/search",
+            component: () => import("../views/SearchView.vue"),
+        },
+        {
+            path: "/bookmarks",
+            component: () => import("../views/BookmarkedView.vue"),
+        },
+        {
+            path: "/settings",
+            component: () => import("../views/SettingsView.vue"),
+        },
+        {
+            path: "/settings/about",
+            component: () => import("../views/SettingsAboutView.vue"),
+        },
+        {
+            path: "/settings/about/changelog",
+            component: () => import("../views/SettingsAboutChangelogView.vue"),
+        },
+        {
+            path: "/settings/help/console",
+            component: () => import("../views/SettingsHelpConsoleView.vue"),
+        },
+        {
+            path: "/settings/about/attributions",
+            component: () => import("../views/SettingsAboutAttributionsView.vue"),
+        },
+        {
+            path: "/settings/help",
+            component: () => import("../views/SettingsHelpView.vue"),
+        },
+        {
+            path: "/settings/options",
+            component: () => import("../views/SettingsOptionsView.vue"),
+        },
+        {
+            path: "/settings/import",
+            component: () => import("../views/SettingsImportView.vue"),
+        },
+        {
+            path: "/:catchAll(.*)",
+            component: () => import("../views/404View.vue"),
+        },
+    ],
+});
+
+// Deep Linking for IOS + Android
+// https://capacitorjs.com/docs/next/guides/deep-links#vue
+App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
+    // Example url: https://acchymns.app/tabs/tabs2
+    // slug = /tabs/tabs2
+    const slug = event.url.split(".app").pop();
+
+    // We only push to the route if there is a slug present
+    if (slug) {
+        router.push(slug);
+    }
+});
+
+export default router;

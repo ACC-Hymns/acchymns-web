@@ -1,0 +1,81 @@
+name: Build and Deploy Development Branch
+on:
+  pull_request:
+    branches: [ staging ]
+    types: [ opened, synchronize, closed ]
+    paths-ignore:
+      - 'ios/**'
+      - 'android/**'
+      - '.vscode/**'
+      - '**.md'
+env:
+  PR_REPO_NAME: acchymns-pr-${{ github.event.pull_request.node_id }}
+
+jobs:
+  create-repo:
+    if: github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create new repository for temporary deployment
+        uses: octobay/create-repository-action@v1
+        with:
+          name: ${{ env.PR_REPO_NAME }}
+          org: ACC-Hymns
+          private-repo: false
+          access-token: ${{ secrets.DEPLOYMENT_PAT }}
+          initialize-repo: true
+
+  delete-repo:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete repository for temporary deployment
+        uses: octobay/delete-repository-action@v1
+        with:
+          name: ACC-Hymns/${{ env.PR_REPO_NAME }}
+          access-token: ${{ secrets.DEPLOYMENT_PAT }}
+
+  build-and-deploy:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      
+      # https://github.com/actions/checkout#push-a-commit-using-the-built-in-token
+      - name: Set GitHub Actions as Commit Author
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          path: 'build'
+      
+      - name: Build
+        run: |
+          cd build
+          export VITE_BASE_URL="/${{ env.PR_REPO_NAME }}/"
+          export VITE_GIT_BRANCH="$GITHUB_HEAD_REF"
+          npm i
+          npm run deploy-check
+          npm run build
+          npx cap copy web
+          cd ..
+      
+      - name: Checkout Dev Target
+        uses: actions/checkout@v3
+        with:
+          repository: ACC-Hymns/${{ env.PR_REPO_NAME }}
+          path: 'deploy'
+          token: ${{ secrets.DEPLOYMENT_PAT }}
+      
+      - name: Push files to target
+        run: |
+          cd deploy
+          git checkout -B gh-pages
+          cp -r ../build/dist/* .
+          cp index.html 404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
+          touch .nojekyll
+          git add .
+          git commit -m $GITHUB_SHA
+          git push --force -u origin gh-pages

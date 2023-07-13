@@ -1,0 +1,530 @@
+{
+	"1": {
+		"title": "El M'a Condus",
+		"notes": ["A4", "F#4", "A3", "D3"]
+	},
+	"2": {
+		"title": "Dacă Isus Ca Imărat",
+		"notes": ["E4", "G#3", "E3"]
+	},
+	"3": {
+		"title": "Te Iubesc Isuse",
+		"notes": ["D4", "C4", "A3", "F3"]
+	},
+	"4": {
+		"title": "Intrănd Isus In Inimă",
+		"notes": ["C#4", "A3", "E3", "A2"]
+	},
+	"5": {
+		"title": "Eu Vin Singur In Grădina",
+		"notes": ["Eb4", "C4"]
+	},
+	"6": {
+		"title": "Căntati Mărire Lui Isus",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"7": {
+		"title": "Nu Ai Tu Loc In Inima",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"8": {
+		"title": "In Tot Locul Mă Conduce",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
+	},
+	"9": {
+		"title": "Sfănt E,Sfănt E",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"10": {
+		"title": "Locuind In Canaan ",
+		"notes": ["Bb4", "D4", "Bb3", "Bb2"]
+	},
+	"11": {
+		"title": "Mai Mult Despre Isus",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"12": {
+		"title": "Isuse, Condumă-ăci",
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
+	},
+	"13": {
+		"title": "In Străvechea Carte Sfăntă",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"14": {
+		"title": "Cănd Umblăm Cu Domnul",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"15": {
+		"title": "In Indurarea Domnului",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"16": {
+		"title": "Credinta Mea Eu O Zidesc",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"17": {
+		"title": "Aflatu-m'a Păstorul",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"18": {
+		"title": "m'am Depărtat",
+		"notes": ["Eb4", "C4", "Ab3"]
+	},
+	"19": {
+		"title": "Căt De Drag Ne Este Isus",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"20": {
+		"title": "Veniti Eu Vă Voiu Spune",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"21": {
+		"title": "Un Nume-mi Place",
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
+	},
+	"22": {
+		"title": "Timp Dulce De Evlavie",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"23": {
+		"title": "Eu Voiu Cănta Despre Isus",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"24": {
+		"title": "A Mea Credintă",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"25": {
+		"title": "Sus Că Noaptea Va Veni",
+		"notes": ["C5", "A4", "F3"]
+	},
+	"26": {
+		"title": "Acuma Cănd Ne Rugăm",
+		"notes": ["A4", "F4", "A3", "D3"]
+	},
+	"27": {
+		"title": "Suflet Ratăcit",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"28": {
+		"title": "Indurat Sfătuitor",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"29": {
+		"title": "De Cufindat Eram",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"30": {
+		"title": "Vina La Apa Vieti",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"31": {
+		"title": "Doamne Nu Vreau Comoară",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"32": {
+		"title": "Să-l Primesti Pe El",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"33": {
+		"title": "Dacă Esti Purtat De Valul",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"34": {
+		"title": "Patria Mea Sus In Cer Este",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"35": {
+		"title": "Strălaceste In Depărtare",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"36": {
+		"title": "O, Ascultati",
+		"notes": ["Db5", "F4", "Ab3", "Db3"]
+	},
+	"37": {
+		"title": "Oh Ce Sămtire",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"38": {
+		"title": "La Lucru ",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"39": {
+		"title": "E Drept Că Isus A Murit",
+		"notes": ["E4", "G#3", "E3"]
+	},
+	"40": {
+		"title": "O,Ce Dulce Nume-i Isus",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"41": {
+		"title": "Izvor Plin Cu Sănge",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"42": {
+		"title": "Curătit Esti",
+		"notes": ["C4", "Ab3", "Eb3", "Ab2"]
+	},
+	"43": {
+		"title": "Eu Rătăcit Eram",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"44": {
+		"title": "Domnul Te Va Păzi",
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
+	},
+	"45": {
+		"title": "Fată N Fată",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"46": {
+		"title": "Stănd Pe Promisiunile",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"47": {
+		"title": "Ibuire Divină Sfăntă",
+		"notes": ["F4", "D4", "F3", "Bb2"]
+	},
+	"48": {
+		"title": "Măntuitorul Meu Isus",
+		"notes": ["Bb4", "G4"]
+	},
+	"49": {
+		"title": "Cănd Eram Eu Numai Prunc Mic",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"50": {
+		"title": "Să-i Spun Lui Isus",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"51": {
+		"title": "Veri Tu Să Scapi",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"52": {
+		"title": "Domnul Vă Binecuvinteze",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"53": {
+		"title": "'Dulce E A Crede N Isus",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
+	},
+	"54": {
+		"title": "Merge-voi Cu Măna Goală",
+		"notes": ["A4", "F#4"]
+	},
+	"55": {
+		"title": "Rîul Binecuvăntării",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"56": {
+		"title": "Celui Ce Călătoreste",
+		"notes": ["D4", "D3"]
+	},
+	"57": {
+		"title": "Voi Iubi Vechea Cruce",
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
+	},
+	"58": {
+		"title": "Despre Isus Voiesc Ca Să Cănt",
+		"notes": ["Eb4", "C4", "Ab3"]
+	},
+	"59": {
+		"title": "Unde-i Sărmanul Fiu Al Meu",
+		"notes": ["B4"]
+	},
+	"60": {
+		"title": "Ostasii Lui Christos",
+		"notes": ["C5", "A4", "F3"]
+	},
+	"61": {
+		"title": "Mărim Sufleteste",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"62": {
+		"title": "Puternic Bate Furtuna",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
+	},
+	"63": {
+		"title": "Urmănd Lumina",
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
+	},
+	"64": {
+		"title": "Mai Aproape De Isus",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
+	},
+	"65": {
+		"title": "Fie-ne Inima Plină",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"66": {
+		"title": "Cu Blăndete Si Drag",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
+	},
+	"67": {
+		"title": "Pe Bratul Domnului",
+		"notes": ["C#5", "E4", "A3", "A2"]
+	},
+	"68": {
+		"title": "Isus Pe Răi Primeste",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"69": {
+		"title": "Păstorul Oaia Isi Caută",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"70": {
+		"title": "Vin' Acasă",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"71": {
+		"title": "Fii Sfănt Cum E Domnul",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"72": {
+		"title": "A Venit Messia",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
+	},
+	"73": {
+		"title": "Zace 'N Rece Mormănt",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"74": {
+		"title": "Christos Cel Crucificat",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"75": {
+		"title": "Doamne Percum Vreai",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"76": {
+		"title": "De Lipsă-mi Esti Mie",
+		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
+	},
+	"77": {
+		"title": "Auziti Isus Vă Cheamă",
+		"notes": ["E4", "E3"]
+	},
+	"78": {
+		"title": "Cunosc O Iubita Capelă",
+		"notes": ["F4", "D4", "F3", "Bb2"]
+	},
+	"79": {
+		"title": "Spune-i Lui Isus",
+		"notes": ["Bb4", "D4", "F3", "Bb2"]
+	},
+	"80": {
+		"title": "Credintă Măntuitore",
+		"notes": ["C5", "Eb4", "Ab3"]
+	},
+	"81": {
+		"title": "Isus Stiu Mă Iubeste",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
+	},
+	"82": {
+		"title": "Nu Mergi Dela Mine Isus",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"]
+	},
+	"83": {
+		"title": "Mai Aproape Doamne",
+		"notes": ["B4", "D4", "G3"]
+	},
+	"84": {
+		"title": "Focul Dragostei Lui Isus",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"85": {
+		"title": "Precum Sunt Asa Vin",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"86": {
+		"title": "O, Scumpă Zi",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"87": {
+		"title": "Numai Săngele Lui Isus",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"88": {
+		"title": "Medicul Bun S'apropie",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
+	},
+	"89": {
+		"title": "Bate Bate La Usă",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"90": {
+		"title": "Isuse, Cărmuitor",
+		"notes": ["D5", "F4", "Bb3", "Bb2"]
+	},
+	"91": {
+		"title": "Scumpă Păne-a Vietei",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"92": {
+		"title": "Aproape Convins",
+		"notes": ["B4", "D4", "G3"]
+	},
+	"93": {
+		"title": "Sfant E Legamantul",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"94": {
+		"title": "Căntati Numai",
+		"notes": ["A4", "F#4", "A3"]
+	},
+	"95": {
+		"title": "Cel Ce Te-ai Deschis Mie",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"96": {
+		"title": "Te Lăudăm Doamne",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"97": {
+		"title": "Veniti Să Căntam",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"98": {
+		"title": "O Doamne Mare",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"99": {
+		"title": "Sfănt Esti Sfănt Esti",
+		"notes": ["E4", "B3", "G#3", "E3"]
+	},
+	"100": {
+		"title": "Ascultati Acest Cuvănt v",
+		"notes": ["D4", "B3", "G3", "G2"]
+	},
+	"101": {
+		"title": "Din  întunerec Și Păcate  ",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"102": {
+		"title": "Nainte 'N Luptă Să Intrăm",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"103": {
+		"title": "Spune-mi Măreata Veste",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"104": {
+		"title": "Cănd Trimbita Domnului",
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
+	},
+	"105": {
+		"title": "Lăudati Puterea Lui Isus",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"106": {
+		"title": "Doamne Cănd Vifor Va Veni",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"107": {
+		"title": "Căna Valea Plăngerii",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"108": {
+		"title": "Căntă Mărire Lui Isus",
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
+	},
+	"109": {
+		"title": "Cu Bucurie Vor Secera Aceia",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"110": {
+		"title": "Oh Noapte Preasfintită!",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"111": {
+		"title": "Domnul Îmi Este Adăpost",
+		"notes": ["C4", "A3", "G3"]
+	},
+	"112": {
+		"title": "Căntați Toți De Bucurie",
+		"notes": ["D5", "F#4", "D4", "D3"]
+	},
+	"113": {
+		"title": "Veselie Este 'N Cer",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"114": {
+		"title": "Dorul Meu Se Avanta",
+		"notes": ["C#4", "A3", "E3", "A2"]
+	},
+	"115": {
+		"title": "Nu-i Prieten Lui Isus Asemenea",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"116": {
+		"title": "Domn Al Sufletului Meu",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"117": {
+		"title": "De-s Păcatele Roșii",
+		"notes": ["Eb4", "C4", "Ab3"]
+	},
+	"118": {
+		"title": "Sus, Voi Fii Ai Mănturie!",
+		"notes": ["Bb3", "Bb2"]
+	},
+	"119": {
+		"title": "Glorios În Strălucire ",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"120": {
+		"title": "Galilea",
+		"notes": ["E4"]
+	},
+	"121": {
+		"title": "Cetate Tare-i Dumnezeu",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"122": {
+		"title": "Fi Cu Mine",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"123": {
+		"title": "Auzi Corul Îngeresc ",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"124": {
+		"title": "Ce Bine E Cănd Frații",
+		"notes": ["C4", "C3"]
+	},
+	"125": {
+		"title": "Tot Mai Aproape",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"126": {
+		"title": "Scumpe Isus Ține-mă",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"127": {
+		"title": "Salvatorul Meu Mă Chemă",
+		"notes": ["C4", "A3", "F3"]
+	},
+	"128": {
+		"title": "Fugi Fugi De Păcate",
+		"notes": ["D5", "Bb4", "Bb3"]
+	},
+	"129": {
+		"title": "Spre Cer Încerc",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"130": {
+		"title": "Primul Noel",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"131": {
+		"title": "Părintele Asupra-mi",
+		"notes": ["Db4", "F3", "Db3"]
+	},
+	"132": {
+		"title": "Ca Și Vara Ni Viața",
+		"notes": ["Eb4", "G3", "Eb3"]
+	}
+}

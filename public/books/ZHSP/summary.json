@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "ZHSP",
+		"medium": "Zion's Harp (Span.)",
+		"long": "Zion's Harp (Spanish)"
+	},
+	"primaryColor": "#ff731c",
+	"secondaryColor": "#db5502",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
