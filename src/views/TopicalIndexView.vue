@@ -2,7 +2,7 @@
 import { onMounted, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
-import type { Song, BookSummary } from "@/scripts/types";
+import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
 
 const props = defineProps<{
@@ -23,17 +23,15 @@ let active_topic = ref<string>("");
 let BOOK_SONG_METADATA: any = null;
 let BOOK_METADATA: any = null;
 const songs_to_display = computed(() => {
-    if(isAlphabetical.value) {
+    if (isAlphabetical.value) {
         return alphabeticalSongs.value;
-    }
-    else {
+    } else {
         if (active_topic.value in topical_index.value) {
             return topical_index.value[active_topic.value];
         }
     }
     return [];
 });
-
 
 onMounted(async () => {
     BOOK_METADATA = await getAllBookMetaData();
@@ -63,7 +61,7 @@ onMounted(async () => {
             title: song?.title ?? "",
             number: song_number,
             notes: song?.notes,
-            firstLine: song?.firstLine
+            first_line: song?.first_line,
         });
     }
     alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
@@ -112,11 +110,10 @@ let title = ref("Topical Index");
 let icon = ref("../assets/text.svg");
 function toggleAlphabetical() {
     isAlphabetical.value = !isAlphabetical.value;
-    if(isAlphabetical.value) {
+    if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
         icon.value = "../assets/list-bulleted.svg";
-    }
-    else {
+    } else {
         title.value = "Topical Index";
         icon.value = "../assets/text.svg";
     }
@@ -127,14 +124,13 @@ function toggleAlphabetical() {
         });
     }, 10);
 }
-
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
             <img @click="goBack()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">{{title}}</h1>
+            <h1 class="title--center">{{ title }}</h1>
             <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
         </div>
     </div>

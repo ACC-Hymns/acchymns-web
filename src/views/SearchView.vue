@@ -14,7 +14,9 @@ const stripped_query = computed(() => {
     return search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
         .replace(/s{2,}/g, " ")
-        .toLowerCase();
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "");
 });
 
 watch(search_query, new_query => {
@@ -26,11 +28,10 @@ const available_books = ref<BookSummary[]>([]);
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
-        if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
+                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
                     search_params.value.bookFilters.find(b => b == s.book.name.short)
                 );
             })
@@ -39,7 +40,7 @@ const search_results = computed(() => {
         if (search_query.value === "") return [];
         return available_songs.value
             .filter(s => {
-                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number == stripped_query.value;
+                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value;
             })
             .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
@@ -70,12 +71,16 @@ onMounted(async () => {
                 stripped_title: song.title
                     .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                     .replace(/s{2,}/g, " ")
-                    .toLowerCase(),
-                stripped_firstLine:
-                    song?.firstLine
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/\p{Diacritic}/gu, ""),
+                stripped_first_line:
+                    song?.first_line
                         ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                         ?.replace(/s{2,}/g, " ")
-                        ?.toLowerCase() ?? "",
+                        ?.toLowerCase()
+                        ?.normalize("NFD")
+                        ?.replace(/\p{Diacritic}/gu, "") ?? "",
             } as SongSearchInfo);
         }
     }
@@ -293,6 +298,7 @@ onUpdated(async () => {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
+    margin-top: 5px;
     margin-right: 10px;
     z-index: 1;
 }

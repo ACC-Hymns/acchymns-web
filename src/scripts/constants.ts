@@ -12,12 +12,17 @@ const branch: string = import.meta.env.VITE_GIT_BRANCH;
 // }
 
 const public_references = {
+    CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
     HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HZ`,
     ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZG`,
-    PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/PC`,
-    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHJ`,
     ZGE: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZGE`,
-    CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
+    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHJ`,
+    ZHSP: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHSP`,
+    ZHG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHG`,
+    ZHH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHH`,
+    ZHR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHR`,
+    HS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HS`,
+    PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/PC`,
 } as const;
 
 const known_references = {

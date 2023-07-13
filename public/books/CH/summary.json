@@ -1,12 +1,12 @@
 {
-    "name": {
-        "short": "CH",
-        "medium": "Celebration Hymnal",
-        "long": "Celebration Hymnal"
-    },
-    "primaryColor": "#084736",
-    "secondaryColor": "#032e22",
-    "fileExtension": "pdf",
-    "addOn": true,
-    "indexAvailable": false
+	"name": {
+		"short": "CH",
+		"medium": "Celebration Hymnal",
+		"long": "Celebration Hymnal"
+	},
+	"primaryColor": "#12884b",
+	"secondaryColor": "#04491b",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": true
 }

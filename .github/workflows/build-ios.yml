@@ -53,6 +53,7 @@ jobs:
           pwd
           echo "$(pwd)"
           npm install
+          npm run deploy-check
           npm run build
         
       - name: Build app bundle

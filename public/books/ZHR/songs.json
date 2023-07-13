@@ -1,0 +1,1723 @@
+{
+	"1": {
+		"title": "Aliluia cu toţi cântaţi",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"2": {
+		"title": "Cântaţi fiii Sionului",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"3": {
+		"title": "Cerul vesteşte pe Domnul",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"4": {
+		"title": "Deschideţi departe poarta",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"5": {
+		"title": "Laudă pe Domnul",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"6": {
+		"title": "Cristoasă viaţa mea",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"7": {
+		"title": "Ridicăm Tatălui laudă",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"8": {
+		"title": "Învierea în botez",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"9": {
+		"title": "Pace şi bucurie",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"10": {
+		"title": "Înainte de botez",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"11": {
+		"title": "Legământ în moartea Lui Isus",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"12": {
+		"title": "Mărirea Domnului",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"13": {
+		"title": "Multă mărire pentru binefacerile lui Dumnezeu",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"14": {
+		"title": "Păstorul şi turma",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"15": {
+		"title": "Păstorul credincios",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"16": {
+		"title": "Bine este miel lui Christos a fi",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
+	"17": {
+		"title": "Bucurie în Isus",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"18": {
+		"title": "Isus cel mai bun prieten",
+		"notes": ["C5", "G4", "E4", "C3"]
+	},
+	"19": {
+		"title": "Cel neasemănat",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"20": {
+		"title": "Nainte!",
+		"notes": ["D4", "D3"]
+	},
+	"21": {
+		"title": "Către luptători",
+		"notes": ["D4", "D3"]
+	},
+	"22": {
+		"title": "Prea sfinte",
+		"notes": ["D4", "D3"]
+	},
+	"23": {
+		"title": "Îngroparea în Christos",
+		"notes": ["D4", "D3"]
+	},
+	"24": {
+		"title": "Cântări pentru Cină",
+		"notes": ["D4", "D3"]
+	},
+	"25": {
+		"title": "Noi Îţi cântăm",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"26": {
+		"title": "Isus în noaptea în care a fost vândut",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"27": {
+		"title": "Sculaţi în luptă",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"28": {
+		"title": "Isus este capul nostru",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"29": {
+		"title": "Mijlocitorul",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"30": {
+		"title": "Cele şapte popoare",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"31": {
+		"title": "Isus ca arhiereu",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"32": {
+		"title": "Cine rămâne?",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"33": {
+		"title": "Societatea sfinţilor",
+		"notes": ["A4", "E4", "C#4", "A3"]
+	},
+	"34": {
+		"title": "Naşterea de sus",
+		"notes": ["A4", "E4", "C#4", "A3"]
+	},
+	"35": {
+		"title": "Lupta duhovnicească",
+		"notes": ["A4", "E4", "C#4", "A3"]
+	},
+	"36": {
+		"title": "Semănătura şi secerişul",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"37": {
+		"title": "Iubirea",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"38": {
+		"title": "Sioane fii tu îndestulat",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"39": {
+		"title": "Lupta pocăinţei",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"40": {
+		"title": "Crearea în botez",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"41": {
+		"title": "Aducerea aminte de Legământ în Botez",
+		"notes": ["A4", "E4", "C#4", "A3"]
+	},
+	"42": {
+		"title": "Betezda ori casa Îndurării",
+		"notes": ["A4", "C#4", "E3", "A2"]
+	},
+	"43": {
+		"title": "Botezul",
+		"notes": ["A4", "C#4", "E3", "A2"]
+	},
+	"44": {
+		"title": "Unul pentru toţi",
+		"notes": ["A4", "C#4", "E3", "A2"]
+	},
+	"45": {
+		"title": "Pocăinţa",
+		"notes": ["A4", "C#4", "E3", "A2"]
+	},
+	"46": {
+		"title": "Lasă pe Domnul",
+		"notes": ["E4", "E3"]
+	},
+	"47": {
+		"title": "Sileşte drept",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"48": {
+		"title": "Cântarea Dimineţii",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"49": {
+		"title": "Cântarea de seară",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"50": {
+		"title": "Fiţi câştigaţi",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"51": {
+		"title": "Deşteptaţi-vă în lupta credinţei",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"52": {
+		"title": "Spre Pocăinţă",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"53": {
+		"title": "Dorinţa",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"54": {
+		"title": "Propovăduirea pe munte",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"55": {
+		"title": "Marele Arhiereu",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"56": {
+		"title": "Venirea Domnului",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"57": {
+		"title": "Isus ca pildă",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"58": {
+		"title": "Viaţa din lăuntru a creştinilor",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"59": {
+		"title": "Viaţa noastră 'i ascunsă",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"60": {
+		"title": "Isus Christos fie lăudat",
+		"notes": ["Db4", "Ab3", "F3", "Db3"]
+	},
+	"61": {
+		"title": "Toţi pentru unul",
+		"notes": ["Db4", "Ab3", "F3", "Db3"]
+	},
+	"62": {
+		"title": "Rodul Duhului",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"63": {
+		"title": "Magnet",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"64": {
+		"title": "Urmarea după Isus",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"65": {
+		"title": "Una e lipsă",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"66": {
+		"title": "Şcoala crucii",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"67": {
+		"title": "Puterea lui Dumnezeu în nori",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"68": {
+		"title": "Purtarea înaintea lui Dumnezeu",
+		"notes": ["B4", "G4", "D4", "G3"]
+	},
+	"69": {
+		"title": "Iubirea frăţească",
+		"notes": ["B4", "G4", "D4", "G3"]
+	},
+	"70": {
+		"title": "Iubirea",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"71": {
+		"title": "Cântare nouă la botez",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"72": {
+		"title": "Iubirea curată",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"73": {
+		"title": "Isus flacăra iubirii",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"74": {
+		"title": "Îndurarea lui Dumnezeu",
+		"notes": ["A4", "D4", "F#3", "D3"]
+	},
+	"75": {
+		"title": "Mulţumiţi Tatălui!",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"76": {
+		"title": "Iubirea frăţească",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"77": {
+		"title": "Dorinţa după Isus",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"78": {
+		"title": "Credinţa, Nădejdea şi Iubirea",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"79": {
+		"title": "Legământul inimilor",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"80": {
+		"title": "Dumnezeu e iubirea",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"81": {
+		"title": "Acum în ora aceasta",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"82": {
+		"title": "Fericirea",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"83": {
+		"title": "Lupta pocăinţei",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"84": {
+		"title": "Dorinţa după Patrie",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"85": {
+		"title": "Rugăciunea Domnului",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"86": {
+		"title": "Îngrijirea lui Dumnezeu",
+		"notes": ["B4", "G#4", "E4", "E3"]
+	},
+	"87": {
+		"title": "Întărirea credinţei",
+		"notes": ["B4", "G#4", "E4", "E3"]
+	},
+	"88": {
+		"title": "Călătoria",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"89": {
+		"title": "Şapte vorbe ale lui Isus pe cruce",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"90": {
+		"title": "Urmează-Mi",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"91": {
+		"title": "Cugetul ceresc",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"92": {
+		"title": "Înainte",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"93": {
+		"title": "Încrederea în Dumnezeu",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"94": {
+		"title": "Luntrea credinţe",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"95": {
+		"title": "Chemare",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"96": {
+		"title": "În vreme de mare prigonire",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"97": {
+		"title": "Evanghelia",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"98": {
+		"title": "Strigarea către începători ",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"99": {
+		"title": "Lupta şi biruinţa",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"100": {
+		"title": "Dumnezeu ne'e ajutor",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"101": {
+		"title": "Lăudaţi pe Domnul",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"102": {
+		"title": "Fericirea vecinică",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"103": {
+		"title": "O! Tu veac bucuros cuvânt",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"104": {
+		"title": "La mormântul credincioşilor",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"104a": {
+		"title": "Ascultaţi acum Cuvântul",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"105": {
+		"title": "Fii credincios",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"106": {
+		"title": "Calea şi semnul",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"107": {
+		"title": "Christos în trup",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"108": {
+		"title": "Omule cum ţi'e inima",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"109": {
+		"title": "Dacă Domnul n'ar fi cu noi",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"110": {
+		"title": "O! Tu Doamne",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"111": {
+		"title": "Rugarea pentru lucrători",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"112": {
+		"title": "O! Păzitori voioşi strigaţi",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"113": {
+		"title": "Sluga Evangheliei",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"114": {
+		"title": "Strigarea despărţirii",
+		"notes": ["Bb4", "D4", "Bb3", "F3"]
+	},
+	"115": {
+		"title": "Cu armele lui Dumnezeu",
+		"notes": ["Bb4", "D4", "Bb3", "F3"]
+	},
+	"116": {
+		"title": "Bunul păstor",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"117": {
+		"title": "\"Mă iubeşti?\" l'a'ntrebat Domnul",
+		"notes": ["A4", "C4", "A3", "F3"]
+	},
+	"118": {
+		"title": "O! Doamne Numele Tău",
+		"notes": ["Bb4", "D4", "Bb3", "F3"]
+	},
+	"119": {
+		"title": "Scoală şi te sileşte",
+		"notes": ["Bb4", "F4", "D4", "Bb3"]
+	},
+	"120": {
+		"title": "Isus e viu",
+		"notes": ["Bb4", "F4", "D4", "Bb3"]
+	},
+	"121": {
+		"title": "Christos cel înviat",
+		"notes": ["G4", "E4", "C4"]
+	},
+	"122": {
+		"title": "Cântare de rugăciune",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"123": {
+		"title": "Capul şi mădularele",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"124": {
+		"title": "Doamne, cari zăcuşi în mormânt",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"125": {
+		"title": "Isus înainte mergător",
+		"notes": ["C4", "A3", "F3"]
+	},
+	"126": {
+		"title": "La adunare",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"127": {
+		"title": "Cercaţi duhurile",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"128": {
+		"title": "Botezul şi Cina Domnului",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"129": {
+		"title": "O! Doamne cât e de iubit",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"130": {
+		"title": "Laudă pentru mântuirea în botez",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"131": {
+		"title": "O! Tu Sfântule",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"132": {
+		"title": "Doamne, ca să'Ti mulţumim",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"133": {
+		"title": "Oraşul lui Dumnezeu",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"134": {
+		"title": "Darul",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"135": {
+		"title": "Rămâi cu noi",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"136": {
+		"title": "Călătoria credinţei",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"137": {
+		"title": "Viaţa in iubire",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"138": {
+		"title": "Isus Emanuel",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"139": {
+		"title": "Viaţa în credinţă",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"140": {
+		"title": "Rugarea după Duhul Sfânt",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"141": {
+		"title": "Fii în veac mărit",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"142": {
+		"title": "Ascultători de cuvânt",
+		"notes": ["F4", "F3"]
+	},
+	"143": {
+		"title": "Nu mă uita",
+		"notes": ["F4", "F3"]
+	},
+	"144": {
+		"title": "Ascultători neuitători",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"145": {
+		"title": "O! Iubită parte am căpătat",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"146": {
+		"title": "Cum vom fi?",
+		"notes": ["D4", "D3"]
+	},
+	"147": {
+		"title": "Dorirea după patrie",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"148": {
+		"title": "Dumnezeu e cu mine",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"149": {
+		"title": "Cea mai bună parte",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"150": {
+		"title": "De ce vrei tu pentru mâine",
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
+	},
+	"151": {
+		"title": "Pentru ce să fiu fricos",
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"]
+	},
+	"152": {
+		"title": "Rugăciunea copiilor",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
+	"153": {
+		"title": "Dumnezeu e al meu păstor",
+		"notes": ["F4", "D4", "Bb3"]
+	},
+	"154": {
+		"title": "Deşteaptă-te",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"155": {
+		"title": "Cântare de despărţire",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"156": {
+		"title": "Rabdă bucuros",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"157": {
+		"title": "Ca cerbul după râu rece",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"158": {
+		"title": "O! Tu în Sion mare Rege",
+		"notes": ["Db5", "F4", "Ab3", "Db3"]
+	},
+	"159": {
+		"title": "Toată viaţa o jertfiţi",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"160": {
+		"title": "Familia credincioasă",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"161": {
+		"title": "Caută la Isus",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"162": {
+		"title": "Botezul în Christos",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"163": {
+		"title": "Legământul harului",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"164": {
+		"title": "Chipul lui Isus",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"165": {
+		"title": "Lauda copiilor",
+		"notes": ["F4", "F3"]
+	},
+	"166": {
+		"title": "Cântarea dimineţii",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"167": {
+		"title": "Isus prieten copiilor",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"168": {
+		"title": "Nu întârzia",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"169": {
+		"title": "Un om fericit",
+		"notes": ["A4", "E4", "C#4", "A2"]
+	},
+	"170": {
+		"title": "Acasă e bine",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"171": {
+		"title": "Crucea",
+		"notes": ["G#4", "B3", "E3"]
+	},
+	"172": {
+		"title": "Fii credincios",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"173": {
+		"title": "Dorinţa inimii",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"174": {
+		"title": "Rugăciunea",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"175": {
+		"title": "Duhul părinţilor",
+		"notes": ["A4", "E4", "C#4", "A3"]
+	},
+	"176": {
+		"title": "Vorba vieţii",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"177": {
+		"title": "Încredere",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"178": {
+		"title": "Viaţa şi îndestularea în Christos",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"179": {
+		"title": "Credinţa în cei mici",
+		"notes": ["D5", "F4", "Bb3"]
+	},
+	"180": {
+		"title": "Tatăl, Fiul şi Duhul Sfânt",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"181": {
+		"title": "Unirea în iubire",
+		"notes": ["E5", "G4", "E4", "C4"]
+	},
+	"182": {
+		"title": "Către Mântuitorul",
+		"notes": ["E5", "G4", "C4", "C3"]
+	},
+	"183": {
+		"title": "Christos cel înviat",
+		"notes": ["E4", "B3", "E3"]
+	},
+	"184": {
+		"title": "Iată Mielul lui Dumnezeu",
+		"notes": ["A4", "D4", "F#3", "D3"]
+	},
+	"185": {
+		"title": "Călătoria Sionului",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"186": {
+		"title": "Smerenia",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"187": {
+		"title": "Naşterea din nou din apă şi din duh",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"188": {
+		"title": "Vremea trece",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"189": {
+		"title": "Rugarea pentru alţii",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"190": {
+		"title": "Isus Christos stăpâneşte",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"191": {
+		"title": "Acuma şi cândva",
+		"notes": ["D4", "D3"]
+	},
+	"192": {
+		"title": "Duhul martorilor",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"193": {
+		"title": "Serbarea Duminicii",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"194": {
+		"title": "Oraşul lui Dumnezeu",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"195": {
+		"title": "Spre despărţire",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"196": {
+		"title": "Predarea",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"197": {
+		"title": "Iubirea către Isus",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"198": {
+		"title": "Drumul nostru spre cer",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"199": {
+		"title": "Mulţumită şi rugăciune",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"200": {
+		"title": "Cântarea la cina Domnului",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
+	},
+	"201": {
+		"title": "Nemăsurat darul lui Dumnezeu",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"202": {
+		"title": "Christos mi-e toate",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"203": {
+		"title": "La Tine este cuvântul vieţii",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"204": {
+		"title": "Eu nu vă voi lăsa orfani",
+		"notes": ["C5", "E4", "C4", "C3"]
+	},
+	"205": {
+		"title": "La Tine voiesc să rămân",
+		"notes": ["B4", "G4", "D4", "G3"]
+	},
+	"206": {
+		"title": "Tatăl vă iubeşte",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"207": {
+		"title": "Cântarea Adunării",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"208": {
+		"title": "Lauda Domnului",
+		"notes": ["G4", "D4", "B3", "G2"]
+	},
+	"209": {
+		"title": "Acum s-a săvârşit",
+		"notes": ["F4", "F3"]
+	},
+	"210": {
+		"title": "Domnul e plata voastră",
+		"notes": ["Bb4", "G4", "G3", "Eb3"]
+	},
+	"211": {
+		"title": "Mai este odihnă pentru noi",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"212": {
+		"title": "Psalmul al 23-lea",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"213": {
+		"title": "Cântarea sfârşirii",
+		"notes": ["A4", "F#4", "A3", "D3"]
+	},
+	"214": {
+		"title": "Înainte de adunare",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"215": {
+		"title": "Tu mare arhiereu",
+		"notes": ["C5", "Eb4", "Ab3"]
+	},
+	"216": {
+		"title": "Cântarea copiilor",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
+	"217": {
+		"title": "Cântarea copiilor",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"218": {
+		"title": "O! Doamne cum ne bucurãm",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"219": {
+		"title": "O! Doamne priveşte la noi jos",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
+	},
+	"220": {
+		"title": "Îndurarea",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"221": {
+		"title": "Acum am aflat temelia",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"222": {
+		"title": "Acest ceas e fericit",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"223": {
+		"title": "Steaua de dimineaţă",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"224": {
+		"title": "Locţiitorul",
+		"notes": ["A4", "C#4", "E3", "A2"]
+	},
+	"225": {
+		"title": "Cel răstignit şi preamărit",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"226": {
+		"title": "Golgota",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"227": {
+		"title": "Către Mântuitorul",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
+	},
+	"228": {
+		"title": "Eu nu mă las de Isus",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"229": {
+		"title": "Aceasta doresc şi jelesc",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"230": {
+		"title": "Cine pe al nostru rege",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"231": {
+		"title": "Nici în cer nici pe pãmânt",
+		"notes": ["Bb4", "F4", "D4", "Bb2"]
+	},
+	"232": {
+		"title": "Pe Isus din inimă vreau să'L iubesc",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"233": {
+		"title": "Cântare de laudă",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"234": {
+		"title": "Copilăria",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"235": {
+		"title": "Dulce'i către Tatăl a ne'apropia",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"236": {
+		"title": "Mulţumiţi toţi lui Dumnezeu",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"237": {
+		"title": "Unirea",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"238": {
+		"title": "Cererea după Isus",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"239": {
+		"title": "Isuse du-mă la Tine",
+		"notes": ["E4", "B3", "E3"]
+	},
+	"240": {
+		"title": "Tu Mielul lui Dumnezeu",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"241": {
+		"title": "Rabdă şi taci",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"242": {
+		"title": "În necazul din lume",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"243": {
+		"title": "În răbdări",
+		"notes": ["Bb4", "F4", "D4", "Bb3"]
+	},
+	"244": {
+		"title": "Aşteptarea",
+		"notes": ["E5", "G4", "C4", "C3"]
+	},
+	"245": {
+		"title": "Rodul răbdării",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"246": {
+		"title": "Simplicitatea",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"247": {
+		"title": "Moartea în Isus",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"248": {
+		"title": "La mormântul drepţilor",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"249": {
+		"title": "Cine sunt înaintea tronului lui Dumnezeu?",
+		"notes": ["E4", "B3", "E3"]
+	},
+	"250": {
+		"title": "Majestatea Dumnezeu",
+		"notes": ["Db4", "Ab3", "F3", "Db3"]
+	},
+	"251": {
+		"title": "Iehova",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"252": {
+		"title": "Crucea Credincioşilor",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"253": {
+		"title": "Timpul meu aşa curând",
+		"notes": ["F4", "C4", "A3", "F3"]
+	},
+	"254": {
+		"title": "Psalmul 92",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"255": {
+		"title": "Psalmul 126",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"256": {
+		"title": "Psalmul 23",
+		"notes": ["C#5", "A4", "E4", "A3"]
+	},
+	"257": {
+		"title": "Serbarea Sâmbetei",
+		"notes": ["D5", "F4", "Bb3", "Bb2"]
+	},
+	"258": {
+		"title": "Păstori din Betleem",
+		"notes": ["G4", "G3"]
+	},
+	"259": {
+		"title": "Este o sfântă patrie",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"260": {
+		"title": "Fii credincios",
+		"notes": ["A4", "C#4", "A3", "A2"]
+	},
+	"261": {
+		"title": "Cea mai mare bucurie",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
+	},
+	"262": {
+		"title": "Psalmul 117",
+		"notes": ["E4", "G#3", "E3"]
+	},
+	"263": {
+		"title": "Cântarea patriei cereşti",
+		"notes": ["B4", "G#4", "E4", "E3"]
+	},
+	"264": {
+		"title": "Cântarea de despărţire",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"265": {
+		"title": "Lasă să merg",
+		"notes": ["A4", "F#4", "A3", "D3"]
+	},
+	"266": {
+		"title": "Scăparea la Isus",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"267": {
+		"title": "O inimă care se abate de la Sion",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"268": {
+		"title": "Duminica",
+		"notes": ["A4", "D4", "F#3", "D3"]
+	},
+	"269": {
+		"title": "Cântare de laudă",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"270": {
+		"title": "Isus cel răstignit",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"271": {
+		"title": "Cuvântul sfânt",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"272": {
+		"title": "Dorinţa după patrie",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"273": {
+		"title": "Reîntoarcerea în patrie",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"274": {
+		"title": "Patria creştinului",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"275": {
+		"title": "Despărţirea lui Ilie de Elisei",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"276": {
+		"title": "Fii bucuros",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"277": {
+		"title": "Auziţi îngerii",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"278": {
+		"title": "Eu mă silesc",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"279": {
+		"title": "Cântare de mulţumită",
+		"notes": ["C4", "E3", "C3"]
+	},
+	"280": {
+		"title": "Odihna vecinică",
+		"notes": ["B4", "E4", "G#3", "E3"]
+	},
+	"281": {
+		"title": "Moartea unui credincios",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"282": {
+		"title": "Cine sunt înaintea tronului lui Dumnezeu?",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"283": {
+		"title": "Dorinţa după patrie",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"284": {
+		"title": "Venirea lui Christos",
+		"notes": ["E4", "C4", "C3"]
+	},
+	"285": {
+		"title": "La despărţire",
+		"notes": ["D4", "D3"]
+	},
+	"286": {
+		"title": "Cântarea la mormânt",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"287": {
+		"title": "Cântare de rugăciune",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"288": {
+		"title": "Cântarea de seară",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"289": {
+		"title": "Christos cel înviat",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"290": {
+		"title": "Încrederea",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"291": {
+		"title": "Iubirea către Isus",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"292": {
+		"title": "Urmarea după Isus",
+		"notes": ["C5", "E4", "G3", "C3"]
+	},
+	"293": {
+		"title": "Întrebarea cu frică şi răspunsul liniştit",
+		"notes": ["C#4", "A3", "E3", "A2"]
+	},
+	"294": {
+		"title": "Învierea cea fericită",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"295": {
+		"title": "Odihna fericită",
+		"notes": ["B4", "G4", "D4", "G3", "G2"]
+	},
+	"296": {
+		"title": "Dorinţa creştinului după patrie",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"297": {
+		"title": "Viaţa în credinţă",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"298": {
+		"title": "Anul libertăţii",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"299": {
+		"title": "Fiul lui Dumnezeu",
+		"notes": ["F4"]
+	},
+	"300": {
+		"title": "Regatul Sfânt",
+		"notes": ["F4"]
+	},
+	"301": {
+		"title": "Patria cerească",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"302": {
+		"title": "Învierea",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"303": {
+		"title": "Cântarea de seară",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
+	"304": {
+		"title": "Plata învingătorului",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"305": {
+		"title": "Învierea",
+		"notes": ["C4", "C3"]
+	},
+	"306": {
+		"title": "O! barem să fiu acolo sus!",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"307": {
+		"title": "Dumnezeu te binecuvinteze",
+		"notes": ["F4", "D4", "F3", "Bb2"]
+	},
+	"308": {
+		"title": "Cântare",
+		"notes": ["D5", "F#4", "A3", "D3"]
+	},
+	"309": {
+		"title": "Ghetsimania",
+		"notes": ["Ab4", "C4", "Ab3"]
+	},
+	"310": {
+		"title": "Luptă-te sufletul meu",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"311": {
+		"title": "După o cercare scurtă",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"312": {
+		"title": "Isuse viaţa mea",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"313": {
+		"title": "Cârmuitorul meu",
+		"notes": ["G4", "G3"]
+	},
+	"314": {
+		"title": "La Tine vin Doamne",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"315": {
+		"title": "Glasul şi harfa",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"316": {
+		"title": "Bună e liniştea",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"317": {
+		"title": "Nu te teme",
+		"notes": ["C#5", "A4", "E4", "A3"]
+	},
+	"318": {
+		"title": "Eu nu mă las de Isus",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"319": {
+		"title": "Cu miruri la mormânt",
+		"notes": ["E4", "C4", "G3", "C3"]
+	},
+	"320": {
+		"title": "Tu pe noi ne iubeşti",
+		"notes": ["A4", "F4", "C4", "F3"]
+	},
+	"321": {
+		"title": "În braţele lui Isus",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"322": {
+		"title": "Pe Tine Mântuitorule",
+		"notes": ["Bb4", "D4", "F3", "Bb2"]
+	},
+	"323": {
+		"title": "O Tu iubite Sioane",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"324": {
+		"title": "Doamne viaţa mea",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"325": {
+		"title": "Când pacea în inimă",
+		"notes": ["Ab4", "F4", "Ab3", "Db3"]
+	},
+	"326": {
+		"title": "În veac cu Domnul",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"327": {
+		"title": "Ce frumos",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"328": {
+		"title": "Pe Tine Te voi lăuda",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"329": {
+		"title": "O mie de limbi de aş avea",
+		"notes": ["D5", "G4", "B3", "G3"]
+	},
+	"330": {
+		"title": "Salutarea",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"331": {
+		"title": "Patria de sus",
+		"notes": ["C4", "C3"]
+	},
+	"332": {
+		"title": "Voinţei Domnului te supune",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"333": {
+		"title": "Speranţă în Dumnezeu",
+		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+	},
+	"334": {
+		"title": "Învierea",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"335": {
+		"title": "Biruinţa",
+		"notes": ["C4", "C3"]
+	},
+	"336": {
+		"title": "Domnul, Păstorul meu",
+		"notes": ["E4", "E3"]
+	},
+	"337": {
+		"title": "Isus trăieşte, cu El şi eu",
+		"notes": ["D4", "D3"]
+	},
+	"338": {
+		"title": "Isus mă cheamă",
+		"notes": ["D5", "F4", "Bb3", "Bb2"]
+	},
+	"339": {
+		"title": "Ora nu e departe",
+		"notes": ["Ab4", "Eb4", "C4", "Ab2"]
+	},
+	"340": {
+		"title": "Cine seamănă cu lacrimi",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"341": {
+		"title": "Pace în inimă",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"342": {
+		"title": "Mai aproape de casă",
+		"notes": ["C5", "C4"]
+	},
+	"343": {
+		"title": "Duhul Sfânt",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"344": {
+		"title": "Scoală-te",
+		"notes": ["C#5", "A4", "E4", "A3"]
+	},
+	"345": {
+		"title": "Cât Isus trăieşte",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"346": {
+		"title": "Lăsaţi grijile pe Domnul",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"347": {
+		"title": "Sus în cer",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"348": {
+		"title": "Slăvit e cel care cuvântul Domnului aude",
+		"notes": ["A4", "C#4", "A3", "A2"]
+	},
+	"349": {
+		"title": "Naşterea lui Christos",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"350": {
+		"title": "Eu cunosc râul",
+		"notes": ["",    "",
+			"",
+			""
+		]
+	},
+	"351": {
+		"title": "Mă cheamă zi şi noapte",
+		"notes": ["D4", "D3"]
+	},
+	"352": {
+		"title": "Cetate Sfântă",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"]
+	},
+	"353": {
+		"title": "Ridicaţi-vă până în ceruri",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"354": {
+		"title": "Cântare despre Miel",
+		"notes": ["C4", "C3"]
+	},
+	"355": {
+		"title": "Să cânte harfele mele",
+		"notes": ["E4", "E3"]
+	},
+	"356": {
+		"title": "Toată inima lui Dumnezeu",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	},
+	"357": {
+		"title": "Aminteşte -ţi de Christos",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
+	},
+	"358": {
+		"title": "Auzi, auzi",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"359": {
+		"title": "În Isus voiesc a muri",
+		"notes": ["Eb4", "Eb3"]
+	},
+	"360": {
+		"title": "Dumnezeu cu voi",
+		"notes": ["C5", "A4", "C4", "F3"]
+	},
+	"361": {
+		"title": "Rămas bun",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"362": {
+		"title": "Cine's cu haine albe",
+		"notes": ["G4"]
+	},
+	"363": {
+		"title": "Uită milostiv Părinte",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"364": {
+		"title": "O Doamne întinde dreapta Ta",
+		"notes": ["D4", "D3"]
+	},
+	"365": {
+		"title": "Cum iute trece timpul",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"366": {
+		"title": "O! Isuse m-ai scăpat",
+		"notes": ["F#4", "D4", "A3", "D3"]
+	},
+	"367": {
+		"title": "O, cum sunt aşa vin Doamne",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"368": {
+		"title": "Cine'i ca Tine",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"369": {
+		"title": "Luntrea'ndurării pleacă",
+		"notes": ["E4", "E3"]
+	},
+	"370": {
+		"title": "O! Ce veste",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"]
+	},
+	"371": {
+		"title": "Cântă din inimă",
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
+	},
+	"372": {
+		"title": "Galileia",
+		"notes": ["E4"]
+	},
+	"373": {
+		"title": "Vorbă vie, tu eşti izvor",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"374": {
+		"title": "Faţă'n faţă cu Domnul",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"375": {
+		"title": "Pace numai",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"376": {
+		"title": "Sus voi fii",
+		"notes": ["Bb3", "Bb2"]
+	},
+	"377": {
+		"title": "Cu bucurie vor secera",
+		"notes": ["G4", "E4", "C4", "C3"]
+	},
+	"378": {
+		"title": "Cunosc un loc de fericiri",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"379": {
+		"title": "Când trâmbiţa Domnului",
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"]
+	},
+	"380": {
+		"title": "Cetate sfântă avem",
+		"notes": ["G4", "G3"]
+	},
+	"381": {
+		"title": "Stânca mântuirii",
+		"notes": ["F4", "D4", "Bb3", "Bb2"]
+	},
+	"382": {
+		"title": "Patria mea",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"383": {
+		"title": "Rămâi la mine Isus",
+		"notes": ["Eb4"]
+	},
+	"384": {
+		"title": "El viu",
+		"notes": ["A4", "F#4"]
+	},
+	"385": {
+		"title": "Plecăm noi cu toţi",
+		"notes": ["Eb4", "Eb3"]
+	},
+	"386": {
+		"title": "Cum e acest fiu fericit",
+		"notes": ["D4", "D3"]
+	},
+	"387": {
+		"title": "Inimile lasă fie pline de bucurie",
+		"notes": ["G#4", "E4", "B3", "E3"]
+	},
+	"388": {
+		"title": "Samariteanca",
+		"notes": ["D4", "D3"]
+	},
+	"389": {
+		"title": "O ia-mi Tu Doamne mâna",
+		"notes": ["C5", "F4", "A3", "F3"]
+	},
+	"390": {
+		"title": "Spune frate unde mergi",
+		"notes": ["E4"]
+	},
+	"391": {
+		"title": "Lasă pe Domnul",
+		"notes": ["B4", "G#4", "B3", "E3"]
+	},
+	"392": {
+		"title": "Unirea",
+		"notes": ["G4", "D4", "B3", "G3"]
+	},
+	"393": {
+		"title": "În Zori De Dimineaţă",
+		"notes": ["A4", "F#4", "D4", "D3"]
+	},
+	"394": {
+		"title": "Iată stăm toţi aici",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"]
+	}
+}

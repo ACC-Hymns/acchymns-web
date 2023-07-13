@@ -1,12 +1,12 @@
 {
-    "name": {
-        "short": "ARFR",
-        "medium": "Avon Fav. (Rom.)",
-        "long": "Avon Road Favourites (Romanian)"
-    },
-    "primaryColor": "#486666",
-    "secondaryColor":"#253F40",
-    "fileExtension": "png",
-    "addOn": true,
-    "indexAvailable": true
+	"name": {
+		"short": "ARFR",
+		"medium": "Avon Fav. (Rom.)",
+		"long": "Avon Road Favourites (Romanian)"
+	},
+	"primaryColor": "#486666",
+	"secondaryColor":"#253F40",
+	"fileExtension": "png",
+	"addOn": true,
+	"indexAvailable": true
 }

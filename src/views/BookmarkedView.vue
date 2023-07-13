@@ -12,14 +12,16 @@ let stripped_query = computed(() => {
     return search_query.value
         .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
         .replace(/s{2,}/g, " ")
-        .toLowerCase();
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "");
 });
 let available_songs = ref<SongSearchInfo[]>([]);
 
 let search_results = computed(() => {
     return available_songs.value
         .filter(s => {
-            return s.stripped_title?.includes(stripped_query.value) || s?.stripped_firstLine?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
+            return s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
         })
         .sort((a, b) => a.title.localeCompare(b.title));
 });
@@ -39,12 +41,16 @@ onMounted(async () => {
             stripped_title: (song?.title ?? "")
                 .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
                 .replace(/s{2,}/g, " ")
-                .toLowerCase(),
-            stripped_firstLine:
-                song?.firstLine
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/\p{Diacritic}/gu, ""),
+            stripped_first_line:
+                song?.first_line
                     ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
                     ?.replace(/s{2,}/g, " ")
-                    ?.toLowerCase() ?? "",
+                    ?.toLowerCase()
+                    ?.normalize("NFD")
+                    ?.replace(/\p{Diacritic}/gu, "") ?? "",
         } as SongSearchInfo);
     }
 });

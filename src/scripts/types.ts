@@ -17,7 +17,7 @@ type Song = {
     title: string;
     number?: string; // Numbers unfortunately can be strings: ex: 403a GH
     notes?: string[];
-    firstLine?: string;
+    first_line?: string;
 };
 
 // Song List is a dictionary of song number to song
@@ -30,7 +30,7 @@ type SongReference = {
 
 type SongSearchInfo = Song & {
     stripped_title?: string;
-    stripped_firstLine?: string;
+    stripped_first_line?: string;
     book: BookSummary;
 };
 

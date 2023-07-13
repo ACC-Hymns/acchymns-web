@@ -2,29 +2,42 @@ from pypdf import PdfReader
 import re
 import json
 
-body = set()
-
 pages = {}
 
-def visitor_body(page_num):
-    regex = re.compile("(\d+?\..+?)")
-    def internals(text, cm, tm, font_dict, font_size):
-        if regex.match(text) and text.isupper() and len(text) > 7 and text not in body:
-            body.add(text)
-            
-            y = tm[5]
-            print(text)
+count = 1
 
-            if text.split('.')[0] in pages:
-                pages[text.split('.')[0] + "b"] = {
-                    "page_num": page_num,
-                    "starts_at_top": y > 610
-                }
-            else:
-                pages[text.split('.')[0]] = {
-                    "page_num": page_num,
-                    "starts_at_top": y > 610
-                }
+def visitor_body(page_num):
+    regex = re.compile("(\d+?)(\/a|\/b)?\. (.+?)(\?|\.|\!)")
+    def internals(text, cm, tm, font_dict, font_size):
+        global count
+        result = regex.match(text)      
+        # if result:
+        #     print(count, int(result.group(1)), len(result.group(2))) 
+        if result and abs(int(result.group(1)) - count) <= 1:
+            res = result.group(3) + result.group(4)
+            y = tm[5]
+
+            item = result.group(1)
+            if result.group(2) is not None:
+                item += result.group(2)[1]
+                if result.group(2) == "/a":
+                    count -= 1
+            print(item, text, cm[5], tm[5], y > 630)
+            
+            pages[item] = {
+                "title": res,
+                "page_num": page_num,
+                "starts_at_top": y > 630
+            }
+
+            count += 1
+
+            # if text.split('.')[0] in pages:
+            #     pages[text.split('.')[0] + "b"] = {
+            #         "page_num": page_num,
+            #         "starts_at_top": y > 610
+            #     }
+            # else:
     return internals
 
 
@@ -37,28 +50,12 @@ with open("internal.json", "w") as outfile:
     outfile.write(json.dumps(pages))
 
 songs = {}
- 
 
-count = 1
-for idx, title in enumerate(sorted(list(body), key=lambda x: int(x.split('.')[0]))):
+for key, value in pages.items():
+    songs[key] = {
+        "title": value["title"].strip()
+    }
 
-    if int(title.split('.')[0]) != count:
-        print("Missed:", int(title.split('.')[0]) - count, "!")
-        count = int(title.split('.')[0])
-    print(title)
-    if title.split('.')[0] in songs:
-        songs[title.split('.')[0] + "b"] = {
-            "title": title.split('.')[1].strip()
-        }
-    else:  
-        songs[title.split('.')[0]] = {
-            "title": title.split('.')[1].strip()
-        }
-    count += 1
-
-# Serializing json
-json_object = json.dumps(songs)
- 
 # Writing to sample.json
-with open("songs.json", "w") as outfile:
-    outfile.write(json_object)
+with open("songs.json", "w", encoding='utf8') as outfile:
+    json.dump(songs, outfile, ensure_ascii=False)
