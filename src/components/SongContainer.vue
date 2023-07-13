@@ -38,7 +38,7 @@ const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
 let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 let panzoom: PanZoom;
-var isMobile = Capacitor.getPlatform() !== "web";
+var isMobile = Capacitor.getPlatform() !== "web" || true;
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -90,8 +90,8 @@ class IntersectionObserverManager {
     }
     refresh() {
         for (let node of this._observedNodes) {
-            this._observer.unobserve(node);
-            this._observer.observe(node);
+            this._observer.unobserve(node as Element);
+            this._observer.observe(node as Element);
         }
     }
 }
@@ -161,9 +161,10 @@ onUpdated(async () => {
     height: max-content;
     width: 100%;
     z-index: -1;
-    position: absolute;
-    padding-top: calc(env(safe-area-inset-top) + 61.16px);
+    padding-top: calc(61.16px + env(safe-area-inset-top));
+    padding-bottom: 61.16px;
     top: 0;
     left: 0;
+    background-color: white;
 }
 </style>
