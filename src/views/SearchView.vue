@@ -298,6 +298,7 @@ onUpdated(async () => {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
+    margin-top: 5px;
     margin-right: 10px;
     z-index: 1;
 }
