@@ -1,12 +1,8 @@
-name: Build and Deploy Development Branch
+name: Build and Deploy Production Branch
 on:
   push:
-    branches: [ main ]
-    paths-ignore:
-      - 'ios/**'
-      - 'android/**'
-      - '.vscode/**'
-      - '**.md'
+    branches:
+      main
 
 jobs:
   build:
