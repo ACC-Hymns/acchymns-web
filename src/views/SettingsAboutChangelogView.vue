@@ -20,6 +20,7 @@ const { back } = useNavigator();
                 <li class="change">Storage savings</li>
                 <li class="change">Increased visual fidelity</li>
                 <li class="change">Zoom and pan on songs</li>
+                <li class="change">Starting note playback on songs</li>
                 <li class="change">Importable books</li>
                 <li class="change">Added Celebration Hymnal</li>
                 <li class="change">Added Hymns of Zion</li>

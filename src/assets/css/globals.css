@@ -45,6 +45,7 @@ a, img {
     --slider-base: #CCCCCC;
     --topical-color: #ffffff;
     --menu-color: rgba(255, 255, 255, 0.9);
+    --song-background: #ffffff;
 }
 
 :root[data-theme="dark"] {
@@ -68,6 +69,7 @@ a, img {
     --slider-base: #292323;
     --topical-color: #2b2b2b;
     --menu-color: rgba(31, 31, 31, 0.9);
+    --song-background: #141414;
 }
 
 h1, h2, h3, h4, h5 {
@@ -177,7 +179,7 @@ h1, h2, h3, h4, h5 {
 
 .main-content {
     margin-top: 90px !important;
-    margin-bottom: 70px !important;
+    margin-bottom: calc(env(safe-area-inset-bottom) + 90px) !important;
 }
 
 .space {

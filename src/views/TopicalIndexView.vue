@@ -66,8 +66,14 @@ onMounted(async () => {
     }
     alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
 
-    title.value = "Topical Index";
-    icon.value = "../assets/text.svg";
+    if(isAlphabetical.value) {
+        title.value = "Alphabetical Index";
+        icon.value = "../assets/list-bulleted.svg";
+
+    } else {
+        title.value = "Topical Index";
+        icon.value = "../assets/text.svg";
+    }
 });
 
 function hideList(topic: string) {
@@ -161,7 +167,7 @@ function toggleAlphabetical() {
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
             </RouterLink>
-            <div class="topic-list">
+            <div class="song-list">
                 <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
                     <div v-if="show_list" class="topic expanded-topic" :style="{ background: primary_color }" @click="hideList(topic as string)">
                         <h3 class="topic-title">{{ topic }}</h3>
@@ -169,7 +175,7 @@ function toggleAlphabetical() {
                 </template>
             </div>
         </div>
-        <div v-else>
+        <div class="song-list" v-else>
             <RouterLink
                 v-for="song in songs_to_display"
                 :key="song.title + song.number"
@@ -212,7 +218,7 @@ function toggleAlphabetical() {
 </style>
 
 <style scoped>
-.topic-list {
+.song-list {
     padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
 }
 
