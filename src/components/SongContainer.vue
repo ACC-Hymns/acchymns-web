@@ -165,6 +165,6 @@ onUpdated(async () => {
     padding-bottom: 61.16px;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: var(--song-background);
 }
 </style>

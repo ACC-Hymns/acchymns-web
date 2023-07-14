@@ -8,6 +8,7 @@ import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
+import router from "@/router";
 
 // Not watching deeply, must assign new array
 
@@ -101,7 +102,7 @@ function removeImportedURL(to_remove: string) {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <img @click="$router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Import Hymnals</h1>
         </div>
     </div>
