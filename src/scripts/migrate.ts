@@ -7,8 +7,9 @@ export async function migrate() {
         return;
     }
 
+    // TODO - FIX MIGRATION
     // Pre-2.0.0, as after this version, we always set the AppVersion.
-    if (previous_semver_version.value == null) {
+    /*if (previous_semver_version.value == null) {
         // Migrate from 1.X.Y to 2.0.0
         // All that's required to migrate, is to move bookmark data from localStorage to Capacitor Storage.
         // and to change from { book: string, song: string } to { book: string, number: string }
@@ -23,5 +24,5 @@ export async function migrate() {
             }
         }
         await Preferences.set({ key: "bookmarks", value: JSON.stringify(new_bookmarks) });
-    }
+    }*/
 }
