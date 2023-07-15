@@ -1728,90 +1728,90 @@
 	},
 	"437": {
 		"title": "Örvendj világ",
-		"notes": ""
+		"notes": ["D4", "F#4", "A3", "D3"]
 	},
 	"438": {
 		"title": "Érett a búza",
-		"notes": ""
+		"notes": ["Eb4", "G3", "Eb3"]
 	},
 	"439": {
 		"title": "Fel, zengjünk boldogan",
-		"notes": ""
+		"notes": ["G4", "B3", "G3"]
 	},
 	"440": {
 		"title": "Itt e földi völgyben",
-		"notes": ""
+		"notes": ["D4", "F#3", "D3"]
 	},
 	"441": {
 		"title": "Ha Jézus eljön",
-		"notes": ""
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"442": {
 		"title": "Keresztyének, keljetek fel",
-		"notes": ""
+		"notes": ["Bb3", "Bb2"]
 	},
 	"443": {
 		"title": "Fény ragyog a távolból",
-		"notes": ""
+		"notes": ["D4"]
 	},
 	"444": {
 		"title": "Mikor fogylyait",
-		"notes": ""
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
 	},
 	"445": {
 		"title": "Élteteket áldozzátok",
-		"notes": ""
+		"notes": ["B4", "G4", "D4"]
 	},
 	"446": {
 		"title": "Menj az oltalmával",
-		"notes": ""
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
 	},
 	"447": {
 		"title": "Ím hálát mondunk",
-		"notes": ""
+		"notes": ["Eb4", "Eb3"]
 	},
 	"448": {
 		"title": "Nem tudom, mit hoz a holnap",
-		"notes": ""
+		"notes": ["Bb3", "D3", "Bb2"]
 	},
 	"449": {
 		"title": "Könyörülj Úr Isten rajtunk",
-		"notes": ""
+		"notes": ["B4", "E4", "G3", "E3"]
 	},
 	"450": {
 		"title": "Egy nap ismét már elmúla",
-		"notes": ""
+		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"451": {
 		"title": "Szép hazámba",
-		"notes": ""
+		"notes": ["A#4", "D4"]
 	},
 	"452": {
 		"title": "Hallod már ütött az óra",
-		"notes": ""
+		"notes": ["F4", "A3", "F3"]
 	},
 	"453": {
 		"title": "Ó, áldott éj",
-		"notes": ""
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"454": {
 		"title": "Istenünk, Te alkottad meg",
-		"notes": ""
+		"notes": ["D3"]
 	},
 	"455": {
 		"title": "Tékozló fiú",
-		"notes": ""
+		"notes": ["B4"]
 	},
 	"456": {
 		"title": "Krisztus katonái, sorakozzatok",
-		"notes": ""
+		"notes": ["C5", "A4", "F3"]
 	},
 	"457": {
 		"title": "Ismerem Istenem égi",
-		"notes": ""
+		"notes": ["G4", "D4", "Bb3", "G3"]
 	},
 	"458": {
 		"title": "Megköszönjük néktek",
-		"notes": ""
+		"notes": ["Eb4", "G3", "Eb3"]
 	}
 }
