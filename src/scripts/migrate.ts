@@ -24,5 +24,5 @@ export async function migrate() {
         }
         await Preferences.set({ key: "bookmarks", value: JSON.stringify(new_bookmarks) });
     }
-    await Preferences.set({ key: “AppVersion”, value: current_semver_version });
+    await Preferences.set({ key: "AppVersion", value: current_semver_version });
 }
