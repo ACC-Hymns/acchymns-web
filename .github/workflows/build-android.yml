@@ -42,6 +42,9 @@ jobs:
         run: |
           echo "PACKAGE_NUMBER=$(jq -r '.version' package.json)" >> "$GITHUB_ENV"
           echo "BUILD_NUMBER=$((${{ vars.ANDROID_BUILD_NUMBER }} + 1))" >> "$GITHUB_ENV"
+
+      - name: Update build number
+        run: |
           curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/ANDROID_BUILD_NUMBER -d '{"value":"${{ env.BUILD_NUMBER }}"}'
 
       - name: Build app bundle
