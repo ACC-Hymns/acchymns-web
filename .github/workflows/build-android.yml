@@ -15,7 +15,6 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
           timeout: 3600000
-          delay: 1000
 
   build:
     name: Build Android
@@ -54,7 +53,7 @@ jobs:
 
       - name: Build app bundle
         run: |
-          npx cap sync
+          npx cap sync android
           # Replace version codes
           sed -i -E "s/versionCode ([0-9]+?)/versionCode ${{ env.BUILD_NUMBER}}/g" android/app/build.gradle
           sed -i -E "s/versionName \"(.+?)\"/versionName \"${{ env.PACKAGE_NUMBER}}\"/g" android/app/build.gradle

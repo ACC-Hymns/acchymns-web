@@ -13,7 +13,6 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
           timeout: 3600000
-          delay: 1000
 
   build:
     name: Build IOS
@@ -67,7 +66,7 @@ jobs:
 
       - name: Build app bundle
         run: |
-          npx cap sync
+          npx cap sync ios
           cd ios/App
           # Replace version codes
           xcrun agvtool new-version -all "${{ env.BUILD_NUMBER }}"
