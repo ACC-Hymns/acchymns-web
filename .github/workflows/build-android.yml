@@ -7,8 +7,19 @@ on:
       - ".github/.workflows/**"
 
 jobs:
+  wait:
+    name: Wait for Previous IOS Builds to finish
+    runs-on: ubuntu-latest
+    steps:
+      # We do this so we don't ever have conflicting build numbers
+      - uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 3600000
+          delay: 1000
+
   build:
     name: Build Android
+    needs: wait
     runs-on: ubuntu-latest
 
     steps:
@@ -31,12 +42,6 @@ jobs:
           npm install
           npm run deploy-check
           npm run build
-
-      # We do this so we don't ever have conflicting build numbers
-      - name: Wait for other build-android to conclude
-        uses: ahmadnassri/action-workflow-queue@v1
-        with:
-          timeout: 3600000
       
       - name: Get & update build number
         run: |
@@ -57,7 +62,15 @@ jobs:
           chmod +x ./android/gradlew
           npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias upload-keystore --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype APK
           npx cap build android --keystorepath release.jks --keystorepass ${{ secrets.KEYSTORE_PASSWORD }} --keystorealias upload-keystore --keystorealiaspass ${{ secrets.KEYSTORE_PASSWORD }} --androidreleasetype AAB
-
+ 
+      - name: Publish AAB
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+          releaseFiles: ./android/app/build/outputs/bundle/release/app-release-signed.aab
+          packageName: com.ChristopherW.acchmns
+          track: internal
+          
       - name: Upload release AAB
         uses: actions/upload-artifact@v3
         with:
