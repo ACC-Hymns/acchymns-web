@@ -7,8 +7,19 @@ on:
       - ".github/.workflows/**"
 
 jobs:
+  wait:
+    name: Wait for Previous IOS Builds to finish
+    runs-on: ubuntu-latest
+    steps:
+      # We do this so we don't ever have conflicting build numbers
+      - name: Wait for other build-ios to conclude
+        uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 3600000
+
   build:
     name: Build IOS
+    needs: wait
     runs-on: macos-latest
 
     steps:
@@ -51,12 +62,6 @@ jobs:
           npm install
           npm run deploy-check
           npm run build
-
-      # We do this so we don't ever have conflicting build numbers
-      - name: Wait for other build-ios to conclude
-        uses: ahmadnassri/action-workflow-queue@v1
-        with:
-          timeout: 3600000
       
       - name: Get & update build number
         run: |
