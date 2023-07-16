@@ -3,14 +3,22 @@ name: Build IOS
 on:
   workflow_dispatch:
   push:
-    paths-ignore:
-      - ".github/.workflows/**"
 
 jobs:
+  wait:
+    name: Wait for Previous IOS Builds to finish
+    runs-on: ubuntu-latest
+    steps:
+      # We do this so we don't ever have conflicting build numbers
+      - uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 3600000
+
   build:
     name: Build IOS
+    needs: wait
     runs-on: macos-latest
-    environment: development
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -19,8 +27,6 @@ jobs:
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow
       - name: Install the Apple certificate and provisioning profile
         run: |
-          echo "build_number=$((${{ vars.IOS_BUILD_NUMBER }}+1))" >> "$GITHUB_ENV"
-
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
@@ -43,25 +49,28 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Setup XCode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-
       - name: Build web app
         run: |
-          pwd
-          echo "$(pwd)"
           npm install
           npm run deploy-check
           npm run build
-        
+      
+      - name: Get & update build number
+        run: |
+          echo "PACKAGE_NUMBER=$(jq -r '.version' package.json)" >> "$GITHUB_ENV"
+          echo "BUILD_NUMBER=$((${{ vars.IOS_BUILD_NUMBER }} + 1))" >> "$GITHUB_ENV"
+
+      - name: Update build number
+        run: |
+          curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/IOS_BUILD_NUMBER -d '{"value":"${{ env.BUILD_NUMBER }}"}'
+
       - name: Build app bundle
         run: |
-          npx cap sync
+          npx cap sync ios
           cd ios/App
-          xcrun agvtool new-version -all ${{ env.build_number }}
-          echo "MARKET_VERSION=$(xcodebuild -showBuildSettings | grep MARKETING_VERSION | tr -d 'MARKETING_VERSION = ')" >> "$GITHUB_ENV"
+          # Replace version codes
+          xcrun agvtool new-version -all "${{ env.BUILD_NUMBER }}"
+          xcrun agvtool new-marketing-version "${{ env.PACKAGE_NUMBER }}"
           xcodebuild clean archive -workspace App.xcworkspace -scheme "ACC Hymns" -destination generic/platform=iOS -archivePath App.xcarchive -allowProvisioningUpdates
           
       - name: Export IPA
@@ -101,7 +110,7 @@ jobs:
 
       - name: Publish IPA
         run: |
-          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.build_number }} --bundle-short-version-string "${{ env.MARKET_VERSION }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
+          xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.BUILD_NUMBER }} --bundle-short-version-string "${{ env.PACKAGE_NUMBER }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
 
       - name: Upload release IPA
         uses: actions/upload-artifact@v3
@@ -109,7 +118,3 @@ jobs:
           name: app-release-ipa
           path: ios/App/output/*.ipa
           retention-days: 7
-
-      - name: Update Build Number
-        run: |
-          curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/acc-hymns/actions/variables/IOS_BUILD_NUMBER -d '{"name":"IOS_BUILD_NUMBER","value":"${{ env.build_number }}"}'
