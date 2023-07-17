@@ -200,13 +200,13 @@
 	"34": {
 		"title": "Velik je Bog",
 		"notes": ["Eb5", "G4", "Bb3", "Eb3"],
-		"page_num": 63,
+		"page_num": 61,
 		"starts_at_top": true
 	},
 	"35": {
 		"title": "Kliči kćeri Sionska",
 		"notes": ["C5", "A4", "A2"],
-		"page_num": 63,
+		"page_num": 61,
 		"starts_at_top": false
 	},
 	"36": {
@@ -298,6 +298,306 @@
 		"notes": ["F4", "F3"],
 		"page_num": 85,
 		"starts_at_top": false
+	},
+	"51": {
+		"title": "Tvoj sjaj svu tamu razbija",
+		"notes": ["A4", "F#4", "C#4", "F#3"],
+		"page_num": 90,
+		"starts_at_top": true
+	},
+	"52": {
+		"title": "Kakav priatelj je Isus",
+		"notes": ["C5", "F4", "A3", "F3"],
+		"page_num": 91,
+		"starts_at_top": true
+	},
+	"53": {
+		"title": "U hladu drveta smokve",
+		"notes": ["F#4", "D4", "A3", "D3"],
+		"page_num": 92,
+		"starts_at_top": true
+	},
+	"54": {
+		"title": "Kako tužan beše Gospod",
+		"notes": ["Bb4", "D4", "Bb3", "F3"],
+		"page_num": 94,
+		"starts_at_top": true
+	},
+	"55": {
+		"title": "Gledaj na zelenom polju",
+		"notes": ["A4", "F4", "C4", "F3"],
+		"page_num": 95,
+		"starts_at_top": true
+	},
+	"56": {
+		"title": "Galilejo",
+		"notes": ["E4"],
+		"page_num": 96,
+		"starts_at_top": true
+	},
+	"57": {
+		"title": "O ljubavi sjajna",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 97,
+		"starts_at_top": true
+	},
+	"58": {
+		"title": "Usta Gospod naš",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 99,
+		"starts_at_top": true
+	},
+	"59": {
+		"title": "Krvav je izvor potek'o",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 100,
+		"starts_at_top": true
+	},
+	"60": {
+		"title": "Jagnje krv proli za mene",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"],
+		"page_num": 101,
+		"starts_at_top": true
+	},
+	"61": {
+		"title": "Tamo gde Spas razapet bi",
+		"notes": ["D5"],
+		"page_num": 103,
+		"starts_at_top": true
+	},
+	"62": {
+		"title": "O kako bi gorko plak'o",
+		"notes": ["C5", "A4", "C4", "F3"],
+		"page_num": 104,
+		"starts_at_top": true
+	},
+	"63": {
+		"title": "Jedna ovca iz stada",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 105,
+		"starts_at_top": true
+	},
+	"64": {
+		"title": "Slušaj glas milosti",
+		"notes": ["D4", "D3", "F2"],
+		"page_num": 106,
+		"starts_at_top": true
+	},
+	"65": {
+		"title": "Suzne mi oči",
+		"notes": ["D4", "F#3", "D3"],
+		"page_num": 107,
+		"starts_at_top": true
+	},
+	"66": {
+		"title": "Na nebu tam'",
+		"notes": ["D4", "F#3", "D3"],
+		"page_num": 107,
+		"starts_at_top": false
+	},
+	"67": {
+		"title": "O moj Spase",
+		"notes": ["A4", "F4", "C4", "F3"],
+		"page_num": 108,
+		"starts_at_top": true
+	},
+	"68": {
+		"title": "Spas na Golgoti",
+		"notes": ["F4", "F3"],
+		"page_num": 109,
+		"starts_at_top": true
+	},
+	"69": {
+		"title": "Slavite Gospoda",
+		"notes": ["D4", "F#3", "D3"],
+		"page_num": 110,
+		"starts_at_top": true
+	},
+	"70": {
+		"title": "O nek Ti je slava, čast",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"],
+		"page_num": 111,
+		"starts_at_top": true
+	},
+	"71": {
+		"title": "Kamen spečatiše",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 113,
+		"starts_at_top": true
+	},
+	"72": {
+		"title": "A još pre zore",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 114,
+		"starts_at_top": true
+	},
+	"73": {
+		"title": "Pre rujne zore",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 115,
+		"starts_at_top": true
+	},
+	"74": {
+		"title": "On živ",
+		"notes": ["A4", "F#4"],
+		"page_num": 116,
+		"starts_at_top": true
+	},
+	"75": {
+		"title": "Hval'te Boga što j' Isus živ",
+		"notes": ["Ab4", "F4", "Db3"],
+		"page_num": 118,
+		"starts_at_top": true
+	},
+	"76": {
+		"title": "Aliluja, Hristos šalje",
+		"notes": ["C4", "C3"],
+		"page_num": 119,
+		"starts_at_top": true
+	},
+	"77": {
+		"title": "Pogledajte deco Božja",
+		"notes": ["A4", "F#4", "D4", "D3"],
+		"page_num": 119,
+		"starts_at_top": false
+	},
+	"78": {
+		"title": "Slava Gospoda u onaj dan",
+		"notes": ["C#4"],
+		"page_num": 121,
+		"starts_at_top": true
+	},
+	"79": {
+		"title": "U dalekom svetu",
+		"notes": ["B4"],
+		"page_num": 125,
+		"starts_at_top": true
+	},
+	"80": {
+		"title": "Blagosloveni glasnici",
+		"notes": ["C4", "C3"],
+		"page_num": 126,
+		"starts_at_top": true
+	},
+	"81": {
+		"title": "Kad ovce odstupaju",
+		"notes": ["Bb4", "G4", "Bb3", "E3"],
+		"page_num": 127,
+		"starts_at_top": false
+	},
+	"82": {
+		"title": "Hitaj s' ruba groba",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 128,
+		"starts_at_top": false
+	},
+	"83": {
+		"title": "Svud zvoni danas vest",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 129,
+		"starts_at_top": true
+	},
+	"84": {
+		"title": "Hodite Spasu",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 130,
+		"starts_at_top": true
+	},
+	"85": {
+		"title": "Ta zar milog Spasitelja",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 131,
+		"starts_at_top": true
+	},
+	"86": {
+		"title": "Pristupite svi narodi",
+		"notes": ["A4", "F#4", "A3", "D3"],
+		"page_num": 132,
+		"starts_at_top": true
+	},
+	"87": {
+		"title": "Čuj Isus zove",
+		"notes": ["E4", "E3"],
+		"page_num": 133,
+		"starts_at_top": true
+	},
+	"88": {
+		"title": "Čuj grešniče",
+		"notes": ["F#4", "D4", "A3", "D3"],
+		"page_num": 134,
+		"starts_at_top": true
+	},
+	"89": {
+		"title": "Čuj Spasitelja Reč pita",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"],
+		"page_num": 135,
+		"starts_at_top": true
+	},
+	"90": {
+		"title": "Dođi k' i zvoru života",
+		"notes": ["C5", "A4", "C4", "F3"],
+		"page_num": 136,
+		"starts_at_top": false
+	},
+	"91": {
+		"title": "Hod'te i primate Reč",
+		"notes": ["E4", "E3"],
+		"page_num": 137,
+		"starts_at_top": true
+	},
+	"92": {
+		"title": "Čuj ko kuca na vrati",
+		"notes": ["F4", "Db4", "Ab3", "Db3"],
+		"page_num": 139,
+		"starts_at_top": true
+	},
+	"93": {
+		"title": "Gle, Isus stoji",
+		"notes": ["D4", "B3", "G3", "G2"],
+		"page_num": 140,
+		"starts_at_top": true
+	},
+	"94": {
+		"title": "Čuj kako Spasitelj poziva",
+		"notes": ["C4", "Ab3", "Eb3", "Ab2"],
+		"page_num": 141,
+		"starts_at_top": true
+	},
+	"95": {
+		"title": "Poznaješ li ono mesto",
+		"notes": ["F#4", "D4", "A3", "D3"],
+		"page_num": 142,
+		"starts_at_top": true
+	},
+	"96": {
+		"title": "Tam' u šumi",
+		"notes": ["F4", "D4"],
+		"page_num": 144,
+		"starts_at_top": true
+	},
+	"97": {
+		"title": "Veruj Boga",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 145,
+		"starts_at_top": false
+	},
+	"98": {
+		"title": "O domovini pojim",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 147,
+		"starts_at_top": true
+	},
+	"99": {
+		"title": "Ko Hrista veruje",
+		"notes": ["G4", "B3", "G3"],
+		"page_num": 148,
+		"starts_at_top": true
+	},
+	"100": {
+		"title": "Kaži zašto još čekaš",
+		"notes": ["E4", "C#4", "A3", "A2"],
+		"page_num": 149,
+		"starts_at_top": true
 	}
 }
 
