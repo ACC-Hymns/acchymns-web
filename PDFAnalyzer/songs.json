@@ -178,6 +178,126 @@
 		"notes": ["G4", "E4", "C4"],
 		"page_num": 49,
 		"starts_at_top": true
+	},
+	"31": {
+		"title": "Dostojno je Jagnje Božje",
+		"notes": ["D5", "A4", "F4", "D4"],
+		"page_num": 54,
+		"starts_at_top": false
+	},
+	"32": {
+		"title": "Božji serafimi",
+		"notes": ["C4", "E3", "C3"],
+		"page_num": 59,
+		"starts_at_top": true
+	},
+	"33": {
+		"title": "O uzmi ruke moje",
+		"notes": ["C5", "F4", "A3", "F3"],
+		"page_num": 60,
+		"starts_at_top": true
+	},
+	"34": {
+		"title": "Velik je Bog",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"],
+		"page_num": 63,
+		"starts_at_top": true
+	},
+	"35": {
+		"title": "Kliči kćeri Sionska",
+		"notes": ["C5", "A4", "A2"],
+		"page_num": 63,
+		"starts_at_top": false
+	},
+	"36": {
+		"title": "Radujem se Gospodnjoj utehi",
+		"notes": ["G4", "B3", "G3"],
+		"page_num": 63,
+		"starts_at_top": true
+	},
+	"37": {
+		"title": "Znaš li ko te silno ljubi",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 64,
+		"starts_at_top": true
+	},
+	"38": {
+		"title": "Lepo je Gospode",
+		"notes": ["D5", "F4", "Bb3", "Bb2"],
+		"page_num": 66,
+		"starts_at_top": true
+	},
+	"39": {
+		"title": "Bogu sva čast",
+		"notes": ["F#5", "A4", "D4"],
+		"page_num": 67,
+		"starts_at_top": true
+	},
+	"40": {
+		"title": "Neka prestane tamna noć",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 69,
+		"starts_at_top": true
+	},
+	"41": {
+		"title": "Radujte se",
+		"notes": ["F#4", "C4", "A3", "F#3"],
+		"page_num": 70,
+		"starts_at_top": true
+	},
+	"42": {
+		"title": "Čuj kako s' noć razleže",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"],
+		"page_num": 71,
+		"starts_at_top": true
+	},
+	"43": {
+		"title": "Tiha noć",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 75,
+		"starts_at_top": true
+	},
+	"44": {
+		"title": "Radost, radost",
+		"notes": ["Bb4", "G4", "Eb4", "Eb3"],
+		"page_num": 76,
+		"starts_at_top": true
+	},
+	"45": {
+		"title": "Čuj s' nebesa glas zvući",
+		"notes": ["A4", "A2"],
+		"page_num": 77,
+		"starts_at_top": true
+	},
+	"46": {
+		"title": "Mila deco",
+		"notes": ["A4", "F4", "C4", "F3"],
+		"page_num": 80,
+		"starts_at_top": false
+	},
+	"47": {
+		"title": "Koju radost i veselje",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 82,
+		"starts_at_top": true
+	},
+	"48": {
+		"title": "Slava Bogu u visini",
+		"notes": ["F4", "D4", "Bb3"],
+		"page_num": 83,
+		"starts_at_top": true
+	},
+	"49": {
+		"title": "Dostojni nismo",
+		"notes": ["A4", "F4", "C4", "F3"],
+		"page_num": 85,
+		"starts_at_top": true
+	},
+	"50": {
+		"title": "Koj' dostojan",
+		"notes": ["F4", "F3"],
+		"page_num": 85,
+		"starts_at_top": false
 	}
 }
 
