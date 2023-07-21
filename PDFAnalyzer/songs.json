@@ -1798,6 +1798,606 @@
 		"notes": ["B4", "G4", "G3"],
 		"page_num": 382,
 		"starts_at_top": false
+	},
+	"301": {
+		"title": "Približi s' kraj života",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 384,
+		"starts_at_top": true 
+	},
+	"302": {
+		"title": "Rastanka čas",
+		"notes": ["F4", "C4", "A3", "F3"],
+		"page_num": 385,
+		"starts_at_top": true
+	},
+	"303": {
+		"title": "Umoran sam idem leć'",
+		"notes": ["F4", "C4", "A3", "F3"],
+		"page_num": 385,
+		"starts_at_top": false
+	},
+	"304": {
+		"title": "Rastanka braćo, prispe čas",
+		"notes": ["G4", "B3", "G3"],
+		"page_num": 386,
+		"starts_at_top": true
+	},
+	"305": {
+		"title": "Laku noć",
+		"notes": ["C5", "A4", "F3"],
+		"page_num": 387,
+		"starts_at_top": true
+	},
+	"306": {
+		"title": "Zbogom do se opet vidimo",
+		"notes": ["F4", "D4", "Ab3", "D3"],
+		"page_num": 388,
+		"starts_at_top": true
+	},
+	"307": {
+		"title": "Oče daj nam' Tvoj blagoslov",
+		"notes": ["Ab4", "C4", "Ab3", "Ab2"],
+		"page_num": 389,
+		"starts_at_top": true
+	},
+	"308": {
+		"title": "Bože pošlji pre odmora",
+		"notes": ["A4"],
+		"page_num": 390,
+		"starts_at_top": true
+	},
+	"309": {
+		"title": "Našeg milog Isus Hrista", 
+		"notes": ["D4", "F#3", "D3"],
+		"page_num": 392,
+		"starts_at_top": true
+	},
+	"310": {
+		"title": "Kada posle tih patnji",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 393,
+		"starts_at_top": true
+	},
+	"311": {
+		"title": "Kako s' divno ori slava",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 394,
+		"starts_at_top": true
+	},
+	"312": {
+		"title": "Pojaću Ti sa radosti",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 396,
+		"starts_at_top": false
+	},
+	"313": {
+		"title": "Pomoz Bože",
+		"notes": ["C5", "G4", "Eb4", "C4"],
+		"page_num": 398,
+		"starts_at_top": true
+	},
+	"314": {
+		"title": "Isus mene ljubi sam'",
+		"notes": ["A4", "E4", "C#4", "A2"],
+		"page_num": 401,
+		"starts_at_top": true
+	},
+	"315": {
+		"title": "Javljajte s' glasnim pojanjem",
+		"notes": ["F4", "Db4", "A3", "D3"],
+		"page_num": 402,
+		"starts_at_top": true
+	},
+	"316": {
+		"title": "Ljubav nek' ne prestaje",
+		"notes": ["Eb5", "C5"],
+		"page_num": 403,
+		"starts_at_top": true
+	},
+	"317": {
+		"title": "Isus ljubi nas male",
+		"notes": ["Bb4", "G4", "Bb3", "E3"],
+		"page_num": 405,
+		"starts_at_top": true
+	},
+	"318": {
+		"title": "A anđeo reče njima",
+		"notes": ["E4"],
+		"page_num": 406,
+		"starts_at_top": true
+	},
+	"319": {
+		"title": "Čuj anđelski hori poje",
+		"notes": ["Ab4", "Ab3"],
+		"page_num": 408,
+		"starts_at_top": false
+	},
+	"320": {
+		"title": "Čuj s' anđelskih usta",
+		"notes": ["D4", "D3"],
+		"page_num": 412,
+		"starts_at_top": true
+	},
+	"321": {
+		"title": "Rado bih video",
+		"notes": ["F4", "Bb2"],
+		"page_num": 413,
+		"starts_at_top": true
+	},
+	"322": {
+		"title": "Božje čudo milosti",
+		"notes": ["F4", "D4", "Ab3", "D3"],
+		"page_num": 414,
+		"starts_at_top": false
+	},
+	"323": {
+		"title": "Vitlejem, Vitlejem",
+		"notes": ["Ab4"],
+		"page_num": 417,
+		"starts_at_top": true
+	},
+	"324": {
+		"title": "Hodite svi",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 418,
+		"starts_at_top": true
+	},
+	"325": {
+		"title": "Hodite ka meni",
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"],
+		"page_num": 424,
+		"starts_at_top": true
+	},
+	"326": {
+		"title": "O, Isuse dođi",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 427,
+		"starts_at_top": true
+	},
+	"327": {
+		"title": "Vodi me dragi Oče",
+		"notes": ["A4", "C#4", "E3", "A2"],
+		"page_num": 429,
+		"starts_at_top": true
+	},
+	"328": {
+		"title": "Primi mene slabog",
+		"notes": ["C5", "Ab4", "Eb4", "Ab2"],
+		"page_num": 430,
+		"starts_at_top": true
+	},
+	"329": {
+		"title": "Gospode Ti zastupaj",
+		"notes": ["D4", "F3", "Bb2"],
+		"page_num": 431,
+		"starts_at_top": true
+	},
+	"330": {
+		"title": "Bože moj",
+		"notes": ["Eb5", "G4", "Bb3", "Eb3"],
+		"page_num": 433,
+		"starts_at_top": true
+	},
+	"331": {
+		"title": "Kad u životnom tom moru",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"],
+		"page_num": 435,
+		"starts_at_top": true
+	},
+	"332": {
+		"title": "Svetlost se sija",
+		"notes": ["D4"],
+		"page_num": 437,
+		"starts_at_top": true
+	},
+	"333": {
+		"title": "Ja čujem glasa Tvog",
+		"notes": ["Eb4", "G3", "Eb3"],
+		"page_num": 439,
+		"starts_at_top": true
+	},
+	"334": {
+		"title": "Uđi o, Gospode",
+		"notes": ["E4", "C#4", "A3", "A2"],
+		"page_num": 440,
+		"starts_at_top": true
+	},
+	"335": {
+		"title": "Obrati se",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"],
+		"page_num": 441,
+		"starts_at_top": true
+	},
+	"336": {
+		"title": "Obrat' se Bogu",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 442,
+		"starts_at_top": true
+	},
+	"337": {
+		"title": "Prizovi me u nevolji",
+		"notes": ["Eb4", "Eb3"],
+		"page_num": 443,
+		"starts_at_top": true
+	},
+	"338": {
+		"title": "Ka Golgoti Isus te zove",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 444,
+		"starts_at_top": true
+	},
+	"339": {
+		"title": "Isus te nežno poziva",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 445,
+		"starts_at_top": true
+	},
+	"340": {
+		"title": "Hitaj spasi dušu svoju",
+		"notes": ["F4", "D4", "B3", "Bb2"],
+		"page_num": 446,
+		"starts_at_top": true
+	},
+	"341": {
+		"title": "Žuri i osnaži se",
+		"notes": ["G4", "G3"],
+		"page_num": 447,
+		"starts_at_top": true
+	},
+	"342": {
+		"title": "Uteši se mirom",
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"],
+		"page_num": 448,
+		"starts_at_top": true
+	},
+	"343": {
+		"title": "Prolazi vreme sve brže",
+		"notes": ["B3"],
+		"page_num": 449,
+		"starts_at_top": true
+	},
+	"344": {
+		"title": "Gospodu Bogu pomoli se",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 450,
+		"starts_at_top": true
+	},
+	"345": {
+		"title": "Mnogo sam ja lutao",
+		"notes": ["A4", "D4", "F#3", "D3"],
+		"page_num": 451,
+		"starts_at_top": true
+	},
+	"346": {
+		"title": "Ostan' sa mnom",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 452,
+		"starts_at_top": true
+	},
+	"347": {
+		"title": "U Isusu ću umret' mome",
+		"notes": ["E4"],
+		"page_num": 453,
+		"starts_at_top": true
+	},
+	"348": {
+		"title": "Bog me vodi",
+		"notes": ["A4", "F#4", "A3", "D3"],
+		"page_num": 455,
+		"starts_at_top": true
+	},
+	"349": {
+		"title": "Svuda sa Isusom",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 456,
+		"starts_at_top": true
+	},
+	"350": {
+		"title": "S' verom gledam na Tebe",
+		"notes": ["Eb4", "G3", "Eb3"],
+		"page_num": 457,
+		"starts_at_top": true
+	},
+	"351": {
+		"title": "Isuse Spase",
+		"notes": ["Ab4", "C4"],
+		"page_num": 458,
+		"starts_at_top": true
+	},
+	"352": {
+		"title": "Isuse Spase",
+		"notes": ["Ab4", "Eb4", "C4", "Ab3"],
+		"page_num": 460,
+		"starts_at_top": false
+	},
+	"353": {
+		"title": "Istina divna",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 461,
+		"starts_at_top": true
+	},
+	"354": {
+		"title": "Duša moja teži k' domovini gore",
+		"notes": ["D4", "Bb3", "F4", "Bb2"],
+		"page_num": 464,
+		"starts_at_top": true
+	},
+	"355": {
+		"title": "O divni dan",
+		"notes": ["A3", "C3"],
+		"page_num": 465,
+		"starts_at_top": true
+	},
+	"356": {
+		"title": "Aliluja spašen sam ja",
+		"notes": ["C5", "Eb4", "Ab3", "Ab2"],
+		"page_num": 466,
+		"starts_at_top": false
+	},
+	"357": {
+		"title": "Sve Isusu ja predajem",
+		"notes": ["G4", "Eb4", "Bb3", "Eb3"],
+		"page_num": 467,
+		"starts_at_top": true
+	},
+	"358": {
+		"title": "Dugo lutah nevoljan",
+		"notes": ["Bb3", "G3", "Eb3"],
+		"page_num": 469,
+		"starts_at_top": true
+	},
+	"359": {
+		"title": "Ja znam jednu silnu Reč",
+		"notes": ["A4", "F#4", "D4", "D3"],
+		"page_num": 471,
+		"starts_at_top": true
+	},
+	"360": {
+		"title": "Dal' i zbog mene Gospod",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 473,
+		"starts_at_top": true
+	},
+	"361": {
+		"title": "O Gospode, Ti nam dođe",
+		"notes": ["B4", "D4", "G3"],
+		"page_num": 474,
+		"starts_at_top": true
+	},
+	"362": {
+		"title": "Bledog lica, sav ponizan",
+		"notes": ["Ab4", "F4", "Ab3", "Db3"],
+		"page_num": 475,
+		"starts_at_top": true
+	},
+	"363": {
+		"title": "Spas usta iz mrtvih",
+		"notes": ["C4", "C3"],
+		"page_num": 476,
+		"starts_at_top": true
+	},
+	"364": {
+		"title": "Ja znam za izvor",
+		"notes": ["C4", "E3", "C3"],
+		"page_num": 479,
+		"starts_at_top": true
+	},
+	"365": {
+		"title": "Spasitelj, Gospod naš vaskrse",
+		"notes": ["C5", "Ab4", "Eb4", "Ab3"],
+		"page_num": 480,
+		"starts_at_top": true
+	},
+	"366": {
+		"title": "Cele noći te",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 481,
+		"starts_at_top": true
+	},
+	"367": {
+		"title": "O nek Ti je slava, čast",
+		"notes": ["Eb4", "Eb3"],
+		"page_num": 482,
+		"starts_at_top": true
+	},
+	"368": {
+		"title": "Nebesa hvale",
+		"notes": ["G4", "G3"],
+		"page_num": 485,
+		"starts_at_top": true
+	},
+	"369": {
+		"title": "Hvali Boga moja dušo",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 486,
+		"starts_at_top": true
+	},
+	"370": {
+		"title": "Nebesa kazuju",
+		"notes": ["E4", "E3"],
+		"page_num": 490,
+		"starts_at_top": true
+	},
+	"371": {
+		"title": "Ko iz stene izvor lep",
+		"notes": ["B4", "G4", "D4", "G3"],
+		"page_num": 493,
+		"starts_at_top": false
+	},
+	"372": {
+		"title": "Kličite Gospodu",
+		"notes": ["A4", "E4", "C#4", "A3"],
+		"page_num": 494,
+		"starts_at_top": true
+	},
+	"373": {
+		"title": "Slava Bogu na nebu",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 498,
+		"starts_at_top": true
+	},
+	"374": {
+		"title": "Koji živi u zaklonu",
+		"notes": ["Eb4", "Eb3"],
+		"page_num": 499,
+		"starts_at_top": true
+	},
+	"375": {
+		"title": "Kad Bože o Tvojoj moći",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 501,
+		"starts_at_top": true
+	},
+	"376": {
+		"title": "O Bože moj",
+		"notes": ["G4", "E4", "G3", "C3"],
+		"page_num": 505,
+		"starts_at_top": true
+	},
+	"377": {
+		"title": "Kad je Gospod kuš'o Avrama",
+		"notes": ["F4", "F3"],
+		"page_num": 506,
+		"starts_at_top": true
+	},
+	"378": {
+		"title": "Navuhodonosor",
+		"notes": ["B4", "G4", "D4", "G3"],
+		"page_num": 507,
+		"starts_at_top": true
+	},
+	"379": {
+		"title": "Kad života bure besne",
+		"notes": ["D4", "B3", "G3"],
+		"page_num": 508,
+		"starts_at_top": true
+	},
+	"380": {
+		"title": "Učitelju bura s' diže",
+		"notes": ["G4", "E4", "C4", "C3"],
+		"page_num": 509,
+		"starts_at_top": true
+	},
+	"381": {
+		"title": "U mlade dane",
+		"notes": ["G4", "Eb4", "Bb3", "Eb4"],
+		"page_num": 511,
+		"starts_at_top": true
+	},
+	"382": {
+		"title": "Bože od iskona",
+		"notes": ["B4", "G4", "D4", "G3"],
+		"page_num": 512,
+		"starts_at_top": true
+	},
+	"383": {
+		"title": "Apostol Jovan",
+		"notes": ["Ab4", "Db4", "F3", "Db3"],
+		"page_num": 513,
+		"starts_at_top": true
+	},
+	"384": {
+		"title": "Aliluja",
+		"notes": ["Eb4", "Eb3"],
+		"page_num": 514,
+		"starts_at_top": false
+	},
+	"385": {
+		"title": "Jehova",
+		"notes": ["Ab4", "Db4", "F3", "Db3"],
+		"page_num": 515,
+		"starts_at_top": true
+	},
+	"386": {
+		"title": "Gospod je štit",
+		"notes": ["F4", "D4", "A3", "F3"],
+		"page_num": 517,
+		"starts_at_top": true
+	},
+	"387": {
+		"title": "Ah, da ne beše s'nama Bog",
+		"notes": ["D4", "A3", "F3", "D3"],
+		"page_num": 518,
+		"starts_at_top": true
+	},
+	"388": {
+		"title": "Pogledajmo braćo",
+		"notes": ["Ab4", "Eb4", "C4", "Ab2"],
+		"page_num": 519,
+		"starts_at_top": true
+	},
+	"389": {
+		"title": "Teškim putem",
+		"notes": ["B4", "D4", "G3", "G2"],
+		"page_num": 521,
+		"starts_at_top": true
+	},
+	"390": {
+		"title": "Dolinom idemo",
+		"notes": ["D4", "F3", "D3"],
+		"page_num": 522,
+		"starts_at_top": true
+	},
+	"391": {
+		"title": "Idem Bože k' Tebi",
+		"notes": ["Bb4", "G4"],
+		"page_num": 523,
+		"starts_at_top": true
+	},
+	"392": {
+		"title": "Prolazni moj put",
+		"notes": ["E4", "C4", "G3", "C3"],
+		"page_num": 527,
+		"starts_at_top": true
+	},
+	"393": {
+		"title": "Braćo složno, jednodušno",
+		"notes": ["G4", "D4", "B3", "G3"],
+		"page_num": 528,
+		"starts_at_top": true
+	},
+	"394": {
+		"title": "Tebe ljubim o Spase",
+		"notes": ["C#4", "A3", "A2"],
+		"page_num": 529,
+		"starts_at_top": true
+	},
+	"395": {
+		"title": "Blažena nam sveza",
+		"notes": ["A4", "F4", "C4", "F3"],
+		"page_num": 530,
+		"starts_at_top": false
+	},
+	"396": {
+		"title": "O kako je to krasno",
+		"notes": ["C#5", "E4", "A3", "A2"],
+		"page_num": 531,
+		"starts_at_top": true
+	},
+	"397": {
+		"title": "Želja mi j' u zavičaj",
+		"notes": ["G4", "B3", "G3"],
+		"page_num": 533,
+		"starts_at_top": true
+	},
+	"398": {
+		"title": "Gospode Bože",
+		"notes": ["D5", "F4", "Bb3", "Bb2"],
+		"page_num": 534,
+		"starts_at_top": true
+	},
+	"399": {
+		"title": "U nebesnoj daljini",
+		"notes": ["F4", "D4", "Bb3", "Bb2"],
+		"page_num": 535,
+		"starts_at_top": true
+	},
+	"400": {
+		"title": "O kako je ljubav jaka",
+		"notes": ["G4", "D4", "Bb3", "G3"],
+		"page_num": 536,
+		"starts_at_top": true
 	}
 }
 
