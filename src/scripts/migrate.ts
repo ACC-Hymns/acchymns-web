@@ -27,5 +27,5 @@ export async function migrate() {
     }
 
     // Update the "previous semver version"
-    await Preferences.set({ key: "AppVersion", value: current_semver_version })
+    await Preferences.set({ key: "AppVersion", value: current_semver_version });
 }

@@ -2,13 +2,10 @@
 import { computed, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
-import { useNavigator } from "@/router/navigator";
-const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
-import router from "@/router";
 
 // Not watching deeply, must assign new array
 

@@ -8,6 +8,7 @@ import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
+import { useSeoMeta } from "@unhead/vue";
 
 const props = defineProps<SongReference>();
 
@@ -15,6 +16,7 @@ const router = useRouter();
 
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
+const song_title = ref<string>("");
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
@@ -36,10 +38,20 @@ async function toggleBookmark() {
     }
 }
 
+useSeoMeta({
+    ogTitle: song_title,
+    ogType: "music.song",
+    ogSiteName: "ACC Hymns",
+    robots: {
+        noindex: true,
+    },
+});
+
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     if (SONG_METADATA != null) {
         notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+        song_title.value = SONG_METADATA[props.number].title;
     }
 });
 

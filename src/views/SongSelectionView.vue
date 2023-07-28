@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useHead } from "@unhead/vue";
 
 const props = defineProps<{
     book: string;
@@ -43,6 +44,23 @@ function hideTooltip() {
         topical_index_tooltip_status.value = true;
     }, 1000);
 }
+
+useHead({
+    meta: [
+        {
+            property: "og:title",
+            content: book_name,
+        },
+        {
+            property: "og:type",
+            content: "music.album",
+        },
+        {
+            property: "og:site_name",
+            content: "ACC Hymns",
+        },
+    ],
+});
 </script>
 
 <template>

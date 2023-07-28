@@ -24,3 +24,6 @@ app.mount("#app");
 
 import { migrate } from "@/scripts/migrate";
 migrate();
+
+import { createHead } from "unhead";
+createHead();

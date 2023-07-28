@@ -4,7 +4,7 @@ import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/boo
 import { RouterLink, useRouter } from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
-
+import { useSeoMeta } from "@unhead/vue";
 const props = defineProps<{
     book: string;
 }>();
@@ -15,6 +15,7 @@ const error_active = ref(false);
 const scroll_topic_list = ref<Element | null>(null);
 
 let book_ref = ref("");
+const book_title = ref("");
 let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: Song[] }>({});
@@ -37,6 +38,7 @@ onMounted(async () => {
     BOOK_METADATA = await getAllBookMetaData();
     BOOK_SONG_METADATA = await getSongMetaData(props.book);
     book_ref.value = BOOK_METADATA[props.book].name.short;
+    book_title.value = BOOK_METADATA[props.book].name.medium;
     primary_color.value = BOOK_METADATA[props.book].primaryColor;
     secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
     const raw_index = await getBookIndex(BOOK_METADATA[props.book].name.short);
@@ -66,10 +68,9 @@ onMounted(async () => {
     }
     alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
 
-    if(isAlphabetical.value) {
+    if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
         icon.value = "../assets/list-bulleted.svg";
-
     } else {
         title.value = "Topical Index";
         icon.value = "../assets/text.svg";
@@ -130,6 +131,12 @@ function toggleAlphabetical() {
         });
     }, 10);
 }
+
+useSeoMeta({
+    ogTitle: () => (isAlphabetical.value ? "Alphabetical " : "Topical " + book_title.value),
+    ogType: "music.album",
+    ogSiteName: "ACC Hymns",
+});
 </script>
 
 <template>
