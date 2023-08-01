@@ -55,11 +55,13 @@ jobs:
         run: |
           cd build
           export VITE_BASE_URL="/${{ env.PR_REPO_NAME }}/"
+          export SEO_URL="https://acc-hymns.github.io"
           export VITE_GIT_BRANCH="$GITHUB_HEAD_REF"
           npm i
           npm run deploy-check
           npm run build
           npx cap copy web
+          node ./seo-deployment.mjs
           cd ..
       
       - name: Checkout Dev Target
