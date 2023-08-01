@@ -58,7 +58,6 @@ const index_html = fs.readFileSync(`${dist_dir}/index.html`, "utf-8");
 
 // /selection/* <- book selection
 const books = ["ZH", "GH", "JH", "HG", "CH", "HZ", "ZG", "ZGE", "ZHJ", "ZHSP", "ZHG", "ZHH", "ZHR", "HS", "PC", "ARF", "ARFR"];
-fs.mkdirSync(`${dist_dir}/selection`, { recursive: true });
 for (const book of books) {
     const dup = parse(index_html);
     const head = dup.getElementsByTagName("head")[0];
@@ -73,14 +72,14 @@ for (const book of books) {
             "music.album"
         )
     );
-    fs.writeFileSync(`${dist_dir}/selection/${book}`, dup.toString());
+    fs.mkdirSync(`${dist_dir}/selection/${book}`, { recursive: true });
+    fs.writeFileSync(`${dist_dir}/selection/${book}/index.html`, dup.toString());
 }
 
 // /display/*/* <- display song
 for (const book of books) {
     const summary = JSON.parse(fs.readFileSync(`public/books/${book}/summary.json`, "utf-8"));
     const song_list = JSON.parse(fs.readFileSync(`public/books/${book}/songs.json`, "utf-8"));
-    fs.mkdirSync(`${dist_dir}/display/${book}`, { recursive: true });
     for (const song of Object.keys(song_list)) {
         const dup = parse(index_html);
         const head = dup.getElementsByTagName("head")[0];
@@ -95,7 +94,8 @@ for (const book of books) {
                 "music.song"
             )
         );
-        fs.writeFileSync(`${dist_dir}/display/${book}/${song}`, dup.toString());
+        fs.mkdirSync(`${dist_dir}/display/${book}/${song}`, { recursive: true });
+        fs.writeFileSync(`${dist_dir}/display/${book}/${song}/index.html`, dup.toString());
     }
 }
 
@@ -107,19 +107,23 @@ for (const book of books) {
         "beforeend",
         generateMetaTags("ACC Hymns Search", "Search for all of your favorite hymns from the Zion's Harp, Gospel Hymns, Junior Hymnal, and many more!", "search", "assets/icons/180x180.png", "website")
     );
-    fs.writeFileSync(`${dist_dir}/search`, dup.toString());
+    fs.mkdirSync(`${dist_dir}/search`, { recursive: true });
+    fs.writeFileSync(`${dist_dir}/search/index.html`, dup.toString());
 }
 
 // /bookmarks <- bookmarks
 {
     const dup = parse(index_html);
     const head = dup.getElementsByTagName("head")[0];
-    head.insertAdjacentHTML("beforeend", generateMetaTags("ACC Hymns Bookmarks", "View your bookmarks from the ACC Hymns app", "bookmarks", "assets/icons/180x180.png", "website"));
-    fs.writeFileSync(`${dist_dir}/bookmarks`, dup.toString());
+    head.insertAdjacentHTML(
+        "beforeend",
+        generateMetaTags("ACC Hymns Bookmarks", "View your bookmarks from the Zion's Harp, Gospel Hymns, Junior Hymnal, and many more!", "bookmarks", "assets/icons/180x180.png", "website")
+    );
+    fs.mkdirSync(`${dist_dir}/bookmarks`, { recursive: true });
+    fs.writeFileSync(`${dist_dir}/bookmarks/index.html`, dup.toString());
 }
 
 // /topical/* <- topical & alphabetical index
-fs.mkdirSync(`${dist_dir}/topical`, { recursive: true });
 for (const book of books) {
     const dup = parse(index_html);
     const head = dup.getElementsByTagName("head")[0];
@@ -128,5 +132,6 @@ for (const book of books) {
         "beforeend",
         generateMetaTags(`${summary.name.long} Topical Index`, `View the topical and alphabetical index for ${summary.name.medium}`, `topical/${book}`, "assets/icons/180x180.png", "music.playlist")
     );
-    fs.writeFileSync(`${dist_dir}/topical/${book}`, dup.toString());
+    fs.mkdirSync(`${dist_dir}/topical/${book}`, { recursive: true });
+    fs.writeFileSync(`${dist_dir}/topical/${book}/index.html`, dup.toString());
 }
