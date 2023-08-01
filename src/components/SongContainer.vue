@@ -61,14 +61,14 @@ onMounted(async () => {
             boundsPadding: isMobile ? 1 : 0.5,
         });
     }
-    if(isMobile) {
+    if (isMobile) {
         setInterval(() => {
             observer.refresh();
         }, 10);
     }
 });
 
-class IntersectionObserverManager { 
+class IntersectionObserverManager {
     _observer;
     _observedNodes;
 
@@ -96,15 +96,14 @@ class IntersectionObserverManager {
     }
 }
 
-const observer = new IntersectionObserverManager(new IntersectionObserver((entries, _observer) => 
-        {
+const observer = new IntersectionObserverManager(
+    new IntersectionObserver(
+        (entries, _observer) => {
             for (const entry of entries) {
                 let rootRect = entry.boundingClientRect;
                 let visibleRect = entry.intersectionRect;
-                if(visibleRect.height < rootRect.height)
-                    panzoom.setVerticalPan(true);
-                else
-                    panzoom.setVerticalPan(false);
+                if (visibleRect.height < rootRect.height) panzoom.setVerticalPan(true);
+                else panzoom.setVerticalPan(false);
             }
         },
         {
@@ -116,10 +115,8 @@ const observer = new IntersectionObserverManager(new IntersectionObserver((entri
 );
 
 onUpdated(async () => {
-    if(isMobile)
-        observer.observe(panzoom_container.value as Element);
+    if (isMobile) observer.observe(panzoom_container.value as Element);
 });
-
 </script>
 
 <template>
