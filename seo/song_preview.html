@@ -1,83 +1,98 @@
-<div style="display: flex;">
+<div>
     <style>
+        @font-face {
+            font-family: 'custom';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("Lato-Regular.woff") format('woff');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
         :root {     
             color: #ffffff;
-            /* --back-color: #818181; */
-            --width: 600px;
-            --height: 315px;
-            --root-padding: 20px;
+            font-family: "custom";
         }
 
         .root {
-            width: 560px;
-            height: 275px;
+            width: 1200px;
+            height: 630px;
             background: #ebebeb;
-            border-radius: 50px;
-            display: flex;
-            padding: 20px;
-            align-items: center;
-            justify-content: space-between
+            border-radius: 100px;
         }
 
         .song-holder {
-            width:  300px;
-            height: 250px;
-            background: linear-gradient(135deg, #ff731c, #db5502);
-            border-radius: 40px;
-            display: flex;
+            width: 1100px;
+            height: 530px;
+            background: linear-gradient(135deg, "{{PRIMARY_COLOR}}", "{{SECONDARY_COLOR}}");
+            border-radius: 80px;
+            padding: 35px;
+            margin: 50px;
             justify-content: space-between;
-            align-items: center;
-        }
-        .song {
-            margin: 5px 20px;
-            padding: 15px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
         }
 
         .book__title {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.5;
+            font-size: 80px;
+            font-weight: bold;
         }
 
         .song__title {
-            color: #ffffff;
-            font-size: 18px;
-            line-height: 1.5;
+            font-size: 90px;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+            padding-left: 35px;
+            font-weight: 100;
+            padding-bottom: 10px;
+            font-weight: normal;
         }
 
         .song__number {
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 900;
-            margin-right: 5px;
-        }
-
-        .booktext--right {
-            color: white;
-            display: flex;
-            align-items: center;
+            font-size: 100px;
+            font-weight: bold;
+            padding-left: 30px;
+            min-width: 232px;
+            justify-content: center;
         }
 
         .icon {
-            width: 250px;
-            height: 250px;
-            border-radius: 20%;
+            border-radius: 30px;
+        }
+
+        .top-row {
+            width: 100%;
+            height: 320px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bottom-row {
+            width: 100%;
+            height: 140px;
+            align-items: center;
+        }
+
+        .center {
+            justify-content: center;
+            width: 890px;
+        }
+        
+        div {
+            display: flex;
         }
     </style>
-    <div style="display: flex;" class="root">
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 153.21 153.21"><defs><style>.cls-1{fill:url(#linear-gradient);}.cls-2{fill:#fff;}.cls-3{fill:url(#linear-gradient-2);}.cls-4,.cls-7{font-size:30.06px;fill:#e4c464;font-family:MADEMirage-Bold, MADE Mirage;font-weight:700;}.cls-4{letter-spacing:-0.04em;}.cls-5{letter-spacing:0.01em;}.cls-6{letter-spacing:0em;}.cls-8{letter-spacing:-0.03em;}.cls-9{letter-spacing:-0.01em;}.cls-10{fill:#e24d4d;}</style><linearGradient id="linear-gradient" x2="153.21" y2="153.21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3a3a3a"/><stop offset="1"/></linearGradient><linearGradient id="linear-gradient-2" x1="45.12" y1="46.38" x2="125.07" y2="46.38" xlink:href="#linear-gradient"/></defs><title>icon</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="153.21" height="153.21"/><path class="cls-2" d="M145.71,104.19s-6,12.87-32.79,12.87H24.05s-12.1-.31-12.1,9.8,10.73,18.08,20.84,18.08h82.43s30.18,1.53,30.18-30.34C145.55,114.45,145.71,104.19,145.71,104.19Z"/><path class="cls-3" d="M66.73,53.16v1H58.62v-1c1.17-.07,1.71-.79,1.29-1.9L58.5,47.71H50.74l-1.32,3.55c-.42,1.17,0,1.81,1.17,1.9v1H45.42v-1a2.37,2.37,0,0,0,2.11-1.9l5.56-15.09c.45-1.17.27-2.07-.93-2.16v-.93H57l7.61,18.18C65.05,52.37,65.62,53.07,66.73,53.16ZM57.81,46,54.5,37.52,51.37,46Z"/><path class="cls-3" d="M85.91,47.84l-.69,4.53a11.29,11.29,0,0,1-7.52,2.05c-6.43-.3-11.42-4.27-11.42-10.82s4.9-10.83,11.33-10.83a14.91,14.91,0,0,1,7.61,2v4.75h-.84c-.9-3.76-3.31-5.71-6.59-5.68-4.51.06-6.7,4.3-6.7,9.71,0,5.71,2.74,9.53,7,9.71,3.55.15,5.75-1.66,7-5.47Z"/><path class="cls-3" d="M107.19,47.84l-.69,4.53A11.26,11.26,0,0,1,99,54.42c-6.44-.3-11.43-4.27-11.43-10.82s4.9-10.83,11.33-10.83a14.88,14.88,0,0,1,7.61,2v4.75h-.84c-.9-3.76-3.31-5.71-6.59-5.68-4.5.06-6.7,4.3-6.7,9.71,0,5.71,2.74,9.53,7,9.71,3.54.15,5.74-1.66,7-5.47Z"/><path class="cls-10" d="M28,120.89H52.4V139L40,132.84,28,139S28,120.85,28,120.89Z"/></g></g></svg>
+    <div class="root">
         <div class="song-holder">
-            <div style="display: flex;">
-                <h2 class="song__title">Santo Dios, Santo Dios, Eres Oh Jehová</h1>
-                <span>
-                    <h1 class="book__title">Zion's Harp (Span.)</h1>
-                    <div style="display: flex;" class="song__number">#7</div>
-                </span>
+            <div class="top-row">
+                <div class="song__number">#{{SONG_NUMBER}}</div>
+                <div class="song__title">{{SONG_TITLE}}</div>
+            </div>
+            <div class="bottom-row">
+                <div class="center">
+                    <div class="book__title">{{BOOK_NAME}}</div>
+                </div>
+                <svg class="icon" width="140" height="140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 153.21 153.21" xmlns:v="https://vecta.io/nano"><style>.D{letter-spacing:-0.04em}</style><defs><linearGradient id="A" x2="153.21" y2="153.21" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3a3a3a"/><stop offset="1"/></linearGradient><linearGradient id="B" x1="45.12" y1="46.38" x2="125.07" y2="46.38" xlink:href="#A"/><path id="C" d="M85.968 52.916q-1.556.807-3.244 1.218-1.688.411-3.523.411-5.475 0-8.675-3.053-3.2-3.068-3.2-8.308 0-5.255 3.2-8.308 3.2-3.068 8.675-3.068 1.835 0 3.523.411 1.688.411 3.244 1.218v4.535q-1.571-1.071-3.097-1.571-1.526-.499-3.214-.499-3.024 0-4.756 1.937-1.732 1.937-1.732 5.343 0 3.391 1.732 5.328 1.732 1.937 4.756 1.937 1.688 0 3.214-.499 1.526-.499 3.097-1.571z"/></defs><path d="M0 0h153.21v153.21H0z" fill="url(#A)"/><path d="M145.71 104.19s-6 12.87-32.79 12.87H24.05s-12.1-.31-12.1 9.8 10.73 18.08 20.84 18.08h82.43s30.18 1.53 30.18-30.34c.15-.15.31-10.41.31-10.41z" fill="#fff"/><g fill="url(#B)"><path d="M66.73 53.16v1h-8.11v-1c1.17-.07 1.71-.79 1.29-1.9l-1.41-3.55h-7.76l-1.32 3.55c-.42 1.17 0 1.81 1.17 1.9v1h-5.17v-1a2.37 2.37 0 0 0 2.11-1.9l5.56-15.09c.45-1.17.27-2.07-.93-2.16v-.93H57l7.61 18.18c.44 1.11 1.01 1.81 2.12 1.9zM57.81 46l-3.31-8.48L51.37 46z"/><path d="M85.91 47.84l-.69 4.53a11.29 11.29 0 0 1-7.52 2.05c-6.43-.3-11.42-4.27-11.42-10.82s4.9-10.83 11.33-10.83a14.91 14.91 0 0 1 7.61 2v4.75h-.84c-.9-3.76-3.31-5.71-6.59-5.68-4.51.06-6.7 4.3-6.7 9.71 0 5.71 2.74 9.53 7 9.71 3.55.15 5.75-1.66 7-5.47z"/><path d="M107.19 47.84l-.69 4.53a11.26 11.26 0 0 1-7.5 2.05c-6.44-.3-11.43-4.27-11.43-10.82s4.9-10.83 11.33-10.83a14.88 14.88 0 0 1 7.61 2v4.75h-.84c-.9-3.76-3.31-5.71-6.59-5.68-4.5.06-6.7 4.3-6.7 9.71 0 5.71 2.74 9.53 7 9.71 3.54.15 5.74-1.66 7-5.47z"/></g><g fill="#e4c464"><g class="D"><path d="M61.177 50.128h-8.836l-1.394 3.992h-5.68l8.117-21.914h6.737l8.117 21.914h-5.68zm-7.427-4.066h6.003l-2.994-8.719z"/><use xlink:href="#C"/><use xlink:href="#C" x="21.28"/></g><path d="M25.159 60.556h5.651v8.352h8.337v-8.352h5.651V82.47h-5.651v-9.291H30.81v9.291h-5.651zm19.967 0h6.179l4.99 7.809 4.99-7.809h6.194l-8.352 12.682v9.232h-5.651v-9.232zm22.533 0h7.192l4.99 11.728 5.02-11.728h7.177V82.47h-5.343V66.442l-5.049 11.816h-3.581l-5.049-11.816V82.47h-5.357zm27.08 0h6.311l7.97 15.03v-15.03h5.357V82.47h-6.311l-7.97-15.03v15.03h-5.357zm37.191.69v4.638q-1.805-.807-3.523-1.218-1.717-.411-3.244-.411-2.026 0-2.994.558-.969.558-.969 1.732 0 .881.646 1.38.66.484 2.378.837l2.407.484q3.655.734 5.196 2.231 1.541 1.497 1.541 4.257 0 3.625-2.158 5.401-2.143 1.761-6.561 1.761-2.084 0-4.183-.396-2.099-.396-4.198-1.174v-4.77q2.099 1.116 4.051 1.688 1.967.558 3.787.558 1.849 0 2.833-.616.983-.616.983-1.761 0-1.027-.675-1.585-.66-.558-2.657-.998l-2.187-.484q-3.288-.705-4.814-2.246-1.512-1.541-1.512-4.154 0-3.273 2.114-5.034 2.114-1.761 6.077-1.761 1.805 0 3.713.279 1.908.264 3.948.807z"/></g><path d="M28 120.89h24.4V139L40 132.84 28 139v-18.11z" fill="#e24d4d"/></svg>
             </div>
         </div>
     </div>

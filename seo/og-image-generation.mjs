@@ -1,34 +1,48 @@
 // This generates open graph images for all the songs in each book, and each book.
 import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
-import { html } from "satori-html";
+import juice from "juice";
+import { html as toSatoriHtml } from "satori-html";
 import fs from "node:fs";
 
 // Get template for song_preview
-const song_preview_template = fs.readFileSync("seo/song_preview.html", "utf-8");
-const font = fs.readFileSync("seo/Lato-Regular.woff");
+const song_preview_template = juice(fs.readFileSync("seo/song_preview.html", "utf-8")).replace(/ class=".+?"/g, "");
+const lato_regular = fs.readFileSync("seo/Lato-Regular.woff");
+const lato_bold = fs.readFileSync("seo/Lato-Bold.woff");
 
-// Replace icon with base64 encoded icon
-const rendered_template = song_preview_template.replace("{{icon}}", "data:image/png;base64,");
-fs.writeFileSync("seo/song_preview_rendered.html", rendered_template);
-const svg = await satori(html(rendered_template), {
-    width: 1200,
-    height: 630,
-    fonts: [
-        {
-            name: "Lato",
-            data: font,
-            weight: 400,
-            style: "normal",
-        },
-    ],
-});
+export async function generateSongPreview(book, song_number, song_title, primary_color, secondary_color) {
+    if (song_title.length == 0) {
+        song_title = "Untitled";
+    }
+    const rendered_template = song_preview_template
+        .replace("{{BOOK_NAME}}", book)
+        .replace("{{SONG_NUMBER}}", song_number)
+        .replace("{{SONG_TITLE}}", song_title)
+        .replace("'{{PRIMARY_COLOR}}'", primary_color)
+        .replace("'{{SECONDARY_COLOR}}'", secondary_color);
+    const react_jsx = toSatoriHtml(rendered_template);
+    const svg = await satori(react_jsx, {
+        width: 1200,
+        height: 630,
+        fonts: [
+            {
+                name: "custom",
+                data: lato_regular,
+                weight: 400,
+            },
+            {
+                name: "custom",
+                data: lato_bold,
+                weight: 700,
+            },
+        ],
+    });
 
-const resvg = new Resvg(svg, {
-    width: 1200,
-    height: 630,
-});
-const data = resvg.render();
-const png = data.asPng();
-
-fs.writeFileSync("seo/song_preview.png", png);
+    const resvg = new Resvg(svg, {
+        width: 1200,
+        height: 630,
+    });
+    const data = resvg.render();
+    const png = data.asPng();
+    return png;
+}

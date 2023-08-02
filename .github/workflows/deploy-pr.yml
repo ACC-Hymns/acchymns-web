@@ -61,7 +61,7 @@ jobs:
           npm run deploy-check
           npm run build
           npx cap copy web
-          node ./seo-deployment.mjs
+          node ./seo/seo-deployment.mjs
           cd ..
       
       - name: Checkout Dev Target
