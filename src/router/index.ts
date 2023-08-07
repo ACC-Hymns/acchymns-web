@@ -5,6 +5,13 @@ import type { URLOpenListenerEvent } from "@capacitor/app";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
+    scrollBehavior(_, __, savedPosition) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(savedPosition || { top: 0 });
+            }, 100);
+        });
+    },
     routes: [
         {
             path: "/",
