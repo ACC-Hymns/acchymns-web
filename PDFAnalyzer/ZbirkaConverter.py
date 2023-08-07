@@ -4,7 +4,7 @@ from pypdf import PdfReader, PdfWriter
 data = sorted(json.load(open("songs.json")).items(), key=lambda v: v[1]["page_num"])
 
 # print(data)
-reader = PdfReader("zbirka.pdf")
+reader = PdfReader("cropped_zbirka.pdf")
 
 for idx, (key, value) in enumerate(data):
     # length = value.page_num
