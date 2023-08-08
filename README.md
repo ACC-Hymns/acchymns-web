@@ -71,6 +71,7 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 - Christopher Weinhardt
 - Timothy Weinhardt
 - Dallas Hart
+- Sis. Ruth Oldja
 
 ## Special Thanks
 
