@@ -15,3 +15,8 @@
 }
 ```
 
+
+## How to use `convertToPNGS`
+
+- Place the script in the folder with all the PDF files and edit the script's `song_count` variable to the amount of songs to convert
+- Run `python convertToPNGS.py` in said folder
