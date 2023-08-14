@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+            sparse-checkout: |
+                .
+                .github
       - uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
           target: patch
