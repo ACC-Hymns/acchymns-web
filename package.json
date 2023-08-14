@@ -30,7 +30,7 @@
     "pinia": "^2.0.32",
     "tone": "^14.7.77",
     "vue": "^3.3.4",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@capacitor/assets": "^2.0.4",
