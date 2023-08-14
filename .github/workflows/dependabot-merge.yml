@@ -3,15 +3,19 @@ name: Dependabot Auto-Merge
 on:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   auto-merge:
+    if: ${{ github.actor == 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-            sparse-checkout: |
-                .
-                .github
+          sparse-checkout: |
+              .
+              .github
       - uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
           target: patch
