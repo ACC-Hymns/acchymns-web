@@ -1,18 +1,28 @@
+# Took this from here: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#enable-auto-merge-on-a-pull-request
 name: Dependabot Auto-Merge
 
-on:
+on: 
   pull_request:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  auto-merge:
+  dependabot:
     runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
         with:
-            sparse-checkout: |
-                .
-                .github
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          target: patch
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
