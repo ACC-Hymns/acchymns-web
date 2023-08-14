@@ -37,9 +37,13 @@ const { back } = useNavigator();
             <h3 class="release">Vue.js</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies.vue) }}</h5>
         </a>
-        <a href="https://vuejs.org/" class="attribution">
+        <a href="https://router.vuejs.org/" class="attribution">
             <h3 class="release">Vue Router</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["vue-router"]) }}</h5>
+        </a>
+        <a href="https://pinia.vuejs.org/" class="attribution">
+            <h3 class="release">Pinia</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies.pinia) }}</h5>
         </a>
         <a href="https://capacitorjs.com/" class="attribution">
             <h3 class="release">Capacitor</h3>
