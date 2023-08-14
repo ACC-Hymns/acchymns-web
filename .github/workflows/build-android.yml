@@ -12,6 +12,7 @@ jobs:
       # We do this so we don't ever have conflicting build numbers
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
+          delay: 60000
           timeout: 3600000
 
   build:
