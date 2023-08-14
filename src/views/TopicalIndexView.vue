@@ -66,10 +66,9 @@ onMounted(async () => {
     }
     alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
 
-    if(isAlphabetical.value) {
+    if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
         icon.value = "../assets/list-bulleted.svg";
-
     } else {
         title.value = "Topical Index";
         icon.value = "../assets/text.svg";
