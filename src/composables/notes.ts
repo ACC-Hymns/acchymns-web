@@ -53,9 +53,12 @@ const player = {
             // Schedule all the notes
             for (const [index, note] of unref(notes).entries()) {
                 scheduled_notes_interval_id.push(
-                    setTimeout(() => {
-                        sampler.triggerAttack(note);
-                    }, interval.value * index * 1000)
+                    setTimeout(
+                        () => {
+                            sampler.triggerAttack(note);
+                        },
+                        interval.value * index * 1000,
+                    ),
                 );
             }
 

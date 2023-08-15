@@ -10,7 +10,7 @@ const props = withDefaults(
     }>(),
     {
         withLink: true,
-    }
+    },
 );
 
 const {

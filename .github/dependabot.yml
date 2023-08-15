@@ -11,6 +11,7 @@ updates:
       - "Nomalah"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 15
   - package-ecosystem: "github-actions"
     directory: "/"
     reviewers:
