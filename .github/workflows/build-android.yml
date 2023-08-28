@@ -1,20 +1,22 @@
 name: Build Android
 
 on:
-  workflow_dispatch:
   push:
 
 jobs:
   wait:
-    name: Wait for Previous IOS Builds to finish
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Queue Android builds
     runs-on: ubuntu-latest
     steps:
       # We do this so we don't ever have conflicting build numbers
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
+          delay: 60000
           timeout: 3600000
 
   build:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build Android
     needs: wait
     runs-on: ubuntu-latest

@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+
+import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
 }>();
 const router = useRouter();
+const route = useRoute();
+
+// Saving position in book
+onBeforeRouteLeave((_, from) => {
+    saveScrollPosition(from.fullPath);
+});
 
 let topical_index_tooltip_status = useLocalStorage<boolean>("topical_index_tooltip_complete", false);
 
@@ -34,6 +42,11 @@ onMounted(async () => {
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
 
     useSessionStorage<boolean>("isAlphabetical", false).value = false;
+
+    // Restoring position in book
+    await nextTick();
+    // The v-for for song buttons now should be active, so we can scroll to the saved position
+    restoreScrollPosition(route.fullPath);
 });
 
 function hideTooltip() {
