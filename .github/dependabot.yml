@@ -11,6 +11,22 @@ updates:
       - "Nomalah"
     schedule:
       interval: "weekly"
+    groups:
+      capacitor:
+        patterns:
+          - "@capacitor/core"
+          - "@capacitor/android"
+          - "@capacitor/ios"
+          - "@capacitor/cli"
+      capacitor-plugins:
+        patterns:
+          - "@capacitor/*"
+          - "@capacitor-community/*"
+        exclude-patterns:
+          - "@capacitor/core"
+          - "@capacitor/android"
+          - "@capacitor/ios"
+          - "@capacitor/cli"
   - package-ecosystem: "github-actions"
     directory: "/"
     reviewers:
