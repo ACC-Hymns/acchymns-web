@@ -24,7 +24,7 @@
     "@capacitor/preferences": "^5.0.6",
     "@capacitor/toast": "^5.0.2",
     "@ionic/pwa-elements": "^3.2.2",
-    "@vueuse/core": "^9.13.0",
+    "@vueuse/core": "^10.4.0",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^3.9.179",
     "pinia": "^2.1.6",
