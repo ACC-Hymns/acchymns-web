@@ -1394,6 +1394,14 @@
 		"title": "Itt állok jászlad mellett",
 		"notes": ["F#4", "D4", "B3", "B2"]
 	},
+	"350": {
+		"title": "Bár Isten volt, és ember lett",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"351": {
+		"title": "Szeretsz-e, mondd",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
 	"352": {
 		"title": "Mester, a bősz vihar",
 		"notes": ["G4", "E4", "C4", "C3"]
@@ -1410,6 +1418,10 @@
 		"title": "Galilea",
 		"notes": ["E4"]
 	},
+	"356": {
+		"title": "Sion lánya, örvendezz",
+		"notes": ["C5", "A4", "F4"]
+	},
 	"357": {
 		"title": "Hozsiánna",
 		"notes": ["F4"]
@@ -1419,7 +1431,7 @@
 		"notes": ["F4", "D4", "Bb3"]
 	},
 	"359": {
-		"title": "Hozsánna...",
+		"title": "Hozsánna",
 		"notes": ["D4"]
 	},
 	"360": {
