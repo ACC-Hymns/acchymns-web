@@ -48,7 +48,7 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: 'build'
       
@@ -65,7 +65,7 @@ jobs:
       
       - name: Checkout Dev Target
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ACC-Hymns/${{ env.PR_REPO_NAME }}
           path: 'deploy'

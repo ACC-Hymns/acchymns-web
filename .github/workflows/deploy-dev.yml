@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: 'build'
 
@@ -34,7 +34,7 @@ jobs:
           cd ..
       
       - name: Checkout Dev Target
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ACC-Hymns/acchymns-dev
           path: 'deploy'
