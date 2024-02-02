@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "XC",
+		"medium": "Харфа Сиона",
+		"long": "Харфа Сиона"
+	},
+	"primaryColor": "#452A70",
+	"secondaryColor": "#160B26",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
