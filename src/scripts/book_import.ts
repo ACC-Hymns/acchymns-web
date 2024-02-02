@@ -12,7 +12,7 @@ async function getBookUrls() {
     return prepackaged_book_urls.concat(JSON.parse(imported_book_urls.value ?? "[]"));
 }
 
-async function download_book(to_download: string) {    
+async function download_book(to_download: string, progress_callback: (progress: number) => void, finish_callback: (url: string) => void) {    
     let url_segments = to_download.split("/");
     let book = url_segments[url_segments.length - 1];
 
@@ -48,7 +48,7 @@ async function download_book(to_download: string) {
         }).then((result) => {
             i++;
             let download_progress = `${i/num_of_songs*100}%`;
-            console.log(download_progress);
+            progress_callback(i/num_of_songs*100);
             if(i/num_of_songs >= 1) {
 
                 Filesystem.downloadFile({
@@ -63,6 +63,7 @@ async function download_book(to_download: string) {
 
                     // this is used for calling fetch on downloaded books
                     let web_url = Capacitor.convertFileSrc(summary_path);
+                    finish_callback(web_url);
                 });
             }
         });
@@ -119,4 +120,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex };
+export { download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex };

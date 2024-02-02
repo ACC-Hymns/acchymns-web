@@ -5,10 +5,12 @@ import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
+import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import router from "@/router";
+import { download_book } from "@/scripts/book_import";
 
 // Not watching deeply, must assign new array
 
@@ -90,6 +92,15 @@ async function addImportedBookByCode(short_book_name: string) {
     }
 }
 
+let downloadProgress = ref(new Map<string, number>());
+
+function download_progress(url: string, percentage: number) {
+    downloadProgress.value.set(url, percentage);
+}
+function download_finish(url: string) {
+
+}
+
 onUpdated(() => {
     if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
 });
@@ -137,9 +148,15 @@ function removeImportedURL(to_remove: string) {
         </div>
         <div style="padding-bottom: 200px">
             <HomeBookBox id="import-book" v-for="url in imported_book_urls" :key="url" :src="url" :with-link="false">
-                <button @click="removeImportedURL(url)">
-                    <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
-                </button>
+                <div class="button-array">
+                    <button v-if="(downloadProgress.get(url || '') || 0) < 1" @click="download_book(url, (progress) => download_progress(url, progress), (url: string) => download_finish(url))">
+                        <img class="ionicon ionicon-custom add-button-icon" src="/assets/arrow-down-circle-outline.svg" />
+                    </button>
+                    <ProgressBar v-if="(downloadProgress.get(url || '') || 0) >= 1 && (downloadProgress.get(url || '') || 0) < 100" :radius="15" :progress="(downloadProgress.get(url || '') || 0)" :stroke="3"></ProgressBar>
+                    <button @click="removeImportedURL(url)">
+                        <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
+                    </button>
+                </div>
             </HomeBookBox>
         </div>
     </div>
@@ -170,6 +187,14 @@ function removeImportedURL(to_remove: string) {
 </style>
 
 <style scoped>
+.button-array {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
 .add-button-icon {
     vertical-align: middle;
 }
