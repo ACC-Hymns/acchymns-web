@@ -26,16 +26,20 @@ async function download_book(to_download: string, progress_callback: (progress: 
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book}/songs.json`
     })
-    Filesystem.downloadFile({
-        directory: Directory.Documents,
-        path: `${book}/index.json`,
-        progress: false,
-        url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book}/index.json`
-    }).then((result) => {
-        console.log(result.path);
-    }).catch(err => {
-        console.log("Ignored File: " + err);
-    });
+    
+    if(book_summary?.indexAvailable) {
+        Filesystem.downloadFile({
+            directory: Directory.Documents,
+            path: `${book}/index.json`,
+            progress: false,
+            url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book}/index.json`
+        }).then((result) => {
+            console.log(result.path);
+        }).catch(err => {
+            console.log("Ignored File: " + err);
+        });
+    }
+    
 
     var i = 0;
     for(let song_number in songs) {
