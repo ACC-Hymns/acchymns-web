@@ -13,9 +13,22 @@ type BookSummary = {
     srcUrl?: string;
 };
 
+enum BookSourceType {
+    BUNDLED,
+    PREVIEW,
+    IMPORTED,
+    DOWNLOADED
+}
+
+type BookDataSummary = {
+    id: string; // e.g. ZH
+    status: BookSourceType;
+    src: string; // URL, can either be local, raw.github or a converted "file://"
+}
+
 type Song = {
     title: string;
-    number?: string; // Numbers unfortunately can be strings: ex: 403a GH
+    number?: string; // Numbers unfortunately can be strings: e.g. 403a GH
     notes?: string[];
     first_line?: string;
 };
@@ -42,4 +55,5 @@ type SearchParams = {
     bookFilters: string[]; // Short names of books
 };
 
-export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
+export type { BookDataSummary, BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
+export { BookSourceType };

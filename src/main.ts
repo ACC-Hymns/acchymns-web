@@ -23,4 +23,6 @@ defineCustomElements(window);
 app.mount("#app");
 
 import { migrate } from "@/scripts/migrate";
+import { loadBookSources } from "./scripts/book_import";
 migrate();
+loadBookSources();
