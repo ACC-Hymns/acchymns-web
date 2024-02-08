@@ -81,17 +81,29 @@ class IntersectionObserverManager {
         this._observer.observe(node);
     }
     unobserve(node: Element) {
-        this._observedNodes.delete(node);
-        this._observer.unobserve(node);
+        try {
+            this._observedNodes.delete(node);
+            this._observer.unobserve(node);
+        } catch(e) {
+
+        }
     }
     disconnect() {
-        this._observedNodes.clear();
-        this._observer.disconnect();
+        try {
+            this._observedNodes.clear();
+            this._observer.disconnect();
+        } catch(e) {
+
+        }
     }
     refresh() {
         for (let node of this._observedNodes) {
-            this._observer.unobserve(node as Element);
-            this._observer.observe(node as Element);
+            try {
+                this._observer.unobserve(node as Element);
+                this._observer.observe(node as Element);
+            } catch(e) {
+
+            }
         }
     }
 }

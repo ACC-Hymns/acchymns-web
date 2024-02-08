@@ -11,7 +11,7 @@ import { useCapacitorPreferences } from "@/composables/preferences";
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
-    return book_sources.filter(b => b.status != BookSourceType.PREVIEW).map(b => b.src);
+    return book_sources.filter(b => (b.status != BookSourceType.PREVIEW && b.status != BookSourceType.HIDDEN)).map(b => b.src);
 }
 
 async function loadBookSources() {
@@ -34,7 +34,7 @@ async function loadBookSources() {
     if(Capacitor.getPlatform() !== "web") {
         let book_dir = await Filesystem.readdir({
             directory: Directory.Documents,
-            path: ""
+            path: "Hymnals/"
         });
         
         for(let f in book_dir.files) {
@@ -98,9 +98,24 @@ async function download_book(book: BookDataSummary, progress_callback: (book: Bo
     let songs: SongList | null = await getSongMetaData(book.id);
     console.log(songs)
     let num_of_songs = Object.entries(songs as any).length;
+
+    // setup folder structure
+    Filesystem.mkdir({
+        directory: Directory.Documents,
+        path: `Hymnals`
+    })
+    Filesystem.mkdir({
+        directory: Directory.Documents,
+        path: `Hymnals/${book.id}`
+    })
+    Filesystem.mkdir({
+        directory: Directory.Documents,
+        path: `Hymnals/${book.id}/songs`
+    })
+
     Filesystem.downloadFile({
         directory: Directory.Documents,
-        path: `${book.id}/songs.json`,
+        path: `Hymnals/${book.id}/songs.json`,
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs.json`
     })
@@ -108,7 +123,7 @@ async function download_book(book: BookDataSummary, progress_callback: (book: Bo
     if(book_summary?.indexAvailable) {
         Filesystem.downloadFile({
             directory: Directory.Documents,
-            path: `${book.id}/index.json`,
+            path: `Hymnals/${book.id}/index.json`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/index.json`
         }).then((result) => {
@@ -124,7 +139,7 @@ async function download_book(book: BookDataSummary, progress_callback: (book: Bo
         let url = `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs/${song_number}.${ext}`
         Filesystem.downloadFile({
             directory: Directory.Documents,
-            path: `${book.id}/songs/${song_number}.${ext}`,
+            path: `Hymnals/${book.id}/songs/${song_number}.${ext}`,
             progress: false,
             url: url
         }).then((result) => {
@@ -135,7 +150,7 @@ async function download_book(book: BookDataSummary, progress_callback: (book: Bo
 
                 Filesystem.downloadFile({
                     directory: Directory.Documents,
-                    path: `${book.id}/summary.json`,
+                    path: `Hymnals/${book.id}/summary.json`,
                     progress: false,
                     url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`
                 }).then((new_result: DownloadFileResult) => {

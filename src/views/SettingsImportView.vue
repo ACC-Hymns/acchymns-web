@@ -152,7 +152,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
     book_to_delete.src = public_references[book_to_delete.id as keyof typeof public_references];
     await Filesystem.rmdir({
         directory: Directory.Documents,
-        path: `/${book_to_delete.id}`,
+        path: `Hymnals/${book_to_delete.id}`,
         recursive: true
     })
     loadBookSources();
