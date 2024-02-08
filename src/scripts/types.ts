@@ -15,6 +15,7 @@ type BookSummary = {
 
 enum BookSourceType {
     BUNDLED,
+    HIDDEN,
     PREVIEW,
     IMPORTED,
     DOWNLOADED

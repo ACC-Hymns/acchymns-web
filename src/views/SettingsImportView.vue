@@ -41,7 +41,7 @@ const downloaded_books = computed(() => {
 const reference_input = ref("");
 
 async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
-    let book = book_sources.value.find(book => book.id == input_book.id);
+    let book = book_sources.value.find(b => b.id == input_book.id);
     if(book == undefined)
         return false;
 
@@ -91,7 +91,7 @@ async function addImportedURL(input_book: BookDataSummary, show_on_success: bool
 
 async function addImportedBookByCode(short_book_name: string) {
     if (short_book_name in known_references) {
-        const to_import = book_sources.value.find(book => book.id = short_book_name); 
+        const to_import = book_sources.value.find(b => b.id == short_book_name);
         if(to_import == undefined)
             return;
 
@@ -142,7 +142,7 @@ onUpdated(() => {
 });
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
-    book_to_remove.status = BookSourceType.PREVIEW;
+    book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
     await Toast.show({
         text: "Successfully removed hymnal!"
     })

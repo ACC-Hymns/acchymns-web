@@ -54,7 +54,7 @@ async function loadBookSources() {
         }
     }
 
-    for(let book in public_references) {
+    for(let book in known_references) {
         let skip = false;
         for(let b in book_sources) {
             if(book_sources[b].id == book) {
@@ -65,10 +65,10 @@ async function loadBookSources() {
         if(skip)
             continue;
         
-        let url = public_references[book as keyof typeof public_references]
+        let url = known_references[book as keyof typeof known_references]
         book_sources.push({
             id: book,
-            status: BookSourceType.PREVIEW,
+            status: (Object.keys(public_references).includes(book)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN,
             src: url
         });
     }
