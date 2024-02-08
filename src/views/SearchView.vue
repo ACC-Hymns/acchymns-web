@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
+import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
 import { computed, ref, onMounted, watch, onUpdated } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
+import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
+import { known_references, prepackaged_books } from "@/scripts/constants";
 
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
@@ -25,6 +26,7 @@ watch(search_query, new_query => {
 
 const available_songs = ref<SongSearchInfo[]>([]);
 const available_books = ref<BookSummary[]>([]);
+const book_data_summaries = ref<Map<string, BookDataSummary>>(new Map<string, BookDataSummary>());
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
@@ -84,6 +86,13 @@ onMounted(async () => {
             } as SongSearchInfo);
         }
     }
+
+    (prepackaged_books.concat(Object.keys(known_references))).forEach(async (book) => {
+        let book_data: BookDataSummary | undefined = await getBookDataSummaryFromName(book);
+        if(book_data == undefined)
+            return;
+        book_data_summaries.value.set(book, book_data);
+    });
 });
 
 const filter_content = ref<Element>();
@@ -197,7 +206,7 @@ onUpdated(async () => {
                 <div class="booktext--right">
                     <div class="song__number">#{{ song.number }}</div>
                     <img
-                        v-if="song.book.addOn && Capacitor.getPlatform() !== 'web'"
+                        v-if="book_data_summaries.get(song.book.name.short)?.status == BookSourceType.IMPORTED && Capacitor.getPlatform() !== 'web'"
                         class="ionicon"
                         style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
                         src="/assets/wifi.svg"

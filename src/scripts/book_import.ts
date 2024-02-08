@@ -4,7 +4,7 @@ import { branch, known_references, prepackaged_book_urls, prepackaged_books, pub
 import { Preferences } from "@capacitor/preferences";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
-import { Capacitor } from "@capacitor/core";
+import { Capacitor, CapacitorCookies } from "@capacitor/core";
 import { loaded } from "tone";
 import { useCapacitorPreferences } from "@/composables/preferences";
 
@@ -29,8 +29,32 @@ async function loadBookSources() {
         });
     }
 
+    // load downloaded books
+    book_sources = book_sources.filter(b => b.status != BookSourceType.DOWNLOADED);
+    if(Capacitor.getPlatform() !== "web") {
+        let book_dir = await Filesystem.readdir({
+            directory: Directory.Documents,
+            path: ""
+        });
+        
+        for(let f in book_dir.files) {
+            let file = book_dir.files[f];
+
+            if(file.type != "directory")
+                continue;
+
+            if(!(prepackaged_books.concat(Object.keys(known_references)).includes(file.name)))
+                continue;
+
+            book_sources.push({
+                id: file.name,
+                status: BookSourceType.DOWNLOADED,
+                src: Capacitor.convertFileSrc(file.uri)
+            });
+        }
+    }
+
     for(let book in public_references) {
-        let url = eval(`public_references.${book}`); // mega sketch but nothing else works in typescript
         let skip = false;
         for(let b in book_sources) {
             if(book_sources[b].id == book) {
@@ -41,7 +65,7 @@ async function loadBookSources() {
         if(skip)
             continue;
         
-        
+        let url = public_references[book as keyof typeof public_references]
         book_sources.push({
             id: book,
             status: BookSourceType.PREVIEW,
@@ -49,10 +73,23 @@ async function loadBookSources() {
         });
     }
 
-    //console.log(book_sources.value)
-    // load downloaded books
-
     Preferences.set({key: "bookSources", value: JSON.stringify(book_sources)})
+}
+
+async function getBookDataSummary(book: BookSummary | null) {
+    if(book == null)
+        return;
+
+    const book_sources_raw = await Preferences.get({ key: "bookSources" });
+    let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
+
+    return book_sources.find(b => b.id == book.name.short);
+}
+async function getBookDataSummaryFromName(book: string) {
+    const book_sources_raw = await Preferences.get({ key: "bookSources" });
+    let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
+
+    return book_sources.find(b => b.id == book);
 }
 
 async function download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void) {    
@@ -166,4 +203,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex };
+export { getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex };

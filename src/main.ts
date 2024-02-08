@@ -16,6 +16,9 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
+import { loadBookSources } from "./scripts/book_import";
+loadBookSources();
+
 import { registerConsoleStore } from "@/stores/console";
 registerConsoleStore();
 defineCustomElements(window);
@@ -23,6 +26,4 @@ defineCustomElements(window);
 app.mount("#app");
 
 import { migrate } from "@/scripts/migrate";
-import { loadBookSources } from "./scripts/book_import";
 migrate();
-loadBookSources();

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useBookSummary } from "@/composables/book_metadata";
+import { getBookDataSummary } from "@/scripts/book_import";
 import router from "@/router";
+import { BookSourceType, type BookDataSummary, type BookSummary } from "@/scripts/types";
 import { Capacitor } from "@capacitor/core";
+import { onMounted, ref } from "vue";
 
 const props = withDefaults(
     defineProps<{
@@ -21,8 +24,14 @@ const {
     timeout: 10000,
     slowFetchThreshold: 200,
 });
-</script>
 
+const book_data_summary = ref<BookDataSummary>();
+
+onMounted(async () => {
+    book_data_summary.value = await getBookDataSummary(book.value);
+})
+
+</script>
 <template>
     <!-- Book has been successfully loaded -->
     <template v-if="isFinished && book != null">
@@ -32,7 +41,7 @@ const {
             <slot></slot>
             <!-- Only show wifi symbol if it's a wifi only book and we're on mobile -->
             <img
-                v-if="book.addOn && router.currentRoute.value.path != '/settings/import' && Capacitor.getPlatform() !== 'web'"
+                v-if="book_data_summary?.status == BookSourceType.IMPORTED && router.currentRoute.value.path != '/settings/import' && Capacitor.getPlatform() !== 'web'"
                 class="ionicon booktext--right"
                 style="filter: invert(100%)"
                 src="/assets/wifi.svg"
