@@ -1,18 +1,27 @@
 PODS:
-  - Capacitor (5.0.3):
+  - Capacitor (5.3.0):
     - CapacitorCordova
-  - CapacitorApp (5.0.2):
+  - CapacitorApp (5.0.6):
     - Capacitor
-  - CapacitorCordova (5.0.3)
-  - CapacitorPreferences (5.0.2):
+  - CapacitorCordova (5.3.0)
+  - CapacitorDialog (5.0.6):
     - Capacitor
-  - CapacitorToast (5.0.2):
+  - CapacitorFilesystem (5.2.1):
+    - Capacitor
+  - CapacitorNetwork (5.0.7):
+    - Capacitor
+  - CapacitorPreferences (5.0.6):
+    - Capacitor
+  - CapacitorToast (5.0.6):
     - Capacitor
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDialog (from `../../node_modules/@capacitor/dialog`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
 
@@ -23,18 +32,27 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/app"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorDialog:
+    :path: "../../node_modules/@capacitor/dialog"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorNetwork:
+    :path: "../../node_modules/@capacitor/network"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: 304a960e431f9e6f78556554ca71c41c1b2b9680
-  CapacitorApp: 28fef1fd75b2b3686e875216806fb8416d421097
-  CapacitorCordova: def732a63679698df6fb392bbe6d269a0b61e937
-  CapacitorPreferences: 0ad8838944f900284900d9647d9b0145c89ca27d
-  CapacitorToast: d785c9169585b9267b8392094298de7cb0eaa16e
+  Capacitor: 1ac9165943bc4f2137642d218c5ba05df811de69
+  CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
+  CapacitorCordova: b9374d68e63ce29e96ab5db994cf14fbefd722c9
+  CapacitorDialog: 0f3c15dfe9414b83bc64aef4078f1b92bcfead26
+  CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
+  CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
+  CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
+  CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
 
-PODFILE CHECKSUM: 37e0a063ba91a475b3793c9f38827ea74a12facd
+PODFILE CHECKSUM: 059b295401a6bd5e5275bc3a89f7f91a34c07d99
 
 COCOAPODS: 1.12.1

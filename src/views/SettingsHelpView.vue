@@ -6,6 +6,8 @@ import { clearCache } from "@/composables/cached_fetch";
 import { resetOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
+import { Preferences } from "@capacitor/preferences";
+import { loadBookSources } from "@/scripts/book_import";
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
@@ -53,6 +55,8 @@ async function clearAllData() {
 
     if (confirmed.value) {
         localStorage.clear();
+        Preferences.remove({ 'key': "bookSources"});
+        loadBookSources();
         Toast.show({
             text: "Cleared All Data!",
         });
