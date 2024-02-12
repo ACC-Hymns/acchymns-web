@@ -96,7 +96,7 @@ async function addImportedBookByCode(short_book_name: string) {
             return;
 
         // Check for duplicate url
-        if (to_import.status == BookSourceType.IMPORTED) {
+        if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
             await Toast.show({
                 text: `Hymnal (${short_book_name}) already imported!`,
             });
@@ -155,6 +155,9 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         path: `Hymnals/${book_to_delete.id}`,
         recursive: true
     })
+
+    downloadProgress.value.delete(book_to_delete.id);
+
     loadBookSources();
     await Toast.show({
         text: "Successfully deleted hymnal!"

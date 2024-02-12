@@ -57,7 +57,7 @@ async function loadBookSources() {
     for(let book in known_references) {
         let skip = false;
         for(let b in book_sources) {
-            if(book_sources[b].id == book) {
+            if(book_sources[b].id === book) {
                 skip = true;
                 break;
             }
