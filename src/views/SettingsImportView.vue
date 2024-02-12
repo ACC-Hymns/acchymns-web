@@ -18,7 +18,6 @@ import { Directory, Filesystem } from "@capacitor/filesystem";
 
 // Not watching deeply, must assign new array
 
-const imported_book_urls = useCapacitorPreferences<string[]>("externalBooks", []);
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 
