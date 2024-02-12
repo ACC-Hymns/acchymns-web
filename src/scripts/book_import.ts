@@ -18,6 +18,7 @@ async function loadBookSources() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
+    console.log("Loading Pre-Packaged Books...")
     for(let url in prepackaged_book_urls) {
         if(book_sources.find(b => b.src == prepackaged_book_urls[url]))
             continue;
@@ -30,8 +31,21 @@ async function loadBookSources() {
     }
 
     // load downloaded books
+    console.log("Loading Downloaded Books...")
     book_sources = book_sources.filter(b => b.status != BookSourceType.DOWNLOADED);
     if(Capacitor.getPlatform() !== "web") {
+        try {
+            await Filesystem.stat({
+                directory: Directory.Documents,
+                path: "Hymnals/"
+            });
+        } catch (e) {
+            await Filesystem.mkdir({
+                directory: Directory.Documents,
+                path: "Hymnals/"
+            })
+        }
+
         let book_dir = await Filesystem.readdir({
             directory: Directory.Documents,
             path: "Hymnals/"
@@ -54,6 +68,7 @@ async function loadBookSources() {
         }
     }
 
+    console.log("Loading Importable Books...")
     for(let book in known_references) {
         let skip = false;
         for(let b in book_sources) {
@@ -73,6 +88,7 @@ async function loadBookSources() {
         });
     }
 
+    console.log("Finished loading sources!")
     Preferences.set({key: "bookSources", value: JSON.stringify(book_sources)})
 }
 

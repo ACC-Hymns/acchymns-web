@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { getBookUrls } from "@/scripts/book_import";
+import { getBookUrls, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import { onMounted, ref } from "vue";
@@ -13,6 +13,7 @@ let tooltip = ref<Element>();
 
 const available_books = ref<string[]>([]);
 onMounted(async () => {
+    await loadBookSources();
     available_books.value = await getBookUrls();
     hasConnection.value = (await Network.getStatus()).connected;
     console.log("Connected to the internet: " + hasConnection.value);
