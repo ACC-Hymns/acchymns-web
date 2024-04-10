@@ -6,6 +6,11 @@ Central ACC Hymnal for many song books used across the ACC
 | Android | iOS | Web |
 |:-:|:-:|:-:|
 | [<img src="/public/assets/en_badge_web_generic.png" height="75"/>](https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns) | [<img src="/public/assets/Appstore_badge.svg" height="50"/>](https://apps.apple.com/us/app/acc-hymns/id1634426405) | [acchymns.app](https://www.acchymns.app) |
+
+## Hymnal Progress
+A table showing the development and implemented features for each hymnal:
+[Spreadsheet](https://docs.google.com/spreadsheets/d/1Wwl8wrOgCiCpcy21894W961yvckVhz6XwVcfSmaGW_E/edit?usp=sharing)
+
 ## Project Setup
 
 ```sh
