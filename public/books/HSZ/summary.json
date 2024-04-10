@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "HSZ",
+		"medium": "Hymns and Songs of Zion",
+		"long": "Hymns and Songs of Zion"
+	},
+	"primaryColor": "#4839A9",
+	"secondaryColor": "#01003D",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
