@@ -49,10 +49,13 @@ onUnmounted(() => {
 
 let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
 let tooltip = ref<Element>();
+let media_panel_visible = ref<boolean>(false);
+let media_panel_height = ref<number>(0.3);
 
 function play() {
-    player.play(notes);
-    hideTooltip();
+    //player.play(notes);
+    //hideTooltip();
+    media_panel_visible.value = !media_panel_visible.value;
 }
 
 function hideTooltip() {
@@ -62,6 +65,27 @@ function hideTooltip() {
         starting_notes_tooltip_status.value = true;
     }, 1000);
 }
+
+function setMediaPanel(event: any, value: boolean) {
+    event.preventDefault();
+    media_starting_notes.value = value;
+}
+
+function drag(e: TouchEvent) {
+    e.preventDefault();
+    media_panel_height.value = 1 - (e.touches[0].pageY)/window.innerHeight;
+}
+function dragEnd(e: TouchEvent) {
+    e.preventDefault();
+    let distance_a = Math.abs(0.3 - media_panel_height.value);
+    let distance_b = Math.abs(0.1 - media_panel_height.value);
+    
+    if(distance_a <= distance_b)
+        media_panel_height.value = 0.3;
+    else
+        media_panel_height.value = 0.1;
+}
+
 </script>
 
 <template>
@@ -87,12 +111,84 @@ function hideTooltip() {
             </div>
         </div>
     </div>
+    <div class="media-panel" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'">   
+            <div class="handle-bar-container" @touchstart="(e) => drag(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
+                <div class="handle-bar"></div>
+            </div>
+            <div class="media-type">
+                <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
+                    <p class="media-type-title">Piano</p>           
+                </div>
+                <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
+                    <p class="media-type-title">Starting Notes</p>           
+                </div>
+            </div>
+        </div>
     <div class="w-100" style="height: 100vh">
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
+    
 </template>
 
 <style>
+
+.media-type-title  {
+    margin: 0px  0px;
+    color: black;
+    font-weight: bold;
+    font-size: small;
+    line-height: 35px;
+}
+.media-type-indicator {
+    height: 33px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 15px;
+}
+.media-type-indicator-active {
+    background-color: white;
+    height: 33px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 25px;
+}
+.media-type {
+    background-color: #EBEBEB;
+    width: 200px;
+    height: 35px;
+    border-radius: 15px;
+    margin: 15px auto;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0px 1px;
+}
+.handle-bar-container {
+    width: 100%;
+    height: 20px;
+}
+.handle-bar {
+    background-color: #818181;
+    width: 50px;
+    height: 2px;
+    border-radius: 15px;
+    margin: 10px auto;
+}
+.media-panel {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    border-radius: 15px 15px 0px 0px;
+}
+
 .tooltip {
     min-width: 155px;
     height: 25px;
