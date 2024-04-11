@@ -49,6 +49,7 @@ onUnmounted(() => {
 
 let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
 let tooltip = ref<Element>();
+let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
 let media_panel_height = ref<number>(0.3);
 
