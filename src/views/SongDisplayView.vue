@@ -70,11 +70,19 @@ function hideTooltip() {
 function setMediaPanel(event: any, value: boolean) {
     event.preventDefault();
     media_starting_notes.value = value;
+    isPlaying.value = !media_panel_visible.value;
 }
 
+let media_panel_start = 0;
+let media_panel_previous = 0;
+function dragStart(e: TouchEvent) {
+    e.preventDefault();
+    media_panel_previous = Number(media_panel_height.value);
+    media_panel_start = 1 - (e.touches[0].pageY)/window.innerHeight;
+}
 function drag(e: TouchEvent) {
     e.preventDefault();
-    media_panel_height.value = 1 - (e.touches[0].pageY)/window.innerHeight;
+    media_panel_height.value = (1 - (e.touches[0].pageY)/window.innerHeight) - media_panel_start + media_panel_previous;
 }
 function dragEnd(e: TouchEvent) {
     e.preventDefault();
@@ -100,8 +108,8 @@ function dragEnd(e: TouchEvent) {
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img v-if="!isPlaying" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else class="ionicon" src="/assets/musical-notes.svg" />
+                    <img v-if="!media_panel_visible" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" @click="play" src="/assets/musical-notes.svg" />
                     <div v-if:="!starting_notes_tooltip_status" class="tooltip" ref="tooltip" @click="hideTooltip()">
                         <p class="tooltiptext">New! Starting Notes</p>
                     </div>
@@ -112,19 +120,20 @@ function dragEnd(e: TouchEvent) {
             </div>
         </div>
     </div>
-    <div class="media-panel" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'">   
-            <div class="handle-bar-container" @touchstart="(e) => drag(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
-                <div class="handle-bar"></div>
+    <div class="media-panel" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
+    <div class="media-panel-content" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'">   
+        <div class="handle-bar-container" @touchstart="(e) => dragStart(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
+            <div class="handle-bar"></div>
+        </div>
+        <div class="media-type" :style="{ display: (media_panel_height < 0.2) ? 'none' : 'flex'}">
+            <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
+                <p class="media-type-title">Piano</p>           
             </div>
-            <div class="media-type">
-                <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
-                    <p class="media-type-title">Piano</p>           
-                </div>
-                <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
-                    <p class="media-type-title">Starting Notes</p>           
-                </div>
+            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
+                <p class="media-type-title">Starting Notes</p>           
             </div>
         </div>
+    </div>
     <div class="w-100" style="height: 100vh">
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
@@ -179,10 +188,19 @@ function dragEnd(e: TouchEvent) {
     border-radius: 15px;
     margin: 10px auto;
 }
+.media-panel-content {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+}
 .media-panel {
     width: 100%;
-    background-color: white;
-    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     position: fixed;
     left: 0;
     bottom: 0;
