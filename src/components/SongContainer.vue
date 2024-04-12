@@ -38,11 +38,10 @@ const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
 let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 let panzoom: PanZoom;
-var isMobile = Capacitor.getPlatform() !== "web";
+var isMobile = true;//Capacitor.getPlatform() !== "web";
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    console.log(BOOK_METADATA[props.book]);
     if (BOOK_METADATA[props.book] == undefined) {
         error_is_active.value = true;
         return;

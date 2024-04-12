@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
-import { onMounted, ref, computed, onUnmounted, getCurrentInstance } from "vue";
+import { onMounted, ref, computed, onUnmounted, getCurrentInstance, type SVGAttributes, type VNodeRef } from "vue";
 import { getSongMetaData } from "@/scripts/book_import";
+import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
 import type { SongList, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
+import { interpolate } from "polymorph-js";
 
 const props = defineProps<SongReference>();
 
@@ -68,9 +70,10 @@ let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
-let media_panel_height = ref<number>(0.3);
+let media_panel_height = ref<number>(0.4);
 let media_panel_elastic = ref<boolean>(false);
 let media_panel_active = ref<boolean>(false);
+let media_is_playing = ref<boolean>(false);
 
 function play() {
     //player.play(notes);
@@ -93,6 +96,22 @@ function setMediaPanel(event: any, value: boolean) {
     isPlaying.value = !media_panel_visible.value;
 }
 
+let morphed_path = ref<string>(play_path);
+
+function playMedia() {
+    let path_order = (media_is_playing.value ? [pause_path, play_path] : [play_path, pause_path]);
+    media_is_playing.value = !media_is_playing.value;
+    let interpolator = interpolate(path_order, {
+        addPoints: 0,
+        origin: { x: 0, y: 0 },
+        optimize: 'fill',
+        precision: 0
+    })
+    animate((path) => {
+        morphed_path.value = path;
+    }, interpolator);
+}
+
 let media_panel_start = 0;
 let media_panel_previous = 0;
 function dragFallOff(x: number) {
@@ -112,11 +131,11 @@ function drag(e: TouchEvent) {
 }
 function dragEnd(e: TouchEvent) {
     e.preventDefault();
-    let distance_a = Math.abs(0.3 - media_panel_height.value);
+    let distance_a = Math.abs(0.4 - media_panel_height.value);
     let distance_b = Math.abs(0.1 - media_panel_height.value);
     
     if(distance_a <= distance_b)
-        media_panel_height.value = 0.3;
+        media_panel_height.value = 0.4;
     else
         media_panel_height.value = 0.1;
 
@@ -138,7 +157,7 @@ function traverse_song(num: number) {
     router.back();
     setTimeout(() => {
         router.push(`/display/${props.book}/${num}`);
-    }, 1);
+    }, 5);
 }
 
 </script>
@@ -187,6 +206,11 @@ function traverse_song(num: number) {
                 <p class="media-type-title">Starting Notes</p>           
             </div>
         </div>
+        <div class="playback-container" v-if="!media_starting_notes">
+            <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
+                <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
+            </svg>
+        </div>
     </div>
     
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
@@ -205,6 +229,22 @@ function traverse_song(num: number) {
 </template>
 
 <style>
+.playback-container {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+.play-button-path {
+    fill: var(--color);
+    stroke: var(--color);
+}
+.play-button {
+    max-width: 75px;
+    max-height: 75px;
+    width: 20vw;
+    height: 20vw;
+    margin: 0 auto;
+}
 .page-buttons {
     position: fixed;
     bottom: 5vh;
