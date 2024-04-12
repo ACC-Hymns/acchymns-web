@@ -59,6 +59,7 @@ onMounted(async () => {
             minZoom: isMobile ? 1 : 0.25,
             bounds: true,
             boundsPadding: isMobile ? 1 : 0.5,
+            zoomDoubleClickSpeed: 1,
         });
     }
     if (isMobile) {

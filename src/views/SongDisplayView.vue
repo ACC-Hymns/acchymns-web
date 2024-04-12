@@ -3,7 +3,7 @@ import SongContainer from "@/components/SongContainer.vue";
 import { onMounted, ref, computed, onUnmounted, getCurrentInstance } from "vue";
 import { getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
-import type { SongReference } from "@/scripts/types";
+import type { SongList, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -15,6 +15,7 @@ const router = useRouter();
 
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
+const song_count = ref<number>(0);
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
@@ -48,6 +49,7 @@ onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     if (SONG_METADATA != null) {
         notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+        song_count.value = Object.keys(SONG_METADATA).length;
     }
 });
 
@@ -131,7 +133,7 @@ function toggleMenu(e: any) {
 }
 
 function traverse_song(num: number) {
-    if(num < 1)
+    if(num < 1 || num > song_count.value)
         return;
     router.back();
     setTimeout(() => {
@@ -165,10 +167,10 @@ function traverse_song(num: number) {
         </div>
     </div>
     <div class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height + 'px') : '0') + ')'}">
-        <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || props.number == '1')}">
+        <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
-        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
+        <div class="page-button" :class="{ 'arrow-hidden-right': (!menu_bar_visible || Number(props.number) == song_count)}">
             <img @click="traverse_song(Number(props.number) + 1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
