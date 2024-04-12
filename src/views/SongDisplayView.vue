@@ -52,6 +52,7 @@ let tooltip = ref<Element>();
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
 let media_panel_height = ref<number>(0.3);
+let media_panel_elastic = ref<boolean>(false);
 
 function play() {
     //player.play(notes);
@@ -75,6 +76,10 @@ function setMediaPanel(event: any, value: boolean) {
 
 let media_panel_start = 0;
 let media_panel_previous = 0;
+function dragFallOff(x: number) {
+    var result = (Math.log(x+0.368)+1)/4;
+    return result;
+}
 function dragStart(e: TouchEvent) {
     e.preventDefault();
     media_panel_previous = Number(media_panel_height.value);
@@ -82,7 +87,7 @@ function dragStart(e: TouchEvent) {
 }
 function drag(e: TouchEvent) {
     e.preventDefault();
-    media_panel_height.value = (1 - (e.touches[0].pageY)/window.innerHeight) - media_panel_start + media_panel_previous;
+    media_panel_height.value = dragFallOff((1 - (e.touches[0].pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
 }
 function dragEnd(e: TouchEvent) {
     e.preventDefault();
@@ -93,6 +98,11 @@ function dragEnd(e: TouchEvent) {
         media_panel_height.value = 0.3;
     else
         media_panel_height.value = 0.1;
+
+    media_panel_elastic.value = true;
+    setTimeout(() => {
+        media_panel_elastic.value = false;
+    }, 250);
 }
 
 </script>
@@ -120,12 +130,12 @@ function dragEnd(e: TouchEvent) {
             </div>
         </div>
     </div>
-    <div class="media-panel" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
-    <div class="media-panel-content" :class="{ hidden: !media_panel_visible}" :style="'height:' + (media_panel_height * 100) + '%'">   
+    <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
+    <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
         <div class="handle-bar-container" @touchstart="(e) => dragStart(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
             <div class="handle-bar"></div>
         </div>
-        <div class="media-type" :style="{ display: (media_panel_height < 0.2) ? 'none' : 'flex'}">
+        <div class="media-type" :style="{ opacity: (media_panel_height < 0.2) ? '0' : '1'}">
             <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
@@ -176,6 +186,7 @@ function dragEnd(e: TouchEvent) {
     justify-content:space-between;
     align-items: center;
     padding: 0px 1px;
+    transition: opacity 0.25s ease-in;
 }
 .handle-bar-container {
     width: 100%;
@@ -194,6 +205,8 @@ function dragEnd(e: TouchEvent) {
     left: 0;
     bottom: 0;
     z-index: 1;
+    transition: opacity 0.125s ease-in;
+    opacity: 1;
 }
 .media-panel {
     width: 100%;
@@ -206,6 +219,14 @@ function dragEnd(e: TouchEvent) {
     bottom: 0;
     z-index: 1;
     border-radius: 15px 15px 0px 0px;
+    transition: opacity 0.125s ease-in;
+    opacity: 1;
+}
+.elastic {
+    transition: height 0.25s;
+}
+.hidden-panel {
+    opacity: 0;
 }
 
 .tooltip {
