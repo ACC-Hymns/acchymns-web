@@ -205,7 +205,7 @@ function traverse_song(num: number) {
 <style>
 .page-buttons {
     position: fixed;
-    bottom: 1vh;
+    bottom: 5vh;
     z-index: 1;
     width: 100%;
     display: flex;
@@ -219,7 +219,7 @@ function traverse_song(num: number) {
     background-color: var(--button-color);
     border-radius: 50px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    margin: 0 1vw;
+    margin: 0 5vw;
     transition: transform 0.3s;
     display: flex;
     justify-content: center;
