@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
-import { onMounted, ref, computed, onUnmounted } from "vue";
+import { onMounted, ref, computed, onUnmounted, getCurrentInstance } from "vue";
 import { getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
 import type { SongReference } from "@/scripts/types";
@@ -19,6 +19,14 @@ const notes = ref<string[]>([]);
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
+});
+
+const window_height = computed(() => window.innerHeight);
+const image_props = computed(() => {
+    return {
+        book: props.book,
+        number: props.number,
+    };
 });
 
 async function toggleBookmark() {
@@ -47,17 +55,26 @@ onUnmounted(() => {
     player.stop();
 });
 
+type Coordinate = {
+    x: number;
+    y: number;
+};
+
 let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
 let tooltip = ref<Element>();
+let menu_bar_visible = ref<boolean>(true);
+let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
 let media_panel_height = ref<number>(0.3);
 let media_panel_elastic = ref<boolean>(false);
+let media_panel_active = ref<boolean>(false);
 
 function play() {
     //player.play(notes);
     //hideTooltip();
     media_panel_visible.value = !media_panel_visible.value;
+    media_panel_active.value = !media_panel_active.value;
 }
 
 function hideTooltip() {
@@ -88,6 +105,8 @@ function dragStart(e: TouchEvent) {
 function drag(e: TouchEvent) {
     e.preventDefault();
     media_panel_height.value = dragFallOff((1 - (e.touches[0].pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
+    if(media_panel_height.value < 0.1)
+        media_panel_height.value = 0.1;
 }
 function dragEnd(e: TouchEvent) {
     e.preventDefault();
@@ -104,11 +123,26 @@ function dragEnd(e: TouchEvent) {
         media_panel_elastic.value = false;
     }, 250);
 }
+function toggleMenu(e: any) {
+    menu_bar_visible.value = !menu_bar_visible.value;
+
+    if(media_panel_active.value)
+        media_panel_visible.value = menu_bar_visible.value;
+}
+
+function traverse_song(num: number) {
+    if(num < 1)
+        return;
+    router.back();
+    setTimeout(() => {
+        router.push(`/display/${props.book}/${num}`);
+    }, 1);
+}
 
 </script>
 
 <template>
-    <div class="menu">
+    <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible}">
         <div class="title">
             <div class="title--left">
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
@@ -130,6 +164,14 @@ function dragEnd(e: TouchEvent) {
             </div>
         </div>
     </div>
+    <div class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height + 'px') : '0') + ')'}">
+        <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || props.number == '1')}">
+            <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        </div>
+        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
+            <img @click="traverse_song(Number(props.number) + 1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
+        </div>
+    </div>
     <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
         <div class="handle-bar-container" @touchstart="(e) => dragStart(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
@@ -144,13 +186,45 @@ function dragEnd(e: TouchEvent) {
             </div>
         </div>
     </div>
-    <div class="w-100" style="height: 100vh">
-        <SongContainer :book="props.book" :number="props.number"></SongContainer>
+    
+    <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
+        @mouseup="(e) => {
+            if(Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5)
+                toggleMenu(e)
+        }" @touchstart="(e) => hide_touch_pos = {x: e.touches[0].screenX, y: e.touches[0].screenY}" 
+        @touchend="(e) => {
+            if(Math.abs(hide_touch_pos.x - e.changedTouches[0].screenX) < 5 && Math.abs(hide_touch_pos.y - e.changedTouches[0].screenY) < 5)
+                toggleMenu(e)
+        }"
+    >
+        <SongContainer :book="image_props.book" :number="image_props.number"></SongContainer>
     </div>
     
 </template>
 
 <style>
+.page-buttons {
+    position: fixed;
+    bottom: 1vh;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.page-button {
+    height: 10vw;
+    width: 10vw;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: var(--button-color);
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    margin: 0 1vw;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .media-type-title  {
     margin: 0px  0px;
@@ -205,28 +279,41 @@ function dragEnd(e: TouchEvent) {
     left: 0;
     bottom: 0;
     z-index: 1;
-    transition: opacity 0.125s ease-in;
+    transition: opacity 0.125s ease-in, visibility 0.125s ease;
     opacity: 1;
+    visibility: visible;
 }
 .media-panel {
     width: 100%;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: var(--menu-color);
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     position: fixed;
     left: 0;
     bottom: 0;
     z-index: 1;
     border-radius: 15px 15px 0px 0px;
-    transition: opacity 0.125s ease-in;
+    transition: opacity 0.125s ease-in, visibility 0.125s ease;
     opacity: 1;
+    visibility: visible;
 }
 .elastic {
-    transition: height 0.25s;
+    transition: height 0.0625s ease-out;
 }
 .hidden-panel {
     opacity: 0;
+    visibility: hidden;
+}
+
+.menu-hidden {
+    transform: translateY(-100%);
+}
+.arrow-hidden-left {
+    transform: translateX(-150%);
+}
+.arrow-hidden-right {
+    transform: translateX(150%);
 }
 
 .tooltip {
