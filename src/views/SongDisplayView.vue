@@ -10,8 +10,9 @@ import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
-import { NativeAudio } from '@capacitor-community/native-audio'
-
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { CapacitorHttp } from '@capacitor/core';
+import { MediaSession } from '@jofr/capacitor-media-session'
 
 const props = defineProps<SongReference>();
 
@@ -49,25 +50,54 @@ async function toggleBookmark() {
     }
 }
 
+let audio_source = ref<HTMLAudioElement>();
+
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     if (SONG_METADATA != null) {
         notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
     }
-    NativeAudio.preload({
-        assetId: 'song',
-        assetPath: '/assets/1.mp3',
-        audioChannelNum: 1,
-        isUrl: true
-    });
+
+    audio_source.value = new Audio('https://github.com/ACC-Hymns/acchymns-web/raw/christopher/media-player/public/assets/1.mp3');
+    MediaSession.setMetadata({
+        title: '1 - Hallelujah, Praise Ye the Lord',
+        artwork: [{
+            src: 'https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/christopher/offline/public/assets/icons/180x180.png',
+            sizes: '180x180',
+            type: 'image/png' 
+        }],
+        artist: "Zion's Harp"
+    })
+    MediaSession.setActionHandler({
+        action: "play"
+    }, (details) => {
+        audio_source.value?.play();
+        MediaSession.setPlaybackState({
+            playbackState: "playing"
+        })
+        morph();
+        media_is_playing.value = true;
+    })
+    MediaSession.setActionHandler({
+        action: "pause"
+    }, (details) => {
+        audio_source.value?.pause();
+        MediaSession.setPlaybackState({
+            playbackState: "paused"
+        })
+        morph();
+        media_is_playing.value = false;
+    })
 });
 
 onUnmounted(() => {
     player.stop();
-    NativeAudio.unload({
-        assetId: 'song'
-    });
+    audio_source.value?.pause();
+    audio_source.value = undefined;
+    MediaSession.setPlaybackState({
+        playbackState: "none"
+    })
 });
 
 type Coordinate = {
@@ -89,7 +119,12 @@ let media_timestamp_elapsed = ref<number>(0);
 let media_timestamp_end = ref<number>(0);
 let elapsed_timer: number;
 const updateTime = async () => {
-    media_timestamp_elapsed.value = (await NativeAudio.getCurrentTime({assetId: 'song'})).currentTime;
+    media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
+    MediaSession.setPositionState({
+        position: audio_source.value?.currentTime || 0,
+        duration: audio_source.value?.duration || 0,
+        playbackRate: 1.0
+    })
     
     if(media_timestamp_elapsed.value >= media_timestamp_end.value) {
         morph();
@@ -104,7 +139,7 @@ async function play() {
     media_panel_visible.value = !media_panel_visible.value;
     media_panel_active.value = !media_panel_active.value;
     
-    media_timestamp_end.value = (await NativeAudio.getDuration({assetId: 'song'})).duration;
+    media_timestamp_end.value = audio_source.value?.duration || 0;
 }
 
 function hideTooltip() {
@@ -141,18 +176,21 @@ async function playMedia() {
 
     // Play the media
     if(!media_is_playing.value) {
-        if((await NativeAudio.getCurrentTime({ assetId: 'song'})).currentTime > 0)
-            NativeAudio.resume({assetId: 'song'});
-        else
-            NativeAudio.play({assetId: 'song'});
+        audio_source.value?.play();
+        MediaSession.setPlaybackState({
+            playbackState: "playing"
+        })
 
         elapsed_timer = setInterval(() => {
             updateTime();
         }, 1000, 0);
-        media_timestamp_elapsed.value = (await NativeAudio.getCurrentTime({assetId: 'song'})).currentTime;
+        media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
     }
     else {
-        NativeAudio.pause({assetId: 'song'});
+        audio_source.value?.pause();
+        MediaSession.setPlaybackState({
+            playbackState: "paused"
+        })
         clearInterval(elapsed_timer);
     }
     

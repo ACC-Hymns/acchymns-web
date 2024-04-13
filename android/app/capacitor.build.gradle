@@ -12,9 +12,11 @@ dependencies {
     implementation project(':capacitor-community-native-audio')
     implementation project(':capacitor-app')
     implementation project(':capacitor-dialog')
+    implementation project(':capacitor-filesystem')
     implementation project(':capacitor-network')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-toast')
+    implementation project(':jofr-capacitor-media-session')
 
 }
 
