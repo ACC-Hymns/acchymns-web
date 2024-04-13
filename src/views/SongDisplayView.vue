@@ -10,6 +10,8 @@ import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
+import { NativeAudio } from '@capacitor-community/native-audio'
+
 
 const props = defineProps<SongReference>();
 
@@ -53,10 +55,19 @@ onMounted(async () => {
         notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
     }
+    NativeAudio.preload({
+        assetId: 'song',
+        assetPath: '/assets/1.mp3',
+        audioChannelNum: 1,
+        isUrl: true
+    });
 });
 
 onUnmounted(() => {
     player.stop();
+    NativeAudio.unload({
+        assetId: 'song'
+    });
 });
 
 type Coordinate = {
@@ -70,16 +81,30 @@ let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
-let media_panel_height = ref<number>(0.4);
+let media_panel_height = ref<number>(0.3);
 let media_panel_elastic = ref<boolean>(false);
 let media_panel_active = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
+let media_timestamp_elapsed = ref<number>(0);
+let media_timestamp_end = ref<number>(0);
+let elapsed_timer: number;
+const updateTime = async () => {
+    media_timestamp_elapsed.value = (await NativeAudio.getCurrentTime({assetId: 'song'})).currentTime;
+    
+    if(media_timestamp_elapsed.value >= media_timestamp_end.value) {
+        morph();
+        media_is_playing.value = false;
+        clearInterval(elapsed_timer);
+    }
+};
 
-function play() {
+async function play() {
     //player.play(notes);
     //hideTooltip();
     media_panel_visible.value = !media_panel_visible.value;
     media_panel_active.value = !media_panel_active.value;
+    
+    media_timestamp_end.value = (await NativeAudio.getDuration({assetId: 'song'})).duration;
 }
 
 function hideTooltip() {
@@ -98,9 +123,8 @@ function setMediaPanel(event: any, value: boolean) {
 
 let morphed_path = ref<string>(play_path);
 
-function playMedia() {
+function morph() {
     let path_order = (media_is_playing.value ? [pause_path, play_path] : [play_path, pause_path]);
-    media_is_playing.value = !media_is_playing.value;
     let interpolator = interpolate(path_order, {
         addPoints: 0,
         origin: { x: 0, y: 0 },
@@ -112,30 +136,56 @@ function playMedia() {
     }, interpolator);
 }
 
+async function playMedia() {
+    morph();
+
+    // Play the media
+    if(!media_is_playing.value) {
+        if((await NativeAudio.getCurrentTime({ assetId: 'song'})).currentTime > 0)
+            NativeAudio.resume({assetId: 'song'});
+        else
+            NativeAudio.play({assetId: 'song'});
+
+        elapsed_timer = setInterval(() => {
+            updateTime();
+        }, 1000, 0);
+        media_timestamp_elapsed.value = (await NativeAudio.getCurrentTime({assetId: 'song'})).currentTime;
+    }
+    else {
+        NativeAudio.pause({assetId: 'song'});
+        clearInterval(elapsed_timer);
+    }
+    
+    media_is_playing.value = !media_is_playing.value;
+}
+function secondsToTimestamp(seconds: number) {
+    let minutes = Math.floor(seconds / 60);
+    let remaining_seconds = Math.floor(seconds % 60);
+    return `${minutes}:${remaining_seconds < 10 ? '0' : ''}${remaining_seconds}`;
+}
+
 let media_panel_start = 0;
 let media_panel_previous = 0;
 function dragFallOff(x: number) {
     var result = (Math.log(x+0.368)+1)/4;
     return result;
 }
-function dragStart(e: TouchEvent) {
+function dragStart(e: Event, pageY: number) {
     e.preventDefault();
     media_panel_previous = Number(media_panel_height.value);
-    media_panel_start = 1 - (e.touches[0].pageY)/window.innerHeight;
+    media_panel_start = 1 - (pageY)/window.innerHeight;
 }
-function drag(e: TouchEvent) {
+function drag(e: Event, pageY: number) {
     e.preventDefault();
-    media_panel_height.value = dragFallOff((1 - (e.touches[0].pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
+    media_panel_height.value = dragFallOff((1 - (pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
     if(media_panel_height.value < 0.1)
         media_panel_height.value = 0.1;
 }
-function dragEnd(e: TouchEvent) {
+function dragEnd(e: Event) {
     e.preventDefault();
-    let distance_a = Math.abs(0.4 - media_panel_height.value);
-    let distance_b = Math.abs(0.1 - media_panel_height.value);
     
-    if(distance_a <= distance_b)
-        media_panel_height.value = 0.4;
+    if(media_panel_height.value > 0.2)
+        media_panel_height.value = 0.3;
     else
         media_panel_height.value = 0.1;
 
@@ -195,8 +245,18 @@ function traverse_song(num: number) {
     </div>
     <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
-        <div class="handle-bar-container" @touchstart="(e) => dragStart(e)" @touchmove="(e) => drag(e)" @touchend="(e) => dragEnd(e)">
+        <div class="handle-bar-container" @mousedown="(e) => dragStart(e, e.pageY)" @mousemove="(e) => drag(e, e.pageY)" @mouseup="(e) => dragEnd(e)" @touchstart="(e) => dragStart(e, e.touches[0].pageY)" @touchmove="(e) => drag(e, e.touches[0].pageY)" @touchend="(e) => dragEnd(e)">
             <div class="handle-bar"></div>
+        </div>
+        <div class="mini-playback-container" v-if="media_panel_height <= 0.15" :style="{ opacity: (media_panel_height <= 0.1) ? '1' : '0'}">
+            <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
+            <div class="progress-bar">
+                <div class="progress-bar-value" :style="{ width: (media_timestamp_elapsed/media_timestamp_end*100) + '%'}"></div>
+            </div>
+            <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+            <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
+                <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
+            </svg>
         </div>
         <div class="media-type" :style="{ opacity: (media_panel_height < 0.2) ? '0' : '1'}">
             <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
@@ -206,11 +266,23 @@ function traverse_song(num: number) {
                 <p class="media-type-title">Starting Notes</p>           
             </div>
         </div>
-        <div class="playback-container" v-if="!media_starting_notes">
-            <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
-                <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
-            </svg>
+        <div class="media-controls" v-if="!media_starting_notes">
+            <div class="playback-container" :style="{ opacity: (media_panel_height < 0.25) ? '0' : '1'}">
+                <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
+                    <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
+                </svg>
+            </div>
+            <div class="timeline" :style="{ opacity: (media_panel_height < 0.3) ? '0' : '1'}">
+                <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
+                <div class="progress-bar">
+                    <div class="progress-bar-value" :style="{ width: (media_timestamp_elapsed/media_timestamp_end*100) + '%'}"></div>
+                </div>
+                <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+            </div>
+            
+            
         </div>
+        
     </div>
     
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
@@ -229,10 +301,51 @@ function traverse_song(num: number) {
 </template>
 
 <style>
+.timeline {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.25s ease-in;
+}
+.timestamp {
+    font-size: small;
+    font-weight: bold;
+    color: var(--color);
+}
+.progress-bar-value {
+    background-color: #000000;
+    width: 0%;
+    height: 2px;
+    border-radius: 15px;
+}
+.progress-bar {
+    background-color: #D8D8D8;
+    width: 50%;
+    height: 2px;
+    border-radius: 15px;
+    margin: 0 10px;
+}
+.mini-playback-container {
+    width: 100%;
+    justify-content: right;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.25s ease-in;
+    transform: translateY(-2vh);
+}
+.mini-play-button {
+    max-width: 50px;
+    max-height: 50px;
+    width: 10vw;
+    height: 10vw;
+    margin: 0 15px;
+}
 .playback-container {
     width: 100%;
     justify-content: center;
     display: flex;
+    transition: opacity 0.25s ease-in;
 }
 .play-button-path {
     fill: var(--color);
@@ -307,6 +420,7 @@ function traverse_song(num: number) {
 .handle-bar-container {
     width: 100%;
     height: 20px;
+    transform: translateY(-2vh);
 }
 .handle-bar {
     background-color: #818181;
@@ -314,6 +428,7 @@ function traverse_song(num: number) {
     height: 2px;
     border-radius: 15px;
     margin: 10px auto;
+    transform: translateY(2vh);
 }
 .media-panel-content {
     width: 100%;
