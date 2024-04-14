@@ -15,6 +15,9 @@
     "capacitor:copy:after": "node add-on-books-handler.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.554.0",
+    "@aws-sdk/credential-providers": "^3.554.0",
+    "@byteowls/capacitor-oauth2": "^5.0.0",
     "@capacitor/android": "^5.3.0",
     "@capacitor/app": "^5.0.6",
     "@capacitor/core": "^5.0.2",
@@ -25,12 +28,14 @@
     "@capacitor/toast": "^5.0.6",
     "@ionic/pwa-elements": "^3.2.2",
     "@vueuse/core": "^9.13.0",
+    "axios": "^1.6.8",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^3.10.111",
     "pinia": "^2.1.6",
     "tone": "^14.7.77",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "vue3-google-login": "^2.0.26"
   },
   "devDependencies": {
     "@capacitor/assets": "^2.0.4",

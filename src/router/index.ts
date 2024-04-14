@@ -84,6 +84,10 @@ const router = createRouter({
             component: () => import("../views/SettingsImportView.vue"),
         },
         {
+            path: "/settings/connect",
+            component: () => import("../views/SettingsConnect.vue"),
+        },
+        {
             path: "/:catchAll(.*)",
             component: () => import("../views/404View.vue"),
         },

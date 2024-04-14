@@ -22,8 +22,7 @@ const duration = useLocalStorage<number>("ACCOptions.playbackDuration", 2.5);
 const staggered = useLocalStorage<boolean>("ACCOptions.staggered", true);
 
 const isPlaying = ref(false);
-let cancel_interval_id: number | undefined = undefined;
-const scheduled_notes_interval_id: number[] = [];
+const timeouts: NodeJS.Timeout[] = [];
 
 const player = {
     async play(notes: MaybeRef<string[]>) {
@@ -49,14 +48,15 @@ const player = {
 
         let end_time: number;
 
+        let count: number = 0;
         if (staggered.value) {
             // Schedule all the notes
             for (const [index, note] of unref(notes).entries()) {
-                scheduled_notes_interval_id.push(
-                    setTimeout(() => {
-                        sampler.triggerAttack(note);
-                    }, interval.value * index * 1000)
-                );
+                const timeout = setTimeout(() => {
+                    sampler.triggerAttack(note);
+                }, interval.value * index * 1000);
+                timeouts.push(timeout);
+                count++;
             }
 
             // Notes play for each note * `interval` + additional `duration`;
@@ -66,17 +66,16 @@ const player = {
             end_time = duration.value; // Notes play for `duration` length when playing as a chord
         }
 
-        cancel_interval_id = setTimeout(() => {
+        timeouts[count] = setTimeout(() => {
             sampler.releaseAll();
             isPlaying.value = false;
         }, end_time * 1000);
     },
     stop() {
         // Release all currently active notes, then cancel any future events from being executed
-        for (const id of scheduled_notes_interval_id) {
-            clearTimeout(id);
+        for (const timeout of timeouts) {
+            clearTimeout(timeout);
         }
-        clearTimeout(cancel_interval_id);
         sampler.releaseAll();
         isPlaying.value = false;
     },
