@@ -133,7 +133,7 @@ async function set() {
             <input class="pin-input" type="text" v-model="INPUT_CHURCH_ID" placeholder="CHURCH_ID"/>
             <input class="pin-input" type="text" v-model="INPUT_BOOK_ID" placeholder="BOOK_ID"/>
             <input class="pin-input" type="text" v-model="INPUT_SONG_NUMBER" placeholder="SONG_NUMBER"/>
-            <button class="settings-button" @click="set()">Update</button>
+            <button class="settings-button" @click="set()">Set</button>
           </div>
           <br>
           <button class="settings-button" @click="scan()">Scan</button>
