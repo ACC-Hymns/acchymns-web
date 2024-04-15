@@ -39,7 +39,10 @@ export async function scan(client: DynamoDBClient) {
     return (response.Items as unknown) as Items;
 }
   
-export async function set(client: DynamoDBClient, church_id: string, song: string, book: string) {
+export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[]) {
+    if(verses.length == 0) {
+        verses = [-1]
+    }
     const data = {
       "TableName": "ACCHYMNS_DISPLAY_DATA",
       "Key": {
@@ -47,7 +50,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
           "S": church_id,
         }
       },
-      "UpdateExpression": "SET #B = :book_id, #S = :song_number",
+      "UpdateExpression": "SET #B = :book_id, #S = :song_number, #V = :verses",
       "ExpressionAttributeValues": {
         ":book_id": {
           "S": book
@@ -55,10 +58,14 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
         ":song_number": {
           "S": song
         },
+        ":verses": {
+          "NS": verses.map(String)
+        },
       },
       "ExpressionAttributeNames": {
         "#B": "BOOK_ID",
-        "#S": "SONG_NUMBER"
+        "#S": "SONG_NUMBER",
+        "#V": "VERSES"
       },
       "ReturnValues": "ALL_NEW",
     }

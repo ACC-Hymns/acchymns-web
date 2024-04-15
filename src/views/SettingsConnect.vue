@@ -29,9 +29,19 @@ async function authorize() {
     status.value = UserStatus.Authorized;
 
     let data = await scan(request_client());
+    churches.value = [];
     for (const [key, value] of Object.entries(data)) {
       churches.value.push(value);
     }
+    let cached_selected_church = (await Preferences.get({ key: "broadcasting_church"})).value;
+    if(cached_selected_church == "" || cached_selected_church == undefined) {
+      selected_church.value = churches.value[0].CHURCH_ID.S;
+    } else {
+      console.log("bingo")
+      selected_church.value = cached_selected_church;
+    }
+
+    update_selected_church()
   } else {
     console.log(response.data);
   }
@@ -52,11 +62,18 @@ onMounted(async () => {
   if (authorized.value == "true") {
     status.value = UserStatus.Authorized;
     let data = await scan(request_client());
+    churches.value = [];
     for (const [key, value] of Object.entries(data)) {
       churches.value.push(value);
     }
-    selected_church.value = churches.value[0].CHURCH_ID.S;
-    await Preferences.set({ key: "broadcasting_church", value: selected_church.value});
+    let cached_selected_church = (await Preferences.get({ key: "broadcasting_church"})).value;
+    if(cached_selected_church == "" || cached_selected_church == undefined) {
+      selected_church.value = churches.value[0].CHURCH_ID.S;
+    } else {
+      selected_church.value = cached_selected_church;
+    }
+
+    update_selected_church()
   }
 });
 
@@ -79,8 +96,8 @@ onMounted(async () => {
             <h1>Authorized</h1>
             <div class="settings-radio">
               <div v-for="church in churches" :key="church.CHURCH_ID.S">
-                <label class="container" >{{ church.CHURCH_ID.S }}
-                  <input v-model="selected_church" type="radio" :value="church.CHURCH_ID.S" :checked="churches.indexOf(church) == 0" @change="update_selected_church()" name="churches" style="width: 0"/>
+                <label class="input-container" >{{ church.CHURCH_ID.S }}
+                  <input v-model="selected_church" type="radio" :value="church.CHURCH_ID.S" :checked="church.CHURCH_ID.S == selected_church" @change="update_selected_church()" name="churches" style="width: 0"/>
                   <span class="checkmark"></span>
                 </label>
               </div>
@@ -114,7 +131,7 @@ onMounted(async () => {
 <style>
 @import "@/assets/css/settings.css";
 
-.container {
+.input-container {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -128,7 +145,7 @@ onMounted(async () => {
   color: var(--color);
 }
 
-.container input {
+.input-container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -144,11 +161,11 @@ onMounted(async () => {
   border-radius: 50%;
 }
 
-.container:hover input ~ .checkmark {
+.input-container:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
-.container input:checked ~ .checkmark {
+.input-container input:checked ~ .checkmark {
   background-color: #2196F3;
 }
 
@@ -158,7 +175,7 @@ onMounted(async () => {
   display: none;
 }
 
-.container input:checked ~ .checkmark:after {
+.input-container input:checked ~ .checkmark:after {
   display: block;
 }
 
