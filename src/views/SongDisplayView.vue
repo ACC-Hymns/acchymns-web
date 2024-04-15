@@ -53,11 +53,13 @@ onUnmounted(() => {
 let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
 let tooltip = ref<Element>();
 
-async function broadcast() {
+async function broadcast(e: MouseEvent) {
     let church_id = await Preferences.get({ key: "broadcasting_church"});
     if(church_id.value == null)
         return;
     set(request_client(), church_id.value, props.number, props.book);
+    let button = (e.target as Element).parentElement?.parentElement;
+    button?.style.setProperty("opacity", "0");
 }
 
 function play() {
@@ -79,15 +81,11 @@ function hideTooltip() {
         <div class="title">
             <div class="title--left">
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
-                
             </div>
             <div class="title--center">
                 <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
-                <template v-if="authorized">
-                    <img @click="broadcast()" class="ionicon" src="/assets/radio-outline.svg" />
-                </template>
                 <template v-if="notes.length != 0">
                     <img v-if="!isPlaying" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
                     <img v-else class="ionicon" src="/assets/musical-notes.svg" />
@@ -101,12 +99,43 @@ function hideTooltip() {
             </div>
         </div>
     </div>
+    <div class="broadcast-button-container" v-if="authorized">
+        <div class="broadcast-button">
+            <img @click="(e) => broadcast(e)" class="ionicon" src="/assets/radio-outline.svg">
+        </div>
+    </div>
     <div class="w-100" style="height: 100vh">
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
 </template>
 
 <style>
+.broadcast-button-container {
+    position: fixed;
+    top: calc(61.16px + env(safe-area-inset-top) + 15px);
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    z-index: 1;
+    transition: opacity 1s;
+    opacity: 1;
+}
+
+.broadcast-button {
+    height: 10vw;
+    width: 10vw;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: var(--button-color);
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    margin: 0 5vw;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .tooltip {
     min-width: 155px;
     height: 25px;
