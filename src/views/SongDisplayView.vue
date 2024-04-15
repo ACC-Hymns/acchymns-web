@@ -8,6 +8,8 @@ import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
+import { Preferences } from "@capacitor/preferences";
+import { request_client, set } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();
 
@@ -17,6 +19,7 @@ const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+const authorized = useCapacitorPreferences<boolean>("authorized", false);
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
@@ -50,6 +53,13 @@ onUnmounted(() => {
 let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
 let tooltip = ref<Element>();
 
+async function broadcast() {
+    let church_id = await Preferences.get({ key: "broadcasting_church"});
+    if(church_id.value == null)
+        return;
+    set(request_client(), church_id.value, props.number, props.book);
+}
+
 function play() {
     player.play(notes);
     hideTooltip();
@@ -69,11 +79,15 @@ function hideTooltip() {
         <div class="title">
             <div class="title--left">
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
+                
             </div>
             <div class="title--center">
                 <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
+                <template v-if="authorized">
+                    <img @click="broadcast()" class="ionicon" src="/assets/radio-outline.svg" />
+                </template>
                 <template v-if="notes.length != 0">
                     <img v-if="!isPlaying" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
                     <img v-else class="ionicon" src="/assets/musical-notes.svg" />

@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import axios from 'axios';
-import { DynamoDBClient, ScanCommand, UpdateItemCommand, type UpdateItemCommandInput } from "@aws-sdk/client-dynamodb";
-import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
-import { GoogleLogin } from "vue3-google-login";
+import { request_client, scan, type ChurchData } from "@/scripts/broadcast";
+import { Preferences } from "@capacitor/preferences";
 const { back } = useNavigator();
 
-let client: DynamoDBClient;
+
 enum UserStatus {
   Unauthorized = 'Unauthorized',
   Authorized = 'Authorized',
-  FullAccess = 'FullAccess'
 }
 
 const input = ref('')
 const status = ref<UserStatus>(UserStatus.Unauthorized)
+let selected_church = ref('');
+let churches = ref<ChurchData[]>([]);
 
 async function authorize() {
   let response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
@@ -25,92 +25,40 @@ async function authorize() {
     }
   );
   if(response.status == 200) {
+    await Preferences.set({ key: "authorized", value: "true"});
     status.value = UserStatus.Authorized;
+
+    let data = await scan(request_client());
+    for (const [key, value] of Object.entries(data)) {
+      churches.value.push(value);
+    }
   } else {
     console.log(response.data);
   }
 }
 
-function handleCredentialResponse(response: any) {
-  const expirationDate = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
-  document.cookie = "credential=" + response.credential + "; expires=" + expirationDate.toUTCString();
-  client = new DynamoDBClient({
-    region: "us-east-2",
-    credentials: fromCognitoIdentityPool({
-      identityPoolId: "us-east-2:b4399f56-af48-4544-b368-31e6701d544c",
-      logins: {
-        "accounts.google.com": response.credential,
-      },
-      clientConfig: { region: "us-east-2"},
-    }),
-  });
-  status.value = UserStatus.FullAccess;
-  const main = async () => {
-    const command = new ScanCommand({
-      TableName: "ACCHYMNS_DISPLAY_DATA"
-    });
-
-    const response = await client.send(command);
-    return response;
-  };
-  main();
+async function update_selected_church() {
+  await Preferences.set({ key: "broadcasting_church", value: selected_church.value});
 }
 
-type Items = { 
-  [id: number]: {
-    BOOK_ID: {
-      S: string;
-    }, 
-    CHURCH_ID: {
-      S: string;
-    },
-    SONG_NUMBER: {
-      N: number;
-    },
-}}
-
-let churches = ref<Items>({});
-let INPUT_CHURCH_ID = ref<string>();
-let INPUT_BOOK_ID = ref<string>();
-let INPUT_SONG_NUMBER = ref<string>();
-
-async function scan() {
-  const command = new ScanCommand({
-    TableName: "ACCHYMNS_DISPLAY_DATA"
-  });
-
-  const response = await client.send(command);
-  churches.value = (response.Items as unknown) as Items;
+async function signout() {
+  await Preferences.set({ key: "authorized", value: "false"});
+  status.value = UserStatus.Unauthorized;
+  input.value = "";
 }
 
-async function set() {
-  let data = {
-    "TableName": "ACCHYMNS_DISPLAY_DATA",
-    "Key": {
-      "CHURCH_ID": {
-        "S": INPUT_CHURCH_ID.value || "",
-      }
-    },
-    "UpdateExpression": "SET #B = :book_id, #S = :song_number",
-    "ExpressionAttributeValues": {
-      ":book_id": {
-        "S": INPUT_BOOK_ID.value || ""
-      },
-      ":song_number": {
-        "N": INPUT_SONG_NUMBER.value || ""
-      },
-    },
-    "ExpressionAttributeNames": {
-      "#B": "BOOK_ID",
-      "#S": "SONG_NUMBER"
-    },
-    "ReturnValues": "ALL_NEW",
+onMounted(async () => {
+  let authorized = await Preferences.get({ key: "authorized"});
+  if (authorized.value == "true") {
+    status.value = UserStatus.Authorized;
+    let data = await scan(request_client());
+    for (const [key, value] of Object.entries(data)) {
+      churches.value.push(value);
+    }
+    selected_church.value = churches.value[0].CHURCH_ID.S;
+    await Preferences.set({ key: "broadcasting_church", value: selected_church.value});
   }
-  const command = new UpdateItemCommand(data as unknown as UpdateItemCommandInput);
-  const response = await client.send(command);
-  console.log(response);
-  scan();
-}
+});
 
 </script>
 
@@ -127,29 +75,19 @@ async function set() {
             <input class="pin-input" v-model="input" type="password">
             <button class="settings-button" @click="authorize()">Authorize</button>
         </div>
-        <GoogleLogin v-else-if="status == UserStatus.Authorized" :callback="handleCredentialResponse" />
-        <div v-else-if="status == UserStatus.FullAccess">
-          <div>
-            <input class="pin-input" type="text" v-model="INPUT_CHURCH_ID" placeholder="CHURCH_ID"/>
-            <input class="pin-input" type="text" v-model="INPUT_BOOK_ID" placeholder="BOOK_ID"/>
-            <input class="pin-input" type="text" v-model="INPUT_SONG_NUMBER" placeholder="SONG_NUMBER"/>
-            <button class="settings-button" @click="set()">Set</button>
-          </div>
-          <br>
-          <button class="settings-button" @click="scan()">Scan</button>
-          <table>
-            <tr>
-              <th>Church ID</th>
-              <th>Book ID</th>
-              <th>Song Number</th>
-            </tr>
-            <tr v-for="church in churches" :key="church.CHURCH_ID.S">
-              <td>{{ church.CHURCH_ID.S }}</td>
-              <td>{{ church.BOOK_ID.S }}</td>
-              <td>{{ church.SONG_NUMBER.N }}</td>
-            </tr>
-          </table>
-        </div>
+        <div v-else-if="status == UserStatus.Authorized" class="login-container">
+            <h1>Authorized</h1>
+            <div class="settings-radio">
+              <div v-for="church in churches" :key="church.CHURCH_ID.S">
+                <label class="container" >{{ church.CHURCH_ID.S }}
+                  <input v-model="selected_church" type="radio" :value="church.CHURCH_ID.S" :checked="churches.indexOf(church) == 0" @change="update_selected_church()" name="churches" style="width: 0"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+            
+            <button class="settings-button" @click="signout()">Log Out</button>
+        </div>        
     </div>
 
 
@@ -176,6 +114,54 @@ async function set() {
 <style>
 @import "@/assets/css/settings.css";
 
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: var(--color);
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--back-color);
+  border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -185,9 +171,17 @@ async function set() {
 
 .settings-button {
   background-color: var(--search-color);
+  color: var(--color);
   border-radius: 10px;
   padding: 0 10px;
   margin: 0 10px;
+}
+
+.settings-radio {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
 }
 
 .pin-input {
