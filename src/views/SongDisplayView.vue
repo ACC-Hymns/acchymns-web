@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
 import { onMounted, ref, computed, onUnmounted } from "vue";
-import { getSongMetaData } from "@/scripts/book_import";
+import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { useRouter } from "vue-router";
-import type { SongReference } from "@/scripts/types";
+import type { BookSummary, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -17,6 +17,7 @@ const router = useRouter();
 
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
+const book_summary = ref<BookSummary>();
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const authorized = useCapacitorPreferences<boolean>("authorized", false);
@@ -44,6 +45,8 @@ onMounted(async () => {
     if (SONG_METADATA != null) {
         notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
     }
+    const BOOK_META = await getAllBookMetaData();
+    book_summary.value = BOOK_META[props.book];
 });
 
 onUnmounted(() => {
@@ -57,7 +60,7 @@ async function broadcast(e: MouseEvent) {
     let church_id = await Preferences.get({ key: "broadcasting_church"});
     if(church_id.value == null)
         return;
-    set(request_client(), church_id.value, props.number, props.book);
+    set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book);
     let button = (e.target as Element).parentElement?.parentElement;
     button?.style.setProperty("opacity", "0");
 }

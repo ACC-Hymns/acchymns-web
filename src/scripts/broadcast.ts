@@ -53,7 +53,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
           "S": book
         },
         ":song_number": {
-          "N": song
+          "S": song
         },
       },
       "ExpressionAttributeNames": {
