@@ -1,6 +1,7 @@
-import { DynamoDBClient, ScanCommand, UpdateItemCommand, type UpdateItemCommandInput } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, ScanCommand, UpdateItemCommand, type UpdateItemCommandInput } from "@aws-sdk/client-dynamodb";
 import type { BookSummary, Song } from "./types";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
+import axios from "axios";
 
 export type ChurchData = {
   BOOK_ID: {
@@ -10,12 +11,41 @@ export type ChurchData = {
     S: string;
   },
   SONG_NUMBER: {
-    N: number;
+    S: string;
   },
+  VERSES: {
+    NS: number[];
+  },
+  BOOK_COLOR: {
+    S: string;
+  }
+}
+
+export enum UserStatus {
+  Unauthorized = 'Unauthorized',
+  Authorized = 'Authorized',
+}
+
+export type AuthResponse = {
+  text: string,
+  token: string;
 }
 
 export type Items = { 
     [id: number]: ChurchData
+}
+
+export async function validate_token(auth_token: string) {
+  const response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
+    {
+      code: auth_token
+    }
+  );
+  if(response.status == 200) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export function request_client() {
@@ -39,7 +69,7 @@ export async function scan(client: DynamoDBClient) {
     return (response.Items as unknown) as Items;
 }
   
-export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[]) {
+export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[], color: string) {
     if(verses.length == 0) {
         verses = [-1]
     }
@@ -50,7 +80,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
           "S": church_id,
         }
       },
-      "UpdateExpression": "SET #B = :book_id, #S = :song_number, #V = :verses",
+      "UpdateExpression": "SET #B = :book_id, #S = :song_number, #V = :verses, #C = :book_color",
       "ExpressionAttributeValues": {
         ":book_id": {
           "S": book
@@ -61,15 +91,32 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
         ":verses": {
           "NS": verses.map(String)
         },
+        ":book_color": {
+          "S": color
+        },
       },
       "ExpressionAttributeNames": {
         "#B": "BOOK_ID",
         "#S": "SONG_NUMBER",
-        "#V": "VERSES"
+        "#V": "VERSES",
+        "#C": "BOOK_COLOR"
       },
       "ReturnValues": "ALL_NEW",
     }
     const command = new UpdateItemCommand(data as unknown as UpdateItemCommandInput);
     const response = await client.send(command);
     return response;
+}
+
+export async function get(client: DynamoDBClient, church_id: string) {
+  const command = new GetItemCommand({
+    TableName: "ACCHYMNS_DISPLAY_DATA",
+    Key: {
+      CHURCH_ID: {
+        S: church_id,
+      }
+    }
+  });
+  const response = await client.send(command);
+  return response;
 }

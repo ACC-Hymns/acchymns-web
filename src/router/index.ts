@@ -91,6 +91,11 @@ const router = createRouter({
             path: "/:catchAll(.*)",
             component: () => import("../views/404View.vue"),
         },
+        {
+            path: "/broadcast/:church_id",
+            props: true,
+            component: () => import("../views/BroadcastView.vue"),
+        }
     ],
 });
 

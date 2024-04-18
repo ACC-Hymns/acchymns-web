@@ -3,15 +3,9 @@ import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
 import axios from 'axios';
-import { request_client, scan, type ChurchData } from "@/scripts/broadcast";
+import { UserStatus, request_client, scan, set, validate_token, type AuthResponse, type ChurchData } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 const { back } = useNavigator();
-
-
-enum UserStatus {
-  Unauthorized = 'Unauthorized',
-  Authorized = 'Authorized',
-}
 
 const input = ref('')
 const status = ref<UserStatus>(UserStatus.Unauthorized)
@@ -24,8 +18,9 @@ async function authorize() {
       code: input.value
     }
   );
+  let auth_response: AuthResponse = response.data;
   if(response.status == 200) {
-    await Preferences.set({ key: "authorized", value: "true"});
+    await Preferences.set({ key: "broadcasting_auth_token", value: auth_response.token});
     status.value = UserStatus.Authorized;
 
     let data = await scan(request_client());
@@ -37,7 +32,6 @@ async function authorize() {
     if(cached_selected_church == "" || cached_selected_church == undefined) {
       selected_church.value = churches.value[0].CHURCH_ID.S;
     } else {
-      console.log("bingo")
       selected_church.value = cached_selected_church;
     }
 
@@ -47,19 +41,26 @@ async function authorize() {
   }
 }
 
+async function clear() {
+  await set(request_client(), selected_church.value, "", "", [-1], "");
+}
+
 async function update_selected_church() {
   await Preferences.set({ key: "broadcasting_church", value: selected_church.value});
 }
 
 async function signout() {
-  await Preferences.set({ key: "authorized", value: "false"});
+  await Preferences.set({ key: "broadcasting_auth_token", value: ""});
   status.value = UserStatus.Unauthorized;
   input.value = "";
 }
 
 onMounted(async () => {
-  let authorized = await Preferences.get({ key: "authorized"});
-  if (authorized.value == "true") {
+  let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
+  if (broadcasting_auth_token.value != "" && broadcasting_auth_token.value != undefined) {
+    if(!(await validate_token(broadcasting_auth_token.value)))
+      return signout();
+
     status.value = UserStatus.Authorized;
     let data = await scan(request_client());
     churches.value = [];
@@ -103,6 +104,7 @@ onMounted(async () => {
               </div>
             </div>
             
+            <button class="settings-button" @click="clear()">Clear</button>
             <button class="settings-button" @click="signout()">Log Out</button>
         </div>        
     </div>
@@ -129,7 +131,6 @@ onMounted(async () => {
 </template>
 
 <style>
-@import "@/assets/css/settings.css";
 
 .input-container {
   display: block;
@@ -187,11 +188,13 @@ onMounted(async () => {
 }
 
 .settings-button {
+  all: unset;
+  height: 44px;
   background-color: var(--search-color);
   color: var(--color);
   border-radius: 10px;
   padding: 0 10px;
-  margin: 0 10px;
+  margin: 10px;
 }
 
 .settings-radio {
@@ -202,10 +205,13 @@ onMounted(async () => {
 }
 
 .pin-input {
+  all: unset;
   background-color: var(--search-color);
   border-radius: 10px;
   width: 50%;
+  height: 100%;
   margin: 5px 10px;
+  padding: 6px 15px;
 }
 
 </style>

@@ -9,7 +9,7 @@ import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import { Preferences } from "@capacitor/preferences";
-import { request_client, set } from "@/scripts/broadcast";
+import { request_client, set, validate_token } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();
 
@@ -20,7 +20,8 @@ const notes = ref<string[]>([]);
 const book_summary = ref<BookSummary>();
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
-const authorized = useCapacitorPreferences<boolean>("authorized", false);
+const broadcasting_auth_token = useCapacitorPreferences<string>("broadcasting_auth_token", "");
+let authorized = ref<boolean>(false);
 let broadcasting = ref<boolean>(false);
 let verses = ref<number[]>([]);
 let verse_input = ref<string>("");
@@ -51,6 +52,8 @@ onMounted(async () => {
     }
     const BOOK_META = await getAllBookMetaData();
     book_summary.value = BOOK_META[props.book];
+
+    authorized.value = await validate_token(broadcasting_auth_token.value);
 });
 
 onUnmounted(() => {
@@ -70,10 +73,10 @@ async function broadcast(e: MouseEvent) {
     let church_id = await Preferences.get({ key: "broadcasting_church"});
     if(church_id.value == null)
         return;
-    await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value);
+    await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
     let button = (e.target as Element).parentElement;
-    button?.style.setProperty("opacity", "0");
+    broadcasting.value = false;
 }
 
 function play() {
@@ -119,28 +122,31 @@ function hideTooltip() {
             <img @click="(e) => open_broadcast(e)" class="ionicon" src="/assets/radio-outline.svg">
         </div>
     </div>
-    <div class="broadcast-container" v-if="authorized" :style="{ opacity: broadcasting ? 1 : 0, visibility: broadcasting ? 'visible' : 'hidden'}" @touchmove="(e) => e.preventDefault()">
+    <div class="broadcast-container" v-if="authorized && broadcasting" @touchmove="(e) => e.preventDefault()">
         <h1>Broadcast</h1>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
-        <div class="verse-list">
-            <div class="verse" v-for="verse in verses" :key="verse" @click="verses.splice(verses.indexOf(verse), 1)">{{ verse }}</div>
-        </div>
-        <div>
-            <input type="text" v-model="verse_input" class="verse-input" placeholder="Enter verses here..." @keypress="(e) => {
-                let char = e.key;
-                if(/^[0-9]*$/.test(char)) return true;
-                else e.preventDefault();
+        <br>
+        <h3>Verses</h3>
+        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+                verses = [];
+                verses.push(-2);
             }">
-            <button class="verse-button" @click="() => {
-                if(verses.includes(Number(verse_input)) || isNaN(Number(verse_input)) || verse_input == '') {
-                    verse_input = '';
-                    return;
-                }
+            All
+        </a>
+        <br>
+        <div class="verse-list">
+            <a v-for="verse in 16" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
 
-                verses.push(Number(verse_input));
-                verses.sort((a, b) => a - b);
-                verse_input = '';
-            }">Add</button>
+                if(verses[0] == -2) 
+                    verses = [];
+
+                if(verses.includes(verse))
+                    verses.splice(verses.indexOf(verse), 1);
+                else
+                    verses.push(verse);
+            }">
+                {{ verse }}
+            </a>
         </div>
         <button class="send-button" @click="(e) => broadcast(e)">Send</button>
     </div>
@@ -150,15 +156,6 @@ function hideTooltip() {
 </template>
 
 <style>
-.verse-button {
-    background-color: #818181;
-    color: white;
-    border-radius: 15px;
-    padding: 2px 10px;
-    height: 30px;
-    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    margin: 5px;
-}
 .send-button {
     background-color: #2196F3;
     color: white;
@@ -168,39 +165,22 @@ function hideTooltip() {
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     margin: 20px;
 }
-.verse-input::placeholder {
-    color: gray;
-}
-.verse-input {
-    margin: 10px 5px;
-    width: 50%;
-    height: 20px;
-    border-radius: 15px;
-    background-color: #dfdede;
-    color: black;
-}
 .verse {
     color: var(--color);
-    border-radius: 10px;
+    border-radius: 50px;
     background-color: var(--button-color);
-    height: 95%;
-    line-height: 150%;
-    padding: 0 10px;
-    max-width: min-content;
+    margin: 5px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    padding: 15px 15px;
+}
+
+.verse-selected {
+    box-shadow: inset 0 0 0 4px #2196F3;
 }
 .verse-list {
-    border-radius: 5px;
-    background-color: var(--background);
-    width: 75%;
-    height: 25px;
-    margin: 0 auto;
-    display: flex;
-    column-gap: 2px;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 2px 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 15px 0;
 }
 .broadcast-container {
     width: 75%;
