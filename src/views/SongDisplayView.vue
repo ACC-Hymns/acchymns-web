@@ -29,6 +29,7 @@ const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
+const isLandscape = ref<boolean>(screen.orientation.type.includes("landscape"));
 const window_height = () => window.innerHeight;
 const window_width = () => window.innerWidth;
 const image_props = computed(() => {
@@ -52,7 +53,6 @@ async function toggleBookmark() {
         });
     }
 }
-
 let audio_source = ref<HTMLAudioElement>();
 
 onMounted(async () => {
@@ -95,6 +95,12 @@ onMounted(async () => {
         morph();
         media_is_playing.value = false;
     })
+
+    screen.orientation.addEventListener('change', () => {
+        isLandscape.value = screen.orientation.type.includes("landscape");
+        let page_button_container = page_buttons.value as HTMLElement;
+        if(page_button_container) page_button_container.style.transform = 'translateY(' + (!isLandscape.value ? (-media_panel_height * window_height() + 'px') : '0') + ')';
+    });
 });
 
 onUnmounted(() => {
@@ -127,6 +133,7 @@ let elapsed_timer: number;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
+let page_buttons = ref();
 
 
 const updateTime = async () => {
@@ -305,8 +312,8 @@ async function traverse_song(num: number) {
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img v-if="!media_panel_visible" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else class="ionicon" @click="play" src="/assets/musical-notes.svg" />
+                    <img v-if="!media_panel_visible && !isLandscape" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else-if="!isLandscape" class="ionicon" @click="play" src="/assets/musical-notes.svg" />
                     <div v-if:="!starting_notes_tooltip_status" class="tooltip" ref="tooltip" @click="hideTooltip()">
                         <p class="tooltiptext">New! Starting Notes</p>
                     </div>
@@ -317,7 +324,7 @@ async function traverse_song(num: number) {
             </div>
         </div>
     </div>
-    <div class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
+    <div ref="page_buttons" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible && !isLandscape ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
@@ -325,8 +332,8 @@ async function traverse_song(num: number) {
             <img @click="traverse_song(Number(props.number) + 1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
-    <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
+    <div v-if="!isLandscape" class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
+    <div v-if="!isLandscape" class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => dragStart(e, e.touches[0].pageY)" @touchmove="(e) => drag(e, e.touches[0].pageY)" @touchend="(e) => dragEnd(e)">
             <div class="handle-bar"></div>
         </div>
@@ -620,10 +627,10 @@ async function traverse_song(num: number) {
     transform: translateY(-100%);
 }
 .arrow-hidden-left {
-    transform: translateX(-150%);
+    transform: translateX(-200%);
 }
 .arrow-hidden-right {
-    transform: translateX(150%);
+    transform: translateX(200%);
 }
 
 .tooltip {
