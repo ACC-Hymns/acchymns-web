@@ -404,6 +404,9 @@ async function traverse_song(num: number) {
 }
 .media-timeline {
     all: initial;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     -webkit-appearance: none;
     appearance: none; 
     font: 16px;
@@ -416,10 +419,13 @@ async function traverse_song(num: number) {
     background: var(--slider-base);
 }
 .media-timeline::-webkit-slider-thumb {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     -webkit-appearance: none;
     appearance: none; 
-    height: 10px;
-    width: 10px;
+    height: 15px;
+    width: 15px;
     background-color: var(--color);
     border-radius: 50%;
     border: none;
@@ -427,10 +433,13 @@ async function traverse_song(num: number) {
 }
 
 .media-timeline::-moz-range-thumb {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     -webkit-appearance: none;
     appearance: none; 
-    height: 10px;
-    width: 10px;
+    height: 15px;
+    width: 15px;
     background-color: var(--color);
     border-radius: 50%;
     border: none;
