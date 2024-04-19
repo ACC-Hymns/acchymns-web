@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
 import { onMounted, ref, computed, onUnmounted, getCurrentInstance, type SVGAttributes, type VNodeRef } from "vue";
-import { getSongMetaData } from "@/scripts/book_import";
+import { getSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
 import type { SongList, SongReference } from "@/scripts/types";
@@ -11,8 +11,9 @@ import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
-import { CapacitorHttp } from '@capacitor/core';
+import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { MediaSession } from '@jofr/capacitor-media-session'
+import { branch } from "@/scripts/constants";
 
 const props = defineProps<SongReference>();
 
@@ -21,13 +22,15 @@ const router = useRouter();
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const song_count = ref<number>(0);
+var isMobile = Capacitor.getPlatform() !== "web";
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
-const window_height = computed(() => window.innerHeight);
+const window_height = () => window.innerHeight;
+const window_width = () => window.innerWidth;
 const image_props = computed(() => {
     return {
         book: props.book,
@@ -54,20 +57,25 @@ let audio_source = ref<HTMLAudioElement>();
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
-    if (SONG_METADATA != null) {
-        notes.value = (SONG_METADATA[props.number]?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
-        song_count.value = Object.keys(SONG_METADATA).length;
-    }
+    const BOOK_METADATA = await getAllBookMetaData();
+    if(SONG_METADATA == null)
+        return;
 
-    audio_source.value = new Audio('https://github.com/ACC-Hymns/acchymns-web/raw/christopher/media-player/public/assets/1.mp3');
+    const song_data = SONG_METADATA[props.number];
+    notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+    song_count.value = Object.keys(SONG_METADATA).length;
+
+    console.log(song_data)
+    audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
+    console.log(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
     MediaSession.setMetadata({
-        title: '1 - Hallelujah, Praise Ye the Lord',
+        title: `${props.number} - ${song_data.title}`,
         artwork: [{
-            src: 'https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/christopher/offline/public/assets/icons/180x180.png',
+            src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
             sizes: '180x180',
             type: 'image/png' 
         }],
-        artist: "Zion's Harp"
+        artist: BOOK_METADATA[props.book].name.medium
     })
     MediaSession.setActionHandler({
         action: "play"
@@ -111,7 +119,7 @@ let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
-let media_panel_height = ref<number>(0.3);
+let media_panel_height = ref<number>(0.4);
 let media_panel_elastic = ref<boolean>(false);
 let media_panel_active = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
@@ -196,6 +204,15 @@ async function playMedia() {
     
     media_is_playing.value = !media_is_playing.value;
 }
+
+function set_audio_position(percentage: number) {
+    let source = audio_source.value;
+    if(source == undefined)
+        return;
+    source.currentTime = source.duration * percentage;
+    updateTime();
+}
+
 function secondsToTimestamp(seconds: number) {
     let minutes = Math.floor(seconds / 60);
     let remaining_seconds = Math.floor(seconds % 60);
@@ -212,18 +229,20 @@ function dragStart(e: Event, pageY: number) {
     e.preventDefault();
     media_panel_previous = Number(media_panel_height.value);
     media_panel_start = 1 - (pageY)/window.innerHeight;
+    console.log(media_panel_height.value, window.innerHeight)
 }
 function drag(e: Event, pageY: number) {
     e.preventDefault();
-    media_panel_height.value = dragFallOff((1 - (pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
+    media_panel_height.value = ((1 - (pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
     if(media_panel_height.value < 0.1)
         media_panel_height.value = 0.1;
+    
 }
 function dragEnd(e: Event) {
     e.preventDefault();
     
     if(media_panel_height.value > 0.2)
-        media_panel_height.value = 0.3;
+        media_panel_height.value = 0.4;
     else
         media_panel_height.value = 0.1;
 
@@ -239,13 +258,11 @@ function toggleMenu(e: any) {
         media_panel_visible.value = menu_bar_visible.value;
 }
 
-function traverse_song(num: number) {
+async function traverse_song(num: number) {
     if(num < 1 || num > song_count.value)
         return;
-    router.back();
-    setTimeout(() => {
-        router.push(`/display/${props.book}/${num}`);
-    }, 5);
+    await router.push(window.history.state.back);
+    router.push(`/display/${props.book}/${num}`);
 }
 
 </script>
@@ -273,7 +290,7 @@ function traverse_song(num: number) {
             </div>
         </div>
     </div>
-    <div class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height + 'px') : '0') + ')'}">
+    <div class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
@@ -283,15 +300,18 @@ function traverse_song(num: number) {
     </div>
     <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
-        <div class="handle-bar-container" @mousedown="(e) => dragStart(e, e.pageY)" @mousemove="(e) => drag(e, e.pageY)" @mouseup="(e) => dragEnd(e)" @touchstart="(e) => dragStart(e, e.touches[0].pageY)" @touchmove="(e) => drag(e, e.touches[0].pageY)" @touchend="(e) => dragEnd(e)">
+        <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => dragStart(e, e.touches[0].pageY)" @touchmove="(e) => drag(e, e.touches[0].pageY)" @touchend="(e) => dragEnd(e)">
             <div class="handle-bar"></div>
         </div>
+        <div class="close-button" :style="{ opacity: (media_panel_height < 0.15) ? '0' : '1'}">
+            <img @click="play()" class="ionicon" src="/assets/close.svg" />
+        </div>
         <div class="mini-playback-container" v-if="media_panel_height <= 0.15" :style="{ opacity: (media_panel_height <= 0.1) ? '1' : '0'}">
-            <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
-            <div class="progress-bar">
+            <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
+            <div class="progress-bar" @click="(e) => set_audio_position(e.offsetX / (window_width()/2))">
                 <div class="progress-bar-value" :style="{ width: (media_timestamp_elapsed/media_timestamp_end*100) + '%'}"></div>
             </div>
-            <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+            <p class="timestamp-right">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
@@ -310,10 +330,13 @@ function traverse_song(num: number) {
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
-            <div class="timeline" :style="{ opacity: (media_panel_height < 0.3) ? '0' : '1'}">
+            <div class="timeline" :style="{ opacity: (media_panel_height < 0.4) ? '0' : '1'}">
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
-                <div class="progress-bar">
-                    <div class="progress-bar-value" :style="{ width: (media_timestamp_elapsed/media_timestamp_end*100) + '%'}"></div>
+                <div class="progress-bar" @click="(e) => {
+                        console.log(window_width()/2);  
+                        set_audio_position(e.offsetX / (window_width()/2))
+                    }">
+                    <div class="progress-bar-value" :style="{ width: (media_timestamp_elapsed/media_timestamp_end*100) + '%'}" ></div>
                 </div>
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             </div>
@@ -339,6 +362,18 @@ function traverse_song(num: number) {
 </template>
 
 <style>
+* {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 15px;
+    transition: opacity 0.25s ease-in;
+}
 .timeline {
     width: 100%;
     justify-content: center;
@@ -350,6 +385,18 @@ function traverse_song(num: number) {
     font-size: small;
     font-weight: bold;
     color: var(--color);
+}
+.timestamp-left {
+    font-size: small;
+    font-weight: bold;
+    color: var(--color);
+    margin-left: 25px;
+}
+.timestamp-right {
+    font-size: small;
+    font-weight: bold;
+    color: var(--color);
+    margin-right: 15px;
 }
 .progress-bar-value {
     background-color: #000000;
@@ -366,18 +413,18 @@ function traverse_song(num: number) {
 }
 .mini-playback-container {
     width: 100%;
-    justify-content: right;
+    justify-content: center;
     display: flex;
     align-items: center;
     transition: opacity 0.25s ease-in;
-    transform: translateY(-2vh);
+    margin: 15px 0;
 }
 .mini-play-button {
     max-width: 50px;
     max-height: 50px;
     width: 10vw;
     height: 10vw;
-    margin: 0 15px;
+    margin-right: 15px;
 }
 .playback-container {
     width: 100%;
@@ -448,7 +495,7 @@ function traverse_song(num: number) {
     width: 200px;
     height: 35px;
     border-radius: 15px;
-    margin: 15px auto;
+    margin: 45px auto;
     display: flex;
     justify-content:space-between;
     align-items: center;
@@ -457,7 +504,8 @@ function traverse_song(num: number) {
 }
 .handle-bar-container {
     width: 100%;
-    height: 20px;
+    height: 40px;
+    position: absolute;
     transform: translateY(-2vh);
 }
 .handle-bar {
@@ -476,7 +524,7 @@ function traverse_song(num: number) {
     z-index: 1;
     transition: opacity 0.125s ease-in, visibility 0.125s ease;
     opacity: 1;
-    visibility: visible;
+    visibility: visible;    
 }
 .media-panel {
     width: 100%;
