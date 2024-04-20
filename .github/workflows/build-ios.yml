@@ -25,7 +25,6 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 	
-      #Ensure the xcode version is available
       - name: List Xcode installations
         run: sudo ls -1 /Applications | grep "Xcode"
 
