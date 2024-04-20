@@ -58,48 +58,48 @@ let audio_source = ref<HTMLAudioElement>();
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
-    if(SONG_METADATA == null)
-        return;
+    
+    if(SONG_METADATA != null) {
+        const song_data = SONG_METADATA[props.number];
+        notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
+        song_count.value = Object.keys(SONG_METADATA).length;
 
-    const song_data = SONG_METADATA[props.number];
-    notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
-    song_count.value = Object.keys(SONG_METADATA).length;
-
-    audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-    MediaSession.setMetadata({
-        title: `${props.number} - ${song_data.title}`,
-        artwork: [{
-            src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
-            sizes: '180x180',
-            type: 'image/png' 
-        }],
-        artist: BOOK_METADATA[props.book].name.medium
-    })
-    MediaSession.setActionHandler({
-        action: "play"
-    }, (details) => {
-        audio_source.value?.play();
-        MediaSession.setPlaybackState({
-            playbackState: "playing"
+        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
+        MediaSession.setMetadata({
+            title: `${props.number} - ${song_data.title}`,
+            artwork: [{
+                src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
+                sizes: '180x180',
+                type: 'image/png' 
+            }],
+            artist: BOOK_METADATA[props.book].name.medium
         })
-        morph();
-        media_is_playing.value = true;
-    })
-    MediaSession.setActionHandler({
-        action: "pause"
-    }, (details) => {
-        audio_source.value?.pause();
-        MediaSession.setPlaybackState({
-            playbackState: "paused"
+        MediaSession.setActionHandler({
+            action: "play"
+        }, (details) => {
+            audio_source.value?.play();
+            MediaSession.setPlaybackState({
+                playbackState: "playing"
+            })
+            morph();
+            media_is_playing.value = true;
         })
-        morph();
-        media_is_playing.value = false;
-    })
+        MediaSession.setActionHandler({
+            action: "pause"
+        }, (details) => {
+            audio_source.value?.pause();
+            MediaSession.setPlaybackState({
+                playbackState: "paused"
+            })
+            morph();
+            media_is_playing.value = false;
+        })
+    }
 
+    isLandscape.value = screen.orientation.type.includes("landscape");
     screen.orientation.addEventListener('change', () => {
         isLandscape.value = screen.orientation.type.includes("landscape");
-        let page_button_container = page_buttons.value as HTMLElement;
-        if(page_button_container) page_button_container.style.transform = 'translateY(' + (!isLandscape.value ? (-media_panel_height * window_height() + 'px') : '0') + ')';
+        media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
     });
 });
 
@@ -123,7 +123,7 @@ let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
 let media_panel_visible = ref<boolean>(false);
-let media_panel_height = ref<number>(0.4);
+let media_panel_height = ref<number>((screen.orientation.type.includes("landscape")) ? 0.8 : 0.4);
 let media_panel_elastic = ref<boolean>(false);
 let media_panel_active = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
@@ -260,17 +260,19 @@ function dragStart(e: Event, pageY: number) {
 function drag(e: Event, pageY: number) {
     e.preventDefault();
     media_panel_height.value = dragFallOff((1 - (pageY)/window.innerHeight) - media_panel_start) + media_panel_previous;
-    if(media_panel_height.value < 0.1)
-        media_panel_height.value = 0.1;
+    if(media_panel_height.value < (isLandscape.value ? 0.2 : 0.1) || isNaN(media_panel_height.value))
+        media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
+
+    console.log(media_panel_height.value)
     
 }
 function dragEnd(e: Event) {
     e.preventDefault();
     
-    if(media_panel_height.value > 0.2)
-        media_panel_height.value = 0.4;
+    if(media_panel_height.value > (isLandscape.value ? 0.4 : 0.2))
+        media_panel_height.value = (isLandscape.value ? 0.8 : 0.4);
     else
-        media_panel_height.value = 0.1;
+        media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
 
     media_panel_elastic.value = true;
     setTimeout(() => {
@@ -285,7 +287,7 @@ function toggleMenu(e: any) {
 }
 
 function hideMedia() {
-    media_panel_height.value = 0.1;
+    media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
     media_panel_elastic.value = true;
     setTimeout(() => {
         media_panel_elastic.value = false;
@@ -312,8 +314,8 @@ async function traverse_song(num: number) {
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img v-if="!media_panel_visible && !isLandscape" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else-if="!isLandscape" class="ionicon" @click="play" src="/assets/musical-notes.svg" />
+                    <img v-if="!media_panel_visible" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" @click="play" src="/assets/musical-notes.svg" />
                     <div v-if:="!starting_notes_tooltip_status" class="tooltip" ref="tooltip" @click="hideTooltip()">
                         <p class="tooltiptext">New! Starting Notes</p>
                     </div>
@@ -324,7 +326,7 @@ async function traverse_song(num: number) {
             </div>
         </div>
     </div>
-    <div ref="page_buttons" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible && !isLandscape ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
+    <div ref="page_buttons" v-if="media_panel_height < 0.7" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
@@ -332,15 +334,15 @@ async function traverse_song(num: number) {
             <img @click="traverse_song(Number(props.number) + 1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div v-if="!isLandscape" class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
-    <div v-if="!isLandscape" class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
+    <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
+    <div class="media-panel-content" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'">   
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => dragStart(e, e.touches[0].pageY)" @touchmove="(e) => drag(e, e.touches[0].pageY)" @touchend="(e) => dragEnd(e)">
             <div class="handle-bar"></div>
         </div>
-        <div class="close-button" :style="{ opacity: (media_panel_height < 0.15) ? '0' : '1'}">
+        <div class="close-button" :style="{ opacity: (media_panel_height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
             <img @click="play()" class="ionicon" src="/assets/close.svg" />
         </div>
-        <div class="mini-playback-container" v-if="media_panel_height <= 0.15" :style="{ opacity: (media_panel_height <= 0.1) ? '1' : '0'}">
+        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15)" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
                 <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
@@ -350,7 +352,7 @@ async function traverse_song(num: number) {
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
         </div>
-        <div class="media-type" :style="{ opacity: (media_panel_height < 0.2) ? '0' : '1'}">
+        <div class="media-type" :style="{ opacity: (media_panel_height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
             <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
@@ -359,12 +361,12 @@ async function traverse_song(num: number) {
             </div>
         </div>
         <div class="media-controls" v-if="!media_starting_notes">
-            <div class="playback-container" :style="{ opacity: (media_panel_height < 0.25) ? '0' : '1'}">
+            <div class="playback-container" :style="{ opacity: (media_panel_height < (isLandscape ? 0.5 : 0.25)) ? '0' : '1'}">
                 <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
-            <div class="timeline" :style="{ opacity: (media_panel_height < 0.4) ? '0' : '1'}">
+            <div class="timeline" :style="{ opacity: (media_panel_height < (isLandscape ? 0.8 : 0.4)) ? '0' : '1'}">
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
                 <div class="progress-bar-large">
                     <input type="range" ref="large_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
