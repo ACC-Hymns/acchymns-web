@@ -14,6 +14,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { MediaSession } from '@jofr/capacitor-media-session'
 import { branch } from "@/scripts/constants";
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 const props = defineProps<SongReference>();
 
@@ -22,14 +23,14 @@ const router = useRouter();
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const song_count = ref<number>(0);
-var isMobile = true//Capacitor.getPlatform() !== "web";
+var isMobile = Capacitor.getPlatform() !== "web";
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
-const isLandscape = ref<boolean>(screen.orientation.type.includes("landscape"));
+const isLandscape = ref<boolean>(false);
 const window_height = () => window.innerHeight;
 const window_width = () => window.innerWidth;
 const image_props = computed(() => {
@@ -96,9 +97,9 @@ onMounted(async () => {
         })
     }
 
-    isLandscape.value = screen.orientation.type.includes("landscape");
-    screen.orientation.addEventListener('change', () => {
-        isLandscape.value = screen.orientation.type.includes("landscape");
+    isLandscape.value = (await ScreenOrientation.orientation()).type.includes('landscape');
+    ScreenOrientation.addListener('screenOrientationChange', async () => {
+        isLandscape.value = (await ScreenOrientation.orientation()).type.includes('landscape');
         media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
     });
 });
@@ -263,7 +264,6 @@ function drag(e: Event, pageY: number) {
     if(media_panel_height.value < (isLandscape.value ? 0.2 : 0.1) || isNaN(media_panel_height.value))
         media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
 
-    console.log(media_panel_height.value)
     
 }
 function dragEnd(e: Event) {
@@ -326,7 +326,7 @@ async function traverse_song(num: number) {
             </div>
         </div>
     </div>
-    <div ref="page_buttons" v-if="media_panel_height < 0.7" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
+    <div ref="page_buttons" v-if="media_panel_height < 0.7 || !media_panel_visible" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
@@ -544,7 +544,7 @@ async function traverse_song(num: number) {
     background-color: var(--button-color);
     border-radius: 50px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    margin: 0 5vw;
+    margin: 0 15px;
     transition: transform 0.3s;
     display: flex;
     justify-content: center;
