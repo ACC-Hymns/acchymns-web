@@ -342,7 +342,7 @@ async function traverse_song(num: number) {
         <div class="close-button" :style="{ opacity: (media_panel_height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
             <img @click="play()" class="ionicon" src="/assets/close.svg" />
         </div>
-        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15)" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
+        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
                 <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
@@ -360,7 +360,7 @@ async function traverse_song(num: number) {
                 <p class="media-type-title">Starting Notes</p>           
             </div>
         </div>
-        <div class="media-controls" v-if="!media_starting_notes">
+        <div class="media-controls" v-if="!media_starting_notes && media_panel_visible">
             <div class="playback-container" :style="{ opacity: (media_panel_height < (isLandscape ? 0.5 : 0.25)) ? '0' : '1'}">
                 <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
