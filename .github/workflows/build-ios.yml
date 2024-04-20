@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
-	
+
       - name: List Xcode installations
         run: sudo ls -1 /Applications | grep "Xcode"
 
