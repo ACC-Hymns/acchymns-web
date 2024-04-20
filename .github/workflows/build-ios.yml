@@ -19,7 +19,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build IOS
     needs: wait
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - name: Checkout source
