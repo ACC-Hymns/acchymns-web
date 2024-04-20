@@ -12,7 +12,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { MediaSession } from '@jofr/capacitor-media-session'
+//import { MediaSession } from '@jofr/capacitor-media-session'
 import { branch } from "@/scripts/constants";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 
@@ -66,35 +66,35 @@ onMounted(async () => {
         song_count.value = Object.keys(SONG_METADATA).length;
 
         audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-        MediaSession.setMetadata({
-            title: `${props.number} - ${song_data.title}`,
-            artwork: [{
-                src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
-                sizes: '180x180',
-                type: 'image/png' 
-            }],
-            artist: BOOK_METADATA[props.book].name.medium
-        })
-        MediaSession.setActionHandler({
-            action: "play"
-        }, (details) => {
-            audio_source.value?.play();
-            MediaSession.setPlaybackState({
-                playbackState: "playing"
-            })
-            morph();
-            media_is_playing.value = true;
-        })
-        MediaSession.setActionHandler({
-            action: "pause"
-        }, (details) => {
-            audio_source.value?.pause();
-            MediaSession.setPlaybackState({
-                playbackState: "paused"
-            })
-            morph();
-            media_is_playing.value = false;
-        })
+        //MediaSession.setMetadata({
+        //    title: `${props.number} - ${song_data.title}`,
+        //    artwork: [{
+        //        src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
+        //        sizes: '180x180',
+        //        type: 'image/png' 
+        //    }],
+        //    artist: BOOK_METADATA[props.book].name.medium
+        //})
+        //MediaSession.setActionHandler({
+        //    action: "play"
+        //}, (details) => {
+        //    audio_source.value?.play();
+        //    MediaSession.setPlaybackState({
+        //        playbackState: "playing"
+        //    })
+        //    morph();
+        //    media_is_playing.value = true;
+        //})
+        //MediaSession.setActionHandler({
+        //    action: "pause"
+        //}, (details) => {
+        //    audio_source.value?.pause();
+        //    MediaSession.setPlaybackState({
+        //        playbackState: "paused"
+        //    })
+        //    morph();
+        //    media_is_playing.value = false;
+        //})
     }
 
     isLandscape.value = (await ScreenOrientation.orientation()).type.includes('landscape');
@@ -108,9 +108,9 @@ onUnmounted(() => {
     player.stop();
     audio_source.value?.pause();
     audio_source.value = undefined;
-    MediaSession.setPlaybackState({
-        playbackState: "none"
-    })
+    //MediaSession.setPlaybackState({
+    //    playbackState: "none"
+    //})
 });
 
 type Coordinate = {
@@ -139,11 +139,11 @@ let page_buttons = ref();
 
 const updateTime = async () => {
     media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-    MediaSession.setPositionState({
-        position: audio_source.value?.currentTime || 0,
-        duration: audio_source.value?.duration || 0,
-        playbackRate: 1.0
-    })
+    //MediaSession.setPositionState({
+    //    position: audio_source.value?.currentTime || 0,
+    //    duration: audio_source.value?.duration || 0,
+    //    playbackRate: 1.0
+    //})
     
     if(audio_source.value == undefined)
         return;
@@ -204,9 +204,9 @@ async function playMedia() {
     // Play the media
     if(!media_is_playing.value) {
         audio_source.value?.play();
-        MediaSession.setPlaybackState({
-            playbackState: "playing"
-        })
+        //MediaSession.setPlaybackState({
+        //    playbackState: "playing"
+        //})
 
         updateTime()
         elapsed_timer = setInterval(() => {
@@ -216,9 +216,9 @@ async function playMedia() {
     }
     else {
         audio_source.value?.pause();
-        MediaSession.setPlaybackState({
-            playbackState: "paused"
-        })
+        //MediaSession.setPlaybackState({
+        //    playbackState: "paused"
+        //})
         clearInterval(elapsed_timer);
     }
 
