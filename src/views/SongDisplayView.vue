@@ -56,6 +56,7 @@ async function toggleBookmark() {
 }
 let audio_source = ref<HTMLAudioElement>();
 let audio_source_exists = ref<boolean>(false);
+let previous_orientation = "";
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -66,8 +67,9 @@ onMounted(async () => {
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
-        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-        audio_source.value.addEventListener('loadeddata', () => {
+        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
+        audio_source.value.preload = 'metadata';
+        audio_source.value.addEventListener('loadedmetadata', () => {
             console.log("Audio Loaded!");
             audio_source_exists.value = true;
             media_timestamp_end.value = audio_source.value?.duration || 0;
@@ -106,12 +108,17 @@ onMounted(async () => {
         isLandscape.value = true;
     }
     ScreenOrientation.addListener('screenOrientationChange', async () => {
+        if(previous_orientation == (await ScreenOrientation.orientation()).type)
+            return;
         if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
             isLandscape.value = false;
+            previous_orientation = (await ScreenOrientation.orientation()).type;
+            media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
         } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
             isLandscape.value = true;
+            previous_orientation = (await ScreenOrientation.orientation()).type;
+            media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
         }
-        media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
     });
 });
 
@@ -146,11 +153,6 @@ let page_buttons = ref();
 
 const updateTime = async () => {
     media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-    navigator.mediaSession.setPositionState({
-        position: audio_source.value?.currentTime || 0,
-        duration: audio_source.value?.duration || 0,
-        playbackRate: 1.0
-    })
     
     if(audio_source.value == undefined)
         return;
@@ -231,6 +233,11 @@ function set_audio_position(e: Event, percentage: number) {
     if(source == undefined)
         return;
     source.currentTime = source.duration * percentage/100;
+    navigator.mediaSession.setPositionState({
+        position: audio_source.value?.currentTime || 0,
+        duration: audio_source.value?.duration || 0,
+        playbackRate: 1.0
+    })
 
     updateTime();
 }
