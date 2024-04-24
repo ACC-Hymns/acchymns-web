@@ -12,9 +12,9 @@ import { useLocalStorage } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-//import { MediaSession } from '@jofr/capacitor-media-session'
 import { branch } from "@/scripts/constants";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+//import { navigator.mediaSession } from '@jofr/capacitor-media-session';
 
 const props = defineProps<SongReference>();
 
@@ -55,6 +55,7 @@ async function toggleBookmark() {
     }
 }
 let audio_source = ref<HTMLAudioElement>();
+let audio_source_exists = ref<boolean>(false);
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -66,40 +67,50 @@ onMounted(async () => {
         song_count.value = Object.keys(SONG_METADATA).length;
 
         audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-        //MediaSession.setMetadata({
-        //    title: `${props.number} - ${song_data.title}`,
-        //    artwork: [{
-        //        src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
-        //        sizes: '180x180',
-        //        type: 'image/png' 
-        //    }],
-        //    artist: BOOK_METADATA[props.book].name.medium
-        //})
-        //MediaSession.setActionHandler({
-        //    action: "play"
-        //}, (details) => {
-        //    audio_source.value?.play();
-        //    MediaSession.setPlaybackState({
-        //        playbackState: "playing"
-        //    })
-        //    morph();
-        //    media_is_playing.value = true;
-        //})
-        //MediaSession.setActionHandler({
-        //    action: "pause"
-        //}, (details) => {
-        //    audio_source.value?.pause();
-        //    MediaSession.setPlaybackState({
-        //        playbackState: "paused"
-        //    })
-        //    morph();
-        //    media_is_playing.value = false;
-        //})
+        audio_source.value.addEventListener('loadeddata', () => {
+            console.log("Audio Loaded!");
+            audio_source_exists.value = true;
+            media_timestamp_end.value = audio_source.value?.duration || 0;
+        })
+        audio_source.value.addEventListener('error', () => {
+            console.error("Error loading audio");
+            audio_source_exists.value = false;
+            setMediaPanel(null, true);
+        });
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: `${props.number} - ${song_data.title}`,
+            artwork: [{
+                src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
+                sizes: '180x180',
+                type: 'image/png' 
+            }],
+            artist: BOOK_METADATA[props.book].name.medium
+        })
+        navigator.mediaSession.setActionHandler("play", (details) => {
+            audio_source.value?.play();
+            navigator.mediaSession.playbackState = 'playing';
+            morph();
+            media_is_playing.value = true;
+        })
+        navigator.mediaSession.setActionHandler("pause", (details) => {
+            audio_source.value?.pause();
+            navigator.mediaSession.playbackState = 'paused';
+            morph();
+            media_is_playing.value = false;
+        })
     }
 
-    isLandscape.value = (await ScreenOrientation.orientation()).type.includes('landscape');
+    if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
+        isLandscape.value = false;
+    } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
+        isLandscape.value = true;
+    }
     ScreenOrientation.addListener('screenOrientationChange', async () => {
-        isLandscape.value = (await ScreenOrientation.orientation()).type.includes('landscape');
+        if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
+            isLandscape.value = false;
+        } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
+            isLandscape.value = true;
+        }
         media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
     });
 });
@@ -108,9 +119,7 @@ onUnmounted(() => {
     player.stop();
     audio_source.value?.pause();
     audio_source.value = undefined;
-    //MediaSession.setPlaybackState({
-    //    playbackState: "none"
-    //})
+    navigator.mediaSession.playbackState = 'none';
 });
 
 type Coordinate = {
@@ -118,8 +127,6 @@ type Coordinate = {
     y: number;
 };
 
-let starting_notes_tooltip_status = useLocalStorage<boolean>("starting_notes_tooltip_complete", false);
-let tooltip = ref<Element>();
 let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
@@ -139,11 +146,11 @@ let page_buttons = ref();
 
 const updateTime = async () => {
     media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-    //MediaSession.setPositionState({
-    //    position: audio_source.value?.currentTime || 0,
-    //    duration: audio_source.value?.duration || 0,
-    //    playbackRate: 1.0
-    //})
+    navigator.mediaSession.setPositionState({
+        position: audio_source.value?.currentTime || 0,
+        duration: audio_source.value?.duration || 0,
+        playbackRate: 1.0
+    })
     
     if(audio_source.value == undefined)
         return;
@@ -162,23 +169,14 @@ const updateTime = async () => {
 
 async function play() {
     //player.play(notes);
-    //hideTooltip();
     media_panel_visible.value = !media_panel_visible.value;
     media_panel_active.value = !media_panel_active.value;
-    
-    media_timestamp_end.value = audio_source.value?.duration || 0;
+    media_panel_height.value = isLandscape.value ? 0.8 : 0.4;
 }
 
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        starting_notes_tooltip_status.value = true;
-    }, 1000);
-}
 
 function setMediaPanel(event: any, value: boolean) {
-    event.preventDefault();
+    if(event) event.preventDefault();
     media_starting_notes.value = value;
     isPlaying.value = !media_panel_visible.value;
 }
@@ -204,9 +202,7 @@ async function playMedia() {
     // Play the media
     if(!media_is_playing.value) {
         audio_source.value?.play();
-        //MediaSession.setPlaybackState({
-        //    playbackState: "playing"
-        //})
+        navigator.mediaSession.playbackState = 'playing'
 
         updateTime()
         elapsed_timer = setInterval(() => {
@@ -216,9 +212,7 @@ async function playMedia() {
     }
     else {
         audio_source.value?.pause();
-        //MediaSession.setPlaybackState({
-        //    playbackState: "paused"
-        //})
+        navigator.mediaSession.playbackState = 'paused'
         clearInterval(elapsed_timer);
     }
 
@@ -287,6 +281,17 @@ function toggleMenu(e: any) {
 }
 
 function hideMedia() {
+    if(audio_source_exists.value == false) {
+        media_panel_height.value = 0;
+        media_panel_elastic.value = true;
+        setTimeout(() => {
+            media_panel_elastic.value = false;
+            media_panel_visible.value = false;
+            media_panel_active.value = false;
+        }, 250);
+        return;
+    }
+
     media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
     media_panel_elastic.value = true;
     setTimeout(() => {
@@ -294,11 +299,29 @@ function hideMedia() {
     }, 250);
 }
 
-async function traverse_song(num: number) {
-    if(num < 1 || num > song_count.value)
+async function traverse_song(dir: number) {
+    const SONG_METADATA = await getSongMetaData(props.book);
+    
+    let num = '0';
+    if(SONG_METADATA == null) {
+        console.error("Error loading song metadata. Cannot traverse song.");
         return;
-    await router.push(window.history.state.back);
-    router.push(`/display/${props.book}/${num}`);
+    } else {
+        let song_numbers = Object.keys(SONG_METADATA).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+        let index = song_numbers.findIndex(song => song == props.number);
+        if(index == -1) {
+            console.error("Error finding song in metadata. Cannot traverse song.");
+            return;
+        }
+        if(index + dir < 0 || index + dir >= song_numbers.length) {
+            console.error("Cannot traverse song. Out of bounds.");
+            return;
+        }
+        num = song_numbers[index + dir];
+    }
+
+    await router.replace(window.history.state.back);
+    await router.replace(`/display/${props.book}/${num}`);
 }
 
 </script>
@@ -316,9 +339,6 @@ async function traverse_song(num: number) {
                 <template v-if="notes.length != 0">
                     <img v-if="!media_panel_visible" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
                     <img v-else class="ionicon" @click="play" src="/assets/musical-notes.svg" />
-                    <div v-if:="!starting_notes_tooltip_status" class="tooltip" ref="tooltip" @click="hideTooltip()">
-                        <p class="tooltiptext">New! Starting Notes</p>
-                    </div>
                 </template>
 
                 <img v-if="is_bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
@@ -328,10 +348,10 @@ async function traverse_song(num: number) {
     </div>
     <div ref="page_buttons" v-if="media_panel_height < 0.7 || !media_panel_visible" class="page-buttons" :style="{transform: 'translateY(' + (media_panel_visible ? (-media_panel_height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
-            <img @click="traverse_song(Number(props.number) - 1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
         <div class="page-button" :class="{ 'arrow-hidden-right': (!menu_bar_visible || Number(props.number) == song_count)}">
-            <img @click="traverse_song(Number(props.number) + 1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
     <div class="media-panel" :class="{ 'hidden-panel': !media_panel_visible, elastic: media_panel_elastic}" :style="'height:' + (media_panel_height * 100) + '%'"></div>
@@ -342,7 +362,7 @@ async function traverse_song(num: number) {
         <div class="close-button" :style="{ opacity: (media_panel_height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
             <img @click="play()" class="ionicon" src="/assets/close.svg" />
         </div>
-        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
+        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible && audio_source_exists" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
                 <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
@@ -353,7 +373,7 @@ async function traverse_song(num: number) {
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: (media_panel_height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
-            <div :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
+            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
             <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
@@ -577,7 +597,7 @@ async function traverse_song(num: number) {
 }
 .media-type {
     background-color: #EBEBEB;
-    width: 200px;
+    width: max-content;
     height: 35px;
     border-radius: 15px;
     margin: 45px auto;
@@ -642,50 +662,5 @@ async function traverse_song(num: number) {
 }
 .arrow-hidden-right {
     transform: translateX(200%);
-}
-
-.tooltip {
-    min-width: 155px;
-    height: 25px;
-    background-color: #2196f3;
-    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    translate: -70px 10px;
-    opacity: 1;
-}
-
-.tooltiphidden {
-    height: 25px;
-    background-color: #2196f3;
-    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 500ms ease;
-}
-
-.tooltip::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent transparent #2196f3 transparent;
-}
-
-.tooltiptext {
-    margin: 0px 10px;
-    line-height: 25px;
-    font-size: 15px;
-    color: white;
 }
 </style>

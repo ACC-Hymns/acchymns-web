@@ -17,15 +17,12 @@ onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
 });
 
-let topical_index_tooltip_status = useLocalStorage<boolean>("topical_index_tooltip_complete", false);
-
 const error_active = ref(false);
 
 const song_numbers = ref<string[]>([]);
 let book_name = ref("");
 let index_available = ref(false);
 let button_color = ref("#000000");
-let tooltip = ref<Element>();
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -48,14 +45,6 @@ onMounted(async () => {
     // The v-for for song buttons now should be active, so we can scroll to the saved position
     restoreScrollPosition(route.fullPath);
 });
-
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        topical_index_tooltip_status.value = true;
-    }, 1000);
-}
 </script>
 
 <template>
@@ -68,13 +57,10 @@ function hideTooltip() {
                 <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
-                <div @click="hideTooltip">
-                    <RouterLink v-if="index_available" :to="`/topical/${props.book}`" @click="topical_index_tooltip_status = true">
+                <div>
+                    <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
                         <img class="ionicon" src="/assets/book-outline.svg" />
                     </RouterLink>
-                    <div v-if:="!topical_index_tooltip_status && index_available" class="tooltip" ref="tooltip">
-                        <p class="tooltiptext">New! Topical Index</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -130,50 +116,6 @@ function hideTooltip() {
     align-items: center;
     justify-content: center;
     margin: 5px;
-}
-
-.tooltip {
-    min-width: 150px;
-    height: 25px;
-    background-color: #2196f3;
-    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    translate: -105px 10px;
-    opacity: 1;
-}
-
-.tooltiphidden {
-    background-color: #2196f3;
-    box-shadow: 0 0 15px rgb(0, 0, 0, 0.25);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 500ms ease;
-}
-
-.tooltip::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 75%;
-    margin-left: -5px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent transparent #2196f3 transparent;
-}
-
-.tooltiptext {
-    margin: 0px 10px;
-    line-height: 25px;
-    font-size: 15px;
-    color: white;
 }
 
 .wifi-fallback {
