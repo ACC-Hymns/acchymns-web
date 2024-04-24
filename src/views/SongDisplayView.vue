@@ -73,6 +73,11 @@ onMounted(async () => {
             console.log("Audio Loaded!");
             audio_source_exists.value = true;
             media_timestamp_end.value = audio_source.value?.duration || 0;
+            navigator.mediaSession.setPositionState({
+                position: audio_source.value?.currentTime || 0,
+                duration: audio_source.value?.duration || 0,
+                playbackRate: 1.0
+            })
         })
         audio_source.value.addEventListener('error', () => {
             console.error("Error loading audio");
@@ -100,8 +105,28 @@ onMounted(async () => {
             morph();
             media_is_playing.value = false;
         })
+        navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+            let percentage = Math.max(0, media_timestamp_elapsed.value - 10)/media_timestamp_end.value * 100;
+            console.log(percentage);
+            set_audio_position(percentage);
+        })
+        navigator.mediaSession.setActionHandler("seekforward", (details) => {
+            let percentage = Math.min(media_timestamp_end.value, media_timestamp_elapsed.value + 10)/media_timestamp_end.value * 100;
+            console.log(percentage);
+            set_audio_position(percentage);
+        })
+        navigator.mediaSession.setActionHandler("previoustrack", (details) => {
+            traverse_song(-1);
+        })
+        navigator.mediaSession.setActionHandler("nexttrack", (details) => {
+            traverse_song(1);
+        })
+        navigator.mediaSession.setActionHandler("seekto", (details) => {
+            set_audio_position((details?.seekTime || 0)/media_timestamp_end.value * 100);
+        })
     }
 
+    previous_orientation = (await ScreenOrientation.orientation()).type;
     if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
         isLandscape.value = false;
     } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
@@ -227,7 +252,7 @@ function release_audio_position(e: Event) {
         audio_source.value?.play();
 }
 
-function set_audio_position(e: Event, percentage: number) {
+function set_audio_position(percentage: number) {
     media_is_scrubbing.value = true;
     let source = audio_source.value;
     if(source == undefined)
@@ -372,7 +397,7 @@ async function traverse_song(dir: number) {
         <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible && audio_source_exists" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
-                <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
+                <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
             </div>
             <p class="timestamp-right">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
@@ -396,7 +421,7 @@ async function traverse_song(dir: number) {
             <div class="timeline" :style="{ opacity: (media_panel_height < (isLandscape ? 0.8 : 0.4)) ? '0' : '1'}">
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
                 <div class="progress-bar-large">
-                    <input type="range" ref="large_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(e, Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
+                    <input type="range" ref="large_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
                 </div>
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             </div>
