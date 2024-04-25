@@ -26,6 +26,8 @@ let book_name = ref("");
 let index_available = ref(false);
 let button_color = ref("#000000");
 let tooltip = ref<Element>();
+let song_number_groups = ref<string[][]>([]);
+let song_number_groups_active = ref<string[][]>([]);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -36,6 +38,33 @@ onMounted(async () => {
         return;
     }
     song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+
+    let song_count = song_numbers.value.length;
+
+    for (let i = 0; i < Math.ceil(song_count/100); i++) {
+        song_number_groups.value?.push(song_numbers.value.filter((song) => {
+            const re = new RegExp(/[a-z]/, "i");
+            let song_num = song.replace(re, "");
+
+            if (Number(song_num) >= i*100 && Number(song_num) < ((i+1)*100)) {
+                return true;
+            }
+
+            return false;
+        }));
+    }
+
+    console.log(song_number_groups_active)
+
+    /*console.log(song_numbers.value.filter((song) => {
+        const re = new RegExp(/[a-z]/, "i");
+        let song_num = song.replace(re, "");
+
+        if (Number(song_num) >= 200 && Number(song_num) < 299) {
+            return true;
+        }
+        return false;
+    }));*/
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
@@ -48,6 +77,15 @@ onMounted(async () => {
     // The v-for for song buttons now should be active, so we can scroll to the saved position
     restoreScrollPosition(route.fullPath);
 });
+
+function toggleDropdown(group: string[]) {
+    if (song_number_groups_active.value.includes(group)) {
+        song_number_groups_active.value = [];
+    } else {
+        song_number_groups_active.value = [];
+        song_number_groups_active.value.push(group);
+    }
+}
 
 function hideTooltip() {
     tooltip.value?.classList.add("tooltiphidden");
@@ -85,9 +123,23 @@ function hideTooltip() {
     </div>
     <div v-else class="songs main-content">
         <!-- Buttons will be added here -->
-        <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
-            {{ song_num }}
-        </RouterLink>
+        <div v-for="group in song_number_groups" class="song-group-container">
+            <div @click="toggleDropdown(group)">
+                <div class="song-group-title-container">
+                    <div class="song-title">{{group[0]}} - {{group[group.length - 1]}}</div>
+                    <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(group)}"/>
+                </div>
+                <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(group)}">
+                    <div class="song-button-container" :class="{'song-button-container-active': song_number_groups_active.includes(group)}">
+                        <RouterLink v-for="song_num in group" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
+                            {{ song_num }}
+                        </RouterLink>
+                    </div>     
+                </div>     
+                
+            </div>
+            
+        </div>
     </div>
 
     <nav class="nav">
@@ -111,12 +163,65 @@ function hideTooltip() {
 </template>
 
 <style scoped>
+
 .songs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0px 15px 50px 15px;
+}
+
+.song-group-container {
+    border: 1px solid #bebebe;
+    border-radius: 15px;
+}
+
+.song-group-title-container{
+    margin: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-title {
+    text-decoration: none;
+    color: var(--color);
+    font-weight: 400;
+}
+
+.dropdown-icon {
+    transition: rotate ease-out 0.4s;
+    transform: translateX(-3px);
+    rotate: calc(-90deg);
+}
+
+.dropdown-icon-active {
+    transition: rotate ease-out 0.4s;
+    transform: translateX(3px);
+    rotate: calc(90deg);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s;
+}
+
+.wrapper-active {
+    grid-template-rows: 1fr;
+}
+
+.song-button-container {
+    overflow: hidden;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 0px 10px 110px 10px;
-    margin-top: 80px;
+}
+
+.song-button-container-active {
+    padding-bottom: 20px;
 }
 
 .song-btn {
