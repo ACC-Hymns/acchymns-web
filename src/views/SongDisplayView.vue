@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
+import { bass_note_icons, treble_note_icons } from "@/composables/notes";
 import { onMounted, ref, computed, onUnmounted } from "vue";
 import { getSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
@@ -210,8 +211,16 @@ const updateTime = async () => {
     }
 };
 
-async function play() {
-    //player.play(notes);
+async function play_all_notes() {
+    player.stop();
+    player.play(notes);
+}
+async function play_note(note: string) {
+    player.stop();
+    player.play([note]);
+}
+
+async function toggle_media_panel() {
     media_panel_visible.value = !media_panel_visible.value;
     media_panel_active.value = !media_panel_active.value;
     media_panel_height.value = isLandscape.value ? 0.8 : 0.4;
@@ -372,6 +381,14 @@ async function traverse_song(dir: number) {
     await router.replace(`/display/${props.book}/${num}`);
 }
 
+function get_note_icon(note: string) {
+    note = note.replace('#', '').replace('b', '');
+
+    if(notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(note))
+        return treble_note_icons[note];
+    return bass_note_icons[note];
+}
+
 </script>
 
 <template>
@@ -385,8 +402,8 @@ async function traverse_song(dir: number) {
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img v-if="!media_panel_visible" @click="play" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else class="ionicon" @click="play" src="/assets/musical-notes.svg" />
+                    <img v-if="!media_panel_visible" @click="toggle_media_panel()" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
                 <img v-if="is_bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
@@ -408,9 +425,9 @@ async function traverse_song(dir: number) {
             <div class="handle-bar"></div>
         </div>
         <div class="close-button" :style="{ opacity: (media_panel_height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
-            <img @click="play()" class="ionicon" src="/assets/close.svg" />
+            <img @click="toggle_media_panel()" class="ionicon" src="/assets/close.svg" />
         </div>
-        <div class="mini-playback-container" v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible && audio_source_exists" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
+        <div v-if="media_panel_height <= (isLandscape ? 0.3 : 0.15) && media_panel_visible && audio_source_exists" class="mini-playback-container" :style="{ opacity: (media_panel_height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
                 <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
@@ -425,10 +442,10 @@ async function traverse_song(dir: number) {
                 <p class="media-type-title">Piano</p>           
             </div>
             <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
-                <p class="media-type-title">Starting Notes</p>           
+                <p class="media-type-title">Starting Notes</p>
             </div>
         </div>
-        <div class="media-controls" v-if="!media_starting_notes && media_panel_visible">
+        <div v-if="!media_starting_notes && media_panel_visible" class="media-controls">
             <div class="playback-container" :style="{ opacity: (media_panel_height < (isLandscape ? 0.5 : 0.25)) ? '0' : '1'}">
                 <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
@@ -441,10 +458,21 @@ async function traverse_song(dir: number) {
                 </div>
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             </div>
-            
-            
         </div>
-        
+        <div v-else class="starting-notes-container">
+            <div class="note-container">
+                <div class="note-button" @click="play_all_notes()">
+                    <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
+                </div>
+                <p class="note-name">All</p>
+            </div>
+            <div v-for="note in notes" :key="note" class="note-container" @click="play_note(note)">
+                <div class="note-button">
+                    <img class="ionicon starting-note-icon" :src="get_note_icon(note)" />
+                </div>
+                <p class="note-name">{{ note }}</p>
+            </div>
+        </div>
     </div>
     
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
@@ -579,6 +607,42 @@ async function traverse_song(dir: number) {
     height: 10vw;
     margin-right: 15px;
 }
+.note-name {
+    color: var(--color);
+}
+.note-container {
+    justify-content: center;
+    align-items: center;
+    text-align: center
+}
+.starting-note-icon-all {
+    filter: var(--svg-polar);
+    width: 8vw;
+    height: 8vw;
+}
+.starting-note-icon {
+    width: 15vw;
+    height: 15vw;
+    filter: var(--svg-polar);
+}
+.note-button {
+    background-color: var(--song-background);
+    color: var(--color);
+    border: 1px solid var(--background);
+    border-radius: 15px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 15vw;
+    min-height: 15vw;
+}
+.starting-notes-container {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    transition: opacity 0.25s ease-in;
+}
 .playback-container {
     width: 100%;
     justify-content: center;
@@ -621,7 +685,7 @@ async function traverse_song(dir: number) {
 
 .media-type-title  {
     margin: 0px  0px;
-    color: black;
+    color: var(--color);
     font-weight: bold;
     font-size: small;
     line-height: 35px;
@@ -635,7 +699,7 @@ async function traverse_song(dir: number) {
     padding: 0px 15px;
 }
 .media-type-indicator-active {
-    background-color: white;
+    background-color: var(--media-type-active);
     height: 33px;
     border-radius: 15px;
     display: flex;
@@ -644,7 +708,7 @@ async function traverse_song(dir: number) {
     padding: 0px 25px;
 }
 .media-type {
-    background-color: #EBEBEB;
+    background-color: var(--media-type);;
     width: max-content;
     height: 35px;
     border-radius: 15px;
