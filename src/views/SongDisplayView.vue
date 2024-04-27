@@ -25,7 +25,7 @@ const router = useRouter();
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const song_count = ref<number>(0);
-var isMobile = Capacitor.getPlatform() !== "web";
+var isMobile = true//Capacitor.getPlatform() !== "web";
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
@@ -155,11 +155,18 @@ onMounted(async () => {
         if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
             isLandscape.value = false;
             previous_orientation = (await ScreenOrientation.orientation()).type;
-            media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
+
+            if(!media_starting_notes.value)
+                media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
+            else
+                media_panel_height.value = (isLandscape.value) ? 0.8 : 0.4;
         } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
             isLandscape.value = true;
             previous_orientation = (await ScreenOrientation.orientation()).type;
-            media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
+            if(!media_starting_notes.value)
+                media_panel_height.value = (isLandscape.value) ? 0.2 : 0.1;
+            else
+                media_panel_height.value = (isLandscape.value) ? 0.8 : 0.4;
         }
     });
 });
@@ -319,11 +326,17 @@ function drag(e: Event, pageY: number) {
 }
 function dragEnd(e: Event) {
     e.preventDefault();
-    
     if(media_panel_height.value > (isLandscape.value ? 0.4 : 0.2))
         media_panel_height.value = (isLandscape.value ? 0.8 : 0.4);
-    else
-        media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
+    else {
+        if(media_starting_notes.value) {
+            media_panel_height.value = 0;
+            media_panel_active.value = false;
+            media_panel_visible.value = false;
+        } else {
+            media_panel_height.value = (isLandscape.value ? 0.2 : 0.1);
+        }
+    }
 
     media_panel_elastic.value = true;
     setTimeout(() => {
