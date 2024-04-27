@@ -4,6 +4,8 @@ import { ref, unref } from "vue";
 
 const notes_to_load = ["A2", "C3", "A3", "C4", "A4", "C5"] as const;
 const bass_note_icons: {[note: string]: string} = {
+    "F2": "/assets/note_icons/F2.svg",
+    "G2": "/assets/note_icons/G2.svg",
     "A2": "/assets/note_icons/A2.svg",
     "B2": "/assets/note_icons/B2.svg",
     "C3": "/assets/note_icons/C3.svg",

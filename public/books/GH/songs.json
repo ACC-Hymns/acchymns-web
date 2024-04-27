@@ -3083,15 +3083,15 @@
 	},
 	"769": {
 		"title": "The Open Gate",
-		"notes": ["B4", "G#4", "C#4", "G#3"]
+		"notes": ["B4", "G4", "D4", "G3"]
 	},
 	"770": {
 		"title": "Free Waters",
-		"notes": ["G#4", "B3", "G#3"]
+		"notes": ["G4", "B3", "G3"]
 	},
 	"771": {
 		"title": "Good Night and Good Morning",
-		"notes": ["Ab4", "F4", "C4", "Db3"]
+		"notes": ["Ab4", "F4", "Db4", "Db3"]
 	},
 	"772": {
 		"title": "Heavenly Sunlight",
@@ -3103,11 +3103,11 @@
 	},
 	"774": {
 		"title": "Good-By",
-		"notes": ["E4", "C4", "C3", "G3"]
+		"notes": ["E4", "C4", "G3", "C3"]
 	},
 	"775": {
 		"title": "Meet Me There",
-		"notes": ["Eb4", "C4", "G3", "Eb3"]
+		"notes": ["Eb4", "Bb3", "G3", "Eb3"]
 	},
 	"776": {
 		"title": "Higher Ground",
@@ -3147,7 +3147,7 @@
 	},
 	"785": {
 		"title": "Through Gates of Splendor",
-		"notes": ["Eb4", "C4", "Ab3", "Ab3"]
+		"notes": ["Eb4", "C4", "Ab3", "Ab2"]
 	},
 	"786": {
 		"title": "Steal Away",
@@ -3155,7 +3155,7 @@
 	},
 	"787": {
 		"title": "Sunshine in the Soul",
-		"notes": ["Ab4", "C4", "Eb3", "F4"]
+		"notes": ["Ab4", "C4", "Eb3", "Ab2"]
 	},
 	"788": {
 		"title": "Where He Leads I'll Follow",
@@ -3183,11 +3183,11 @@
 	},
 	"794": {
 		"title": "The Nail-Scarred Hand",
-		"notes": ["C4", "A3", "F4"]
+		"notes": ["C4", "A3", "F3"]
 	},
 	"795": {
 		"title": "That Lonesome Valley",
-		"notes": ["D4"]
+		"notes": ["C4", "A3", "F3", "D4"]
 	},
 	"796": {
 		"title": "Be Still, My Soul",

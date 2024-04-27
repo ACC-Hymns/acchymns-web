@@ -382,11 +382,11 @@ async function traverse_song(dir: number) {
 }
 
 function get_note_icon(note: string) {
-    note = note.replace('#', '').replace('b', '');
-
-    if(notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(note))
-        return treble_note_icons[note];
-    return bass_note_icons[note];
+    let modified_note = note.replace('#', '').replace('b', '');
+    
+    if(notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note))
+        return treble_note_icons[modified_note];
+    return bass_note_icons[modified_note];
 }
 
 </script>
@@ -621,10 +621,14 @@ function get_note_icon(note: string) {
     filter: var(--svg-polar);
     width: 8vw;
     height: 8vw;
+    max-width: 50px;
+    max-height: 50px;
 }
 .starting-note-icon {
     width: 15vw;
     height: 15vw;
+    max-width: 100px;
+    max-height: 100px;
     filter: var(--svg-polar);
 }
 .note-button {
@@ -636,8 +640,12 @@ function get_note_icon(note: string) {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 15vw;
-    min-height: 15vw;
+    min-width: 15px;
+    min-height: 15px;
+    width: 15vw;
+    height: 15vw;
+    max-width: 100px;
+    max-height: 100px;
 }
 .starting-notes-container {
     width: 100%;
