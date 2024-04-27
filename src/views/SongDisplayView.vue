@@ -13,6 +13,7 @@ import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
+import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 //import { navigator.mediaSession } from '@jofr/capacitor-media-session';
 
@@ -69,6 +70,8 @@ onMounted(async () => {
 
         audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
         audio_source.value.preload = 'metadata';
+        if(!(await Network.getStatus()).connected) audio_source_exists.value = false;
+        setMediaPanel(null, true);
         audio_source.value.addEventListener('loadedmetadata', () => {
             console.log("Audio Loaded!");
             audio_source_exists.value = true;
@@ -78,6 +81,13 @@ onMounted(async () => {
                 duration: audio_source.value?.duration || 0,
                 playbackRate: 1.0
             })
+            setMediaPanel(null, false);
+        })
+        Network.addListener("networkStatusChange", async (details) => {
+            if(!(await Network.getStatus()).connected) {
+                audio_source_exists.value = false;
+                audio_source.value?.load();
+            }
         })
         audio_source.value.addEventListener('error', () => {
             console.error("Error loading audio");
@@ -98,6 +108,12 @@ onMounted(async () => {
             navigator.mediaSession.playbackState = 'playing';
             morph();
             media_is_playing.value = true;
+        })
+        navigator.mediaSession.setActionHandler('stop', (details) => {
+            audio_source.value?.pause();
+            navigator.mediaSession.playbackState = 'paused';
+            morph();
+            media_is_playing.value = false;
         })
         navigator.mediaSession.setActionHandler("pause", (details) => {
             audio_source.value?.pause();
