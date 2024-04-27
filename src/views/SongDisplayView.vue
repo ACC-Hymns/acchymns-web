@@ -524,10 +524,11 @@ function get_note_icon(note: string) {
     appearance: none; 
     height: 15px;
     width: 15px;
-    background-color: var(--color);
+    background-color: white;
     border-radius: 50%;
     border: none;
     transition: .2s ease-in-out;
+    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
 }
 
 .media-timeline::-moz-range-thumb {
@@ -538,10 +539,11 @@ function get_note_icon(note: string) {
     appearance: none; 
     height: 15px;
     width: 15px;
-    background-color: var(--color);
+    background-color: white;
     border-radius: 50%;
     border: none;
     transition: .2s ease-in-out;
+    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
 }
 .close-button {
     position: absolute;
