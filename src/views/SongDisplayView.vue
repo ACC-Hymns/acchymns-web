@@ -228,8 +228,8 @@ async function play_note(note: string) {
 }
 
 async function toggle_media_panel() {
-    media_panel_visible.value = !media_panel_visible.value;
     media_panel_active.value = !media_panel_active.value;
+    media_panel_visible.value = media_panel_active.value;
     media_panel_height.value = isLandscape.value ? 0.8 : 0.4;
 }
 
@@ -329,7 +329,7 @@ function dragEnd(e: Event) {
     if(media_panel_height.value > (isLandscape.value ? 0.4 : 0.2))
         media_panel_height.value = (isLandscape.value ? 0.8 : 0.4);
     else {
-        if(media_starting_notes.value) {
+        if(media_starting_notes.value && media_is_playing.value == false) {
             media_panel_height.value = 0;
             media_panel_active.value = false;
             media_panel_visible.value = false;
