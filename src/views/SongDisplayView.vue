@@ -284,9 +284,9 @@ async function toggle_media_panel() {
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
 
     panel.value.background_blur = false;
-    setTimeout(() => {
+    /:setTimeout(() => {
         panel.value.background_blur = true;
-    }, 50);
+    //}, 50);
 }
 
 
