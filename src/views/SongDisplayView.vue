@@ -286,7 +286,7 @@ async function toggle_media_panel() {
     panel.value.background_blur = false;
     setTimeout(() => {
         panel.value.background_blur = true;
-    }, 250);
+    }, 50);
 }
 
 
