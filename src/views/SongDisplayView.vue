@@ -94,8 +94,8 @@ class DraggablePanel {
             if(!(media_starting_notes.value && !media_is_playing.value))
                 this.height = (isLandscape.value ? 0.2 : 0.1);
         }
-        if (this.height <= 0 || isNaN(this.height)) {
-            this.height = 0;
+        if (this.height <= 0.01 || isNaN(this.height)) {
+            this.height = 0.005;
         }
     }
     dragEnd(e: Event) {
@@ -104,7 +104,7 @@ class DraggablePanel {
             this.height = (isLandscape.value ? 0.8 : 0.4);
         else {
             if (media_starting_notes.value && media_is_playing.value == false) {
-                this.height = 0;
+                this.height = 0.005;
                 setTimeout(() => {
                     this.active = false;
                     this.visible = false;
@@ -387,7 +387,7 @@ function toggleMenu(e: any) {
 
 function hideMedia() {
     if(audio_source_exists.value == false) {
-        panel.value.height = 0;
+        panel.value.height = 0.005;
         panel.value.elastic = true;
         setTimeout(() => {
             panel.value.elastic = false;
