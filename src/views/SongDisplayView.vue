@@ -16,7 +16,7 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
-//import { navigator.mediaSession } from '@jofr/capacitor-media-session';
+//import { MediaSession } from '@jofr/capacitor-media-session';
 
 const props = defineProps<SongReference>();
 
@@ -62,14 +62,14 @@ class DraggablePanel {
     height: number;
     visible: boolean;
     elastic: boolean;
-    background_blur: boolean;
+    active: boolean;
 
     constructor() {
         this.start = 0;
         this.previous = 0;
         this.visible = false;
         this.elastic = false;
-        this.background_blur = true;
+        this.active = false;
         this.height = (screen.orientation.type.includes("landscape")) ? 0.8 : 0.4;
     }
     dragFallOff(x: number) {
@@ -83,9 +83,20 @@ class DraggablePanel {
     }
     drag(e: Event, pageY: number) {
         e.preventDefault();
-        this.height = this.dragFallOff((1 - pageY / window.innerHeight) - this.start) + this.previous;
-        if (this.height < (isLandscape.value ? 0.2 : 0.1) || isNaN(this.height))
-        this.height = (isLandscape.value ? 0.2 : 0.1);
+
+        if(isLandscape.value) {
+            this.height = (1 - pageY / window.innerHeight) - this.start + this.previous;
+        } else {  
+            this.height = this.dragFallOff((1 - pageY / window.innerHeight) - this.start) + this.previous;
+        }
+
+        if (this.height < (isLandscape.value ? 0.2 : 0.1) || isNaN(this.height)) {
+            if(!(media_starting_notes.value && !media_is_playing.value))
+                this.height = (isLandscape.value ? 0.2 : 0.1);
+        }
+        if (this.height <= 0 || isNaN(this.height)) {
+            this.height = 0;
+        }
     }
     dragEnd(e: Event) {
         e.preventDefault();
@@ -94,8 +105,10 @@ class DraggablePanel {
         else {
             if (media_starting_notes.value && media_is_playing.value == false) {
                 this.height = 0;
-                media_panel_active.value = false;
-                this.visible = false;
+                setTimeout(() => {
+                    this.active = false;
+                    this.visible = false;
+                }, 250);
             } else {
                 this.height = (isLandscape.value ? 0.2 : 0.1);
             }
@@ -240,7 +253,6 @@ onUnmounted(() => {
 let menu_bar_visible = ref<boolean>(true);
 let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
 let media_starting_notes = ref<boolean>(false);
-let media_panel_active = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
 let media_timestamp_elapsed = ref<number>(0);
 let media_timestamp_end = ref<number>(0);
@@ -279,14 +291,19 @@ async function play_note(note: string) {
 }
 
 async function toggle_media_panel() {
-    media_panel_active.value = !media_panel_active.value;
-    panel.value.visible = media_panel_active.value;
+    panel.value.active = !panel.value.active;
+    panel.value.visible = panel.value.active;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
+}
 
-    panel.value.background_blur = false;
-    //setTimeout(() => {
-        panel.value.background_blur = true;
-    //}, 50);
+async function close_media_panel() {
+    panel.value.active = false;
+    panel.value.visible = false;
+    panel.value.height = isLandscape.value ? 0.8 : 0.4;
+    audio_source.value?.pause();
+    navigator.mediaSession.playbackState = 'paused';
+    morph();
+    media_is_playing.value = false;
 }
 
 
@@ -364,7 +381,7 @@ function secondsToTimestamp(seconds: number) {
 function toggleMenu(e: any) {
     menu_bar_visible.value = !menu_bar_visible.value;
 
-    if(media_panel_active.value)
+    if(panel.value.active)
         panel.value.visible = menu_bar_visible.value;
 }
 
@@ -375,7 +392,7 @@ function hideMedia() {
         setTimeout(() => {
             panel.value.elastic = false;
             panel.value.visible = false;
-            media_panel_active.value = false;
+            panel.value.active = false;
         }, 250);
         return;
     }
@@ -450,13 +467,13 @@ function get_note_icon(note: string) {
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div class="media-panel" :class="{ 'hidden-panel': !panel.visible, elastic: panel.elastic, 'media-panel-blur': panel.background_blur}" :style="'height:' + (panel.height * 100) + '%'"></div>
-    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">   
+    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
+        <div class="media-panel-blur"></div> 
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => panel.dragStart(e, e.touches[0].pageY)" @touchmove="(e) => panel.drag(e, e.touches[0].pageY)" @touchend="(e) => panel.dragEnd(e)">
             <div class="handle-bar"></div>
         </div>
         <div class="close-button" :style="{ opacity: (panel.height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
-            <img @click="toggle_media_panel()" class="ionicon" src="/assets/close.svg" />
+            <img @click="close_media_panel()" class="ionicon" src="/assets/close.svg" />
         </div>
         <div v-if="panel.height <= (isLandscape ? 0.3 : 0.15) && panel.visible && audio_source_exists" class="mini-playback-container" :style="{ opacity: (panel.height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
@@ -652,14 +669,14 @@ function get_note_icon(note: string) {
     filter: var(--svg-polar);
     width: 8vw;
     height: 8vw;
-    max-width: 50px;
-    max-height: 50px;
+    max-width:  30px;
+    max-height: 30px;
 }
 .starting-note-icon {
     width: 15vw;
     height: 15vw;
-    max-width: 100px;
-    max-height: 100px;
+    max-width:  75px;
+    max-height: 75px;
     filter: var(--svg-polar);
 }
 .note-button {
@@ -675,8 +692,8 @@ function get_note_icon(note: string) {
     min-height: 15px;
     width: 15vw;
     height: 15vw;
-    max-width: 100px;
-    max-height: 100px;
+    max-width:  75px;
+    max-height: 75px;
 }
 .starting-notes-container {
     width: 100%;
@@ -787,19 +804,15 @@ function get_note_icon(note: string) {
 .media-panel-blur {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-}
-.media-panel {
-    width: 100%;
-    background-color: var(--menu-color);
-    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    position: fixed;
+    position: absolute;
+    top: 0;
     left: 0;
-    bottom: 0;
-    z-index: 1;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    background-color: var(--menu-color);
     border-radius: 15px 15px 0px 0px;
-    transition: opacity 0.125s ease-in, visibility 0.125s ease;
-    opacity: 1;
-    visibility: visible;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
 }
 .elastic {
     transition: height 0.0625s ease-out;
