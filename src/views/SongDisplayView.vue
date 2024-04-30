@@ -25,7 +25,7 @@ const router = useRouter();
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const song_count = ref<number>(0);
-var isMobile = true//Capacitor.getPlatform() !== "web";
+var isMobile = Capacitor.getPlatform() !== "web";
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const is_bookmarked = computed(() => {
