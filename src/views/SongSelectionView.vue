@@ -3,7 +3,6 @@ import { nextTick, onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-
 import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 
 const props = defineProps<{
@@ -28,6 +27,8 @@ let button_color = ref("#000000");
 let tooltip = ref<Element>();
 let song_number_groups = ref<string[][]>([]);
 let song_number_groups_active = ref<string[][]>([]);
+let song_group_elements = ref<any[]>()
+let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", false);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -40,8 +41,13 @@ onMounted(async () => {
     song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
 
     let song_count = song_numbers.value.length;
+    let num_groups = Math.ceil(song_count/100);
+    if (song_count % 100 == 0) {
+        num_groups += 1;
+    }
 
-    for (let i = 0; i < Math.ceil(song_count/100); i++) {
+    // Dividing songs into groups of 100
+    for (let i = 0; i < num_groups; i++) {
         song_number_groups.value?.push(song_numbers.value.filter((song) => {
             const re = new RegExp(/[a-z]/, "i");
             let song_num = song.replace(re, "");
@@ -53,18 +59,6 @@ onMounted(async () => {
             return false;
         }));
     }
-
-    console.log(song_number_groups_active)
-
-    /*console.log(song_numbers.value.filter((song) => {
-        const re = new RegExp(/[a-z]/, "i");
-        let song_num = song.replace(re, "");
-
-        if (Number(song_num) >= 200 && Number(song_num) < 299) {
-            return true;
-        }
-        return false;
-    }));*/
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
@@ -84,6 +78,32 @@ function toggleDropdown(group: string[]) {
     } else {
         song_number_groups_active.value = [];
         song_number_groups_active.value.push(group);
+        var index = song_number_groups.value.indexOf(group);
+        if (song_group_elements.value == undefined) {
+            return;
+        }
+        let element = song_group_elements.value[index] as HTMLElement;
+        setTimeout(() => {
+            scrollIntoViewWithOffset(element, 0);
+        }, 200)
+    }
+}
+
+const scrollIntoViewWithOffset = (selector: HTMLElement, offset: number) => {
+    window.scrollTo({
+        behavior: 'smooth',
+        top:
+        selector.getBoundingClientRect().top -
+        document.body.getBoundingClientRect().top -
+        offset,
+    })
+}
+
+function getRangeString(start: string, end: string) {
+    if (start == end) {
+        return start;
+    } else {
+        return `${start} - ${end}`;
     }
 }
 
@@ -117,16 +137,21 @@ function hideTooltip() {
             </div>
         </div>
     </div>
-
     <div v-if="error_active" class="fallback-container">
         <img class="wifi-fallback" src="/assets/wifi_off.svg" />
     </div>
     <div v-else class="songs main-content">
-        <!-- Buttons will be added here -->
-        <div v-for="group in song_number_groups" class="song-group-container">
-            <div @click="toggleDropdown(group)">
+        <!-- Buttons with song grouping disabled -->
+        <div v-if="!song_group_enabled" class="song-button-container">
+            <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
+                            {{ song_num }}
+            </RouterLink>
+        </div>
+        <!-- Buttons with song grouping enabled -->
+        <div v-else @click="toggleDropdown(group)" v-for="group in song_number_groups" class="song-group-container" ref="song_group_elements">
+            <div>
                 <div class="song-group-title-container">
-                    <div class="song-title">{{group[0]}} - {{group[group.length - 1]}}</div>
+                    <div class="song-title">{{getRangeString(group[0], group[group.length - 1])}}</div>
                     <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(group)}"/>
                 </div>
                 <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(group)}">
@@ -174,7 +199,9 @@ function hideTooltip() {
 }
 
 .song-group-container {
-    border: 1px solid #bebebe;
+    /*border: 1px solid #bebebe;*/
+    box-shadow: var(--thin-shadow);
+    background-color: var(--button-color);
     border-radius: 15px;
 }
 
@@ -214,6 +241,8 @@ function hideTooltip() {
 }
 
 .song-button-container {
+    padding-left: 10px;
+    padding-right: 10px;
     overflow: hidden;
     display: flex;
     justify-content: center;

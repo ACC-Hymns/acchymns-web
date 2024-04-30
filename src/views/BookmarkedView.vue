@@ -33,6 +33,9 @@ onMounted(async () => {
     const SONG_METADATA = await getAllSongMetaData();
 
     for (const bookmark of bookmarks.value) {
+        if (SONG_METADATA[bookmark.book] == undefined) {
+            continue;
+        }
         const song: Song = SONG_METADATA[bookmark.book][bookmark.number];
         available_songs.value.push({
             title: song.title ?? "",

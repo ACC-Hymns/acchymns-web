@@ -295,7 +295,7 @@ onUpdated(async () => {
     padding: 10px 15px;
     border-radius: 30px;
     border-width: 2px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--thin-shadow);
     display: flex;
     justify-content: center;
     margin-top: 5px;
