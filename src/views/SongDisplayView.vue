@@ -16,7 +16,7 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
-//import { MediaSession } from '@jofr/capacitor-media-session';
+import { MediaSession } from '@christoffyw/capacitor-media-session';
 
 const props = defineProps<SongReference>();
 
@@ -62,14 +62,12 @@ class DraggablePanel {
     height: number;
     visible: boolean;
     elastic: boolean;
-    active: boolean;
 
     constructor() {
         this.start = 0;
         this.previous = 0;
         this.visible = false;
         this.elastic = false;
-        this.active = false;
         this.height = (screen.orientation.type.includes("landscape")) ? 0.8 : 0.4;
     }
     dragFallOff(x: number) {
@@ -106,7 +104,6 @@ class DraggablePanel {
             if (media_starting_notes.value && media_is_playing.value == false) {
                 this.height = 0.005;
                 setTimeout(() => {
-                    this.active = false;
                     this.visible = false;
                 }, 250);
             } else {
@@ -143,17 +140,17 @@ onMounted(async () => {
         audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
         audio_source.value.preload = 'metadata';
         if(!(await Network.getStatus()).connected) audio_source_exists.value = false;
-        setMediaPanel(null, true);
+        setMediaType(null, true);
         audio_source.value.addEventListener('loadedmetadata', () => {
             console.log("Audio Loaded!");
             audio_source_exists.value = true;
             media_timestamp_end.value = audio_source.value?.duration || 0;
-            navigator.mediaSession.setPositionState({
+            MediaSession.setPositionState({
                 position: audio_source.value?.currentTime || 0,
                 duration: audio_source.value?.duration || 0,
                 playbackRate: 1.0
             })
-            setMediaPanel(null, false);
+            setMediaType(null, false);
         })
         Network.addListener("networkStatusChange", async (details) => {
             if(!(await Network.getStatus()).connected) {
@@ -164,9 +161,9 @@ onMounted(async () => {
         audio_source.value.addEventListener('error', () => {
             console.error("Error loading audio");
             audio_source_exists.value = false;
-            setMediaPanel(null, true);
+            setMediaType(null, true);
         });
-        navigator.mediaSession.metadata = new MediaMetadata({
+        MediaSession.setMetadata({
             title: `${props.number} - ${song_data.title}`,
             artwork: [{
                 src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
@@ -174,42 +171,62 @@ onMounted(async () => {
                 type: 'image/png' 
             }],
             artist: BOOK_METADATA[props.book].name.medium
-        })
-        navigator.mediaSession.setActionHandler("play", (details) => {
+        });
+        MediaSession.setActionHandler({
+            action: 'play',
+        }, (details) => {
             audio_source.value?.play();
-            navigator.mediaSession.playbackState = 'playing';
+            MediaSession.setPlaybackState({
+                playbackState: "playing"
+            });
             morph();
             media_is_playing.value = true;
         })
-        navigator.mediaSession.setActionHandler('stop', (details) => {
+        MediaSession.setActionHandler({
+            action: 'pause',
+        }, (details) => {
             audio_source.value?.pause();
-            navigator.mediaSession.playbackState = 'paused';
+            MediaSession.setPlaybackState({
+                playbackState: "paused"
+            });
             morph();
             media_is_playing.value = false;
         })
-        navigator.mediaSession.setActionHandler("pause", (details) => {
+        MediaSession.setActionHandler({
+            action: 'stop',
+        }, (details) => {
             audio_source.value?.pause();
-            navigator.mediaSession.playbackState = 'paused';
+            MediaSession.setPlaybackState({
+                playbackState: "paused"
+            });
             morph();
             media_is_playing.value = false;
         })
-        navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+        MediaSession.setActionHandler({
+            action: 'seekbackward',
+        }, (details) => {
             let percentage = Math.max(0, media_timestamp_elapsed.value - 10)/media_timestamp_end.value * 100;
-            console.log(percentage);
             set_audio_position(percentage);
         })
-        navigator.mediaSession.setActionHandler("seekforward", (details) => {
+        MediaSession.setActionHandler({
+            action: 'seekforward',
+        }, (details) => {
             let percentage = Math.min(media_timestamp_end.value, media_timestamp_elapsed.value + 10)/media_timestamp_end.value * 100;
-            console.log(percentage);
             set_audio_position(percentage);
         })
-        navigator.mediaSession.setActionHandler("previoustrack", (details) => {
+        MediaSession.setActionHandler({
+            action: 'previoustrack',
+        }, (details) => {
             traverse_song(-1);
-        })
-        navigator.mediaSession.setActionHandler("nexttrack", (details) => {
+        });
+        MediaSession.setActionHandler({
+            action: 'nexttrack',
+        }, (details) => {
             traverse_song(1);
         })
-        navigator.mediaSession.setActionHandler("seekto", (details) => {
+        MediaSession.setActionHandler({
+            action: 'seekto',
+        }, (details) => {
             set_audio_position((details?.seekTime || 0)/media_timestamp_end.value * 100);
         })
     }
@@ -246,7 +263,9 @@ onUnmounted(() => {
     player.stop();
     audio_source.value?.pause();
     audio_source.value = undefined;
-    navigator.mediaSession.playbackState = 'none';
+    MediaSession.setPlaybackState({
+        playbackState: "none"
+    });
 });
 
 
@@ -291,23 +310,23 @@ async function play_note(note: string) {
 }
 
 async function toggle_media_panel() {
-    panel.value.active = !panel.value.active;
-    panel.value.visible = panel.value.active;
+    panel.value.visible = !panel.value.visible;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
 }
 
 async function close_media_panel() {
-    panel.value.active = false;
     panel.value.visible = false;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
     audio_source.value?.pause();
-    navigator.mediaSession.playbackState = 'paused';
+    MediaSession.setPlaybackState({
+        playbackState: "paused"
+    });
     morph();
     media_is_playing.value = false;
 }
 
 
-function setMediaPanel(event: any, value: boolean) {
+function setMediaType(event: any, value: boolean) {
     if(event) event.preventDefault();
     media_starting_notes.value = value;
     isPlaying.value = !panel.value.visible;
@@ -334,7 +353,9 @@ async function playMedia() {
     // Play the media
     if(!media_is_playing.value) {
         audio_source.value?.play();
-        navigator.mediaSession.playbackState = 'playing'
+        MediaSession.setPlaybackState({
+            playbackState: "playing"
+        });
 
         updateTime()
         elapsed_timer = setInterval(() => {
@@ -344,7 +365,9 @@ async function playMedia() {
     }
     else {
         audio_source.value?.pause();
-        navigator.mediaSession.playbackState = 'paused'
+        MediaSession.setPlaybackState({
+            playbackState: "paused"
+        });
         clearInterval(elapsed_timer);
     }
 
@@ -363,7 +386,7 @@ function set_audio_position(percentage: number) {
     if(source == undefined)
         return;
     source.currentTime = source.duration * percentage/100;
-    navigator.mediaSession.setPositionState({
+    MediaSession.setPositionState({
         position: audio_source.value?.currentTime || 0,
         duration: audio_source.value?.duration || 0,
         playbackRate: 1.0
@@ -380,9 +403,6 @@ function secondsToTimestamp(seconds: number) {
 
 function toggleMenu(e: any) {
     menu_bar_visible.value = !menu_bar_visible.value;
-
-    if(panel.value.active)
-        panel.value.visible = menu_bar_visible.value;
 }
 
 function hideMedia() {
@@ -392,7 +412,6 @@ function hideMedia() {
         setTimeout(() => {
             panel.value.elastic = false;
             panel.value.visible = false;
-            panel.value.active = false;
         }, 250);
         return;
     }
@@ -467,7 +486,7 @@ function get_note_icon(note: string) {
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
+    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
         <div class="media-panel-blur"></div> 
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => panel.dragStart(e, e.touches[0].pageY)" @touchmove="(e) => panel.drag(e, e.touches[0].pageY)" @touchend="(e) => panel.dragEnd(e)">
             <div class="handle-bar"></div>
@@ -486,10 +505,10 @@ function get_note_icon(note: string) {
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: (panel.height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
-            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)">
+            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
-            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)">
+            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, true)">
                 <p class="media-type-title">Starting Notes</p>
             </div>
         </div>
@@ -507,7 +526,7 @@ function get_note_icon(note: string) {
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             </div>
         </div>
-        <div v-else class="starting-notes-container">
+        <div v-if="media_starting_notes" class="starting-notes-container">
             <div class="note-container">
                 <div class="note-button" @click="play_all_notes()">
                     <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
