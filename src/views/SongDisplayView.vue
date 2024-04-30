@@ -486,10 +486,10 @@ function get_note_icon(note: string) {
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: (panel.height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
-            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)" @touchstart="(e) => setMediaPanel(e, false)">
+            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
-            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)" @touchstart="(e) => setMediaPanel(e, true)">
+            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaPanel(e, true)">
                 <p class="media-type-title">Starting Notes</p>
             </div>
         </div>
