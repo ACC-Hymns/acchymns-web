@@ -17,6 +17,9 @@ let verses = ref<string>("");
 let color = ref<string>("");
 let book_name = ref<string>("");
 let verses_visible = ref<boolean>(false);
+let bible_reading = ref<boolean>(false);
+let top_text = ref<string>("");
+let bottom_text = ref<string>("");
 
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
@@ -40,20 +43,27 @@ let client: DynamoDBClient;
 
 async function set_data() {
     let data: ChurchData = (await get(client, props.church_id)).Item as unknown as ChurchData;
-    song_number.value = data.SONG_NUMBER.S;
+    bible_reading.value = data.BOOK_ID.S == "BIBLE";
 
-    verses_visible.value = false;
-    if(data.VERSES.NS[0] == -1) {
-        verses.value = "";
-    } else if (data.VERSES.NS[0] == -2) {
-        verses.value = "All Verses";
+    if(bible_reading.value) {
+      top_text.value = data.SONG_NUMBER.S;
+      bottom_text.value = data.BOOK_COLOR.S;
     } else {
-        data.VERSES.NS.sort((a, b) => a - b);
-        verses.value = data.VERSES.NS.join(", ");
-        verses_visible.value = true;
+      song_number.value = data.SONG_NUMBER.S;
+
+      verses_visible.value = false;
+      if(data.VERSES.NS[0] == -1) {
+          verses.value = "";
+      } else if (data.VERSES.NS[0] == -2) {
+          verses.value = "All Verses";
+      } else {
+          data.VERSES.NS.sort((a, b) => a - b);
+          verses.value = data.VERSES.NS.join(", ");
+          verses_visible.value = true;
+      }
+      color.value = data.BOOK_COLOR.S;
+      book_name.value = data.BOOK_ID.S;
     }
-    color.value = data.BOOK_COLOR.S;
-    book_name.value = data.BOOK_ID.S;
 }
 
 onMounted(async () => {
@@ -79,19 +89,33 @@ let hours = ref<string>('');
 let minutes = ref<string>('');
 let seconds = ref<string>('');
 
-
+function calculate_text_width(text: string, font: string) {
+    let canvas = document.createElement("canvas");
+    let context = canvas.getContext("2d");
+    if (context == null) {
+        return 0;
+    }
+    context.font = font;
+    let metrics = context.measureText(text);
+    return metrics.width;
+}
 
 </script>
 
 <template>
     <div class="info-seperator">
-        <div class="song-info">
+        <div v-if="bible_reading" class="song-info">
+          <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
+          <h2 class="bottom-text">{{ bottom_text }}</h2>
+          
+        </div>
+        <div v-else class="song-info">
             <h1 class="song-number">{{ song_number}}</h1>
             <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
             <h2 class="verses">{{ verses }}</h2>
             <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
         </div>
-        <div class="clock">
+        <div class="clock" :class="{'clock-bible-long': top_text.length > 8 && bible_reading, 'clock-song': song_number.length > 0, 'clock-bible': top_text.length <= 8 && bible_reading}">
             <div class="dot"></div>
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
@@ -106,6 +130,24 @@ let seconds = ref<string>('');
 </template>
 
 <style scoped>
+.top-text {
+    font-size: 16em;
+    color: #000000;
+    margin: 0 5%;
+    top: 10%;
+    position: fixed;
+    margin: 0 5%;
+    line-height: 1;
+}
+.bottom-text {
+    font-size: 10em;
+    color: #000000;
+    margin: 0 5%;
+    bottom: 50%;
+    position: fixed;
+    margin: 0 5%;
+    line-height: 1;
+}
 .song-info {
     width: 50%;
     height: 100%;
@@ -156,17 +198,26 @@ let seconds = ref<string>('');
     margin: 0 5%;
 }
 
+.clock-bible-long {
+  transform: translate(25vw, 12vh);
+}
+.clock-bible {
+  transform: translateX(25vw);
+}
+.clock-song {
+  transform: translateX(25vw);
+}
+
 .clock {
   background: #ececec;
   width: 600px;
   height: 600px;
-  margin: 0 5%;
   border-radius: 50%;
   border: 14px solid #333;
   position: fixed;
   box-shadow: 0 2vw 4vw -1vw rgba(0,0,0,0.8);
-  right: 0;
-  top: calc(50% - 300px);
+  transition: transform 0.3s;
+  translate: calc(50vw - 300px) 50vh;
 }
 
 .dot {

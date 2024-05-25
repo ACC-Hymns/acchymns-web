@@ -135,7 +135,7 @@ function hideTooltip() {
         </a>
         <br>
         <div class="verse-list">
-            <a v-for="verse in 16" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
+            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
 
                 if(verses[0] == -2) 
                     verses = [];

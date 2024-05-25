@@ -42,4 +42,24 @@ type SearchParams = {
     bookFilters: string[]; // Short names of books
 };
 
-export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
+type BibleVerse = {
+    text: string;
+    num: number;
+};
+
+type BibleChapter = {
+    verses: BibleVerse[];
+    num: number;
+};
+
+type BibleBook = {
+    name: string;
+    chapters: BibleChapter[];
+};
+
+type Bible = {
+    version: string;
+    books: BibleBook[];
+};
+
+export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BibleVerse, BibleChapter, BibleBook, Bible};
