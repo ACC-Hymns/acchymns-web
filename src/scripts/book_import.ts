@@ -14,6 +14,45 @@ async function getBookUrls() {
     return book_sources.filter(b => (b.status != BookSourceType.PREVIEW && b.status != BookSourceType.HIDDEN)).map(b => b.src);
 }
 
+async function checkForUpdates() {
+    console.log("Checking for updates...")
+    if(Capacitor.getPlatform() !== "web") {
+        try {
+            await Filesystem.stat({
+                directory: Directory.Documents,
+                path: "Hymnals/"
+            });
+        } catch (e) {
+            await Filesystem.mkdir({
+                directory: Directory.Documents,
+                path: "Hymnals/"
+            })
+        }
+
+        let book_dir = await Filesystem.readdir({
+            directory: Directory.Documents,
+            path: "Hymnals/"
+        });
+        
+        for(let f in book_dir.files) {
+            let file = book_dir.files[f];
+
+            if(file.type != "directory")
+                continue;
+
+            if(!(prepackaged_books.concat(Object.keys(known_references)).includes(file.name)))
+                continue;
+
+            console.log(file.name);
+            let signature = await Filesystem.readFile({
+                directory: Directory.Documents,
+                path: `Hymnals/${file.name}/.signature`
+            })
+            console.log(signature.data);
+        }
+    }
+}
+
 async function loadBookSources() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
@@ -234,4 +273,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex };
+export { getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates };

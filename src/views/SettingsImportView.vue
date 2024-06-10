@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUpdated, ref } from "vue";
+import { computed, onMounted, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
@@ -12,7 +12,7 @@ import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import router from "@/router";
-import { download_book, loadBookSources } from "@/scripts/book_import";
+import { download_book, loadBookSources, checkForUpdates } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
@@ -139,6 +139,10 @@ async function download_finish(book: BookDataSummary, new_url: string) {
 onUpdated(() => {
     if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
 });
+
+onMounted(() => {
+    checkForUpdates();
+})
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
