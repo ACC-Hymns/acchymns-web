@@ -5,7 +5,8 @@ import { computed } from 'vue';
 const props = defineProps<{
     radius: number,
     progress: number,
-    stroke: number
+    stroke: number,
+    transform: string
 }>();
 
 const normalizedRadius = props.radius - props.stroke * 2;
@@ -26,7 +27,7 @@ const strokeDashoffset = computed(() => {
       :r="normalizedRadius"
       :cx="radius"
       :cy="radius"
-      transform="rotate(-90) translate(-25 -8)"
+      :transform="props.transform"
     />
   </svg>
 </template>

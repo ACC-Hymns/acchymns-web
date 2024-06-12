@@ -56,5 +56,18 @@ type SearchParams = {
     bookFilters: string[]; // Short names of books
 };
 
-export type { BookDataSummary, BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams };
+type BookSignature = {
+    name: string,
+    hash: string,
+    parent?: BookSignature,
+    children?: BookSignature[]
+};
+
+type UpdatePackage = {
+    book_short: string,
+    book_summary?: BookSummary,
+    paths: string[]
+}
+
+export type { BookDataSummary, BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BookSignature, UpdatePackage };
 export { BookSourceType };

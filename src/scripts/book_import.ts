@@ -1,5 +1,5 @@
 import { fetchCachedJSON } from "@/composables/cached_fetch";
-import { type BookSummary, type SongList, type BookIndex, type BookDataSummary, BookSourceType } from "@/scripts/types";
+import { type BookSummary, type SongList, type BookIndex, type BookDataSummary, BookSourceType, type BookSignature, type UpdatePackage } from "@/scripts/types";
 import { branch, known_references, prepackaged_book_urls, prepackaged_books, public_references } from "@/scripts/constants";
 import { Preferences } from "@capacitor/preferences";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
@@ -7,51 +7,53 @@ import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
 import { Capacitor, CapacitorCookies } from "@capacitor/core";
 import { useCapacitorPreferences } from "@/composables/preferences";
 
-type BookSignature = {
-    name: string,
-    hash: string,
-    children?: BookSignature[]
-};
-
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
     return book_sources.filter(b => (b.status != BookSourceType.PREVIEW && b.status != BookSourceType.HIDDEN)).map(b => b.src);
 }
 
-function verifySignatures(local: BookSignature, origin: BookSignature): BookSignature | null | undefined {
-    /*
-        local - hash
-            - children
-                - 1
-                    -hash
-                - 2 
-                    -hash
-                - 3
-                    -hash
-                - 4
-                    -hash
-    */
-
-    if(local.hash != origin.hash)
-        return local;
-
-    if(local.children == undefined || origin.children == undefined)
-        return null;
-
-    for(var i = 0; i < local.children.length; i++) {
-        let result = verifySignatures(local.children[i], origin.children[i])
-        if(result != null && result != undefined)
-            return result;
+function getPathFromSignatureNode(node: BookSignature): string {
+    let names: string[] = [];
+    let current_node = node;
+    while(current_node.parent != null && current_node.parent != undefined) {
+        names.push(current_node.name);
+        current_node = current_node.parent;
     }
-    return null;
+    names = names.reverse();
+    let path = names.join("/")
+    return path;
 }
 
-async function checkForUpdates() {
+function verifySignatures(local: BookSignature, origin: BookSignature): BookSignature[] {
+    let results: BookSignature[] = [];
+
+    if(local.hash != origin.hash)
+        results = results.concat([local])
+
+    if(local.children != undefined && origin.children != undefined) {
+        for(var i = 0; i < local.children.length; i++) {
+            local.children[i].parent = {
+                name: local.name,
+                hash: local.hash,
+                parent: local.parent
+            }
+            let result = verifySignatures(local.children[i], origin.children[i])
+            if(result != null && result != undefined) {
+                results = results.concat(result);
+            }
+        }
+    }
+    
+    return results;
+}
+
+async function checkForUpdates(): Promise<UpdatePackage[]> {
     console.log("Checking for updates...")
     if(Capacitor.getPlatform() !== "web") {
-        const book_signature: BookSignature[] = await (await fetch(import.meta.env.BASE_URL + "book_signatures.json")).json();
-        
+        const book_signature: BookSignature[] = await (await fetch(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/book_signatures.json`)).json();
+        let return_packages: UpdatePackage[] = [];
+
         try {
             await Filesystem.stat({
                 directory: Directory.Documents,
@@ -83,18 +85,34 @@ async function checkForUpdates() {
                 path: `Hymnals/${file.name}/.signature`
             })
             let signature_data = JSON.parse(atob(signature_blob.data.toString()));
-            console.log(signature_data);
-            console.log('-----------------------')
             let updated_signature_data = book_signature.find(sig => sig.name == signature_data.name);
             if(updated_signature_data == undefined)
-                return;
-            console.log(updated_signature_data)
+                continue;
 
-            console.log("RESULTS")
+            console.log(`Verification Results (${signature_data.name})`)
             let verification_error = verifySignatures(signature_data, updated_signature_data);
-            console.log(verification_error);
+
+            if(verification_error.length < 1)
+                continue;
+
+            let broken_file_paths: string[] = [];
+            for(var i = 1; i < verification_error.length; i++) {
+                let bad_file: BookSignature = verification_error[i];
+                broken_file_paths.push(getPathFromSignatureNode(bad_file));
+                console.log("Must redownload " + bad_file.name);
+            }
+
+            let update_package: UpdatePackage = {
+                book_short: signature_data.name,
+                paths: broken_file_paths
+            }
+            return_packages.push(update_package);
         }
+        console.log("RETURN PACKAGES")
+        console.log(return_packages);
+        return return_packages;
     }
+    return [];
 }
 
 async function loadBookSources() {
@@ -189,6 +207,27 @@ async function getBookDataSummaryFromName(book: string) {
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
     return book_sources.find(b => b.id == book);
+}
+
+async function download_update_package(update: UpdatePackage, progress_callback: (progress: number) => void, finish_callback: () => void) {
+    for(var i = 0; i < update.paths.length; i++) {
+        let path = update.paths[i];
+        console.log(`Downloading (${update.book_short}/${path})`);
+        await Filesystem.downloadFile({
+            directory: Directory.Documents,
+            path: `Hymnals/${update.book_short}/${path}`,
+            progress: false,
+            url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/${path}`
+        });
+        progress_callback((i + 1)/update.paths.length);
+    }
+    await Filesystem.downloadFile({
+        directory: Directory.Documents,
+        path: `Hymnals/${update.book_short}/.signature`,
+        progress: false,
+        url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/.signature`
+    })
+    finish_callback();
 }
 
 async function download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void) {    
@@ -317,6 +356,14 @@ async function getSongMetaData(book_short_name: string): Promise<SongList | null
     return null;
 }
 
+async function getBookFromId(book_short_name: string): Promise<BookSummary | undefined> {
+    const BOOK_METADATA = await getAllBookMetaData();
+    if (BOOK_METADATA[book_short_name] !== undefined) {
+        return BOOK_METADATA[book_short_name];
+    }
+    return undefined;
+}
+
 async function getBookIndex(book_short_name: string): Promise<BookIndex | null> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
@@ -325,4 +372,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates };
+export { download_update_package, getBookFromId, getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates };

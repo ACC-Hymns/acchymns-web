@@ -140,10 +140,6 @@ onUpdated(() => {
     if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
 });
 
-onMounted(() => {
-    checkForUpdates();
-})
-
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
     await Toast.show({
@@ -215,7 +211,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
                         (downloadProgress.get(book.id || '') || 0) >= 1 &&
                         (downloadProgress.get(book.id || '') || 0) < 100 && 
                         Capacitor.getPlatform() !== 'web'" 
-                     :radius="15" :progress="(downloadProgress.get(book.id || '') || 0)" :stroke="3"></ProgressBar>
+                     :radius="15" :progress="(downloadProgress.get(book.id || '') || 0)" :stroke="3" :transform="'rotate(-90) translate(-25 -8)'"></ProgressBar>
                     <button @click="removeImportedURL(book)">
                         <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
                     </button>
