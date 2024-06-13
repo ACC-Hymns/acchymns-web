@@ -1,5 +1,5 @@
-const fs = require('fs');
-const { hashElement } = require('folder-hash');
+import fs from "node:fs";
+import { hashElement } from 'folder-hash';
 
 const options = {
     folders: { exclude: ['.*', 'node_modules', 'test_coverage'] },
