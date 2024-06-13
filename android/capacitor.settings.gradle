@@ -22,3 +22,6 @@ project(':capacitor-screen-orientation').projectDir = new File('../node_modules/
 
 include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')
+
+include ':christoffyw-capacitor-media-session'
+project(':christoffyw-capacitor-media-session').projectDir = new File('../node_modules/@christoffyw/capacitor-media-session/android')

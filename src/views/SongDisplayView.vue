@@ -180,7 +180,13 @@ onMounted(async () => {
                 playbackState: "playing"
             });
             morph();
+
             media_is_playing.value = true;
+            updateTime()
+            elapsed_timer = setInterval(() => {
+                updateTime();
+            }, 1000, 0);
+            media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
         })
         MediaSession.setActionHandler({
             action: 'pause',
@@ -191,6 +197,8 @@ onMounted(async () => {
             });
             morph();
             media_is_playing.value = false;
+
+            clearInterval(elapsed_timer);
         })
         MediaSession.setActionHandler({
             action: 'stop',
@@ -201,6 +209,8 @@ onMounted(async () => {
             });
             morph();
             media_is_playing.value = false;
+
+            clearInterval(elapsed_timer);
         })
         MediaSession.setActionHandler({
             action: 'seekbackward',
