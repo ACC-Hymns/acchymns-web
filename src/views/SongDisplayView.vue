@@ -183,6 +183,8 @@ onMounted(async () => {
 
             media_is_playing.value = true;
             updateTime()
+
+            clearInterval(elapsed_timer);
             elapsed_timer = setInterval(() => {
                 updateTime();
             }, 1000, 0);
@@ -217,12 +219,14 @@ onMounted(async () => {
         }, (details) => {
             let percentage = Math.max(0, media_timestamp_elapsed.value - 10)/media_timestamp_end.value * 100;
             set_audio_position(percentage);
+            updateTime();
         })
         MediaSession.setActionHandler({
             action: 'seekforward',
         }, (details) => {
             let percentage = Math.min(media_timestamp_end.value, media_timestamp_elapsed.value + 10)/media_timestamp_end.value * 100;
             set_audio_position(percentage);
+            updateTime();
         })
         MediaSession.setActionHandler({
             action: 'previoustrack',
