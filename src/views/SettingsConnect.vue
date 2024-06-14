@@ -165,8 +165,8 @@ function verse_start_changed(e: Event) {
 function verse_end_changed(e: Event) {
   verse_end.value = Number.parseInt((e.target as HTMLSelectElement).innerText);
 }
-function read_type_changed(e: Event) {
-  read_type.value = Number.parseInt((e.target as HTMLSelectElement).value);
+function read_type_changed(e: Event, id: number) {
+  read_type.value = id;
 }
 
 function get_chapter_start_list(book: string) {
@@ -225,9 +225,9 @@ function get_verse_end_list(book: string, chapter: number) {
               <div class="book-selector">
                 <a class="biblebook space"></a>
                 <a class="biblebook space"></a>
-                <option @click="(e) => read_type_changed(e)" class="biblebook" :class="{'selected': read_type == 1}" value="1">Start Only</option>
-                <option @click="(e) => read_type_changed(e)" class="biblebook" :class="{'selected': read_type == 2}" value="2">Start End</option>
-                <option @click="(e) => read_type_changed(e)" class="biblebook" :class="{'selected': read_type == 3}" value="3">Start End Chapter</option>
+                <a @click="(e) => read_type_changed(e,1)" class="biblebook" :class="{'selected': read_type == 1}">Start Only</a>
+                <a @click="(e) => read_type_changed(e,2)" class="biblebook" :class="{'selected': read_type == 2}">Start End</a>
+                <a @click="(e) => read_type_changed(e,3)" class="biblebook" :class="{'selected': read_type == 3}">Start End Chapter</a>
                 <a class="biblebook space"></a>
                 <a class="biblebook space"></a>
               </div>
