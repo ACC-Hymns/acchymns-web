@@ -59,7 +59,7 @@ async function signout() {
 }
 
 onMounted(async () => {
-  bible.value = await fetchCachedJSON<Bible>("/NKJV.bible.json", {}) || { version: "", books: []};
+  bible.value = await fetchCachedJSON<Bible>(import.meta.env.BASE_URL + "NKJV.bible.json", {}) || { version: "", books: []};
   
   for(let [index, book] of bible.value.books.entries()) {
     if(index > 38)
