@@ -26,9 +26,15 @@ export enum UserStatus {
   Authorized = 'Authorized',
 }
 
+export type TokenAuthResponse = {
+  text: string,
+  church_id: string;
+}
+
 export type AuthResponse = {
   text: string,
-  token: string;
+  token: string,
+  church_id: string;
 }
 
 export type Items = { 
@@ -41,11 +47,7 @@ export async function validate_token(auth_token: string) {
       code: auth_token
     }
   );
-  if(response.status == 200) {
-    return true;
-  } else {
-    return false;
-  }
+  return response;
 }
 
 export function request_client() {

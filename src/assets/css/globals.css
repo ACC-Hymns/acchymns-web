@@ -46,6 +46,7 @@ a, img {
     --topical-color: #ffffff;
     --menu-color: rgba(255, 255, 255, 0.9);
     --song-background: #ffffff;
+    --button-tap: #CCCCCC;
 }
 
 :root[data-theme="dark"] {
@@ -70,6 +71,7 @@ a, img {
     --topical-color: #2b2b2b;
     --menu-color: rgba(31, 31, 31, 0.9);
     --song-background: #141414;
+    --button-tap: #575757;
 }
 
 h1, h2, h3, h4, h5 {

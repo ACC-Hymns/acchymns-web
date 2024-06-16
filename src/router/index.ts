@@ -92,8 +92,7 @@ const router = createRouter({
             component: () => import("../views/404View.vue"),
         },
         {
-            path: "/broadcast/:church_id",
-            props: true,
+            path: "/broadcast",
             component: () => import("../views/BroadcastView.vue"),
         }
     ],

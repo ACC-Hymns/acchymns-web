@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { useCapacitorPreferences } from "@/composables/preferences";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { validate_token, request_client, get } from "@/scripts/broadcast";
-import type {ChurchData} from "@/scripts/broadcast";
+import type {ChurchData, TokenAuthResponse} from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import type { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
-const props = defineProps<{
-    church_id: string;
-}>();
 let authorized = ref<boolean>(false);
+let church_id = ref<string>('');
 
 let song_number = ref<string>("");
 let verses = ref<string>("");
@@ -42,7 +40,7 @@ function clock() {
 let client: DynamoDBClient;
 
 async function set_data() {
-    let data: ChurchData = (await get(client, props.church_id)).Item as unknown as ChurchData;
+    let data: ChurchData = (await get(client, church_id.value)).Item as unknown as ChurchData;
     bible_reading.value = data.BOOK_ID.S == "BIBLE";
 
     if(bible_reading.value) {
@@ -65,10 +63,20 @@ async function set_data() {
       book_name.value = data.BOOK_ID.S;
     }
 }
-
+let old_bg_color = '';
 onMounted(async () => {
+    old_bg_color = document.body.style.backgroundColor;
+    document.body.style.backgroundColor = "white";
+
+    clock();
+
+    setInterval(clock, 100);
+    setInterval(set_data, 2000);
+
     let token = await Preferences.get({ key: "broadcasting_auth_token"});
-    authorized.value = await validate_token(token.value || "");
+    let response = await validate_token(token.value || "");
+    authorized.value = response.status == 200;
+    church_id.value = (response.data as TokenAuthResponse).church_id;
     console.log("Authorized: " + authorized.value)
     if (!authorized.value) {
         book_name.value = "Unauthorized";
@@ -76,14 +84,12 @@ onMounted(async () => {
     }
     client = request_client();
 
-    
-
-    document.body.style.backgroundColor = "white";
-
-    setInterval(clock, 100);
-    setInterval(set_data, 2000);
     set_data();
 });
+
+onUnmounted(() => {
+    document.body.style.backgroundColor = old_bg_color;
+})
 
 let hours = ref<string>('');
 let minutes = ref<string>('');

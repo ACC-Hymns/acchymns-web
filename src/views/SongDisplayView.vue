@@ -9,7 +9,7 @@ import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import { Preferences } from "@capacitor/preferences";
-import { request_client, set, validate_token } from "@/scripts/broadcast";
+import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();
 
@@ -21,6 +21,7 @@ const book_summary = ref<BookSummary>();
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const broadcasting_auth_token = useCapacitorPreferences<string>("broadcasting_auth_token", "");
+let church_id = ref<string>('');
 let authorized = ref<boolean>(false);
 let broadcasting = ref<boolean>(false);
 let verses = ref<number[]>([]);
@@ -53,7 +54,9 @@ onMounted(async () => {
     const BOOK_META = await getAllBookMetaData();
     book_summary.value = BOOK_META[props.book];
 
-    authorized.value = await validate_token(broadcasting_auth_token.value);
+    let response = await validate_token(broadcasting_auth_token.value);
+    authorized.value = response.status == 200;
+    church_id.value = (response.data as TokenAuthResponse).church_id;
 });
 
 onUnmounted(() => {
@@ -70,9 +73,9 @@ function open_broadcast(e: MouseEvent) {
 }
 
 async function broadcast(e: MouseEvent) {
-    let church_id = await Preferences.get({ key: "broadcasting_church"});
     if(church_id.value == null)
         return;
+
     await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
     let button = (e.target as Element).parentElement;

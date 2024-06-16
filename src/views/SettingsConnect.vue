@@ -1,21 +1,29 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, createRouterMatcher } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
 import axios from 'axios';
-import { UserStatus, request_client, scan, set, validate_token, type AuthResponse, type ChurchData } from "@/scripts/broadcast";
+import { UserStatus, request_client, scan, set, validate_token, type AuthResponse, type ChurchData, type TokenAuthResponse } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse } from "@/scripts/types";
 import { fetchCachedJSON } from "@/composables/cached_fetch";
+import router from "@/router";
 const { back } = useNavigator();
 
 const input = ref('')
 const status = ref<UserStatus>(UserStatus.Unauthorized)
-let selected_church = ref('');
+let login_error = ref<boolean>(false);
+let selected_church = ref('LOADING');
 let churches = ref<ChurchData[]>([]);
 let bible = ref<Bible>();
+let touched_pin = ref<number>(0);
 
 async function authorize() {
+  touched_pin.value = 12;
+    setTimeout(() => {
+      touched_pin.value = 0;
+    }, 100);
+
   let response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
     {
       code: input.value
@@ -31,25 +39,20 @@ async function authorize() {
     for (const [key, value] of Object.entries(data)) {
       churches.value.push(value);
     }
-    let cached_selected_church = (await Preferences.get({ key: "broadcasting_church"})).value;
-    if(cached_selected_church == "" || cached_selected_church == undefined) {
-      selected_church.value = churches.value[0].CHURCH_ID.S;
-    } else {
-      selected_church.value = cached_selected_church;
-    }
+    selected_church.value = auth_response.church_id;
 
-    update_selected_church()
   } else {
     console.log(response.data);
+    login_error.value = true;
+    setTimeout(() => {
+      login_error.value = false;
+      input.value = "";
+    }, 400);
   }
 }
 
 async function clear() {
   await set(request_client(), selected_church.value, "", "", [-1], "");
-}
-
-async function update_selected_church() {
-  await Preferences.set({ key: "broadcasting_church", value: selected_church.value});
 }
 
 async function signout() {
@@ -58,7 +61,30 @@ async function signout() {
   input.value = "";
 }
 
+function view_output() {
+  router.push({path: "/broadcast"})
+}
+
+function backspace_pin() {
+  if(input.value.length > 0) {
+    input.value = input.value.substring(0, input.value.length - 1);
+    touched_pin.value = 10;
+    setTimeout(() => {
+      touched_pin.value = 0;
+    }, 100);
+  }
+}
+
+function enter_pin(value: number) {
+  input.value += value;
+  touched_pin.value = (value == 0) ? 11 : value;
+  setTimeout(() => {
+    touched_pin.value = 0;
+  }, 100);
+}
+
 onMounted(async () => {
+  selected_church.value = "...";
   bible.value = await fetchCachedJSON<Bible>(import.meta.env.BASE_URL + "NKJV.bible.json", {}) || { version: "", books: []};
   
   for(let [index, book] of bible.value.books.entries()) {
@@ -72,8 +98,10 @@ onMounted(async () => {
 
   let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
   if (broadcasting_auth_token.value != "" && broadcasting_auth_token.value != undefined) {
-    if(!(await validate_token(broadcasting_auth_token.value)))
+    let token_response = await validate_token(broadcasting_auth_token.value);
+    if(token_response.status != 200)
       return signout();
+    let token_response_data = token_response.data as TokenAuthResponse;
 
     status.value = UserStatus.Authorized;
     let data = await scan(request_client());
@@ -81,14 +109,8 @@ onMounted(async () => {
     for (const [key, value] of Object.entries(data)) {
       churches.value.push(value);
     }
-    let cached_selected_church = (await Preferences.get({ key: "broadcasting_church"})).value;
-    if(cached_selected_church == "" || cached_selected_church == undefined) {
-      selected_church.value = churches.value[0].CHURCH_ID.S;
-    } else {
-      selected_church.value = cached_selected_church;
-    }
 
-    update_selected_church()
+    selected_church.value = token_response_data.church_id;
   }
 });
 
@@ -215,9 +237,23 @@ function get_verse_end_list(book: string, chapter: number) {
     </div>
 
     <div class="main-content login-container">
-        <div v-if="status == UserStatus.Unauthorized">
-            <input class="pin-input" v-model="input" type="password">
-            <button class="settings-button" @click="authorize()">Authorize</button>
+        <div v-if="status == UserStatus.Unauthorized" class="keypad-container ">
+
+            <div class="pin-input-container">
+              <input class="pin-input" :class="{'pin-input--error': login_error }" v-model="input" type="password" disabled="true">
+            </div>
+            <div class="keypad">
+              <div class="key" v-for="i in 12" :class="{'key-tapped': touched_pin == i}">
+                <a v-if="i == 10" @click="backspace_pin()">
+                  <img class="ionicon keyicon" src="/assets/backspace-outline.svg" />
+                </a>
+                <a v-else-if="i == 11" @click="enter_pin(0)">0</a>
+                <a v-else-if="i == 12" @click="authorize()">
+                  <img class="ionicon keyicon" src="/assets/enter-outline.svg" />
+                </a>
+                <a v-else @click="enter_pin(i)">{{ i }}</a>
+              </div>
+            </div>
         </div>
         <div v-else-if="status == UserStatus.Authorized && bibleReading">            
           <div class="biblereading">
@@ -302,19 +338,12 @@ function get_verse_end_list(book: string, chapter: number) {
             </div>
         </div>
         <div v-else-if="status == UserStatus.Authorized" class="login-container">
-            <h1>Authorized</h1>
-
-            <div class="settings-radio">
-              <div v-for="church in churches" :key="church.CHURCH_ID.S">
-                <label class="input-container" >{{ church.CHURCH_ID.S }}
-                  <input v-model="selected_church" type="radio" :value="church.CHURCH_ID.S" :checked="church.CHURCH_ID.S == selected_church" @change="update_selected_church()" name="churches" style="width: 0"/>
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-            </div>
+            <h1 style="margin-bottom: 0px;">Authorized</h1>
+            <h3 style="margin-top: 0px;">as {{ selected_church }}</h3>
             
             <button class="settings-button" @click="bibleReading = true">Set Bible Reading</button>
             <button class="settings-button" @click="clear()">Clear Screen</button>
+            <button class="settings-button" @click="view_output()">Open Output Display</button>
             <button class="settings-button" @click="signout()">Log Out</button>
             
             
@@ -346,6 +375,82 @@ function get_verse_end_list(book: string, chapter: number) {
 label {
   font-size: 22px;
   color: var(--color);
+}
+:root {
+  --key-size: 8vh;
+}
+
+.keypad-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes loginError {
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+
+@-moz-keyframes loginError {
+  25% {
+    transform: translateX(-3px);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}
+.pin-input-container {
+  margin: 0 auto;
+}
+.pin-input--error {
+  color: #901818;
+  background-color: #ffb3b3;
+  animation-name: loginError;
+  animation-duration: 0.1s;
+  animation-iteration-count: 2;
+}
+.pin-input {
+  background-color: var(--search-color);
+  border-radius: 2vh;
+  width: 25vh;
+  height: 2vh;
+  font-size: 4vh;
+  margin: 20px auto;
+  padding: 1vh 2vh;
+  align-self: center;
+  text-align: center;
+  color: var(--color);
+  border: none;
+  line-height: 100%;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: var(--key-size) var(--key-size) var(--key-size);
+  grid-template-rows: var(--key-size) var(--key-size) var(--key-size) var(--key-size);
+  gap: calc(var(--key-size)/2);
+}
+.key {
+  background-color: var(--toolbar);
+  box-shadow: 0px 0px 20px 0px rgb(0,0,0,0.2);
+  padding: 2vh;
+  border-radius: 100%;
+  font-size: 4vh;
+  text-align: center;
+  line-height: 100%;
+  color: var(--color);
+  transition: background-color 0.1s ease-out;
+}
+.key-tapped {
+  background-color: var(--button-tap);
+}
+.keyicon {
+  font-size: 4vh;
+  width: 4vh;
+  height: 4vh;
+  filter: var(--svg-color);
 }
 
 .book-selector {
@@ -506,14 +611,6 @@ label {
   justify-content: left;
 }
 
-.pin-input {
-  all: unset;
-  background-color: var(--search-color);
-  border-radius: 10px;
-  width: 50%;
-  height: 100%;
-  margin: 5px 10px;
-  padding: 6px 15px;
-}
+
 
 </style>
