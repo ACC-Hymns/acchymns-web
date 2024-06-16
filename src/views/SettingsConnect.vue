@@ -19,11 +19,6 @@ let bible = ref<Bible>();
 let touched_pin = ref<number>(0);
 
 async function authorize() {
-  touched_pin.value = 12;
-    setTimeout(() => {
-      touched_pin.value = 0;
-    }, 100);
-
   let response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
     {
       code: input.value
@@ -68,19 +63,12 @@ function view_output() {
 function backspace_pin() {
   if(input.value.length > 0) {
     input.value = input.value.substring(0, input.value.length - 1);
-    touched_pin.value = 10;
-    setTimeout(() => {
-      touched_pin.value = 0;
-    }, 100);
   }
 }
 
 function enter_pin(value: number) {
-  input.value += value;
-  touched_pin.value = (value == 0) ? 11 : value;
-  setTimeout(() => {
-    touched_pin.value = 0;
-  }, 100);
+  if(input.value.length < 4)
+    input.value += value;
 }
 
 onMounted(async () => {
@@ -240,10 +228,10 @@ function get_verse_end_list(book: string, chapter: number) {
         <div v-if="status == UserStatus.Unauthorized" class="keypad-container ">
 
             <div class="pin-input-container">
-              <input class="pin-input" :class="{'pin-input--error': login_error }" v-model="input" type="password" disabled="true">
+              <input class="pin-input" :class="{'pin-input--error': login_error }" v-model="input" type="password" disabled="true" maxlength="4">
             </div>
             <div class="keypad">
-              <div class="key" v-for="i in 12" :class="{'key-tapped': touched_pin == i}">
+              <div class="key" v-for="i in 12" :class="{'key-tapped': touched_pin == i}" @touchstart="touched_pin=i" @mousedown="touched_pin=i" @touchend="touched_pin=0" @touchcancel="touched_pin=0" @mouseup="touched_pin=0">
                 <a v-if="i == 10" @click="backspace_pin()">
                   <img class="ionicon keyicon" src="/assets/backspace-outline.svg" />
                 </a>
@@ -417,7 +405,7 @@ label {
   border-radius: 2vh;
   width: 25vh;
   height: 2vh;
-  font-size: 4vh;
+  font-size: 2vh;
   margin: 20px auto;
   padding: 1vh 2vh;
   align-self: center;
@@ -441,7 +429,7 @@ label {
   text-align: center;
   line-height: 100%;
   color: var(--color);
-  transition: background-color 0.1s ease-out;
+  transition: background-color 0.2s;
 }
 .key-tapped {
   background-color: var(--button-tap);
