@@ -125,7 +125,7 @@ function tooltipVisible(visible: boolean) {
         <div id="appsection">
             <HomeBookBox v-for="book in book_sources.filter(book => filter_book(book,hasConnection))" :key="book.src" :src="book.src"></HomeBookBox>
             <div v-if="!hasConnection">
-                <div class="warning-label-container">
+                <div v-if="book_sources.filter(book => book.status == BookSourceType.IMPORTED).length > 0" class="warning-label-container">
                     <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
                     <h5 class="warning-label">The hymnals below require an internet connection</h5>
                 </div>
