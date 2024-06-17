@@ -103,10 +103,6 @@ onMounted(async () => {
 });
 
 async function broadcast(e: MouseEvent) {
-    let church_id = await Preferences.get({ key: "broadcasting_church"});
-    if(church_id.value == null)
-        return;
-
     let top_text = "";
     let bottom_text = "";
     if(read_type.value == 1) {
@@ -123,7 +119,7 @@ async function broadcast(e: MouseEvent) {
       bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books.find(b => b.name == book.value)?.chapters.find(c => c.num == chapter_start.value)?.verses.length}, ${chapter_end.value}:1-${verse_end.value}`;
     }
 
-    await set(request_client(), church_id.value, top_text, "BIBLE", [], bottom_text);
+    await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
 }
 
 let bibleReading = ref<boolean>(false);
