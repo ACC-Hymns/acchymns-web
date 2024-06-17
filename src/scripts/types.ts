@@ -25,6 +25,13 @@ type BookDataSummary = {
     id: string; // e.g. ZH
     status: BookSourceType;
     src: string; // URL, can either be local, raw.github or a converted "file://"
+    name?: {
+        short: string;
+        medium: string;
+        long: string;
+    };
+    primaryColor?: string;
+    secondaryColor?: string;
 }
 
 type Song = {

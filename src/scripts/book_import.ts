@@ -4,8 +4,7 @@ import { branch, known_references, prepackaged_book_urls, prepackaged_books, pub
 import { Preferences } from "@capacitor/preferences";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
-import { Capacitor, CapacitorCookies } from "@capacitor/core";
-import { useCapacitorPreferences } from "@/composables/preferences";
+import { Capacitor } from "@capacitor/core";
 
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
@@ -127,6 +126,7 @@ async function loadBookSources() {
         book_sources.push({
             id: prepackaged_books[url],
             status: BookSourceType.BUNDLED,
+            
             src: prepackaged_book_urls[url]
         });
     }
@@ -182,15 +182,26 @@ async function loadBookSources() {
             continue;
         
         let url = known_references[book as keyof typeof known_references]
-        book_sources.push({
+
+        let entry: BookDataSummary = {
             id: book,
             status: (Object.keys(public_references).includes(book)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN,
             src: url
-        });
+        };
+
+        let summary: BookSummary | null = await fetchBookSummary(url);
+        if(summary) {
+            entry.name = summary.name;
+            entry.primaryColor = summary.primaryColor;
+            entry.secondaryColor = summary.secondaryColor;
+        }
+
+        book_sources.push(entry);
     }
 
     console.log("Finished loading sources!")
     Preferences.set({key: "bookSources", value: JSON.stringify(book_sources)})
+    return book_sources;
 }
 
 async function getBookDataSummary(book: BookSummary | null) {

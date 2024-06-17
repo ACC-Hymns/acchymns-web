@@ -7,7 +7,8 @@ import ProgressBar from "@/components/ProgressBar.vue";
 import { onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import type { UpdatePackage } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type UpdatePackage } from "@/scripts/types";
+import BaseBookBox from "@/components/BaseBookBox.vue";
 
 var hasConnection = ref<boolean>(false);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
@@ -19,9 +20,10 @@ let update_background_element = ref();
 let update_panel_element = ref();
 
 const available_books = ref<string[]>([]);
+const book_sources = ref<BookDataSummary[]>([]);
 
 onMounted(async () => {
-    await loadBookSources();
+    book_sources.value = await loadBookSources();
 
     available_books.value = await getBookUrls();
     hasConnection.value = (await Network.getStatus()).connected;
@@ -108,7 +110,14 @@ function tooltipVisible(visible: boolean) {
             <h1 class="pagetitle">Home</h1>
         </div>
         <div id="appsection">
-            <HomeBookBox v-for="url in available_books" :key="url" :src="url"></HomeBookBox>
+            <HomeBookBox v-for="url in (hasConnection) ? available_books : available_books.filter(url => !url.startsWith('http'))" :key="url" :src="url"></HomeBookBox>
+            <div v-if="!hasConnection">
+                <div class="warning-label-container">
+                    <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+                    <h5 class="warning-label">The hymnals below require an internet connection</h5>
+                </div>
+                <BaseBookBox v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)" :summary="book" :isEnabled="false"></BaseBookBox>
+            </div>
             <div @click="hideTooltip">
                 <RouterLink to="/settings/import" v-if="hasConnection">
                     <img class="ionicon import-books-button" src="/assets/add-circle-outline.svg" />
@@ -255,6 +264,25 @@ function tooltipVisible(visible: boolean) {
 .import-books-button {
     width: 50px;
     height: 50px;
+}
+
+.warning-icon {
+    width: 20px;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+.warning-label-container {
+    margin: 10px 30px;
+    display: flex;
+    justify-content: left;
+    text-align: left;
+}
+
+.warning-label {
+    color: var(--toolbar-text);
+    display: inline-block;
+    margin: 0 0;
+    line-height: 25px;
 }
 
 .tooltip {

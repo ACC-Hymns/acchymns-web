@@ -39,13 +39,13 @@ onMounted(async () => {
             <div class="book_title">{{ book.name.medium }}</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
-            <!-- Only show wifi symbol if it's a wifi only book and we're on mobile -->
+            <!-- Only show wifi symbol if it's a wifi only book and we're on mobile
             <img
                 v-if="book_data_summary?.status == BookSourceType.IMPORTED && router.currentRoute.value.path != '/settings/import' && Capacitor.getPlatform() !== 'web'"
                 class="ionicon booktext--right"
                 style="filter: invert(100%)"
                 src="/assets/wifi.svg"
-            />
+            /> -->
         </component>
     </template>
     <template v-else-if="!isFinished && isSlowFetch">
@@ -53,8 +53,8 @@ onMounted(async () => {
             <div class="book_title">Loading...</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
-            <!-- It's okay to show a wifi symbol if it's fetching -->
-            <img class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" />
+            <!-- It's okay to show a wifi symbol if it's fetching
+            <img class="ionicon booktext--right" style="filter: invert(100%)" src="/assets/wifi.svg" /> -->
         </div>
     </template>
     <template v-else-if="isFinished">
