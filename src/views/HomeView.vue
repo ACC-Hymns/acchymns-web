@@ -24,8 +24,6 @@ const book_sources = ref<BookDataSummary[]>([]);
 
 onMounted(async () => {
     book_sources.value = await loadBookSources();
-
-    available_books.value = await getBookUrls();
     hasConnection.value = (await Network.getStatus()).connected;
     console.log("Connected to the internet: " + hasConnection.value);
 
@@ -36,6 +34,12 @@ onMounted(async () => {
         }
         update_packages.value = update_results;
     }
+
+    Network.addListener('networkStatusChange', async () => {
+        book_sources.value = await loadBookSources();
+        hasConnection.value = (await Network.getStatus()).connected;
+        console.log("Connected to the internet: " + hasConnection.value);
+    })
 });
 
 function delayUpdate() {
@@ -67,6 +71,14 @@ async function startUpdate() {
     }
 }
 
+function filter_book(book: BookDataSummary, hasConnection: boolean) {
+    if(hasConnection) {
+        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.IMPORTED || book.status == BookSourceType.DOWNLOADED;
+    } else {
+        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED;
+    }
+}
+
 function hideTooltip() {
     tooltip.value?.classList.add("tooltiphidden");
     tooltip.value?.classList.add("tooltip");
@@ -78,6 +90,7 @@ function hideTooltip() {
 function tooltipVisible(visible: boolean) {
     return visible ? "padding-top: 50px;" : "";
 }
+
 </script>
 
 <template>
@@ -110,7 +123,7 @@ function tooltipVisible(visible: boolean) {
             <h1 class="pagetitle">Home</h1>
         </div>
         <div id="appsection">
-            <HomeBookBox v-for="url in (hasConnection) ? available_books : available_books.filter(url => !url.startsWith('http'))" :key="url" :src="url"></HomeBookBox>
+            <HomeBookBox v-for="book in book_sources.filter(book => filter_book(book,hasConnection))" :key="book.src" :src="book.src"></HomeBookBox>
             <div v-if="!hasConnection">
                 <div class="warning-label-container">
                     <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
