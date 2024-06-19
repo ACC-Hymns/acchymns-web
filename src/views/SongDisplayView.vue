@@ -16,7 +16,6 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
-import { MediaSession } from '@christoffyw/capacitor-media-session';
 
 const props = defineProps<SongReference>();
 
@@ -126,7 +125,28 @@ type Coordinate = {
 let panel = ref<DraggablePanel>(new DraggablePanel());
 let audio_source = ref<HTMLAudioElement>();
 let audio_source_exists = ref<boolean>(false);
-let previous_orientation = "";
+let previous_orientation: OrientationType | undefined;
+
+function setup_audiosource(audio_source: HTMLAudioElement) {
+    audio_source.addEventListener('loadedmetadata', () => {
+            console.log("Audio Loaded!");
+        audio_source_exists.value = true;
+        media_timestamp_end.value = audio_source?.duration || 0;
+
+        setMediaType(null, false);
+    })
+    audio_source.addEventListener('error', () => {
+        console.error("Error loading audio");
+        audio_source_exists.value = false;
+        setMediaType(null, true);
+    });
+    audio_source.addEventListener('play', () => {
+
+    })
+    audio_source.addEventListener('pause', () => {
+
+    })
+}
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -137,111 +157,27 @@ onMounted(async () => {
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
-        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
-        audio_source.value.preload = 'metadata';
-        if(!(await Network.getStatus()).connected) audio_source_exists.value = false;
+        if(!(await Network.getStatus()).connected) {
+            audio_source_exists.value = false;
+            audio_source.value = new Audio();
+        } else {
+            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
+            audio_source.value.preload = 'metadata';
+            setup_audiosource(audio_source.value);
+        }
+
         setMediaType(null, true);
-        audio_source.value.addEventListener('loadedmetadata', () => {
-            console.log("Audio Loaded!");
-            audio_source_exists.value = true;
-            media_timestamp_end.value = audio_source.value?.duration || 0;
-            MediaSession.setPositionState({
-                position: audio_source.value?.currentTime || 0,
-                duration: audio_source.value?.duration || 0,
-                playbackRate: 1.0
-            })
-            setMediaType(null, false);
-        })
+        
         Network.addListener("networkStatusChange", async (details) => {
             if(!(await Network.getStatus()).connected) {
                 audio_source_exists.value = false;
                 audio_source.value?.load();
+            } else {
+                audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
+                audio_source.value.preload = 'metadata';
+                setup_audiosource(audio_source.value);
+                audio_source.value?.load();
             }
-        })
-        audio_source.value.addEventListener('error', () => {
-            console.error("Error loading audio");
-            audio_source_exists.value = false;
-            setMediaType(null, true);
-        });
-        MediaSession.setMetadata({
-            title: `${props.number} - ${song_data.title}`,
-            artwork: [{
-                src: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/assets/icons/180x180.png`,
-                sizes: '180x180',
-                type: 'image/png' 
-            }],
-            artist: BOOK_METADATA[props.book].name.medium
-        });
-        MediaSession.setActionHandler({
-            action: 'play',
-        }, (details) => {
-            audio_source.value?.play();
-            MediaSession.setPlaybackState({
-                playbackState: "playing"
-            });
-            morph();
-
-            media_is_playing.value = true;
-            updateTime()
-
-            clearInterval(elapsed_timer);
-            elapsed_timer = setInterval(() => {
-                updateTime();
-            }, 1000, 0);
-            media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-        })
-        MediaSession.setActionHandler({
-            action: 'pause',
-        }, (details) => {
-            audio_source.value?.pause();
-            MediaSession.setPlaybackState({
-                playbackState: "paused"
-            });
-            morph();
-            media_is_playing.value = false;
-
-            clearInterval(elapsed_timer);
-        })
-        MediaSession.setActionHandler({
-            action: 'stop',
-        }, (details) => {
-            audio_source.value?.pause();
-            MediaSession.setPlaybackState({
-                playbackState: "paused"
-            });
-            morph();
-            media_is_playing.value = false;
-
-            clearInterval(elapsed_timer);
-        })
-        MediaSession.setActionHandler({
-            action: 'seekbackward',
-        }, (details) => {
-            let percentage = Math.max(0, media_timestamp_elapsed.value - 10)/media_timestamp_end.value * 100;
-            set_audio_position(percentage);
-            updateTime();
-        })
-        MediaSession.setActionHandler({
-            action: 'seekforward',
-        }, (details) => {
-            let percentage = Math.min(media_timestamp_end.value, media_timestamp_elapsed.value + 10)/media_timestamp_end.value * 100;
-            set_audio_position(percentage);
-            updateTime();
-        })
-        MediaSession.setActionHandler({
-            action: 'previoustrack',
-        }, (details) => {
-            traverse_song(-1);
-        });
-        MediaSession.setActionHandler({
-            action: 'nexttrack',
-        }, (details) => {
-            traverse_song(1);
-        })
-        MediaSession.setActionHandler({
-            action: 'seekto',
-        }, (details) => {
-            set_audio_position((details?.seekTime || 0)/media_timestamp_end.value * 100);
         })
     }
 
@@ -277,9 +213,6 @@ onUnmounted(() => {
     player.stop();
     audio_source.value?.pause();
     audio_source.value = undefined;
-    MediaSession.setPlaybackState({
-        playbackState: "none"
-    });
 });
 
 
@@ -289,7 +222,7 @@ let media_starting_notes = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
 let media_timestamp_elapsed = ref<number>(0);
 let media_timestamp_end = ref<number>(0);
-let elapsed_timer: number;
+let elapsed_timer: number = -1;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
@@ -332,9 +265,7 @@ async function close_media_panel() {
     panel.value.visible = false;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
     audio_source.value?.pause();
-    MediaSession.setPlaybackState({
-        playbackState: "paused"
-    });
+
     morph();
     media_is_playing.value = false;
 }
@@ -367,21 +298,13 @@ async function playMedia() {
     // Play the media
     if(!media_is_playing.value) {
         audio_source.value?.play();
-        MediaSession.setPlaybackState({
-            playbackState: "playing"
-        });
-
         updateTime()
         elapsed_timer = setInterval(() => {
             updateTime();
         }, 1000, 0);
-        media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
     }
     else {
         audio_source.value?.pause();
-        MediaSession.setPlaybackState({
-            playbackState: "paused"
-        });
         clearInterval(elapsed_timer);
     }
 
@@ -400,11 +323,6 @@ function set_audio_position(percentage: number) {
     if(source == undefined)
         return;
     source.currentTime = source.duration * percentage/100;
-    MediaSession.setPositionState({
-        position: audio_source.value?.currentTime || 0,
-        duration: audio_source.value?.duration || 0,
-        playbackRate: 1.0
-    })
 
     updateTime();
 }

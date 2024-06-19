@@ -25,7 +25,6 @@
     "@capacitor/preferences": "^6.0.0",
     "@capacitor/screen-orientation": "^6.0.0",
     "@capacitor/toast": "^6.0.0",
-    "@christoffyw/capacitor-media-session": "^3.0.4",
     "@ionic/pwa-elements": "^3.2.2",
     "@vueuse/core": "^9.13.0",
     "panzoom": "^9.4.3",
