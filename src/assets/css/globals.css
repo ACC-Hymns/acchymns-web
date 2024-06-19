@@ -47,6 +47,9 @@ a, img {
     --menu-color: rgba(255, 255, 255, 0.9);
     --overlay-color: rgba(255, 255, 255, 0.5);
     --song-background: #ffffff;
+    --svg-polar: invert(0%) sepia(100%) saturate(0%) hue-rotate(21deg) brightness(97%) contrast(103%);
+    --media-type-active: #ffffff;
+    --media-type: var(--slider-base);
 }
 
 :root[data-theme="dark"] {
@@ -72,6 +75,9 @@ a, img {
     --menu-color: rgba(31, 31, 31, 0.9);
     --overlay-color: rgba(0, 0, 0, 0.5);
     --song-background: #141414;
+    --svg-polar: invert(100%) sepia(0%) saturate(0%) hue-rotate(267deg) brightness(105%) contrast(108%);
+    --media-type-active: #5c5c5c;
+    --media-type: var(--menu-color);
 }
 
 h1, h2, h3, h4, h5 {
@@ -177,6 +183,7 @@ h1, h2, h3, h4, h5 {
     width: 100%;
     top: 0;
     z-index: 1;
+    transition: transform 0.3s;
 }
 
 .main-content {

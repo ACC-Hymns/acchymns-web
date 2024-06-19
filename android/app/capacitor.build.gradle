@@ -14,7 +14,9 @@ dependencies {
     implementation project(':capacitor-filesystem')
     implementation project(':capacitor-network')
     implementation project(':capacitor-preferences')
+    implementation project(':capacitor-screen-orientation')
     implementation project(':capacitor-toast')
+    implementation project(':christoffyw-capacitor-media-session')
 
 }
 

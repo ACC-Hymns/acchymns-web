@@ -1,18 +1,20 @@
 PODS:
-  - Capacitor (5.3.0):
+  - Capacitor (6.0.0):
     - CapacitorCordova
-  - CapacitorApp (5.0.6):
+  - CapacitorApp (6.0.0):
     - Capacitor
-  - CapacitorCordova (5.3.0)
-  - CapacitorDialog (5.0.6):
+  - CapacitorCordova (6.0.0)
+  - CapacitorDialog (6.0.0):
     - Capacitor
-  - CapacitorFilesystem (5.2.1):
+  - CapacitorFilesystem (6.0.0):
     - Capacitor
-  - CapacitorNetwork (5.0.7):
+  - CapacitorNetwork (6.0.0):
     - Capacitor
-  - CapacitorPreferences (5.0.6):
+  - CapacitorPreferences (6.0.0):
     - Capacitor
-  - CapacitorToast (5.0.6):
+  - CapacitorScreenOrientation (6.0.0):
+    - Capacitor
+  - CapacitorToast (6.0.0):
     - Capacitor
 
 DEPENDENCIES:
@@ -23,6 +25,7 @@ DEPENDENCIES:
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorScreenOrientation (from `../../node_modules/@capacitor/screen-orientation`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
 
 EXTERNAL SOURCES:
@@ -40,19 +43,22 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/network"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorScreenOrientation:
+    :path: "../../node_modules/@capacitor/screen-orientation"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: 1ac9165943bc4f2137642d218c5ba05df811de69
-  CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
-  CapacitorCordova: b9374d68e63ce29e96ab5db994cf14fbefd722c9
-  CapacitorDialog: 0f3c15dfe9414b83bc64aef4078f1b92bcfead26
-  CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
-  CapacitorNetwork: 81ef9728aa7a65cac8c1181ce79e578162b57b57
-  CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
-  CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
+  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
+  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
+  CapacitorDialog: 64aa82840ee5e9c066f9e1a49c1e186afd3f24d2
+  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
+  CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
+  CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorScreenOrientation: d78ce2b710bfcd1c32d3a090d32b6686c1c95e4f
+  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
 
-PODFILE CHECKSUM: 059b295401a6bd5e5275bc3a89f7f91a34c07d99
+PODFILE CHECKSUM: 2f8103341365c308c17aa79d59d28e6cfedeafe6
 
 COCOAPODS: 1.12.1

@@ -42,7 +42,6 @@ var isMobile = Capacitor.getPlatform() !== "web";
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    console.log(BOOK_METADATA[props.book]);
     if (BOOK_METADATA[props.book] == undefined) {
         error_is_active.value = true;
         return;
@@ -59,6 +58,7 @@ onMounted(async () => {
             minZoom: isMobile ? 1 : 0.25,
             bounds: true,
             boundsPadding: isMobile ? 1 : 0.5,
+            zoomDoubleClickSpeed: 1,
         });
     }
     if (isMobile) {
