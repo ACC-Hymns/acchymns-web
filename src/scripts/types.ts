@@ -78,5 +78,25 @@ type UpdatePackage = {
     paths: string[]
 }
 
-export type { BookDataSummary, BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BookSignature, UpdatePackage };
+type BibleVerse = {
+    text: string;
+    num: number;
+};
+
+type BibleChapter = {
+    verses: BibleVerse[];
+    num: number;
+};
+
+type BibleBook = {
+    name: string;
+    chapters: BibleChapter[];
+};
+
+type Bible = {
+    version: string;
+    books: BibleBook[];
+};
+
+export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BibleVerse, BibleChapter, BibleBook, Bible, BookSignature, UpdatePackage, BookDataSummary };
 export { BookSourceType };

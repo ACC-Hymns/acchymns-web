@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 </script>
@@ -24,6 +25,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
             <span>Import Hymnals</span>
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+        </RouterLink>
+        <RouterLink to="/settings/connect" class="settings-option">
+            <span>Broadcast</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
     </div>

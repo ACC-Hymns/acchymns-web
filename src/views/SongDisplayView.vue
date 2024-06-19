@@ -5,7 +5,7 @@ import { onMounted, ref, computed, onUnmounted } from "vue";
 import { getSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
-import type { SongList, SongReference } from "@/scripts/types";
+import type { BookSummary, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -16,6 +16,8 @@ import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { Preferences } from "@capacitor/preferences";
+import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();
 
@@ -25,8 +27,16 @@ const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const song_count = ref<number>(0);
 var isMobile = Capacitor.getPlatform() !== "web";
+const book_summary = ref<BookSummary>();
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+const broadcasting_auth_token = useCapacitorPreferences<string>("broadcasting_auth_token", "");
+let church_id = ref<string>('');
+let authorized = ref<boolean>(false);
+let broadcasting = ref<boolean>(false);
+let verses = ref<number[]>([]);
+let verse_input = ref<string>("");
+
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
@@ -151,6 +161,11 @@ function setup_audiosource(audio_source: HTMLAudioElement) {
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
+    book_summary.value = BOOK_METADATA[props.book];
+
+    let response = await validate_token(broadcasting_auth_token.value);
+    authorized.value = response.status == 200;
+    church_id.value = (response.data as TokenAuthResponse).church_id;
     
     if(SONG_METADATA != null) {
         const song_data = SONG_METADATA[props.number];
@@ -228,6 +243,21 @@ let large_timeline = ref();
 let mini_timeline = ref();
 let page_buttons = ref();
 
+function open_broadcast(e: MouseEvent) {
+    broadcasting.value = true;
+    let button = (e.target as Element).parentElement?.parentElement;
+    button?.style.setProperty("opacity", "0");
+}
+
+async function broadcast(e: MouseEvent) {
+    if(church_id.value == null)
+        return;
+
+    await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
+
+    let button = (e.target as Element).parentElement;
+    broadcasting.value = false;
+}
 
 const updateTime = async () => {
     media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
@@ -474,6 +504,39 @@ function get_note_icon(note: string) {
         </div>
     </div>
     
+    <div class="broadcast-button-container" v-if="authorized">
+        <div class="broadcast-button">
+            <img @click="(e) => open_broadcast(e)" class="ionicon" src="/assets/radio-outline.svg">
+        </div>
+    </div>
+    <div class="broadcast-container" v-if="authorized && broadcasting" @touchmove="(e) => e.preventDefault()">
+        <h1>Broadcast</h1>
+        <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
+        <br>
+        <h3>Verses</h3>
+        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+                verses = [];
+                verses.push(-2);
+            }">
+            All
+        </a>
+        <br>
+        <div class="verse-list">
+            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
+
+                if(verses[0] == -2) 
+                    verses = [];
+
+                if(verses.includes(verse))
+                    verses.splice(verses.indexOf(verse), 1);
+                else
+                    verses.push(verse);
+            }">
+                {{ verse }}
+            </a>
+        </div>
+        <button class="send-button" @click="(e) => broadcast(e)">Send</button>
+    </div>
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
         @mouseup="(e) => {
             if(Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5)
@@ -494,6 +557,74 @@ function get_note_icon(note: string) {
 </template>
 
 <style>
+.send-button {
+    background-color: #2196F3;
+    color: white;
+    border-radius: 15px;
+    padding: 6px 20px;
+    height: 30px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    margin: 20px;
+}
+.verse {
+    color: var(--color);
+    border-radius: 50px;
+    background-color: var(--button-color);
+    margin: 5px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    padding: 15px 15px;
+}
+
+.verse-selected {
+    box-shadow: inset 0 0 0 4px #2196F3;
+}
+.verse-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 15px 0;
+}
+.broadcast-container {
+    width: 75%;
+    min-height: max-content;
+    background-color: var(--div-color);
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s, visibility 0.5s ease;
+    opacity: 1;
+    text-align: center;
+    padding: 15px;
+}
+.broadcast-button-container {
+    position: fixed;
+    top: calc(61.16px + env(safe-area-inset-top) + 15px);
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    z-index: 1;
+    transition: opacity 0.25s;
+    opacity: 1;
+}
+
+.broadcast-button {
+    height: 10vw;
+    width: 10vw;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: var(--button-color);
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    margin: 0 5vw;
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 * {
     -webkit-user-select: none;
     -ms-user-select: none;
