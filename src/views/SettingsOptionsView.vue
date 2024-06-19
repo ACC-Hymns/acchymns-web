@@ -9,6 +9,7 @@ let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
 let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
 let panzoom_enabled = useLocalStorage("ACCOptions.panzoomEnable", true);
+let song_group_enabled = useLocalStorage("ACCOptions.songGroupEnabled", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
 const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
@@ -33,7 +34,7 @@ const dark_mode = computed(() => {
     </div>
 
     <div class="main-content">
-        <h2>Theme</h2>
+        <h2>Accessibility</h2>
         <div class="settings">
             <div class="settings-option">
                 <span>Enable Pan & Zoom</span>
@@ -42,6 +43,16 @@ const dark_mode = computed(() => {
                     <span class="slider round"></span>
                 </label>
             </div>
+            <div class="settings-option">
+                <span>Group Songs by Number</span>
+                <label class="switch">
+                    <input v-model="song_group_enabled" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <h2>Theme</h2>
+        <div class="settings">
             <div class="settings-option">
                 <span>Override System Theme</span>
                 <label class="switch">

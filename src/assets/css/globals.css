@@ -37,6 +37,7 @@ a, img {
     --div-color: #ffffff;
     --border-color: rgb(218, 218, 218) solid 1px;
     --box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    --thin-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
     --invert: invert(0%);
     --svg-back-filter: invert(51%) sepia(0%) saturate(0%) hue-rotate(183deg) brightness(99%) contrast(90%);
     --change-svg-filter: invert(0%) sepia(9%) saturate(4%) hue-rotate(326deg) brightness(105%) contrast(86%);
