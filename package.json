@@ -17,7 +17,6 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.554.0",
     "@aws-sdk/credential-providers": "^3.554.0",
-    "@byteowls/capacitor-oauth2": "^5.0.0",
     "@capacitor/android": "^6.0.0",
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.0.0",
@@ -30,8 +29,8 @@
     "@capacitor/toast": "^6.0.0",
     "@ionic/pwa-elements": "^3.2.2",
     "@vueuse/core": "^9.13.0",
-    "folder-hash": "^4.0.4",
     "axios": "^1.6.8",
+    "folder-hash": "^4.0.4",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^3.10.111",
     "pinia": "^2.1.6",

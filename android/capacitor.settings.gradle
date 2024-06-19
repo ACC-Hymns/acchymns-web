@@ -2,9 +2,6 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
-include ':byteowls-capacitor-oauth2'
-project(':byteowls-capacitor-oauth2').projectDir = new File('../node_modules/@byteowls/capacitor-oauth2/android')
-
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
@@ -25,6 +22,3 @@ project(':capacitor-screen-orientation').projectDir = new File('../node_modules/
 
 include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')
-
-include ':christoffyw-capacitor-media-session'
-project(':christoffyw-capacitor-media-session').projectDir = new File('../node_modules/@christoffyw/capacitor-media-session/android')

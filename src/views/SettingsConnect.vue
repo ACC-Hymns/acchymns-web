@@ -8,10 +8,12 @@ import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse } from "@/scripts/types";
 import { fetchCachedJSON } from "@/composables/cached_fetch";
 import router from "@/router";
+import { Capacitor } from "@capacitor/core";
 const { back } = useNavigator();
 
 const input = ref('')
 const status = ref<UserStatus>(UserStatus.Unauthorized)
+let platform = ref<string>(Capacitor.getPlatform());
 let login_error = ref<boolean>(false);
 let selected_church = ref('LOADING');
 let churches = ref<ChurchData[]>([]);
@@ -173,6 +175,7 @@ function verse_end_changed(e: Event) {
 }
 function read_type_changed(e: Event, id: number) {
   read_type.value = id;
+  console.log(read_type.value)
 }
 
 function get_chapter_start_list(book: string) {
@@ -202,7 +205,7 @@ function get_verse_end_list(book: string, chapter: number) {
   let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: []};
   let verse_end_list: BibleVerse[] = [];
   if(verse_start.value > 0) {
-    for (let i = verse_start.value; i <= c?.verses.length; i++) {
+    for (let i = (read_type.value == 3) ? 1 : verse_start.value; i <= c?.verses.length; i++) {
       verse_end_list.push(c.verses[i-1]);
     }
     return verse_end_list;
@@ -242,77 +245,77 @@ function get_verse_end_list(book: string, chapter: number) {
         <div v-else-if="status == UserStatus.Authorized && bibleReading">            
           <div class="biblereading">
               <h3>Reading Type</h3>
-              <div class="book-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+              <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a @click="(e) => read_type_changed(e,1)" class="biblebook" :class="{'selected': read_type == 1}">Start Only</a>
                 <a @click="(e) => read_type_changed(e,2)" class="biblebook" :class="{'selected': read_type == 2}">Start End</a>
                 <a @click="(e) => read_type_changed(e,3)" class="biblebook" :class="{'selected': read_type == 3}">Start End Chapter</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <h3>Book</h3>
               <div class="book-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)" v-for="b in old_testament" :key="b.name">{{ b.name }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <div class="book-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)" v-for="b in new_testament" :key="b.name">{{ b.name }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <h3>Chapter</h3>
               <div class="number-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a class="biblebook" :class="{'selected': c.num == chapter_start}" @click="(e: Event) => chapter_start_changed(e)" v-for="c in get_chapter_start_list(book)" :key="c.num">{{ c.num }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <h3>Start Verse</h3>
               <div class="number-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a class="biblebook" :class="{'selected': v.num == verse_start}" @click="(e: Event) => verse_start_changed(e)" v-for="v in get_verse_start_list(book, chapter_start)" :key="v.num">{{ v.num }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-              </div>
-              <h3 v-if="read_type > 1">End Verse</h3>
-              <div v-if="read_type > 1" class="number-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook" :class="{'selected': v.num == verse_end}" @click="(e: Event) => verse_end_changed(e)" v-for="v in get_verse_end_list(book, read_type == 2 ? chapter_end : chapter_start)" :key="v.num">{{ v.num }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <h3 v-if="read_type == 3">End Chapter</h3>
               <div v-if="read_type == 3" class="number-selector">
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
                 <a class="biblebook" :class="{'selected': c.num == chapter_end}" @click="(e: Event) => chapter_end_changed(e)" v-for="c in get_chapter_end_list(book)" :key="c.num">{{ c.num }}</a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
-                <a class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+              </div>
+              <h3 v-if="read_type > 1">End Verse</h3>
+              <div v-if="read_type > 1" class="number-selector">
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a class="biblebook" :class="{'selected': v.num == verse_end}" @click="(e: Event) => verse_end_changed(e)" v-for="v in get_verse_end_list(book, read_type == 3 ? chapter_end : chapter_start)" :key="v.num">{{ v.num }}</a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
+                <a v-if="platform !== 'web'" class="biblebook space"></a>
               </div>
               <div>
                 <button class="send-button" @click="(e) => broadcast(e)">Send</button>
@@ -325,10 +328,10 @@ function get_verse_end_list(book: string, chapter: number) {
             <h1 style="margin-bottom: 0px;">Authorized</h1>
             <h3 style="margin-top: 0px;">as {{ selected_church }}</h3>
             
-            <button class="settings-button" @click="bibleReading = true">Set Bible Reading</button>
-            <button class="settings-button" @click="clear()">Clear Screen</button>
-            <button class="settings-button" @click="view_output()">Open Output Display</button>
-            <button class="settings-button" @click="signout()">Log Out</button>
+            <a class="settings-button" @click="bibleReading = true">Set Bible Reading</a>
+            <a class="settings-button" @click="clear()">Clear Screen</a>
+            <a class="settings-button" href="/broadcast">Open Output Display</a>
+            <a class="settings-button" @click="signout()">Log Out</a>
             
             
         </div>        
@@ -464,7 +467,6 @@ label {
     background-image: linear-gradient(to left, rgba(255,255,255,0), var(--background) 85%);
     width: 30px;
   }
-  scrollbar-width: none;  /* Firefox */
 }
 
 .number-selector {
@@ -474,12 +476,8 @@ label {
   overflow: auto;
   width: 95vw;
   height: 12vh;
-  scrollbar-width: none;  /* Firefox */
 }
-.book-selector::-webkit-scrollbar {
-  display: none;
-}
-.number-selector::-webkit-scrollbar {
+.hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
@@ -494,6 +492,7 @@ label {
   background-color: var(--search-color);
   color: var(--color);
   text-align: center;
+  cursor: pointer;
 }
 .space {
   opacity: 0;
@@ -521,6 +520,7 @@ label {
   height: 30px;
   box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
   margin: 20px;
+  cursor: pointer;
 }
 
 .input-container {
@@ -581,11 +581,13 @@ label {
 .settings-button {
   all: unset;
   height: 44px;
+  line-height: 44px;
   background-color: var(--search-color);
   color: var(--color);
   border-radius: 10px;
   padding: 0 10px;
   margin: 10px;
+  cursor: pointer;
 }
 
 .settings-radio {

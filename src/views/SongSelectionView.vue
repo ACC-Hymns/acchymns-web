@@ -3,7 +3,7 @@ import { nextTick, onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened } from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
@@ -66,7 +66,22 @@ onMounted(async () => {
     // Restoring position in book
     await nextTick();
     // The v-for for song buttons now should be active, so we can scroll to the saved position
-    restoreScrollPosition(route.fullPath);
+
+    let group_id = getGroupOpened(route.fullPath);
+    if(group_id != undefined) {
+        song_number_groups_active.value.push(song_number_groups.value[group_id]);
+
+        if(song_group_elements.value == undefined)
+            return;
+
+        let element = song_group_elements.value[group_id] as HTMLElement;
+        setTimeout(() => {
+            scrollIntoViewWithOffset(element, 0);
+            restoreScrollPosition(route.fullPath);
+        }, 100)
+    } else {
+        restoreScrollPosition(route.fullPath);
+    }
 });
 
 function toggleDropdown(group: string[]) {
@@ -83,6 +98,7 @@ function toggleDropdown(group: string[]) {
         setTimeout(() => {
             scrollIntoViewWithOffset(element, 0);
         }, 200)
+        saveGroupOpened(route.fullPath, index);
     }
 }
 
@@ -102,14 +118,6 @@ function getRangeString(start: string, end: string) {
     } else {
         return `${start} - ${end}`;
     }
-}
-
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        topical_index_tooltip_status.value = true;
-    }, 1000);
 }
 </script>
 
@@ -142,7 +150,7 @@ function hideTooltip() {
             </RouterLink>
         </div>
         <!-- Buttons with song grouping enabled -->
-        <div v-else @click="toggleDropdown(group)" v-for="group in song_number_groups" class="song-group-container" ref="song_group_elements">
+        <div v-else @click="toggleDropdown(group)" v-for="(group) in song_number_groups" class="song-group-container" ref="song_group_elements">
             <div>
                 <div class="song-group-title-container">
                     <div class="song-title">{{getRangeString(group[0], group[group.length - 1])}}</div>
@@ -189,7 +197,7 @@ function hideTooltip() {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 0px 15px 50px 15px;
+    padding: 0px 10px 50px 10px;
 }
 
 .song-group-container {

@@ -4,6 +4,7 @@ type ScrollPosition = {
 };
 
 const scroll_positions = new Map<string, ScrollPosition>();
+const groups_opened = new Map<string, number>();
 
 export function saveScrollPosition(path: string) {
     scroll_positions.set(path, {
@@ -17,4 +18,17 @@ export function restoreScrollPosition(path: string) {
     if (position) {
         window.scrollTo(position);
     }
+}
+
+export function saveGroupOpened(path: string, id: number) {
+    groups_opened.set(path, id);
+}
+
+export function getGroupOpened(path: string) {
+    const position = groups_opened.get(path);
+    return position;
+}
+
+export function removeGroupOpened(path: string) {
+    groups_opened.delete(path);
 }
