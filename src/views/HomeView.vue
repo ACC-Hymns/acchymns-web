@@ -132,6 +132,12 @@ function tooltipVisible(visible: boolean) {
                 <BaseBookBox v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)" :summary="book" :isEnabled="false"></BaseBookBox>
             </div>
 
+            <div>
+                <RouterLink to="/settings/import" v-if="hasConnection">
+                    <img class="ionicon import-books-button" src="/assets/add-circle-outline.svg" />
+                </RouterLink>
+            </div>
+
             <template v-if="Capacitor.getPlatform() === 'web'">
                 <a class="app-button-container play-store-width" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
                     <img class="app-button" src="/assets/en_badge_web_generic.png" />
