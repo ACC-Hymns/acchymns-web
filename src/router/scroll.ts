@@ -4,7 +4,7 @@ type ScrollPosition = {
 };
 
 const scroll_positions = new Map<string, ScrollPosition>();
-const groups_opened = new Map<string, number>();
+const groups_opened = new Map<string, number[]>();
 
 export function saveScrollPosition(path: string) {
     scroll_positions.set(path, {
@@ -20,8 +20,8 @@ export function restoreScrollPosition(path: string) {
     }
 }
 
-export function saveGroupOpened(path: string, id: number) {
-    groups_opened.set(path, id);
+export function saveGroupOpened(path: string, ids: number[]) {
+    groups_opened.set(path, ids);
 }
 
 export function getGroupOpened(path: string) {

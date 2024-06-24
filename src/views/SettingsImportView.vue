@@ -13,7 +13,7 @@ import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import router from "@/router";
 import { download_book, loadBookSources, checkForUpdates } from "@/scripts/book_import";
-import { BookSourceType, type BookDataSummary } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
 // Not watching deeply, must assign new array
@@ -115,10 +115,12 @@ async function addImportedBookByCode(short_book_name: string) {
 }
 
 let downloadProgress = ref(new Map<string, number>());
+let downloads = new Map<string, DownloadPromise>();
 
 async function download(book_to_download: BookDataSummary) {
     if((await Network.getStatus()).connected) {
-        download_book(book_to_download, (book, progress) => download_progress(book, progress), (book, url: string) => download_finish(book, url))
+        let d: DownloadPromise = download_book(book_to_download, (book, progress) => download_progress(book, progress), (book, url: string) => download_finish(book, url))
+        downloads.set(book_to_download.id, d);
     } else {
         await Toast.show({
             text: "No internet connection."
@@ -142,6 +144,12 @@ onUpdated(() => {
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
+
+    if(downloads.has(book_to_remove.id)) {
+        downloads.get(book_to_remove.id)?.cancel();
+        downloadProgress.value.delete(book_to_remove.id);
+    }
+
     await Toast.show({
         text: "Successfully removed hymnal!"
     })

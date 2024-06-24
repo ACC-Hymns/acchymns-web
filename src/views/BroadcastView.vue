@@ -276,7 +276,7 @@ function calculate_text_width(text: string, font: string) {
   height: 240px;
   background: red;
   top: 52px;
-  lefT: 50%;
+  left: 50%;
   margin-left: -2px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;

@@ -72,6 +72,11 @@ type BookSignature = {
     children?: BookSignature[]
 };
 
+type DownloadPromise = {
+    cancel: () => void,
+    promise: Promise<void>
+}
+
 type UpdatePackage = {
     book_short: string,
     book_summary?: BookSummary,
@@ -98,5 +103,5 @@ type Bible = {
     books: BibleBook[];
 };
 
-export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BibleVerse, BibleChapter, BibleBook, Bible, BookSignature, UpdatePackage, BookDataSummary };
+export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BibleVerse, BibleChapter, BibleBook, Bible, BookSignature, UpdatePackage, DownloadPromise, BookDataSummary };
 export { BookSourceType };

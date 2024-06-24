@@ -7,8 +7,9 @@ let landing_complete = useLocalStorage<boolean>("landing_complete", false);
 </script>
 
 <template>
-    <SplashScreen v-if="!landing_complete" />
-    <RouterView v-else />
+    <!--<SplashScreen v-if="!landing_complete" />
+    <RouterView v-else />-->
+    <RouterView />
 </template>
 
 <style>

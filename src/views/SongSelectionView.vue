@@ -63,42 +63,35 @@ onMounted(async () => {
 
     useSessionStorage<boolean>("isAlphabetical", false).value = false;
 
+    let group_ids = getGroupOpened(route.fullPath);
+    if(group_ids != undefined) {
+        group_ids.forEach((id) => {
+            song_number_groups_active.value.push(song_number_groups.value[id]);
+        })
+    }
+
     // Restoring position in book
     await nextTick();
     // The v-for for song buttons now should be active, so we can scroll to the saved position
-
-    let group_id = getGroupOpened(route.fullPath);
-    if(group_id != undefined) {
-        song_number_groups_active.value.push(song_number_groups.value[group_id]);
-
-        if(song_group_elements.value == undefined)
-            return;
-
-        let element = song_group_elements.value[group_id] as HTMLElement;
-        setTimeout(() => {
-            scrollIntoViewWithOffset(element, 0);
-            restoreScrollPosition(route.fullPath);
-        }, 100)
-    } else {
-        restoreScrollPosition(route.fullPath);
-    }
+    restoreScrollPosition(route.fullPath);
 });
 
 function toggleDropdown(group: string[]) {
     if (song_number_groups_active.value.includes(group)) {
-        song_number_groups_active.value = [];
+        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(group), 1);
     } else {
-        song_number_groups_active.value = [];
+        let ids: number[] = [];
         song_number_groups_active.value.push(group);
-        var index = song_number_groups.value.indexOf(group);
+        
         if (song_group_elements.value == undefined) {
             return;
         }
-        let element = song_group_elements.value[index] as HTMLElement;
-        setTimeout(() => {
-            scrollIntoViewWithOffset(element, 0);
-        }, 200)
-        saveGroupOpened(route.fullPath, index);
+
+        song_number_groups_active.value.forEach((group_id) => {
+            var index = song_number_groups.value.indexOf(group_id);
+            ids.push(index);
+        })
+        saveGroupOpened(route.fullPath, ids);
     }
 }
 
@@ -150,9 +143,9 @@ function getRangeString(start: string, end: string) {
             </RouterLink>
         </div>
         <!-- Buttons with song grouping enabled -->
-        <div v-else @click="toggleDropdown(group)" v-for="(group) in song_number_groups" class="song-group-container" ref="song_group_elements">
+        <div v-else v-for="(group) in song_number_groups" class="song-group-container" ref="song_group_elements">
             <div>
-                <div class="song-group-title-container">
+                <div class="song-group-title-container" @click="toggleDropdown(group)">
                     <div class="song-title">{{getRangeString(group[0], group[group.length - 1])}}</div>
                     <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(group)}"/>
                 </div>

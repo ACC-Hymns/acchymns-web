@@ -162,10 +162,6 @@ onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
     book_summary.value = BOOK_METADATA[props.book];
-
-    let response = await validate_token(broadcasting_auth_token.value);
-    authorized.value = response.status == 200;
-    church_id.value = (response.data as TokenAuthResponse).church_id;
     
     if(SONG_METADATA != null) {
         const song_data = SONG_METADATA[props.number];
@@ -222,6 +218,10 @@ onMounted(async () => {
                 panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
         }
     });
+
+    let response = await validate_token(broadcasting_auth_token.value);
+    authorized.value = response.status == 200;
+    church_id.value = (response.data as TokenAuthResponse).church_id;
 });
 
 onUnmounted(() => {
