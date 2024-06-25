@@ -165,6 +165,7 @@ h1, h2, h3, h4, h5 {
 
 .w-100 {
     width: 100%;
+    overflow: hidden;
 }
 
 .fill {

@@ -73,9 +73,17 @@ function enter_pin(value: number) {
     input.value += value;
 }
 
+function back_button() {
+  if(bibleReading.value) {
+    bibleReading.value = false;
+  } else {
+    back();
+  }
+}
+
 onMounted(async () => {
   selected_church.value = "...";
-  bible.value = await fetchCachedJSON<Bible>(import.meta.env.BASE_URL + "NKJV.bible.json", {}) || { version: "", books: []};
+  bible.value = (await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible || { version: "", books: []};
   
   for(let [index, book] of bible.value.books.entries()) {
     if(index > 38)
@@ -122,6 +130,7 @@ async function broadcast(e: MouseEvent) {
     }
 
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
+    bibleReading.value = false;
 }
 
 let bibleReading = ref<boolean>(false);
@@ -218,7 +227,7 @@ function get_verse_end_list(book: string, chapter: number) {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <img @click="back_button()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">{{ bibleReading ? "Bible Reading" : "Broadcast" }}</h1>
         </div>
     </div>

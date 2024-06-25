@@ -5,6 +5,7 @@ import { Preferences } from "@capacitor/preferences";
 import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
 import { Capacitor } from "@capacitor/core";
+import { Network } from "@capacitor/network";
 
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
@@ -189,11 +190,43 @@ async function loadBookSources() {
         for(let b in book_sources) {
             if(book_sources[b].id === book) {
                 skip = true;
+                if(book_sources[b].status == BookSourceType.IMPORTED) {
+                    if(Capacitor.getPlatform() === "web")
+                        break;
+
+                    let source_path = "";
+                    try {
+                        let result = await Filesystem.stat({
+                            directory: Directory.Documents,
+                            path: `Imports/${book}`
+                        })
+                        source_path = result.uri;
+                    } catch (e) {
+                        if((await Network.getStatus()).connected) {
+                            console.log("No local summary found for " + book + ". Downloading now...");
+                            let result = await download_import_summary(book_sources[b]);
+                            source_path = result.path?.replace("/summary.json", "") || "";
+                        } else {
+                            console.log("No local summary found for " + book + ". Skipping...");
+                        }
+                    }
+                    
+                    if(source_path == "")
+                        break;
+
+                    let summary: BookSummary | null = await fetchBookSummary(Capacitor.convertFileSrc(source_path));
+                    if(summary) {
+                        book_sources[b].name = summary.name;
+                        book_sources[b].primaryColor = summary.primaryColor;
+                        book_sources[b].secondaryColor = summary.secondaryColor;
+                    }
+                }
                 break;
             }
         }
         if(skip)
             continue;
+            
         
         let url = known_references[book as keyof typeof known_references]
 
@@ -202,13 +235,6 @@ async function loadBookSources() {
             status: (Object.keys(public_references).includes(book)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN,
             src: url
         };
-
-        let summary: BookSummary | null = await fetchBookSummary(url);
-        if(summary) {
-            entry.name = summary.name;
-            entry.primaryColor = summary.primaryColor;
-            entry.secondaryColor = summary.secondaryColor;
-        }
 
         book_sources.push(entry);
     }
@@ -292,6 +318,50 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/.signature`
     })
     finish_callback();
+}
+
+async function delete_import_summary(book: BookDataSummary) {
+    await Filesystem.rmdir({
+        directory: Directory.Documents,
+        path: `Imports/${book.id}`,
+        recursive: true
+    })
+}
+
+async function download_import_summary(book: BookDataSummary) {
+    // setup folder structure
+    try {
+        await Filesystem.stat({
+            directory: Directory.Documents,
+            path: "Imports/"
+        });
+    } catch (e) {
+        await Filesystem.mkdir({
+            directory: Directory.Documents,
+            path: "Imports/"
+        })
+    }
+
+    try {
+        await Filesystem.stat({
+            directory: Directory.Documents,
+            path: `Imports/${book.id}`
+        })
+    } catch (e) {
+        await Filesystem.mkdir({
+            directory: Directory.Documents,
+            path: `Imports/${book.id}`
+        })
+    }
+
+    let result = await Filesystem.downloadFile({
+        directory: Directory.Documents,
+        path: `Imports/${book.id}/summary.json`,
+        progress: false,
+        url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`
+    });
+
+    return result;
 }
 
 function download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void): DownloadPromise {
@@ -502,4 +572,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { generate_force_update_package, download_update_package, getBookFromId, getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates };
+export { generate_force_update_package, download_update_package, getBookFromId, getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates, delete_import_summary, download_import_summary };

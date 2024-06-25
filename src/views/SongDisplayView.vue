@@ -242,11 +242,18 @@ let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
 let page_buttons = ref();
+let broadcast_button = ref();
 
-function open_broadcast(e: MouseEvent) {
+function open_broadcast() {
     broadcasting.value = true;
-    let button = (e.target as Element).parentElement?.parentElement;
+    let button = (broadcast_button.value as HTMLElement);
     button?.style.setProperty("opacity", "0");
+}
+
+function close_broadcast() {
+    broadcasting.value = false;
+    let button = (broadcast_button.value as HTMLElement);
+    button?.style.setProperty("opacity", "1");
 }
 
 async function broadcast(e: MouseEvent) {
@@ -504,13 +511,16 @@ function get_note_icon(note: string) {
         </div>
     </div>
     
-    <div class="broadcast-button-container" v-if="authorized">
+    <div class="broadcast-button-container" v-if="authorized" ref="broadcast_button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
         <div class="broadcast-button">
-            <img @click="(e) => open_broadcast(e)" class="ionicon" src="/assets/radio-outline.svg">
+            <img @click="(e) => open_broadcast()" class="ionicon" src="/assets/radio-outline.svg">
         </div>
     </div>
     <div class="broadcast-container" v-if="authorized && broadcasting" @touchmove="(e) => e.preventDefault()">
         <h1>Broadcast</h1>
+        <div class="close-button">
+            <img @click="close_broadcast()" class="ionicon" src="/assets/close.svg" />
+        </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br>
         <h3>Verses</h3>
@@ -606,7 +616,7 @@ function get_note_icon(note: string) {
     display: flex;
     justify-content: right;
     z-index: 1;
-    transition: opacity 0.25s;
+    transition: opacity 0.25s, transform 0.3s;
     opacity: 1;
 }
 
@@ -716,13 +726,15 @@ function get_note_icon(note: string) {
     width: 50%;
     margin: 0 10px;
     align-items: center;
-    display: flex;
+    display: flex;    
+    overflow: visible;
 }
 .progress-bar-large {
     width: 60%;
     margin: 0 10px;
     align-items: center;
-    display: flex;
+    display: flex;    
+    overflow: visible;
 }
 .mini-playback-container {
     width: 100%;
@@ -882,6 +894,7 @@ function get_note_icon(note: string) {
     transition: opacity 0.125s ease-in, visibility 0.125s ease;
     opacity: 1;
     visibility: visible;    
+    overflow: visible;
 }
 .media-panel-blur {
     backdrop-filter: blur(8px);

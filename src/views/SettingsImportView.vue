@@ -12,7 +12,7 @@ import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
 import router from "@/router";
-import { download_book, loadBookSources, checkForUpdates } from "@/scripts/book_import";
+import { download_book, loadBookSources, checkForUpdates, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
@@ -43,6 +43,8 @@ async function addImportedURL(input_book: BookDataSummary, show_on_success: bool
     let book = book_sources.value.find(b => b.id == input_book.id);
     if(book == undefined)
         return false;
+
+    await download_import_summary(book);
 
     let resp: Response | null = null;
     try {
@@ -149,6 +151,8 @@ async function removeImportedURL(book_to_remove: BookDataSummary) {
         downloads.get(book_to_remove.id)?.cancel();
         downloadProgress.value.delete(book_to_remove.id);
     }
+
+    await delete_import_summary(book_to_remove);
 
     await Toast.show({
         text: "Successfully removed hymnal!"
