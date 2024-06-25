@@ -205,12 +205,6 @@ onUpdated(async () => {
                 </div>
                 <div class="booktext--right">
                     <div class="song__number">#{{ song.number }}</div>
-                    <img
-                        v-if="book_data_summaries.get(song.book.name.short)?.status == BookSourceType.IMPORTED && Capacitor.getPlatform() !== 'web'"
-                        class="ionicon"
-                        style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
-                        src="/assets/wifi.svg"
-                    />
                 </div>
             </RouterLink>
             <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">

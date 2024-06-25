@@ -88,12 +88,6 @@ onMounted(async () => {
             </div>
             <div class="booktext--right">
                 <div class="song__number">#{{ song.number }}</div>
-                <img
-                    v-if="song.book.addOn && Capacitor.getPlatform() !== 'web'"
-                    class="ionicon"
-                    style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
-                    src="/assets/wifi.svg"
-                />
             </div>
         </RouterLink>
     </div>
