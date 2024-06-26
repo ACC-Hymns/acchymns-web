@@ -38,7 +38,8 @@
     "polymorph-js": "^1.0.2",
     "tone": "^14.7.77",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@capacitor/assets": "^2.0.4",

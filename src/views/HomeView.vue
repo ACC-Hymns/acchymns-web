@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { checkForUpdates, download_update_package, getBookFromId, getBookUrls, loadBookSources } from "@/scripts/book_import";
+import { checkForUpdates, download_update_package, fetchBookSummary, getBookFromId, getBookUrls, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import { BookSourceType, type BookDataSummary, type UpdatePackage } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type BookSummary, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
+import draggable from 'vuedraggable'
+import { Preferences } from "@capacitor/preferences";
 
 var hasConnection = ref<boolean>(false);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
@@ -18,14 +20,48 @@ let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
+let editting_order = ref<boolean>(false);
+let dragOptions = computed(() => {
+    return {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost",
+        forceFallback: true,
+        direction: "vertical",
+    };
+})
 
-const available_books = ref<string[]>([]);
 const book_sources = ref<BookDataSummary[]>([]);
 
+async function sort_books() {
+    let book_order = JSON.parse((await Preferences.get({key: "bookOrder"})).value || "[]") as string[];
+    let available_books = book_sources.value.filter((book) => filter_book(book, hasConnection.value));
+    let temp_books: BookDataSummary[] = [];
+    for(let id of book_order) {
+        if(available_books.find(book => book.id == id)) {
+            temp_books.push(available_books.find(book => book.id == id) as BookDataSummary)
+            available_books.splice(available_books.findIndex(book => book.id == id), 1);
+        }
+    }
+    temp_books = temp_books.concat(available_books);
+    temp_books.forEach(async (book) => {
+        let summary: BookSummary | null = await fetchBookSummary(book.src);
+        if(summary) {
+            book.name = summary.name;
+            book.primaryColor = summary.primaryColor;
+            book.secondaryColor = summary.secondaryColor;
+        }
+    });
+    book_sources.value = temp_books;
+}
+
 onMounted(async () => {
-    book_sources.value = await loadBookSources();
     hasConnection.value = (await Network.getStatus()).connected;
     console.log("Connected to the internet: " + hasConnection.value);
+
+    book_sources.value = await loadBookSources();
+    await sort_books();
 
     if(hasConnection && update_reminder.value <= Date.now()) {
         let update_results: UpdatePackage[] = await checkForUpdates();
@@ -41,6 +77,22 @@ onMounted(async () => {
         console.log("Connected to the internet: " + hasConnection.value);
     })
 });
+
+type BookOrderEvent = {
+    moved: {
+        element: BookDataSummary,
+        newIndex: number,
+        oldIndex: number
+    }
+}
+async function move_book(e: BookOrderEvent) {
+    let book_order = book_sources.value.map(book => book.id);
+    let moved_book = e.moved.element;
+    book_order.splice(e.moved.oldIndex, 1);
+    book_order.splice(e.moved.newIndex, 0, moved_book.id);
+    Preferences.set({key: "bookOrder", value: JSON.stringify(book_order)});
+    await sort_books();
+}
 
 function delayUpdate() {
 
@@ -119,11 +171,49 @@ function tooltipVisible(visible: boolean) {
             </div>
         </div>
 
-        <div>
-            <h1 class="pagetitle">Home</h1>
+        <div class="page-heading">
+            <h1>Home</h1>
+            <a v-if="!editting_order" @click="editting_order = !editting_order">
+                <img class="ionicon" src="/assets/edit-outline.svg" />
+            </a>
+            <a v-else @click="editting_order = !editting_order" class="confirm-text-container">
+                <h3 class="confirm-text">Confirm</h3>
+                <img class="ionicon" src="/assets/confirm-outline.svg" />
+            </a>
         </div>
         <div id="appsection">
-            <HomeBookBox v-for="book in book_sources.filter(book => filter_book(book,hasConnection))" :key="book.src" :src="book.src"></HomeBookBox>
+
+            <div v-if="editting_order">
+                <draggable 
+                    :list="book_sources.filter(book => filter_book(book, hasConnection))" 
+                    :component-data="{
+                        tag: 'div',
+                        type: 'transition-group',
+                        name: 'flip-list'
+                    }"
+                    v-bind="dragOptions"
+                    :key="book_sources.filter(book => filter_book(book, hasConnection)).length" 
+                    @change="(e: BookOrderEvent) => move_book(e)" 
+                    item-key="book" 
+                    handle=".handle">
+                    
+                    <template #item="{ element }">
+                        <BaseBookBox :summary="element">
+                            <img 
+                                class="ionicon booktext--right handle "
+                                style="filter: invert(100%)"
+                                src="/assets/drag-handle.svg"
+                            />
+                        </BaseBookBox>
+                    </template>
+                </draggable>
+            </div>
+            <div v-else>
+                <HomeBookBox v-for="book in book_sources.filter(book => filter_book(book, hasConnection))" :key="book.id" :src="book.src"></HomeBookBox>
+            </div>
+            
+
+
             <div v-if="!hasConnection">
                 <div v-if="book_sources.filter(book => book.status == BookSourceType.IMPORTED).length > 0" class="warning-label-container">
                     <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
@@ -169,9 +259,41 @@ function tooltipVisible(visible: boolean) {
 </template>
 
 <style scoped>
+.sortable-fallback {
+    opacity: 1 !important;
+}
+.ghost {
+    opacity: 0;
+}
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.confirm-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.confirm-text {
+    color: var(--back-color);
+    font-size: 15px;
+}
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 55px 30px 20px 30px;
+    height: 39px;
+}
+
 #appsection {
     text-align: center;
     padding-bottom: 200px;
+}
+
+.handle {
+  width: 30px;
+  height: 30px;
 }
 
 .update-section {
