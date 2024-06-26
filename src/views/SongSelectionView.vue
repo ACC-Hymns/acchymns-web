@@ -25,7 +25,7 @@ let button_color = ref("#000000");
 let song_number_groups = ref<string[][]>([]);
 let song_number_groups_active = ref<string[][]>([]);
 let song_group_elements = ref<any[]>()
-let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", false);
+let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
