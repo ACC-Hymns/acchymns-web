@@ -203,12 +203,8 @@ function tooltipVisible(visible: boolean) {
                     @change="(e: BookOrderEvent) => move_book(e)" 
                     item-key="book" 
                     handle=".handle"
-                    :scroll="true"
-                    :scrollSensitivity="50"
-                    :scrollFn="(offsetX: number, offsetY: number, originalEvent: Event, touchEvt: Event, hoverTargetEl: HTMLElement) => {
-                        if(offsetX == 0)
-                            return 'continue'
-                    }"
+                    :scroll="false"
+                    :scrollSensitivity="0"
                     :forceFallback="true">
                     
                     
