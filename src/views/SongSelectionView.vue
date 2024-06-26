@@ -80,19 +80,14 @@ function toggleDropdown(group: string[]) {
     if (song_number_groups_active.value.includes(group)) {
         song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(group), 1);
     } else {
-        let ids: number[] = [];
         song_number_groups_active.value.push(group);
-        
-        if (song_group_elements.value == undefined) {
-            return;
-        }
-
-        song_number_groups_active.value.forEach((group_id) => {
-            var index = song_number_groups.value.indexOf(group_id);
-            ids.push(index);
-        })
-        saveGroupOpened(route.fullPath, ids);
     }
+    let ids: number[] = [];
+    song_number_groups_active.value.forEach((group_id) => {
+        var index = song_number_groups.value.indexOf(group_id);
+        ids.push(index);
+    })
+    saveGroupOpened(route.fullPath, ids);
 }
 
 const scrollIntoViewWithOffset = (selector: HTMLElement, offset: number) => {

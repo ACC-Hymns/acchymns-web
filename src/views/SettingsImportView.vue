@@ -3,7 +3,7 @@ import { computed, onMounted, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
-import { RouterLink } from "vue-router";
+import { RouterLink, onBeforeRouteLeave } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
@@ -17,6 +17,13 @@ import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/sc
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
 // Not watching deeply, must assign new array
+
+onBeforeRouteLeave((_, from) => {
+    for (const book in downloads) {
+        downloads.get(book)?.cancel();
+        downloadProgress.value.delete(book);
+    }
+});
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);

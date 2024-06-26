@@ -36,7 +36,6 @@ const dark_mode = computed(() => {
 
 const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
-let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 let panzoom: PanZoom;
 var isMobile = Capacitor.getPlatform() !== "web";
 
@@ -49,18 +48,16 @@ onMounted(async () => {
     const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
-    if (panzoom_enabled.value) {
-        panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
-            beforeWheel: e => {
-                return e.shiftKey;
-            },
-            maxZoom: 3,
-            minZoom: isMobile ? 1 : 0.25,
-            bounds: true,
-            boundsPadding: isMobile ? 1 : 0.5,
-            zoomDoubleClickSpeed: 1,
-        });
-    }
+    panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
+        beforeWheel: e => {
+            return e.shiftKey;
+        },
+        maxZoom: 3,
+        minZoom: isMobile ? 1 : 0.25,
+        bounds: true,
+        boundsPadding: isMobile ? 1 : 0.5,
+        zoomDoubleClickSpeed: 1,
+    });
     if (isMobile) {
         setInterval(() => {
             observer.refresh();
