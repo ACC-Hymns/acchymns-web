@@ -21,18 +21,23 @@ let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
 let editting_order = ref<boolean>(false);
+
+function getDirection() {
+    return "vertical";
+}
+
 let dragOptions = computed(() => {
     return {
         animation: 200,
         group: "description",
         disabled: false,
         ghostClass: "ghost",
-        forceFallback: true,
-        direction: "vertical",
+        direction: getDirection(),
     };
 })
 
 const book_sources = ref<BookDataSummary[]>([]);
+let customized_books = ref<BookDataSummary[]>([]);
 
 async function sort_books() {
     let book_order = JSON.parse((await Preferences.get({key: "bookOrder"})).value || "[]") as string[];
@@ -46,14 +51,13 @@ async function sort_books() {
     }
     temp_books = temp_books.concat(available_books);
     temp_books.forEach(async (book) => {
-        let summary: BookSummary | null = await fetchBookSummary(book.src);
-        if(summary) {
-            book.name = summary.name;
-            book.primaryColor = summary.primaryColor;
-            book.secondaryColor = summary.secondaryColor;
-        }
+        let summary = book_sources.value.find((source) => source.id == book.id);
+        book.primaryColor = summary?.primaryColor;
+        book.secondaryColor = summary?.secondaryColor;
+        book.name = summary?.name;
     });
-    book_sources.value = temp_books;
+
+    customized_books.value = temp_books;
 }
 
 onMounted(async () => {
@@ -72,9 +76,12 @@ onMounted(async () => {
     }
 
     Network.addListener('networkStatusChange', async () => {
-        book_sources.value = await loadBookSources();
         hasConnection.value = (await Network.getStatus()).connected;
         console.log("Connected to the internet: " + hasConnection.value);
+
+        book_sources.value = await loadBookSources();
+        await sort_books();
+
     })
 });
 
@@ -86,7 +93,7 @@ type BookOrderEvent = {
     }
 }
 async function move_book(e: BookOrderEvent) {
-    let book_order = book_sources.value.map(book => book.id);
+    let book_order = customized_books.value.map(book => book.id);
     let moved_book = e.moved.element;
     book_order.splice(e.moved.oldIndex, 1);
     book_order.splice(e.moved.newIndex, 0, moved_book.id);
@@ -173,29 +180,37 @@ function tooltipVisible(visible: boolean) {
 
         <div class="page-heading">
             <h1>Home</h1>
-            <a v-if="!editting_order" @click="editting_order = !editting_order">
-                <img class="ionicon" src="/assets/edit-outline.svg" />
+            <a v-if="!editting_order" @click="editting_order = !editting_order" class="confirm-text-container">
+                <img class="ionicon" src="/assets/create-outline.svg" />
             </a>
             <a v-else @click="editting_order = !editting_order" class="confirm-text-container">
                 <h3 class="confirm-text">Confirm</h3>
-                <img class="ionicon" src="/assets/confirm-outline.svg" />
+                <img class="ionicon" src="/assets/checkmark-circle-outline.svg" />
             </a>
         </div>
         <div id="appsection">
 
             <div v-if="editting_order">
                 <draggable 
-                    :list="book_sources.filter(book => filter_book(book, hasConnection))" 
+                    :list="customized_books.filter(book => filter_book(book, hasConnection))" 
                     :component-data="{
                         tag: 'div',
                         type: 'transition-group',
                         name: 'flip-list'
                     }"
                     v-bind="dragOptions"
-                    :key="book_sources.filter(book => filter_book(book, hasConnection)).length" 
+                    :key="customized_books.filter(book => filter_book(book, hasConnection)).length" 
                     @change="(e: BookOrderEvent) => move_book(e)" 
                     item-key="book" 
-                    handle=".handle">
+                    handle=".handle"
+                    :scroll="true"
+                    :scrollSensitivity="50"
+                    :scrollFn="(offsetX: number, offsetY: number, originalEvent: Event, touchEvt: Event, hoverTargetEl: HTMLElement) => {
+                        if(offsetX == 0)
+                            return 'continue'
+                    }"
+                    :forceFallback="true">
+                    
                     
                     <template #item="{ element }">
                         <BaseBookBox :summary="element">
@@ -209,7 +224,7 @@ function tooltipVisible(visible: boolean) {
                 </draggable>
             </div>
             <div v-else>
-                <HomeBookBox v-for="book in book_sources.filter(book => filter_book(book, hasConnection))" :key="book.id" :src="book.src"></HomeBookBox>
+                <HomeBookBox v-for="book in customized_books.filter(book => filter_book(book, hasConnection))" :key="book.id" :src="book.src"></HomeBookBox>
             </div>
             
 
@@ -261,6 +276,7 @@ function tooltipVisible(visible: boolean) {
 <style scoped>
 .sortable-fallback {
     opacity: 1 !important;
+    
 }
 .ghost {
     opacity: 0;

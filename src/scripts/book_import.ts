@@ -121,14 +121,24 @@ async function loadBookSources() {
 
     console.log("Loading Pre-Packaged Books...")
     for(let url in prepackaged_book_urls) {
-        if(book_sources.find(b => b.src == prepackaged_book_urls[url]))
+        let existing = book_sources.find(b => b.src == prepackaged_book_urls[url]);
+        let summary: BookSummary | null = await fetchBookSummary(prepackaged_book_urls[url]);
+
+        if(existing != undefined) {
+            existing.name = summary?.name;
+            existing.primaryColor = summary?.primaryColor;
+            existing.secondaryColor = summary?.secondaryColor;
             continue;
+        }
         
+
         book_sources.push({
             id: prepackaged_books[url],
             status: BookSourceType.BUNDLED,
-            
-            src: prepackaged_book_urls[url]
+            src: prepackaged_book_urls[url],
+            name: summary?.name,
+            primaryColor: summary?.primaryColor,
+            secondaryColor: summary?.secondaryColor
         });
     }
 
@@ -176,10 +186,15 @@ async function loadBookSources() {
                 book_sources.splice(book_sources.indexOf(existing_book), 1);
             }
 
+            let summary: BookSummary | null = await fetchBookSummary(Capacitor.convertFileSrc(file.uri));
+
             book_sources.push({
                 id: file.name,
                 status: BookSourceType.DOWNLOADED,
-                src: Capacitor.convertFileSrc(file.uri)
+                src: Capacitor.convertFileSrc(file.uri),
+                name: summary?.name,
+                primaryColor: summary?.primaryColor,
+                secondaryColor: summary?.secondaryColor
             });
         }
     }
@@ -191,8 +206,15 @@ async function loadBookSources() {
             if(book_sources[b].id === book) {
                 skip = true;
                 if(book_sources[b].status == BookSourceType.IMPORTED) {
-                    if(Capacitor.getPlatform() === "web")
+                    if(Capacitor.getPlatform() === "web") {
+                        let summary: BookSummary | null = await fetchBookSummary(book_sources[b].src);
+                        if(summary) {
+                            book_sources[b].name = summary.name;
+                            book_sources[b].primaryColor = summary.primaryColor;
+                            book_sources[b].secondaryColor = summary.secondaryColor;
+                        }
                         break;
+                    }
 
                     let source_path = "";
                     try {
