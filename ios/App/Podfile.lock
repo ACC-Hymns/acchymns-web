@@ -10,6 +10,8 @@ PODS:
     - Capacitor
   - CapacitorNetwork (6.0.0):
     - Capacitor
+  - CapacitorPluginIosWebviewConfigurator (0.0.1):
+    - Capacitor
   - CapacitorPreferences (6.0.0):
     - Capacitor
   - CapacitorScreenOrientation (6.0.0):
@@ -24,6 +26,7 @@ DEPENDENCIES:
   - "CapacitorDialog (from `../../node_modules/@capacitor/dialog`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
+  - CapacitorPluginIosWebviewConfigurator (from `../../node_modules/capacitor-plugin-ios-webview-configurator`)
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - "CapacitorScreenOrientation (from `../../node_modules/@capacitor/screen-orientation`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
@@ -41,6 +44,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/filesystem"
   CapacitorNetwork:
     :path: "../../node_modules/@capacitor/network"
+  CapacitorPluginIosWebviewConfigurator:
+    :path: "../../node_modules/capacitor-plugin-ios-webview-configurator"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
   CapacitorScreenOrientation:
@@ -55,10 +60,11 @@ SPEC CHECKSUMS:
   CapacitorDialog: 64aa82840ee5e9c066f9e1a49c1e186afd3f24d2
   CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
   CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
+  CapacitorPluginIosWebviewConfigurator: 4090b21ed635a5676718436bbbf386191d077271
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
   CapacitorScreenOrientation: d78ce2b710bfcd1c32d3a090d32b6686c1c95e4f
   CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
 
-PODFILE CHECKSUM: 2f8103341365c308c17aa79d59d28e6cfedeafe6
+PODFILE CHECKSUM: 7803bc90412ff56fd93167c678078196e4877553
 
 COCOAPODS: 1.12.1
