@@ -1,6 +1,26 @@
 <!-- eslint-disable prettier/prettier -->
 <script setup lang="ts">
+import { resetOptions } from "@/stores/options";
+import { Dialog } from "@capacitor/dialog";
+import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
+
+async function resetAllOptions() {
+    const confirmed = await Dialog.confirm({
+        title: "Reset Options",
+        message: "Are you sure you want to reset your options?",
+        okButtonTitle: "Yes",
+        cancelButtonTitle: "No",
+    });
+
+    if (confirmed.value) {
+        resetOptions();
+        Toast.show({
+            text: "Reset Options!",
+        });
+    }
+}
+
 </script>
 
 <template>
@@ -17,10 +37,10 @@ import { RouterLink } from "vue-router";
         </RouterLink>
     </div>
 
-    <h2>Preferences</h2>
+    <h2>General</h2>
     <div class="settings">
         <RouterLink to="/settings/options" class="settings-option">
-            <span>Options</span>
+            <span>Preferences</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
@@ -31,6 +51,9 @@ import { RouterLink } from "vue-router";
             <span>Broadcast</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
+        <a class="settings-option" @click="resetAllOptions()">
+            <span>Reset Settings</span>
+        </a>
     </div>
 
     <nav class="nav">

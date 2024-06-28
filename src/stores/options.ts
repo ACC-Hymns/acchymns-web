@@ -2,6 +2,8 @@
 // import { defineStore } from "pinia";
 // import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
+import { Preferences } from "@capacitor/preferences";
+
 // export const usePreferencesStore = defineStore("Preferences", () => {
 //     const staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 //     const playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
@@ -37,4 +39,6 @@ export function resetOptions() {
             localStorage.removeItem(key);
         }
     }
+    Preferences.remove({ 'key': "bookOrder"});
+    Preferences.remove({ 'key': "broadcasting_auth_token"});
 }

@@ -75,23 +75,6 @@ async function startUpdate() {
     }
 }
 
-
-async function resetAllOptions() {
-    const confirmed = await Dialog.confirm({
-        title: "Reset Options",
-        message: "Are you sure you want to reset your options?",
-        okButtonTitle: "Yes",
-        cancelButtonTitle: "No",
-    });
-
-    if (confirmed.value) {
-        resetOptions();
-        Toast.show({
-            text: "Reset Options!",
-        });
-    }
-}
-
 async function clearAllData() {
     const confirmed = await Dialog.confirm({
         title: "Clear All Data",
@@ -103,6 +86,7 @@ async function clearAllData() {
     if (confirmed.value) {
         localStorage.clear();
         Preferences.remove({ 'key': "bookSources"});
+        Preferences.remove({ 'key': "bookOrder"});
         loadBookSources();
         Toast.show({
             text: "Cleared All Data!",
@@ -162,9 +146,6 @@ async function clearAllData() {
             </a>
             <a class="settings-option" @click="clearFetchCache()">
                 <span>Clear Cache</span>
-            </a>
-            <a class="settings-option" @click="resetAllOptions()">
-                <span>Reset Options</span>
             </a>
             <a class="settings-option" @click="clearAllData()">
                 <span>Clear All Data</span>
