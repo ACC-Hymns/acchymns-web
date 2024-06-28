@@ -31,12 +31,11 @@ onMounted(() => {
 
 function scrollHandler(e: UIEvent) {
     let target = (e.target as HTMLElement);
-    is_scrolling.value = !(target.scrollLeft % target.offsetWidth === 0);
-
-    if (is_scrolling.value) {
-        scroll_index.value = Math.round(target.scrollLeft / target.offsetWidth);
-    }
-    console.log(is_scrolling.value)
+    let scroll_percentage = target.scrollLeft / target.offsetWidth;
+    let nearest_index = Math.round(scroll_percentage);
+    let distance = Math.min(Math.abs(nearest_index - scroll_percentage), 1);
+    is_scrolling.value = distance > 0.2;
+    scroll_index.value = nearest_index;
 }
 
 function exit() {

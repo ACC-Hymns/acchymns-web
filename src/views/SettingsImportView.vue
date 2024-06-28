@@ -16,8 +16,6 @@ import { download_book, loadBookSources, checkForUpdates, delete_import_summary,
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 
-// Not watching deeply, must assign new array
-
 onBeforeRouteLeave((_, from) => {
     for (const book in downloads) {
         downloads.get(book)?.cancel();
