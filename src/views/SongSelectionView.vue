@@ -3,7 +3,7 @@ import { nextTick, onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData } from "@/scripts/book_import";
 import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened } from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
@@ -14,6 +14,10 @@ const route = useRoute();
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
+    if(!_.fullPath.includes("/display")) {
+        removeGroupOpened(from.fullPath);
+        removeScrollPosition(from.fullPath);
+    }
 });
 
 const error_active = ref(false);

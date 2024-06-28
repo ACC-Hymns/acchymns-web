@@ -20,6 +20,11 @@ export function restoreScrollPosition(path: string) {
     }
 }
 
+export function removeScrollPosition(path: string) {
+    scroll_positions.delete(path);
+}
+
+
 export function saveGroupOpened(path: string, ids: number[]) {
     groups_opened.set(path, ids);
 }

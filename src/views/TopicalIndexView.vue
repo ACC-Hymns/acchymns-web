@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, nextTick } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink, useRoute, useRouter } from "vue-router";
+import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
-import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened } from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
@@ -34,6 +34,14 @@ const songs_to_display = computed(() => {
     return [];
 });
 
+onBeforeRouteLeave((_, from) => {
+    saveScrollPosition(from.fullPath);
+    if(!_.fullPath.includes("/display")) {
+        removeGroupOpened(from.fullPath);
+        removeScrollPosition(from.fullPath);
+    }
+});
+
 onMounted(async () => {
     BOOK_METADATA = await getAllBookMetaData();
     BOOK_SONG_METADATA = await getSongMetaData(props.book);
@@ -56,6 +64,7 @@ onMounted(async () => {
         }
         topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
+    song_number_groups.value = Object.keys(topical_index.value);
     for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
         let song: Song = BOOK_SONG_METADATA[song_number];
         alphabeticalSongs.value.push({
@@ -74,6 +83,18 @@ onMounted(async () => {
         title.value = "Topical Index";
         icon.value = "../assets/text.svg";
     }
+
+    let group_ids = getGroupOpened(route.fullPath);
+    if(group_ids != undefined) {
+        group_ids.forEach((id) => {
+            song_number_groups_active.value.push(song_number_groups.value[id]);
+        })
+    }
+
+    // Restoring position in book
+    await nextTick();
+    // The v-for for song buttons now should be active, so we can scroll to the saved position
+    restoreScrollPosition(route.fullPath);
 });
 
 function hideList(topic: string) {
@@ -140,6 +161,7 @@ function toggleDropdown(topic: string) {
     } else {
         song_number_groups_active.value.push(topic);
     }
+
     let ids: number[] = [];
     song_number_groups_active.value.forEach((group_id) => {
         var index = song_number_groups.value.indexOf(group_id);
