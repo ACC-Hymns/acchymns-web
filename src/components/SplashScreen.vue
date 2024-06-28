@@ -212,7 +212,7 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
     height: 50px;
     width: 250px;
     border-style: none;
-    background-color: #2196f3;
+    background-color: var(--blue);
     border-radius: 15px;
 }
 

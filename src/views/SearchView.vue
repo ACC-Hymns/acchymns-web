@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch, onUpdated } from "vue";
+import { computed, ref, onMounted, watch, onUpdated, nextTick } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
 import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
 import { known_references, prepackaged_books } from "@/scripts/constants";
+import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
 
+// Saving position in book
+onBeforeRouteLeave((_, from) => {
+    saveScrollPosition(from.fullPath);
+});
+
+const route = useRoute();
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
 const search_query = ref(search_params.value.search);
@@ -66,6 +73,10 @@ onMounted(async () => {
     for (const book of Object.keys(SONG_METADATA)) {
         for (const song_number of Object.keys(SONG_METADATA[book])) {
             let song: Song = SONG_METADATA[book][song_number];
+            
+            if(song.title == undefined)
+                song.title = "";
+
             available_songs.value.push({
                 title: song?.title ?? "",
                 number: song_number,
@@ -93,6 +104,11 @@ onMounted(async () => {
             return;
         book_data_summaries.value.set(book, book_data);
     });
+
+    // Restoring position in book
+    await nextTick();
+    // The v-for for song buttons now should be active, so we can scroll to the saved position
+    restoreScrollPosition(route.fullPath);
 });
 
 const filter_content = ref<Element>();
@@ -207,7 +223,7 @@ onUpdated(async () => {
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
             </RouterLink>
-            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">
+            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: var(--blue); justify-content: center">
                 <div class="song__title">Show more</div>
             </div>
         </div>

@@ -202,7 +202,7 @@ async function clearAllData() {
 .update-button-blue{
     width: 50px;
     height: 20px;
-    background-color: #2196F3;
+    background-color: var(--blue);
     color:white;
     padding: 15px;
     border-radius: 15px;

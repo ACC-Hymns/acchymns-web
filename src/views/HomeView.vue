@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
 import { checkForUpdates, download_update_package, fetchBookSummary, getBookFromId, getBookUrls, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
 import { BookSourceType, type BookDataSummary, type BookSummary, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
 import draggable from 'vuedraggable'
 import { Preferences } from "@capacitor/preferences";
+import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 
 var hasConnection = ref<boolean>(false);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
@@ -21,6 +22,13 @@ let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
 let editting_order = ref<boolean>(false);
+
+// Saving position in book
+onBeforeRouteLeave((_, from) => {
+    saveScrollPosition(from.fullPath);
+});
+
+const route = useRoute();
 
 function getDirection() {
     return "vertical";
@@ -83,6 +91,11 @@ onMounted(async () => {
         await sort_books();
 
     })
+
+    // Restoring position in book
+    await nextTick();
+    // The v-for for song buttons now should be active, so we can scroll to the saved position
+    restoreScrollPosition(route.fullPath);
 });
 
 type BookOrderEvent = {
@@ -330,7 +343,7 @@ function tooltipVisible(visible: boolean) {
 .update-button-blue{
     width: 50px;
     height: 20px;
-    background-color: #2196F3;
+    background-color: var(--blue);
     color:white;
     padding: 15px;
     border-radius: 15px;

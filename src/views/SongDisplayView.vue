@@ -568,7 +568,7 @@ function get_note_icon(note: string) {
 
 <style>
 .send-button {
-    background-color: #2196F3;
+    background-color: var(--blue);
     color: white;
     border-radius: 15px;
     padding: 6px 20px;
@@ -586,7 +586,7 @@ function get_note_icon(note: string) {
 }
 
 .verse-selected {
-    box-shadow: inset 0 0 0 4px #2196F3;
+    box-shadow: inset 0 0 0 4px var(--blue);
 }
 .verse-list {
     display: grid;

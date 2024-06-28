@@ -85,14 +85,14 @@ input {
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: #2196F3;
+    background-color: var(--blue);
     border-bottom: var(--border-color);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
 
 .input-option-button:active {
-    background-color: #1b80d2;
+    background-color: var(--blue);
 }
 
 .switch {
@@ -139,11 +139,11 @@ input {
 }
 
 input:checked+.slider {
-    background-color: #2196F3;
+    background-color: var(--blue);
 }
 
 input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px var(--blue);
 }
 
 input:checked+.slider:before {
