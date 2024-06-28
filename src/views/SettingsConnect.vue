@@ -87,13 +87,13 @@ function back_button() {
 }
 
 async function handle_tap(index: number) {
+    touched_pin.value = 0;
     if(index == 10)
         return;
 
-    touched_pin.value = 0;
     setTimeout(()=> {
         touched_pin.value = index;
-    });
+    }, 5);
 
     if(input.value.length > 4)
         return;
@@ -293,9 +293,6 @@ function get_lock_icon() {
                 <a v-else><h4>{{ i }}</h4></a>
             </div>
         </div>
-        <!--<div class="pin-input-container">
-            <input class="pin-input" :class="{'pin-input--error': login_error }" v-model="input" type="password" disabled="true" maxlength="4">
-        </div>-->
     </div>
     <div class="main-content" v-else-if="status == UserStatus.Authorized">
         <div v-if="bibleReading">            
@@ -388,14 +385,14 @@ function get_lock_icon() {
                     <span>Open Output Display</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
-                <a @click="bibleReading = true" class="settings-option">
+                <a @click="bibleReading = true" class="settings-option width-70">
                     <span>Set Biblie Reading</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
-                <a @click="clear" class="settings-option">
+                <a @click="clear" class="settings-option width-70">
                     <span>Clear Screeen</span>
                 </a>
-                <a @click="signout" class="settings-option">
+                <a @click="signout" class="settings-option width-70">
                     <span>Log Out</span>
                 </a>
             </div>
@@ -436,7 +433,7 @@ label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 12vh;
+    margin-top: calc(12vh + env(safe-area-inset-top));
     color: var(--color);
 }
 .login-container {
