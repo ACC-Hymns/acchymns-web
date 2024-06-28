@@ -167,7 +167,6 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
 }
 .demo-image {
     height: 70%;
-    width: max-content;
 }
 
 .swipe-view {
