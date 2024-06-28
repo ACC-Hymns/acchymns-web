@@ -27,7 +27,6 @@
     "@capacitor/preferences": "^6.0.0",
     "@capacitor/screen-orientation": "^6.0.0",
     "@capacitor/toast": "^6.0.0",
-    "@esbuild/win32-x64": "^0.21.5",
     "@ionic/pwa-elements": "^3.2.2",
     "@vueuse/core": "^9.13.0",
     "axios": "^1.6.8",
