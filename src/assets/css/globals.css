@@ -213,6 +213,7 @@ h1, h2, h3, h4, h5 {
 
 .title--left {
     text-align: left;
+    cursor: pointer;
 }
 
 .title--left > * {
@@ -228,6 +229,7 @@ h1, h2, h3, h4, h5 {
 
 .title--right {
     text-align: right;
+    cursor: pointer;
 }
 
 .title--right > * {

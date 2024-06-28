@@ -285,10 +285,24 @@ const updateTime = async () => {
 };
 
 async function play_all_notes() {
+    if(media_is_playing.value) {
+        audio_source.value?.pause();
+        clearInterval(elapsed_timer);
+        morph();
+        media_is_playing.value = false;
+    }
+
     player.stop();
     player.play(notes);
 }
 async function play_note(note: string) {
+    if(media_is_playing.value) {
+        media_is_playing.value = false;
+        audio_source.value?.pause();
+        clearInterval(elapsed_timer);
+        morph();
+        media_is_playing.value = false;
+    }
     player.stop();
     player.play([note]);
 }
@@ -633,6 +647,7 @@ function get_note_icon(note: string) {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 * {
@@ -655,6 +670,7 @@ function get_note_icon(note: string) {
     border-radius: 15px;
     height: 2px;
     background: var(--slider-base);
+    cursor: pointer;
 }
 .media-timeline::-webkit-slider-thumb {
     -webkit-user-select: none;
@@ -669,6 +685,7 @@ function get_note_icon(note: string) {
     border: none;
     transition: .2s ease-in-out;
     box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
+    cursor: pointer;
 }
 
 .media-timeline::-moz-range-thumb {
@@ -684,6 +701,7 @@ function get_note_icon(note: string) {
     border: none;
     transition: .2s ease-in-out;
     box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
+    cursor: pointer;
 }
 .close-button {
     position: absolute;
@@ -691,6 +709,7 @@ function get_note_icon(note: string) {
     top: 0;
     margin: 15px;
     transition: opacity 0.25s ease-in;
+    cursor: pointer;
 }
 .timeline {
     width: 100%;
@@ -750,6 +769,7 @@ function get_note_icon(note: string) {
     width: 10vw;
     height: 10vw;
     margin-right: 15px;
+    cursor: pointer;
 }
 .note-name {
     color: var(--color);
@@ -757,7 +777,7 @@ function get_note_icon(note: string) {
 .note-container {
     justify-content: center;
     align-items: center;
-    text-align: center
+    text-align: center;
 }
 .starting-note-icon-all {
     filter: var(--svg-polar);
@@ -788,6 +808,13 @@ function get_note_icon(note: string) {
     height: 15vw;
     max-width:  75px;
     max-height: 75px;
+    cursor: pointer;
+    transition: background-color 0.1s ease-out;
+    transition: border 0.1s ease-out;
+}
+.note-button:active {
+    background-color: var(--button-tap);
+    border: 1px solid var(--button-tap);
 }
 .starting-notes-container {
     width: 100%;
@@ -811,6 +838,7 @@ function get_note_icon(note: string) {
     width: 20vw;
     height: 20vw;
     margin: 0 auto;
+    cursor: pointer;
 }
 .page-buttons {
     position: fixed;
@@ -833,6 +861,7 @@ function get_note_icon(note: string) {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .media-type-title  {
@@ -844,7 +873,7 @@ function get_note_icon(note: string) {
 }
 .media-type-indicator {
     height: 33px;
-    border-radius: 15px;
+    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -853,7 +882,7 @@ function get_note_icon(note: string) {
 .media-type-indicator-active {
     background-color: var(--media-type-active);
     height: 33px;
-    border-radius: 15px;
+    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -863,13 +892,14 @@ function get_note_icon(note: string) {
     background-color: var(--media-type);;
     width: max-content;
     height: 35px;
-    border-radius: 15px;
+    border-radius: 25px;
     margin: 45px auto;
     display: flex;
     justify-content:space-between;
     align-items: center;
     padding: 0px 1px;
     transition: opacity 0.25s ease-in;
+    cursor: pointer;
 }
 .handle-bar-container {
     width: 100%;

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened } from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
@@ -129,6 +130,23 @@ function toggleAlphabetical() {
         });
     }, 10);
 }
+
+let song_number_groups = ref<string[]>([]);
+let song_number_groups_active = ref<string[]>([]);
+const route = useRoute();
+function toggleDropdown(topic: string) {
+    if (song_number_groups_active.value.includes(topic)) {
+        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(topic), 1);
+    } else {
+        song_number_groups_active.value.push(topic);
+    }
+    let ids: number[] = [];
+    song_number_groups_active.value.forEach((group_id) => {
+        var index = song_number_groups.value.indexOf(group_id);
+        ids.push(index);
+    })
+    saveGroupOpened(route.fullPath, ids);
+}
 </script>
 
 <template>
@@ -146,32 +164,29 @@ function toggleAlphabetical() {
     <div v-else class="main-content">
         <!-- Each Topical Section -->
         <div v-if="!isAlphabetical">
-            <div ref="scroll_topic_list">
-                <div :key="active_topic" v-if="!show_list" class="topic" :style="{ background: primary_color }" @click="showList">
-                    <h3 class="topic-title">{{ active_topic }}</h3>
+            <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
+                <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
+                    <div class="song-title">{{topic}}</div>
+                    <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(topic.toString())}"/>
                 </div>
-            </div>
-            <RouterLink
-                v-show="!show_list"
-                v-for="song in songs_to_display"
-                :key="song.title + song.number"
-                :to="`/display/${book_ref}/${song.number}`"
-                class="song topic-song"
-                :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
-            >
-                <div>
-                    <div class="song__title">{{ song.title }}</div>
-                </div>
-                <div class="booktext--right">
-                    <div class="song__number">#{{ song.number }}</div>
-                </div>
-            </RouterLink>
-            <div class="song-list">
-                <template v-for="(_topic_songs, topic) in topical_index" :key="topic">
-                    <div v-if="show_list" class="topic expanded-topic" :style="{ background: primary_color }" @click="hideList(topic as string)">
-                        <h3 class="topic-title">{{ topic }}</h3>
-                    </div>
-                </template>
+                <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(topic.toString())}">
+                    <div class="song-button-container" :class="{'song-button-container-active': song_number_groups_active.includes(topic.toString())}">
+                        <RouterLink
+                            v-for="song in topical_index[topic]"
+                            :key="song.title + song.number"
+                            :to="`/display/${book_ref}/${song.number}`"
+                            class="song topic-song"
+                            :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
+                        >
+                            <div>
+                                <div class="song__title">{{ song.title }}</div>
+                            </div>
+                            <div class="booktext--right">
+                                <div class="song__number">#{{ song.number }}</div>
+                            </div>
+                        </RouterLink>
+                    </div>     
+                </div>     
             </div>
         </div>
         <div class="song-list" v-else>
@@ -179,7 +194,7 @@ function toggleAlphabetical() {
                 v-for="song in songs_to_display"
                 :key="song.title + song.number"
                 :to="`/display/${book_ref}/${song.number}`"
-                class="song topic-song"
+                class="song"
                 :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
             >
                 <div>
@@ -217,12 +232,71 @@ function toggleAlphabetical() {
 </style>
 
 <style scoped>
+.song-group-container {
+    /*border: 1px solid #bebebe;*/
+    box-shadow: var(--thin-shadow);
+    background-color: var(--button-color);
+    border-radius: 15px;
+    margin: 10px;
+    padding: 15px;
+}
+
+.song-group-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.song-title {
+    text-decoration: none;
+    color: var(--color);
+    font-weight: 400;
+}
+
+.dropdown-icon {
+    transition: rotate ease-out 0.4s;
+    transform: translateX(-3px);
+    rotate: calc(-90deg);
+}
+
+.dropdown-icon-active {
+    transition: rotate ease-out 0.4s;
+    transform: translateX(3px);
+    rotate: calc(90deg);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s;
+}
+
+.wrapper-active {
+    grid-template-rows: 1fr;
+}
+
+.song-button-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.song-button-container-active {
+    padding-bottom: 20px;
+    margin-top: 10px;
+}
+
 .song-list {
     padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
 }
 
 .topic-song {
-    margin-top: 10px;
+    width: 100%;
+    margin: 2px 0;
 }
 
 .topic {

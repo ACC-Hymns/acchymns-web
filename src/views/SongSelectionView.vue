@@ -200,6 +200,7 @@ function getRangeString(start: string, end: string) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .song-title {

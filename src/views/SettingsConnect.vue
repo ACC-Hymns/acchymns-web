@@ -44,7 +44,6 @@ async function authorize(response: AxiosResponse<any,any>) {
 
     } else {
         console.log(response.data);
-        login_error.value = true;
         setTimeout(() => {
             login_error.value = false;
             input.value = "";
@@ -74,8 +73,7 @@ function backspace_pin() {
 }
 
 function enter_pin(value: number) {
-    if(input.value.length < 4)
-        input.value += value;
+    input.value += value;
 }
 
 function back_button() {
@@ -87,16 +85,10 @@ function back_button() {
 }
 
 async function handle_tap(index: number) {
-    touched_pin.value = 0;
     if(index == 10)
         return;
 
-    setTimeout(()=> {
-        touched_pin.value = index;
-    }, 5);
-
-    if(input.value.length > 4)
-        return;
+    touched_pin.value = index;
 
     if(index == 12) {
         backspace_pin();
@@ -107,9 +99,15 @@ async function handle_tap(index: number) {
         enter_pin(index);
     }
 
+    
+    if(input.value.length > 4)
+        return;
+
     if(input.value.length == 4) {
         let response = await check_code(input.value);
         unlocked.value = response.status == 200;
+        if(!unlocked.value)
+            login_error.value = true;
 
         setTimeout(() => {
             authorize(response);
@@ -284,7 +282,7 @@ function get_lock_icon() {
             </div>
         </div>
         <div class="keypad">
-            <div class="key" v-for="i in 12" :class="{'key-tapped': touched_pin == i && touched_pin != 10}" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{'opacity': (i == 10) ? 0 : 1}">
+            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{'opacity': (i == 10) ? 0 : 1}">
                 <a v-if="i == 10"></a>
                 <a v-else-if="i == 11"><h4>0</h4></a>
                 <a v-else-if="i == 12" class="backspace">
@@ -380,19 +378,19 @@ function get_lock_icon() {
         <div v-else-if="status == UserStatus.Authorized" class="center-container">
             <h1 style="margin-bottom: 0px;">Authorized</h1>
             <h3 style="margin-top: 0px;">as {{ selected_church }}</h3>
-            <div class="settings">
-                <a v-if="platform == 'web'" @click="router.push('/broadcast')" class="settings-option width-70">
+            <div class="settings width-100">
+                <a v-if="platform == 'web'" @click="router.push('/broadcast')" class="settings-option">
                     <span>Open Output Display</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
-                <a @click="bibleReading = true" class="settings-option width-70">
+                <a @click="bibleReading = true" class="settings-option">
                     <span>Set Biblie Reading</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
-                <a @click="clear" class="settings-option width-70">
+                <a @click="clear" class="settings-option">
                     <span>Clear Screeen</span>
                 </a>
-                <a @click="signout" class="settings-option width-70">
+                <a @click="signout" class="settings-option">
                     <span>Log Out</span>
                 </a>
             </div>
@@ -538,17 +536,11 @@ label {
     color: var(--color);
     user-select: none;
     -moz-user-select: none;
-    -webkit-user-select: none;
+    -webkit-user-select: none;    
+    transition: background-color 0.1s ease-out;
 }
-
-@keyframes tapped {
-  0% {background-color: var(--song-background)}
-  10% {background-color: var(--button-tap);}
-  100% {background-color: var(--song-background)}
-}
-
-.key-tapped {
-    animation: tapped 0.5s;
+.key:active {
+    background-color: var(--button-tap);
 }
 .keyicon {
     font-size: 4vh;
@@ -621,8 +613,8 @@ label {
     box-shadow:inset 0px 0px 0px 4px var(--blue);
 }
 
-.width-70 {
-    width: 70vw;
+.width-100 {
+    align-self: stretch;
 }
 
 .center-container {
