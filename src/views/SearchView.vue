@@ -254,7 +254,7 @@ onUpdated(async () => {
 @import "@/assets/css/song.css";
 
 .blocker {
-    top: 0;
+    top: env(safe-area-inset-top);
     left: 0;
     width: 100vw;
     height: calc(100vh - 55px);
