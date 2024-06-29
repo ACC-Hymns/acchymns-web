@@ -379,7 +379,7 @@ function get_lock_icon() {
             <h1 style="margin-bottom: 0px;">Authorized</h1>
             <h3 style="margin-top: 0px;">as {{ selected_church }}</h3>
             <div class="settings width-100">
-                <a v-if="platform == 'web'" @click="router.push('/broadcast')" class="settings-option">
+                <a v-if="platform == 'web'" href="/broadcast" class="settings-option">
                     <span>Open Output Display</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>

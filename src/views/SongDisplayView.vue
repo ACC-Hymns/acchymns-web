@@ -286,11 +286,7 @@ const updateTime = async () => {
 
 async function play_all_notes() {
     if(media_is_playing.value) {
-        media_is_playing.value = false;
-        audio_source.value?.pause();
-        clearInterval(elapsed_timer);
-        morph();
-        media_is_playing.value = false;
+        playMedia();
     }
 
     player.stop();
@@ -298,11 +294,7 @@ async function play_all_notes() {
 }
 async function play_note(note: string) {
     if(media_is_playing.value) {
-        media_is_playing.value = false;
-        audio_source.value?.pause();
-        clearInterval(elapsed_timer);
-        morph();
-        media_is_playing.value = false;
+        playMedia();
     }
     player.stop();
     player.play([note]);

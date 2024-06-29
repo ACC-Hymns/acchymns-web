@@ -304,7 +304,7 @@ async function generate_force_update_package() {
     let local_hashes: BookSignature[] = await (await fetch(import.meta.env.BASE_URL + `book_signatures.json`)).json();
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
-    let local_books = book_sources.filter((book) => book.status == BookSourceType.IMPORTED)
+    let local_books = book_sources.filter((book) => book.status == BookSourceType.DOWNLOADED)
     for(let book of local_books) {
         let hash = local_hashes.find((hash) => hash.name == book.id);
         if(hash == undefined)

@@ -284,9 +284,9 @@ function tooltipVisible(visible: boolean) {
 
 <style scoped>
 .sortable-fallback {
-    opacity: 1 !important;
-    
+    opacity: 1 !important;   
 }
+
 .ghost {
     opacity: 0;
 }
@@ -298,6 +298,7 @@ function tooltipVisible(visible: boolean) {
     justify-content: center;
     align-items: center;
     gap: 5px;
+    cursor: pointer;
 }
 .confirm-text {
     color: var(--back-color);
@@ -319,6 +320,7 @@ function tooltipVisible(visible: boolean) {
 .handle {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 .update-section {
