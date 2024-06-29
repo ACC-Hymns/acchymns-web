@@ -15,7 +15,7 @@ const { back } = useNavigator();
     <div class="settings main-content">
         <a class="changelog">
             <h3 class="release" style="margin-bottom: 0px">[v3.0]</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2024-06-27</h5>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2024-07-01</h5>
             <ul style="margin-top: 5px">
                 <li class="change">Bug fixes</li>
                 <li class="change">Added song grouping</li>

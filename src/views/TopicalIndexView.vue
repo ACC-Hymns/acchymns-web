@@ -299,8 +299,6 @@ function toggleDropdown(topic: string) {
 }
 
 .song-button-container {
-    padding-left: 10px;
-    padding-right: 10px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -309,7 +307,7 @@ function toggleDropdown(topic: string) {
 
 .song-button-container-active {
     padding-bottom: 20px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .song-list {
