@@ -162,6 +162,7 @@ let swipe_origin: Touch;
 let left_indicator_opacity = ref<number>(0);
 let right_indicator_opacity = ref<number>(0);
 const song_container = ref<HTMLElement | null>(null);
+const desired_magnitude = window_width()/4;
 const swipe_handler = useSwipe(song_container, {
     onSwipeStart(e: TouchEvent) {
         swipe_origin = e.changedTouches[0];
@@ -173,18 +174,13 @@ const swipe_handler = useSwipe(song_container, {
         let x = e.changedTouches[0].clientX;
         let startX = swipe_origin.clientX;
         let magnitude = Math.abs(x - startX);
-        let left_point = window_width() * 0.1;
-        let right_point = window_width() * 0.9;
-        //distance to either point
-        let left_distance = Math.max(x - left_point, 0);
-        let right_distance = Math.max(-(x - right_point), 0);
-        if(magnitude > 100) {
-            // flip sides for the indicator
-            left_indicator_opacity.value = Math.max((100 - right_distance) / 100, 0);
-            right_indicator_opacity.value = Math.max((100 - left_distance) / 100, 0);
-        }
+        let direction = (x - startX) > 0 ? 1 : -1;
+        left_indicator_opacity.value = (direction == 1) ? Math.max((magnitude) / desired_magnitude, 0) : 0;
+        right_indicator_opacity.value = (direction == -1) ?  Math.max((magnitude) / desired_magnitude, 0) : 0;
     },
     onSwipeEnd(e: TouchEvent) {
+        left_indicator_opacity.value = 0;
+        right_indicator_opacity.value = 0;
         let zoom = (song_container.value as any).getZoom();
         if(zoom > 1)
             return;
@@ -192,16 +188,15 @@ const swipe_handler = useSwipe(song_container, {
         let startX = swipe_origin.clientX;
         let magnitude = Math.abs(x - startX);
 
-        if(magnitude < 100)
+        if(magnitude < desired_magnitude)
             return;
 
-        if(x < window_width() * 0.1) {
+        let direction = (x - startX) > 0 ? -1 : 1;
+        if(direction == 1) {
             traverse_song(1);
-        } else if(x > window_width() * 0.9) {
+        } else {
             traverse_song(-1);
         }
-        left_indicator_opacity.value = 0;
-        right_indicator_opacity.value = 0;
     }
 });
 
@@ -513,10 +508,10 @@ function get_note_icon(note: string) {
         </div>
     </div>
     <div v-if="left_indicator_opacity > 0 && Number(props.number) > 1" class="flip-indicator flip-indicator-left" :style="{opacity: left_indicator_opacity}">
-        <img class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <h2 class="indicator-text">{{Number(props.number) - 1}}</h2>
     </div>
     <div v-if="right_indicator_opacity > 0 && Number(props.number) < song_count" class="flip-indicator flip-indicator-right" :style="{opacity: right_indicator_opacity}">
-        <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
+        <h2 class="indicator-text">{{Number(props.number) + 1}}</h2>
     </div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
         <div class="media-panel-blur"></div> 
@@ -641,11 +636,17 @@ function get_note_icon(note: string) {
     width: 10vw;
     max-height: 50px;
     max-width: 50px;
+    margin: 0 15px;
+    background-color: var(--button-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 15px;
-    background-color: var(--button-color);
+}
+.indicator-text {
+    text-align: center;
+    font-size: 5vw;
+    color: var(--back-color);
+    margin: 0;
 }
 .flip-indicator-left {
     left: 0;
