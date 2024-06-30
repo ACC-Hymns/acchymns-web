@@ -18,6 +18,14 @@ function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: str
     return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
 
+function getZoom() {
+    return panzoom.getTransform().scale;
+}
+
+defineExpose({
+    getZoom,
+});
+
 let song_img_src = ref("");
 let error_is_active = ref(false);
 

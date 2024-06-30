@@ -9,7 +9,7 @@ import type { BookSummary, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
-import { useLocalStorage } from "@vueuse/core";
+import { useLocalStorage, useSwipe } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
@@ -158,6 +158,52 @@ function setup_audiosource(audio_source: HTMLAudioElement) {
 
     })
 }
+let swipe_origin: Touch;
+let left_indicator_opacity = ref<number>(0);
+let right_indicator_opacity = ref<number>(0);
+const song_container = ref<HTMLElement | null>(null);
+const swipe_handler = useSwipe(song_container, {
+    onSwipeStart(e: TouchEvent) {
+        swipe_origin = e.changedTouches[0];
+    },
+    onSwipe(e: TouchEvent) {
+        let zoom = (song_container.value as any).getZoom();
+        if(zoom > 1)
+            return;
+        let x = e.changedTouches[0].clientX;
+        let startX = swipe_origin.clientX;
+        let magnitude = Math.abs(x - startX);
+        let left_point = window_width() * 0.1;
+        let right_point = window_width() * 0.9;
+        //distance to either point
+        let left_distance = Math.max(x - left_point, 0);
+        let right_distance = Math.max(-(x - right_point), 0);
+        if(magnitude > 100) {
+            // flip sides for the indicator
+            left_indicator_opacity.value = Math.max((100 - right_distance) / 100, 0);
+            right_indicator_opacity.value = Math.max((100 - left_distance) / 100, 0);
+        }
+    },
+    onSwipeEnd(e: TouchEvent) {
+        let zoom = (song_container.value as any).getZoom();
+        if(zoom > 1)
+            return;
+        let x = e.changedTouches[0].clientX;
+        let startX = swipe_origin.clientX;
+        let magnitude = Math.abs(x - startX);
+
+        if(magnitude < 100)
+            return;
+
+        if(x < window_width() * 0.1) {
+            traverse_song(1);
+        } else if(x > window_width() * 0.9) {
+            traverse_song(-1);
+        }
+        left_indicator_opacity.value = 0;
+        right_indicator_opacity.value = 0;
+    }
+});
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -466,6 +512,12 @@ function get_note_icon(note: string) {
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
+    <div v-if="left_indicator_opacity > 0 && Number(props.number) > 1" class="flip-indicator flip-indicator-left" :style="{opacity: left_indicator_opacity}">
+        <img class="ionicon" src="/assets/chevron-back-outline.svg" />
+    </div>
+    <div v-if="right_indicator_opacity > 0 && Number(props.number) < song_count" class="flip-indicator flip-indicator-right" :style="{opacity: right_indicator_opacity}">
+        <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
+    </div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
         <div class="media-panel-blur"></div> 
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => panel.dragStart(e, e.touches[0].pageY)" @touchmove="(e) => panel.drag(e, e.touches[0].pageY)" @touchend="(e) => panel.dragEnd(e)">
@@ -572,12 +624,35 @@ function get_note_icon(note: string) {
             hideMedia()
         }"
     >
-        <SongContainer :book="image_props.book" :number="image_props.number"></SongContainer>
+        <SongContainer :book="image_props.book" :number="image_props.number" ref="song_container"></SongContainer>
     </div>
     
 </template>
 
 <style>
+.flip-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    border-radius: 50px;
+    height: 10vw;
+    width: 10vw;
+    max-height: 50px;
+    max-width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15px;
+    background-color: var(--button-color);
+}
+.flip-indicator-left {
+    left: 0;
+}
+.flip-indicator-right {
+    right: 0;
+}
 .send-button {
     background-color: var(--blue);
     color: white;
