@@ -73,7 +73,7 @@ type BookSignature = {
 };
 
 type DownloadPromise = {
-    cancel: () => void,
+    cancel: () => Promise<void>,
     promise: Promise<void>
 }
 

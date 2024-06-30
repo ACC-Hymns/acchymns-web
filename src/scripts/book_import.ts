@@ -108,8 +108,6 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
             }
             return_packages.push(update_package);
         }
-        console.log("RETURN PACKAGES")
-        console.log(return_packages);
         return return_packages;
     }
     return [];
@@ -386,13 +384,20 @@ async function download_import_summary(book: BookDataSummary) {
     return result;
 }
 
+async function clean_up_cancel(book: BookDataSummary) {
+    await Filesystem.rmdir({
+        directory: Directory.Documents,
+        path: `Hymnals/${book.id}`,
+        recursive: true
+    })
+}
+
 function download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void): DownloadPromise {
     let cancel_download = false;
     async function async_download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void) {    
         let book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`)
         let ext = book_summary?.fileExtension;
         let songs: SongList | null = await getSongMetaData(book.id);
-        console.log(songs)
         let num_of_songs = Object.entries(songs as any).length;
     
         // setup folder structure
@@ -439,7 +444,10 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs.json`
         })
     
-        if(cancel_download) throw new Error("Download Cancelled");
+        if(cancel_download) {
+            clean_up_cancel(book);
+            throw new Error("Download Cancelled");
+        }
 
         // Download book signature for updates
         await Filesystem.downloadFile({
@@ -449,7 +457,10 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/.signature`
         })
 
-        if(cancel_download) throw new Error("Download Cancelled");
+        if(cancel_download) {
+            clean_up_cancel(book);
+            throw new Error("Download Cancelled");
+        }
         
         if(book_summary?.indexAvailable) {
             await Filesystem.downloadFile({
@@ -460,7 +471,10 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
             })
         }
         
-        if(cancel_download) throw new Error("Download Cancelled");
+        if(cancel_download) {
+            clean_up_cancel(book);
+            throw new Error("Download Cancelled");
+        }
     
         var i = 0;
         const chunk_size = 10;
@@ -498,7 +512,10 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
             }
 
             i++;
-            if(cancel_download) throw new Error("Download Cancelled");
+            if(cancel_download) {
+                clean_up_cancel(book);
+                throw new Error("Download Cancelled");
+            }
 
             let download_progress = `${i/num_of_songs*100}%`;
             progress_callback(book, i/num_of_songs*100);
@@ -528,8 +545,11 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
     }
     return {
         cancel: () => {
-            console.log("Attempting to cancel download!");
-            cancel_download = true;
+            return new Promise(function(resolve) {
+                console.log("Attempting to cancel download!");
+                cancel_download = true;
+                resolve();
+            })
         },
         promise: async_download_book(book, progress_callback, finish_callback)
     }

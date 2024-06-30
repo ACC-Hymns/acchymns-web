@@ -41,6 +41,7 @@ const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
+const isConnected = ref<boolean>(false);
 const isLandscape = ref<boolean>(false);
 const window_height = () => window.innerHeight;
 const window_width = () => window.innerWidth;
@@ -168,7 +169,8 @@ onMounted(async () => {
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
-        if(!(await Network.getStatus()).connected) {
+        isConnected.value = (await Network.getStatus()).connected;
+        if(!isConnected.value) {
             audio_source_exists.value = false;
             audio_source.value = new Audio();
         } else {
@@ -180,9 +182,11 @@ onMounted(async () => {
         setMediaType(null, true);
         
         Network.addListener("networkStatusChange", async (details) => {
-            if(!(await Network.getStatus()).connected) {
+            isConnected.value = details.connected;
+            if(!isConnected.value) {
                 audio_source_exists.value = false;
-                audio_source.value?.load();
+                audio_source.value = new Audio();
+                setMediaType(null, true);
             } else {
                 audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
                 audio_source.value.preload = 'metadata';
@@ -481,7 +485,7 @@ function get_note_icon(note: string) {
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: (panel.height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
-            <div v-if="audio_source_exists" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, false)">
+            <div v-if="audio_source_exists && isConnected" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, false)">
                 <p class="media-type-title">Piano</p>           
             </div>
             <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, true)">

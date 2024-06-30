@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUpdated, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
@@ -15,12 +15,13 @@ import router from "@/router";
 import { download_book, loadBookSources, checkForUpdates, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
-
-onBeforeRouteLeave((_, from) => {
-    for (const book in downloads) {
-        downloads.get(book)?.cancel();
-        downloadProgress.value.delete(book);
-    }
+let downloadProgress = ref(new Map<string, number>());
+let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
+onBeforeUnmount(async () => {
+    downloads.value.forEach(async (value, key) => {
+        await value.cancel();
+        downloadProgress.value.delete(key);
+    }) 
 });
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
@@ -121,18 +122,16 @@ async function addImportedBookByCode(short_book_name: string) {
     }
 }
 
-let downloadProgress = ref(new Map<string, number>());
-let downloads = new Map<string, DownloadPromise>();
-
 async function download(book_to_download: BookDataSummary) {
     if((await Network.getStatus()).connected) {
         let d: DownloadPromise = download_book(book_to_download, (book, progress) => download_progress(book, progress), (book, url: string) => download_finish(book, url))
-        downloads.set(book_to_download.id, d);
+        downloads.value.set(book_to_download.id, d);
     } else {
         await Toast.show({
             text: "No internet connection."
         })
     }
+    console.log("Downloads:", downloads.value);
 }
 async function download_progress(book: BookDataSummary, percentage: number) {
     downloadProgress.value.set(book.id, percentage);
@@ -152,8 +151,8 @@ onUpdated(() => {
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
 
-    if(downloads.has(book_to_remove.id)) {
-        downloads.get(book_to_remove.id)?.cancel();
+    if(downloads.value.has(book_to_remove.id)) {
+        downloads.value.get(book_to_remove.id)?.cancel();
         downloadProgress.value.delete(book_to_remove.id);
     }
 
