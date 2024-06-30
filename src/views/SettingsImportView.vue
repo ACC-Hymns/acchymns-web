@@ -15,6 +15,7 @@ import router from "@/router";
 import { download_book, loadBookSources, checkForUpdates, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
+
 let downloadProgress = ref(new Map<string, number>());
 let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
 onBeforeUnmount(async () => {
@@ -50,7 +51,17 @@ async function addImportedURL(input_book: BookDataSummary, show_on_success: bool
     if(book == undefined)
         return false;
 
-    await download_import_summary(book);
+    let connection = (await Network.getStatus()).connected
+    if(connection) {
+        if(Capacitor.getPlatform() !== 'web')
+            await download_import_summary(book);
+    }
+    else {
+        await Toast.show({
+            text: "No internet connection."
+        })
+        return false;
+    }
 
     let resp: Response | null = null;
     try {
@@ -156,7 +167,8 @@ async function removeImportedURL(book_to_remove: BookDataSummary) {
         downloadProgress.value.delete(book_to_remove.id);
     }
 
-    await delete_import_summary(book_to_remove);
+    if(Capacitor.getPlatform() !== 'web')
+        await delete_import_summary(book_to_remove);
 
     await Toast.show({
         text: "Successfully removed hymnal!"
