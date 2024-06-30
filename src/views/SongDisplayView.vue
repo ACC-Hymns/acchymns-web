@@ -508,10 +508,10 @@ function get_note_icon(note: string) {
         </div>
     </div>
     <div v-if="left_indicator_opacity > 0 && Number(props.number) > 1" class="flip-indicator flip-indicator-left" :style="{opacity: left_indicator_opacity}">
-        <h2 class="indicator-text">{{Number(props.number) - 1}}</h2>
+        <img class="ionicon" src="/assets/chevron-back-outline.svg" />
     </div>
     <div v-if="right_indicator_opacity > 0 && Number(props.number) < song_count" class="flip-indicator flip-indicator-right" :style="{opacity: right_indicator_opacity}">
-        <h2 class="indicator-text">{{Number(props.number) + 1}}</h2>
+        <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
     </div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
         <div class="media-panel-blur"></div> 
