@@ -15,6 +15,7 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
 import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { Preferences } from "@capacitor/preferences";
 import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 
@@ -195,26 +196,26 @@ onMounted(async () => {
         })
     }
 
-    previous_orientation = window.screen.orientation.type;
-    if(window.screen.orientation.type == 'portrait-primary') {
+    previous_orientation = (await ScreenOrientation.orientation()).type;
+    if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
         isLandscape.value = false;
-    } else if(window.screen.orientation.type.includes('landscape')) {
+    } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
         isLandscape.value = true;
     }
-    window.screen.orientation.addEventListener('change', async (event) => {
-        if(previous_orientation == window.screen.orientation.type)
+    ScreenOrientation.addListener('screenOrientationChange', async () => {
+        if(previous_orientation == (await ScreenOrientation.orientation()).type)
             return;
-        if(window.screen.orientation.type== 'portrait-primary') {
+        if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
             isLandscape.value = false;
-            previous_orientation = window.screen.orientation.type;
+            previous_orientation = (await ScreenOrientation.orientation()).type;
 
             if(!media_starting_notes.value)
                 panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
             else
                 panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
-        } else if(window.screen.orientation.type.includes('landscape')) {
+        } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
             isLandscape.value = true;
-            previous_orientation = window.screen.orientation.type;
+            previous_orientation = (await ScreenOrientation.orientation()).type;
             if(!media_starting_notes.value)
                 panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
             else
