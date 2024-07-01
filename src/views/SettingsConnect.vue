@@ -258,7 +258,7 @@ function get_verse_end_list(book: string, chapter: number) {
 }
 
 function get_lock_icon() {
-    return unlocked.value ? "./assets/lock-open-outline.svg" : "./assets/lock-closed-outline.svg";
+    return unlocked.value ? import.meta.env.BASE_URL + "assets/lock-open-outline.svg" : import.meta.env.BASE_URL + "assets/lock-closed-outline.svg";
 }
 
 </script>
