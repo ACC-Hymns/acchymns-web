@@ -24,7 +24,7 @@ const { back } = useNavigator();
                 <li class="change">Added ability to download books for offline use</li>
                 <li class="change">Added a media player for some hymnals</li>
                 <li class="change">Added broadcasting to TVs</li>
-                <li class="change">Added Hymns and Songs of Zion</li>
+                <!--<li class="change">Added Hymns and Songs of Zion</li>-->
                 <li class="change">Added Харфа Сиона</li>
             </ul>
         </a>
