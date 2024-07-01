@@ -80,8 +80,8 @@
 		"notes": ["F4", "D4", "Bb3", "Bb2"]
 	},
 	"21": {
-		"title": "Aliluja",
-		"notes": ["D5", "A4", "F#4", "D4"]
+		"title": "Obrati se dušo!",
+		"notes": ["Eb4"]
 	},
 	"22": {
 		"title": "Hvali Boga",
@@ -161,7 +161,7 @@
 	},
 	"41": {
 		"title": "Radujte se",
-		"notes": ["F#4", "C4", "A3", "F#3"]
+		"notes": ["F#4", "C#4", "A3", "F#3"]
 	},
 	"42": {
 		"title": "Čuj kako s' noć razleže",
@@ -648,7 +648,7 @@
 		"notes": ["E4", "C#4", "A3", "A2"]
 	},
 	"163": {
-		"title": "O Hriste okreni se k'nam'",
+		"title": "O, Hriste okreni se k'nam'",
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"164": {
@@ -904,8 +904,8 @@
 		"notes": ["G4", "A3"]
 	},
 	"227": {
-		"title": "Može l' što lepše biti",
-		"notes": ["D4", "F#3", "D3"]
+		"title": "Bliže, još bliže",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
 	},
 	"228": {
 		"title": "Grad gde teče med i mleko",
@@ -1164,7 +1164,7 @@
 		"notes": ["D4", "G3"]
 	},
 	"292": {
-		"title": "Ja znam jednu reku",
+		"title": "Care naš svemoćni",
 		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"293": {
@@ -1696,8 +1696,8 @@
 		"notes": ["D4", "F#3", "D3"]
 	},
 	"425": {
-		"title": "Jedino je od potrebe",
-		"notes": ["Bb4", "Eb4", "G3", "Eb3"]
+		"title": "Ima jedno mesto",
+		"notes": ["D4", "B3", "G3", "G2"]
 	},
 	"426": {
 		"title": "Čeznem da sam sličan Hristu",
@@ -1826,6 +1826,10 @@
 	"457": {
 		"title": "Ah, sećam se majko na te",
 		"notes": ["G#4", "E4"]
+	},
+	"457a": {
+		"title": "Ja lujbim mog Spasa",
+		"notes": ["F#4", "D4", "A3", "D3"]
 	},
 	"458": {
 		"title": "Celim putem Spas me vodi",

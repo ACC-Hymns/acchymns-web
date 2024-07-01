@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ACCHymns</string>
-    <string name="title_activity_main">ACCHymns</string>
+    <string name="app_name">Hymnal</string>
+    <string name="title_activity_main">Hymnal</string>
     <string name="package_name">org.ACCHymns.app</string>
     <string name="custom_url_scheme">org.ACCHymns.app</string>
 </resources>

@@ -1,27 +1,36 @@
 name: Build IOS
 
 on:
-  workflow_dispatch:
   push:
 
 jobs:
   wait:
-    name: Wait for Previous IOS Builds to finish
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    name: Queue IOS builds
     runs-on: ubuntu-latest
     steps:
       # We do this so we don't ever have conflicting build numbers
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
+          delay: 60000
           timeout: 3600000
 
   build:
+    if: ${{ github.actor != 'dependabot[bot]' }}
     name: Build IOS
     needs: wait
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: List Xcode installations
+        run: sudo ls -1 /Applications | grep "Xcode"
+
+      #Select your required version
+      - name: Select Xcode 15.0
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
         
       # Setup Apple certs for building
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development#add-a-step-to-your-workflow

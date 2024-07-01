@@ -7,13 +7,14 @@ on:
       - 'ios/**'
       - 'android/**'
       - '.vscode/**'
+      - '.github/**'
       - '**.md'
 env:
   PR_REPO_NAME: acchymns-pr-${{ github.event.pull_request.node_id }}
 
 jobs:
   create-repo:
-    if: github.event.action == 'opened'
+    if: ${{ github.event.action == 'opened' && github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Create new repository for temporary deployment
@@ -26,7 +27,7 @@ jobs:
           initialize-repo: true
 
   delete-repo:
-    if: github.event.action == 'closed'
+    if: ${{ github.event.action == 'closed' && github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Delete repository for temporary deployment
@@ -36,7 +37,7 @@ jobs:
           access-token: ${{ secrets.DEPLOYMENT_PAT }}
 
   build-and-deploy:
-    if: github.event.action != 'closed'
+    if: ${{ github.event.action != 'closed' }}
     runs-on: ubuntu-latest
     steps:
       
@@ -47,7 +48,7 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: 'build'
       
@@ -63,13 +64,15 @@ jobs:
           cd ..
       
       - name: Checkout Dev Target
-        uses: actions/checkout@v3
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: actions/checkout@v4
         with:
           repository: ACC-Hymns/${{ env.PR_REPO_NAME }}
           path: 'deploy'
           token: ${{ secrets.DEPLOYMENT_PAT }}
       
       - name: Push files to target
+        if: ${{ github.actor != 'dependabot[bot]' }}
         run: |
           cd deploy
           git checkout -B gh-pages

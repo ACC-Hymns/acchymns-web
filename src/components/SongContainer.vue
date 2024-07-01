@@ -18,6 +18,14 @@ function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: str
     return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
 
+function getZoom() {
+    return panzoom.getTransform().scale;
+}
+
+defineExpose({
+    getZoom,
+});
+
 let song_img_src = ref("");
 let error_is_active = ref(false);
 
@@ -36,13 +44,11 @@ const dark_mode = computed(() => {
 
 const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
-let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 let panzoom: PanZoom;
 var isMobile = Capacitor.getPlatform() !== "web";
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
-    console.log(BOOK_METADATA[props.book]);
     if (BOOK_METADATA[props.book] == undefined) {
         error_is_active.value = true;
         return;
@@ -50,25 +56,24 @@ onMounted(async () => {
     const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
-    if (panzoom_enabled.value) {
-        panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
-            beforeWheel: e => {
-                return e.shiftKey;
-            },
-            maxZoom: 3,
-            minZoom: isMobile ? 1 : 0.25,
-            bounds: true,
-            boundsPadding: isMobile ? 1 : 0.5,
-        });
-    }
-    if(isMobile) {
+    panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
+        beforeWheel: e => {
+            return e.shiftKey;
+        },
+        maxZoom: 3,
+        minZoom: isMobile ? 1 : 0.25,
+        bounds: true,
+        boundsPadding: isMobile ? 1 : 0.5,
+        zoomDoubleClickSpeed: 1,
+    });
+    if (isMobile) {
         setInterval(() => {
             observer.refresh();
         }, 10);
     }
 });
 
-class IntersectionObserverManager { 
+class IntersectionObserverManager {
     _observer;
     _observedNodes;
 
@@ -81,30 +86,41 @@ class IntersectionObserverManager {
         this._observer.observe(node);
     }
     unobserve(node: Element) {
-        this._observedNodes.delete(node);
-        this._observer.unobserve(node);
+        try {
+            this._observedNodes.delete(node);
+            this._observer.unobserve(node);
+        } catch(e) {
+
+        }
     }
     disconnect() {
-        this._observedNodes.clear();
-        this._observer.disconnect();
+        try {
+            this._observedNodes.clear();
+            this._observer.disconnect();
+        } catch(e) {
+
+        }
     }
     refresh() {
         for (let node of this._observedNodes) {
-            this._observer.unobserve(node as Element);
-            this._observer.observe(node as Element);
+            try {
+                this._observer.unobserve(node as Element);
+                this._observer.observe(node as Element);
+            } catch(e) {
+
+            }
         }
     }
 }
 
-const observer = new IntersectionObserverManager(new IntersectionObserver((entries, _observer) => 
-        {
+const observer = new IntersectionObserverManager(
+    new IntersectionObserver(
+        (entries, _observer) => {
             for (const entry of entries) {
                 let rootRect = entry.boundingClientRect;
                 let visibleRect = entry.intersectionRect;
-                if(visibleRect.height < rootRect.height)
-                    panzoom.setVerticalPan(true);
-                else
-                    panzoom.setVerticalPan(false);
+                if (visibleRect.height < rootRect.height) panzoom.setVerticalPan(true);
+                else panzoom.setVerticalPan(false);
             }
         },
         {
@@ -116,10 +132,8 @@ const observer = new IntersectionObserverManager(new IntersectionObserver((entri
 );
 
 onUpdated(async () => {
-    if(isMobile)
-        observer.observe(panzoom_container.value as Element);
+    if (isMobile) observer.observe(panzoom_container.value as Element);
 });
-
 </script>
 
 <template>
