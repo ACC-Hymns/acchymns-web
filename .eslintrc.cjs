@@ -9,12 +9,8 @@ module.exports = {
         "prettier/prettier": [
             "error",
             {
-                // Override all options of `prettier` here
-                // @see https://prettier.io/docs/en/options.html
-                tabWidth: 4,
-                printWidth: 200,
-                arrowParens: "avoid",
-            },
+                "endOfLine": "LF"
+            }
         ],
         // Ignore all unused variables that start with an underscore
         "no-unused-vars": "off",

@@ -41,6 +41,18 @@ const { back } = useNavigator();
             <h3 class="release">Vue Router</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["vue-router"]) }}</h5>
         </a>
+        <a href="https://github.com/SortableJS/vue.draggable.next/" class="attribution">
+            <h3 class="release">Vue Draggable</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies.vuedraggable) }}</h5>
+        </a>
+        <a href="https://github.com/notoriousb1t/polymorph" class="attribution">
+            <h3 class="release">Polymorph.js</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["polymorph-js"]) }}</h5>
+        </a>
+        <a href="https://github.com/marc136/node-folder-hash" class="attribution">
+            <h3 class="release">Node Folder Hash</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["folder-hash"]) }}</h5>
+        </a>
         <a href="https://pinia.vuejs.org/" class="attribution">
             <h3 class="release">Pinia</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies.pinia) }}</h5>
@@ -55,7 +67,7 @@ const { back } = useNavigator();
         </a>
         <a href="https://ionic.io/ionicons" class="attribution">
             <h3 class="release">Ionicons</h3>
-            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">5.5.2</h5>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">7.4.0</h5>
         </a>
         <a href="https://fonts.google.com/about" class="attribution">
             <h3 class="release">Google Fonts</h3>

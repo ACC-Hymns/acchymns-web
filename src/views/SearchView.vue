@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
-import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch, onUpdated } from "vue";
+import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
+import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
+import { computed, ref, onMounted, watch, onUpdated, nextTick } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import type { BookSummary, Song, SongSearchInfo, SearchParams } from "@/scripts/types";
+import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
+import { known_references, prepackaged_books } from "@/scripts/constants";
+import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
 
+// Saving position in book
+onBeforeRouteLeave((_, from) => {
+    saveScrollPosition(from.fullPath);
+});
+
+const route = useRoute();
 const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
 
 const search_query = ref(search_params.value.search);
@@ -25,6 +33,7 @@ watch(search_query, new_query => {
 
 const available_songs = ref<SongSearchInfo[]>([]);
 const available_books = ref<BookSummary[]>([]);
+const book_data_summaries = ref<Map<string, BookDataSummary>>(new Map<string, BookDataSummary>());
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
@@ -64,6 +73,10 @@ onMounted(async () => {
     for (const book of Object.keys(SONG_METADATA)) {
         for (const song_number of Object.keys(SONG_METADATA[book])) {
             let song: Song = SONG_METADATA[book][song_number];
+            
+            if(song.title == undefined)
+                song.title = "";
+
             available_songs.value.push({
                 title: song?.title ?? "",
                 number: song_number,
@@ -84,6 +97,18 @@ onMounted(async () => {
             } as SongSearchInfo);
         }
     }
+
+    (prepackaged_books.concat(Object.keys(known_references))).forEach(async (book) => {
+        let book_data: BookDataSummary | undefined = await getBookDataSummaryFromName(book);
+        if(book_data == undefined)
+            return;
+        book_data_summaries.value.set(book, book_data);
+    });
+
+    // Restoring position in book
+    await nextTick();
+    // The v-for for song buttons now should be active, so we can scroll to the saved position
+    restoreScrollPosition(route.fullPath);
 });
 
 const filter_content = ref<Element>();
@@ -196,15 +221,9 @@ onUpdated(async () => {
                 </div>
                 <div class="booktext--right">
                     <div class="song__number">#{{ song.number }}</div>
-                    <img
-                        v-if="song.book.addOn && Capacitor.getPlatform() !== 'web'"
-                        class="ionicon"
-                        style="filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%)"
-                        src="/assets/wifi.svg"
-                    />
                 </div>
             </RouterLink>
-            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: #2196f3; justify-content: center">
+            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: var(--blue); justify-content: center">
                 <div class="song__title">Show more</div>
             </div>
         </div>
@@ -235,13 +254,12 @@ onUpdated(async () => {
 @import "@/assets/css/song.css";
 
 .blocker {
-    top: 0;
+    top: env(safe-area-inset-top);
     left: 0;
-    right: 0;
-    bottom: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 55px);
     content: " ";
+    position: absolute;
 }
 
 .dropdown-content {
@@ -295,7 +313,7 @@ onUpdated(async () => {
     padding: 10px 15px;
     border-radius: 30px;
     border-width: 2px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--thin-shadow);
     display: flex;
     justify-content: center;
     margin-top: 5px;
