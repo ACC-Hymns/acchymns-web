@@ -9,6 +9,7 @@ let scroll_index = ref<number>(0);
 let scroll_target = ref<HTMLElement>();
 
 const isDarkMode = ref<boolean>(false);
+const BASE_URL = import.meta.env.BASE_URL;
 
 let change_headers = ref<string[]>([
     "Customization",
@@ -63,9 +64,9 @@ function action() {
 
 function active(selected: boolean) {
     if (selected) {
-        return "./assets/ellipse.svg";
+        return BASE_URL + "assets/ellipse.svg";
     } else {
-        return "./assets/ellipse-outline.svg";
+        return BASE_URL + "assets/ellipse-outline.svg";
     }
 }
 
@@ -80,13 +81,13 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
         <div class="welcome-page">
             <div class="swipe-view" @scroll="(e) => scrollHandler(e)" ref="scroll_target">
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode('./assets/demos/rearrange.gif', './assets/demos/rearrange-dark.gif', isDarkMode)" />
+                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/rearrange.gif', BASE_URL + 'assets/demos/rearrange-dark.gif', isDarkMode)" />
                 </section>
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode('./assets/demos/download.gif', './assets/demos/download-dark.gif', isDarkMode)" />
+                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/download.gif', BASE_URL + 'assets/demos/download-dark.gif', isDarkMode)" />
                 </section>
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode('./assets/demos/mediaplayer.png', './assets/demos/mediaplayer-dark.png', isDarkMode)" />
+                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/mediaplayer.png', BASE_URL + 'assets/demos/mediaplayer-dark.png', isDarkMode)" />
                 </section>
             </div>
         </div>
@@ -213,6 +214,8 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
     border-style: none;
     background-color: var(--blue);
     border-radius: 15px;
+
+    cursor: pointer;
 }
 
 .welcome-page {

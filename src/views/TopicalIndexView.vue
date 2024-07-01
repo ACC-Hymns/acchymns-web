@@ -78,10 +78,10 @@ onMounted(async () => {
 
     if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
-        icon.value = "../assets/list-bulleted.svg";
+        icon.value = import.meta.env.BASE_URL + "assets/list-bulleted.svg";
     } else {
         title.value = "Topical Index";
-        icon.value = "../assets/text.svg";
+        icon.value = import.meta.env.BASE_URL + "assets/text.svg";
     }
 
     let group_ids = getGroupOpened(route.fullPath);
@@ -134,15 +134,15 @@ function goBack() {
 let isAlphabetical = useSessionStorage<boolean>("isAlphabetical", false);
 const alphabeticalSongs = ref<Song[]>([]);
 let title = ref("Topical Index");
-let icon = ref("../assets/text.svg");
+let icon = ref(import.meta.env.BASE_URL + "assets/text.svg");
 function toggleAlphabetical() {
     isAlphabetical.value = !isAlphabetical.value;
     if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
-        icon.value = "../assets/list-bulleted.svg";
+        icon.value = import.meta.env.BASE_URL + "assets/list-bulleted.svg";
     } else {
         title.value = "Topical Index";
-        icon.value = "../assets/text.svg";
+        icon.value = import.meta.env.BASE_URL + "assets/text.svg";
     }
     setTimeout(() => {
         window.scrollTo({
