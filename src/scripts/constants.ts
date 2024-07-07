@@ -1,4 +1,4 @@
-const prepackaged_books = ["ZH", "GH", "JH"];//, "HG"];
+const prepackaged_books = ["ZH", "GH", "JH"];
 const prepackaged_book_urls: string[] = prepackaged_books.map(book_name => import.meta.env.BASE_URL + "books/" + book_name);
 
 const branch: string = import.meta.env.VITE_GIT_BRANCH;
@@ -12,6 +12,7 @@ const branch: string = import.meta.env.VITE_GIT_BRANCH;
 // }
 
 const public_references = {
+    HG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HG`,
     CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
     //HSZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HSZ`,
     HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HZ`,
