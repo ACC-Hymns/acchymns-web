@@ -2,7 +2,7 @@
 import SongContainer from "@/components/SongContainer.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
 import { onMounted, ref, computed, onUnmounted } from "vue";
-import { getSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
+import { getSongMetaData, getAllBookMetaData, handle_missing_book } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
 import type { BookSummary, SongReference } from "@/scripts/types";
@@ -235,6 +235,9 @@ onMounted(async () => {
                 audio_source.value?.load();
             }
         })
+    } else {
+        console.log("book doesn't exist")
+        await handle_missing_book(props.book);
     }
 
     previous_orientation = (await ScreenOrientation.orientation()).type;
