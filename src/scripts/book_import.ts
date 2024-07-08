@@ -6,6 +6,8 @@ import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
 import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
 import { Capacitor } from "@capacitor/core";
 import { Network } from "@capacitor/network";
+import { useCapacitorPreferences } from "@/composables/preferences";
+import router from "@/router";
 
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
@@ -295,6 +297,75 @@ async function collect_signatures(start: BookSignature) {
     }
 
     return hashes;
+}
+
+const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
+async function handle_missing_book(book_short: string) {
+    if(book_sources.value.length == 0) {
+        book_sources.value = await loadBookSources();
+    }
+
+    await addImportedBookByCode(book_short)
+    async function addImportedBookByCode(short_book_name: string) {
+        if (short_book_name in known_references) {
+            const to_import = book_sources.value.find(b => b.id == short_book_name);
+            if(to_import == undefined)
+                return;
+    
+            // Check for duplicate url
+            if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
+                return;
+            } else {
+                if (await addImportedURL(to_import, false)) {
+                    router.go(0);   
+                }
+            }
+        }
+    }
+    
+    async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
+        let book = book_sources.value.find(b => b.id == input_book.id);
+        if(book == undefined)
+            return false;
+    
+        let connection = (await Network.getStatus()).connected
+        if(connection) {
+            if(Capacitor.getPlatform() !== 'web')
+                await download_import_summary(book);
+        }
+        else {
+            return false;
+        }
+    
+        let resp: Response | null = null;
+        try {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 2000);
+            resp = await fetch(book.src + "/summary.json", {
+                method: "HEAD",
+                signal: controller.signal,
+            });
+            clearTimeout(id);
+        } catch (e: any) {
+            if (e.name == "TypeError") {
+                return false;
+            }
+            if (e.name != "AbortError") {
+                throw e;
+            }
+        }
+    
+        if (resp == null || !resp.ok || resp.status != 200) {
+            return false;
+        }
+    
+        if (book.status != BookSourceType.IMPORTED) {
+            book.status = BookSourceType.IMPORTED;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 async function generate_force_update_package() {
@@ -614,4 +685,4 @@ async function getBookIndex(book_short_name: string): Promise<BookIndex | null> 
     return null;
 }
 
-export { generate_force_update_package, download_update_package, getBookFromId, getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates, delete_import_summary, download_import_summary };
+export { handle_missing_book, generate_force_update_package, download_update_package, getBookFromId, getBookDataSummaryFromName, getBookDataSummary, loadBookSources, download_book, getBookUrls, fetchBookSummary, getAllBookMetaData, getAllSongMetaData, getSongMetaData, getBookIndex, checkForUpdates, delete_import_summary, download_import_summary };
