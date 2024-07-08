@@ -301,6 +301,10 @@ async function collect_signatures(start: BookSignature) {
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
 async function handle_missing_book(book_short: string) {
+    if(book_sources.value.length == 0) {
+        book_sources.value = await loadBookSources();
+    }
+
     await addImportedBookByCode(book_short)
     async function addImportedBookByCode(short_book_name: string) {
         if (short_book_name in known_references) {
