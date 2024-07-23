@@ -4,8 +4,8 @@
 		"medium": "Camp Book",
 		"long": "Camp Book"
 	},
-	"primaryColor": "#FFD35D",
-	"secondaryColor": "#DB8223",
+	"primaryColor": "#FBBC13",
+	"secondaryColor": "#BD772A",
 	"fileExtension": "pdf",
 	"addOn": true,
 	"indexAvailable": true
