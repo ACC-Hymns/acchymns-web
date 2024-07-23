@@ -163,42 +163,42 @@ let left_indicator_opacity = ref<number>(0);
 let right_indicator_opacity = ref<number>(0);
 const song_container = ref<HTMLElement | null>(null);
 const desired_magnitude = window_width()/4;
-const swipe_handler = useSwipe(song_container, {
-    onSwipeStart(e: TouchEvent) {
-        swipe_origin = e.changedTouches[0];
-    },
-    onSwipe(e: TouchEvent) {
-        let zoom = (song_container.value as any).getZoom();
-        if(zoom > 1)
-            return;
-        let x = e.changedTouches[0].clientX;
-        let startX = swipe_origin.clientX;
-        let magnitude = Math.abs(x - startX);
-        let direction = (x - startX) > 0 ? 1 : -1;
-        left_indicator_opacity.value = (direction == 1) ? Math.max((magnitude) / desired_magnitude, 0) : 0;
-        right_indicator_opacity.value = (direction == -1) ?  Math.max((magnitude) / desired_magnitude, 0) : 0;
-    },
-    onSwipeEnd(e: TouchEvent) {
-        left_indicator_opacity.value = 0;
-        right_indicator_opacity.value = 0;
-        let zoom = (song_container.value as any).getZoom();
-        if(zoom > 1)
-            return;
-        let x = e.changedTouches[0].clientX;
-        let startX = swipe_origin.clientX;
-        let magnitude = Math.abs(x - startX);
+// const swipe_handler = useSwipe(song_container, {
+//     onSwipeStart(e: TouchEvent) {
+//         swipe_origin = e.changedTouches[0];
+//     },
+//     onSwipe(e: TouchEvent) {
+//         let zoom = (song_container.value as any).getZoom();
+//         if(zoom > 1)
+//             return;
+//         let x = e.changedTouches[0].clientX;
+//         let startX = swipe_origin.clientX;
+//         let magnitude = Math.abs(x - startX);
+//         let direction = (x - startX) > 0 ? 1 : -1;
+//         left_indicator_opacity.value = (direction == 1) ? Math.max((magnitude) / desired_magnitude, 0) : 0;
+//         right_indicator_opacity.value = (direction == -1) ?  Math.max((magnitude) / desired_magnitude, 0) : 0;
+//     },
+//     onSwipeEnd(e: TouchEvent) {
+//         left_indicator_opacity.value = 0;
+//         right_indicator_opacity.value = 0;
+//         let zoom = (song_container.value as any).getZoom();
+//         if(zoom > 1)
+//             return;
+//         let x = e.changedTouches[0].clientX;
+//         let startX = swipe_origin.clientX;
+//         let magnitude = Math.abs(x - startX);
 
-        if(magnitude < desired_magnitude)
-            return;
+//         if(magnitude < desired_magnitude)
+//             return;
 
-        let direction = (x - startX) > 0 ? -1 : 1;
-        if(direction == 1) {
-            traverse_song(1);
-        } else {
-            traverse_song(-1);
-        }
-    }
-});
+//         let direction = (x - startX) > 0 ? -1 : 1;
+//         if(direction == 1) {
+//             traverse_song(1);
+//         } else {
+//             traverse_song(-1);
+//         }
+//     }
+// });
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -289,7 +289,6 @@ let elapsed_timer: number = -1;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
-let page_buttons = ref();
 let broadcast_button = ref();
 
 function open_broadcast() {
@@ -502,14 +501,18 @@ function get_note_icon(note: string) {
             </div>
         </div>
     </div>
-    <div ref="page_buttons" v-if="panel.height < 0.7 || !panel.visible" class="page-buttons" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
+    <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
+    </div>
+    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-right': (!menu_bar_visible || Number(props.number) == song_count)}">
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
+
+
     <div v-if="left_indicator_opacity > 0 && Number(props.number) > 1" class="flip-indicator flip-indicator-left" :style="{opacity: left_indicator_opacity}">
         <img class="ionicon" src="/assets/chevron-back-outline.svg" />
     </div>
@@ -916,13 +919,10 @@ function get_note_icon(note: string) {
     margin: 0 auto;
     cursor: pointer;
 }
-.page-buttons {
+.page-button-container {
     position: fixed;
     bottom: 5vh;
     z-index: 1;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
 }
 .page-button {
     height: 10vw;
@@ -932,12 +932,18 @@ function get_note_icon(note: string) {
     background-color: var(--button-color);
     border-radius: 50px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    margin: 0 15px;
     transition: transform 0.3s;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+
+.left {
+    left: 15px;
+}
+.right {
+    right: 15px;
 }
 
 .media-type-title  {

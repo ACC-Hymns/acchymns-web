@@ -12,6 +12,7 @@ import BaseBookBox from "@/components/BaseBookBox.vue";
 import draggable from 'vuedraggable'
 import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
+import { clearCache } from "@/composables/cached_fetch";
 
 var hasConnection = ref<boolean>(false);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
@@ -141,6 +142,8 @@ async function startUpdate() {
             update_packages.value = [];
         })
     }
+    
+    clearCache();
 }
 
 function filter_book(book: BookDataSummary, hasConnection: boolean) {
