@@ -26,7 +26,6 @@ onBeforeUnmount(async () => {
 });
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
@@ -154,10 +153,6 @@ async function download_finish(book: BookDataSummary, new_url: string) {
         text: "Successfully downloaded hymnal!"
     })
 }
-
-onUpdated(() => {
-    if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
-});
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;

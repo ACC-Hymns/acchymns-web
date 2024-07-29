@@ -15,9 +15,7 @@ import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
 
 var hasConnection = ref<boolean>(false);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
-let tooltip = ref<Element>();
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
@@ -116,7 +114,6 @@ async function move_book(e: BookOrderEvent) {
 }
 
 function delayUpdate() {
-
     if(update_progress.value > 0)
         return;
 
@@ -152,18 +149,6 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
     } else {
         return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED;
     }
-}
-
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        import_books_tooltip_status.value = true;
-    }, 1000);
-}
-
-function tooltipVisible(visible: boolean) {
-    return visible ? "padding-top: 50px;" : "";
 }
 
 </script>

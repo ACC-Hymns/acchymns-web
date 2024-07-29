@@ -9,7 +9,7 @@ module.exports = {
         "prettier/prettier": [
             "error",
             {
-                "endOfLine": "LF"
+                "endOfLine": "lf"
             }
         ],
         // Ignore all unused variables that start with an underscore

@@ -13,10 +13,9 @@ import { useLocalStorage, useSwipe } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { branch } from "@/scripts/constants";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
-import { Preferences } from "@capacitor/preferences";
+import type { ConnectionStatus } from "@capacitor/network";
 import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();
@@ -200,6 +199,19 @@ const desired_magnitude = window_width()/4;
 //     }
 // });
 
+async function prepAudio(network_status: ConnectionStatus) {
+    isConnected.value = network_status.connected;
+    if(!isConnected.value) {
+            audio_source_exists.value = false;
+            audio_source.value = new Audio();
+        } else {
+            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
+            audio_source.value.preload = 'metadata';
+            setup_audiosource(audio_source.value);
+            audio_source.value?.load();
+        }
+}
+
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
@@ -210,31 +222,11 @@ onMounted(async () => {
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
-        isConnected.value = (await Network.getStatus()).connected;
-        if(!isConnected.value) {
-            audio_source_exists.value = false;
-            audio_source.value = new Audio();
-        } else {
-            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
-            audio_source.value.preload = 'metadata';
-            setup_audiosource(audio_source.value);
-        }
+        prepAudio(await Network.getStatus());
+        Network.addListener("networkStatusChange", prepAudio);
 
         setMediaType(null, true);
         
-        Network.addListener("networkStatusChange", async (details) => {
-            isConnected.value = details.connected;
-            if(!isConnected.value) {
-                audio_source_exists.value = false;
-                audio_source.value = new Audio();
-                setMediaType(null, true);
-            } else {
-                audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
-                audio_source.value.preload = 'metadata';
-                setup_audiosource(audio_source.value);
-                audio_source.value?.load();
-            }
-        })
     } else {
         console.log("book doesn't exist")
         await handle_missing_book(props.book);
@@ -289,19 +281,6 @@ let elapsed_timer: number = -1;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
-let broadcast_button = ref();
-
-function open_broadcast() {
-    broadcasting.value = true;
-    let button = (broadcast_button.value as HTMLElement);
-    button?.style.setProperty("opacity", "0");
-}
-
-function close_broadcast() {
-    broadcasting.value = false;
-    let button = (broadcast_button.value as HTMLElement);
-    button?.style.setProperty("opacity", "1");
-}
 
 async function broadcast(e: MouseEvent) {
     if(church_id.value == null)
@@ -309,7 +288,6 @@ async function broadcast(e: MouseEvent) {
 
     await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
-    let button = (e.target as Element).parentElement;
     broadcasting.value = false;
 }
 
@@ -393,8 +371,7 @@ async function playMedia() {
         elapsed_timer = setInterval(() => {
             updateTime();
         }, 1000, 0);
-    }
-    else {
+    } else {
         audio_source.value?.pause();
         clearInterval(elapsed_timer);
     }
@@ -575,15 +552,15 @@ function get_note_icon(note: string) {
         </div>
     </div>
     
-    <div class="broadcast-button-container" v-if="authorized" ref="broadcast_button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
-        <div class="broadcast-button">
-            <img @click="(e) => open_broadcast()" class="ionicon" src="/assets/radio-outline.svg">
+    <div class="broadcast-button-container" v-if="authorized && !broadcasting" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
+        <div class="broadcast-button" @click="broadcasting = true">
+            <img class="ionicon" src="/assets/radio-outline.svg">
         </div>
     </div>
     <div class="broadcast-container" v-if="authorized && broadcasting" @touchmove="(e) => e.preventDefault()">
         <h1>Broadcast</h1>
-        <div class="close-button">
-            <img @click="close_broadcast()" class="ionicon" src="/assets/close.svg" />
+        <div class="close-button" @click="broadcasting = false">
+            <img class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br>
@@ -598,7 +575,7 @@ function get_note_icon(note: string) {
         <div class="verse-list">
             <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
 
-                if(verses[0] == -2) 
+                if(verses[0] == -2)
                     verses = [];
 
                 if(verses.includes(verse))

@@ -19,6 +19,9 @@ let bible_reading = ref<boolean>(false);
 let top_text = ref<string>("");
 let bottom_text = ref<string>("");
 
+let hours = ref<string>('');
+let minutes = ref<string>('');
+
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
 function clock() {
@@ -27,15 +30,14 @@ function clock() {
     let m = d.getMinutes();
     let s = d.getSeconds();
     
-    let hDeg = h * 30 + m * (360/720);
-    let mDeg = m * 6 + s * (360/3600);
-    let sDeg = s * 6;
-
+    let hDeg = h * (360/12) + m * (360/720);
+    let mDeg = m * (360/60) + s * (360/3600);
 
     hours.value = "rotate("+hDeg+"deg)";
     minutes.value = "rotate("+mDeg+"deg)";
-    seconds.value = "rotate("+sDeg+"deg)";
 }
+clock();
+setInterval(clock, 1000);
 
 let client: DynamoDBClient;
 
@@ -44,35 +46,27 @@ async function set_data() {
     bible_reading.value = data.BOOK_ID.S == "BIBLE";
 
     if(bible_reading.value) {
-      top_text.value = data.SONG_NUMBER.S;
-      bottom_text.value = data.BOOK_COLOR.S;
+        top_text.value = data.SONG_NUMBER.S;
+        bottom_text.value = data.BOOK_COLOR.S;
     } else {
-      song_number.value = data.SONG_NUMBER.S;
+        song_number.value = data.SONG_NUMBER.S;
 
-      verses_visible.value = false;
-      if(data.VERSES.NS[0] == -1) {
-          verses.value = "";
-      } else if (data.VERSES.NS[0] == -2) {
-          verses.value = "All Verses";
-      } else {
-          data.VERSES.NS.sort((a, b) => a - b);
-          verses.value = data.VERSES.NS.join(", ");
-          verses_visible.value = true;
-      }
-      color.value = data.BOOK_COLOR.S;
-      book_name.value = data.BOOK_ID.S;
+        verses_visible.value = false;
+        if(data.VERSES.NS[0] == -1) {
+            verses.value = "";
+        } else if (data.VERSES.NS[0] == -2) {
+            verses.value = "All Verses";
+        } else {
+            data.VERSES.NS.sort((a, b) => a - b);
+            verses.value = data.VERSES.NS.join(", ");
+            verses_visible.value = true;
+        }
+        color.value = data.BOOK_COLOR.S;
+        book_name.value = data.BOOK_ID.S;
     }
 }
-let old_bg_color = '';
+
 onMounted(async () => {
-    old_bg_color = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = "white";
-
-    clock();
-
-    setInterval(clock, 100);
-    setInterval(set_data, 2000);
-
     let token = await Preferences.get({ key: "broadcasting_auth_token"});
     let response = await validate_token(token.value || "");
     authorized.value = response.status == 200;
@@ -85,27 +79,8 @@ onMounted(async () => {
     client = request_client();
 
     set_data();
+    setInterval(set_data, 2000);
 });
-
-onUnmounted(() => {
-    document.body.style.backgroundColor = old_bg_color;
-})
-
-let hours = ref<string>('');
-let minutes = ref<string>('');
-let seconds = ref<string>('');
-
-function calculate_text_width(text: string, font: string) {
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext("2d");
-    if (context == null) {
-        return 0;
-    }
-    context.font = font;
-    let metrics = context.measureText(text);
-    return metrics.width;
-}
-
 </script>
 
 <template>
@@ -128,14 +103,18 @@ function calculate_text_width(text: string, font: string) {
                 <div class="minute-hand" :style="{transform: minutes}"></div>
             </div>
             <div>
+                <div class="diallines" v-for="i in 60" :key="i" :style="{transform: 'rotate(' + 6 * i + 'deg)'}"></div>
             </div>
-            <div class="diallines" v-for="i in 61" :key="i" :style="{transform: 'rotate(' + 6 * (i - 2) + 'deg)'}"></div>
         </div>
     </div>
 
 </template>
 
-<style scoped>
+<style>
+body {
+    background-color: white;
+}
+
 .top-text {
     font-size: 16em;
     color: #000000;

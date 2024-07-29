@@ -59,13 +59,9 @@ onMounted(async () => {
     for (let i = 0; i < num_groups; i++) {
         song_number_groups.value?.push(song_numbers.value.filter((song) => {
             const re = new RegExp(/[a-z]/, "i");
-            let song_num = song.replace(re, "");
+            let song_num = Number(song.replace(re, ""));
 
-            if (Number(song_num) >= i*100 && Number(song_num) < ((i+1)*100)) {
-                return true;
-            }
-
-            return false;
+            return song_num >= i*100 && song_num < ((i+1)*100);
         }));
     }
 
@@ -163,9 +159,7 @@ function getRangeString(start: string, end: string) {
                         </RouterLink>
                     </div>     
                 </div>     
-                
             </div>
-            
         </div>
     </div>
 
