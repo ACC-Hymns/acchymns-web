@@ -1,13 +1,26 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
+import {
+    getAllSongMetaData,
+    getAllBookMetaData,
+    getBookDataSummary,
+    fetchBookSummary,
+    getBookDataSummaryFromName,
+} from "@/scripts/book_import";
 import { computed, ref, onMounted, watch, onUpdated, nextTick } from "vue";
 import { useSessionStorage } from "@vueuse/core";
 import { Capacitor } from "@capacitor/core";
-import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
+import {
+    type BookSummary,
+    type Song,
+    type SongSearchInfo,
+    type SearchParams,
+    type BookDataSummary,
+    BookSourceType,
+} from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
 import { known_references, prepackaged_books } from "@/scripts/constants";
-import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -15,7 +28,10 @@ onBeforeRouteLeave((_, from) => {
 });
 
 const route = useRoute();
-const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
+const search_params = useSessionStorage<SearchParams>("searchParams", {
+    search: "",
+    bookFilters: [],
+});
 
 const search_query = ref(search_params.value.search);
 const stripped_query = computed(() => {
@@ -27,31 +43,55 @@ const stripped_query = computed(() => {
         .replace(/\p{Diacritic}/gu, "");
 });
 
-watch(search_query, new_query => {
+watch(search_query, (new_query) => {
     search_params.value.search = new_query;
 });
 
 const available_songs = ref<SongSearchInfo[]>([]);
 const available_books = ref<BookSummary[]>([]);
-const book_data_summaries = ref<Map<string, BookDataSummary>>(new Map<string, BookDataSummary>());
+const book_data_summaries = ref<Map<string, BookDataSummary>>(
+    new Map<string, BookDataSummary>(),
+);
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
-            .filter(s => {
+            .filter((s) => {
                 return (
-                    (s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value) &&
-                    search_params.value.bookFilters.find(b => b == s.book.name.short)
+                    (s.stripped_title?.includes(stripped_query.value) ||
+                        s?.stripped_first_line?.includes(
+                            stripped_query.value,
+                        ) ||
+                        s?.number == stripped_query.value) &&
+                    search_params.value.bookFilters.find(
+                        (b) => b == s.book.name.short,
+                    )
                 );
             })
-            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+            .sort((a, b) =>
+                a.title
+                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                    .localeCompare(
+                        b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
+                    ),
+            );
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
-            .filter(s => {
-                return s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number == stripped_query.value;
+            .filter((s) => {
+                return (
+                    s.stripped_title?.includes(stripped_query.value) ||
+                    s?.stripped_first_line?.includes(stripped_query.value) ||
+                    s?.number == stripped_query.value
+                );
             })
-            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+            .sort((a, b) =>
+                a.title
+                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                    .localeCompare(
+                        b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
+                    ),
+            );
     }
 });
 
@@ -73,9 +113,8 @@ onMounted(async () => {
     for (const book of Object.keys(SONG_METADATA)) {
         for (const song_number of Object.keys(SONG_METADATA[book])) {
             let song: Song = SONG_METADATA[book][song_number];
-            
-            if(song.title == undefined)
-                song.title = "";
+
+            if (song.title == undefined) song.title = "";
 
             available_songs.value.push({
                 title: song?.title ?? "",
@@ -98,12 +137,14 @@ onMounted(async () => {
         }
     }
 
-    (prepackaged_books.concat(Object.keys(known_references))).forEach(async (book) => {
-        let book_data: BookDataSummary | undefined = await getBookDataSummaryFromName(book);
-        if(book_data == undefined)
-            return;
-        book_data_summaries.value.set(book, book_data);
-    });
+    prepackaged_books
+        .concat(Object.keys(known_references))
+        .forEach(async (book) => {
+            let book_data: BookDataSummary | undefined =
+                await getBookDataSummaryFromName(book);
+            if (book_data == undefined) return;
+            book_data_summaries.value.set(book, book_data);
+        });
 
     // Restoring position in book
     await nextTick();
@@ -116,7 +157,11 @@ const filter_content = ref<Element>();
 var isOpen = false;
 
 function resetModals() {
-    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
+    if (
+        filter_content.value?.classList.contains("dropdown-content-active") &&
+        !isOpen
+    )
+        filter_content.value?.classList.remove("dropdown-content-active");
     isOpen = false;
 }
 
@@ -136,7 +181,9 @@ let all_hymnals_filter = ref<Element>();
 function filterBook(short_book_name: string) {
     isOpen = true;
     if (search_params.value.bookFilters.includes(short_book_name)) {
-        let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
+        let index = search_params.value.bookFilters.findIndex(
+            (b) => b == short_book_name,
+        );
         search_params.value.bookFilters.splice(index, 1);
     } else {
         search_params.value.bookFilters.push(short_book_name);
@@ -158,7 +205,9 @@ function checkmarked(selected: boolean) {
 onUpdated(async () => {
     for (var i = 0; i < book_filters.value?.length; i++) {
         const img = book_filters.value?.at(i)?.children[0].children[0];
-        const rgb = hexToRgb(available_books.value.at(i)?.primaryColor ?? "#000000");
+        const rgb = hexToRgb(
+            available_books.value.at(i)?.primaryColor ?? "#000000",
+        );
         if (rgb?.length !== 3) {
             alert("Invalid format!");
             return;
@@ -175,7 +224,11 @@ onUpdated(async () => {
     <div @click="resetModals" class="blocker">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
-            <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
+            <input
+                v-model="search_query"
+                placeholder="Search for a song title or number..."
+                aria-label="Search through site content"
+            />
             <button disabled>
                 <svg viewBox="0 0 1024 1024">
                     <path
@@ -188,25 +241,60 @@ onUpdated(async () => {
         <div class="filters">
             <a @click="showDropdown()" class="dropdown">
                 <p class="dropdown-text">Filters</p>
-                <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
+                <img
+                    class="ionicon filter-icon"
+                    src="/assets/filter-outline.svg"
+                />
             </a>
             <div class="dropdown-content" ref="filter_content">
                 <a>
-                    <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
-                        <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
+                    <div
+                        class="dropdown-content-top-item"
+                        ref="all_hymnals_filter"
+                        @click="clearFilters"
+                    >
+                        <img
+                            class="ionicon checkmark-icon"
+                            :src="
+                                checkmarked(
+                                    search_params.bookFilters.length == 0,
+                                )
+                            "
+                        />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
+                <a
+                    v-for="book in available_books"
+                    :key="book.name.medium"
+                    @click="filterBook(book.name.short)"
+                    ref="book_filters"
+                >
                     <div class="dropdown-content-item">
-                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
-                        <div class="dropdown-content-text">{{ book.name.medium }}</div>
+                        <img
+                            class="ionicon"
+                            :src="
+                                checkmarked(
+                                    search_params.bookFilters.includes(
+                                        book.name.short,
+                                    ),
+                                )
+                            "
+                        />
+                        <div class="dropdown-content-text">
+                            {{ book.name.medium }}
+                        </div>
                     </div>
                 </a>
             </div>
         </div>
 
-        <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px">Search Results ({{ search_results.length }})</h2>
+        <h2
+            v-if="search_results.length > 0"
+            style="margin-top: 10px; margin-bottom: 10px"
+        >
+            Search Results ({{ search_results.length }})
+        </h2>
         <div class="songlist">
             <RouterLink
                 v-for="song in limited_search_results"
@@ -223,7 +311,12 @@ onUpdated(async () => {
                     <div class="song__number">#{{ song.number }}</div>
                 </div>
             </RouterLink>
-            <div v-if="limited_search_results.length < search_results.length" @click="display_limit += increment" class="song" style="background: var(--blue); justify-content: center">
+            <div
+                v-if="limited_search_results.length < search_results.length"
+                @click="display_limit += increment"
+                class="song"
+                style="background: var(--blue); justify-content: center"
+            >
                 <div class="song__title">Show more</div>
             </div>
         </div>

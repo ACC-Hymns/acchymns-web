@@ -1,9 +1,15 @@
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed, readonly, watch } from "vue";
 
-const system_prefers_dark_mode = readonly(useMediaQuery("(prefers-color-scheme: dark)"));
-const override_system_theme = readonly(useLocalStorage("ACCOptions.overrideSystemTheme", false));
-const user_prefers_dark_mode = readonly(useLocalStorage("ACCOptions.overrideDarkMode", false));
+const system_prefers_dark_mode = readonly(
+    useMediaQuery("(prefers-color-scheme: dark)"),
+);
+const override_system_theme = readonly(
+    useLocalStorage("ACCOptions.overrideSystemTheme", false),
+);
+const user_prefers_dark_mode = readonly(
+    useLocalStorage("ACCOptions.overrideDarkMode", false),
+);
 
 const dark_mode = computed(() => {
     if (override_system_theme.value) {
@@ -23,5 +29,5 @@ watch(
             document.documentElement.setAttribute("data-theme", "light");
         }
     },
-    { immediate: true }
+    { immediate: true },
 );

@@ -1,10 +1,26 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, nextTick } from "vue";
-import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import {
+    getAllBookMetaData,
+    getSongMetaData,
+    getBookIndex,
+} from "@/scripts/book_import";
+import {
+    RouterLink,
+    onBeforeRouteLeave,
+    useRoute,
+    useRouter,
+} from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
-import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import {
+    saveScrollPosition,
+    restoreScrollPosition,
+    saveGroupOpened,
+    getGroupOpened,
+    removeGroupOpened,
+    removeScrollPosition,
+} from "@/router/scroll";
 
 const props = defineProps<{
     book: string;
@@ -36,7 +52,7 @@ const songs_to_display = computed(() => {
 
 onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
-    if(!_.fullPath.includes("/display")) {
+    if (!_.fullPath.includes("/display")) {
         removeGroupOpened(from.fullPath);
         removeScrollPosition(from.fullPath);
     }
@@ -62,7 +78,13 @@ onMounted(async () => {
                 notes: BOOK_SONG_METADATA[song_number].notes,
             });
         }
-        topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+        topical_index.value[topic_name].sort((a, b) =>
+            a.title
+                .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+                .localeCompare(
+                    b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
+                ),
+        );
     }
     song_number_groups.value = Object.keys(topical_index.value);
     for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
@@ -74,7 +96,11 @@ onMounted(async () => {
             first_line: song?.first_line,
         });
     }
-    alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+    alphabeticalSongs.value.sort((a, b) =>
+        a.title
+            .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
+            .localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
+    );
 
     if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
@@ -85,10 +111,10 @@ onMounted(async () => {
     }
 
     let group_ids = getGroupOpened(route.fullPath);
-    if(group_ids != undefined) {
+    if (group_ids != undefined) {
         group_ids.forEach((id) => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
-        })
+        });
     }
 
     // Restoring position in book
@@ -157,7 +183,10 @@ let song_number_groups_active = ref<string[]>([]);
 const route = useRoute();
 function toggleDropdown(topic: string) {
     if (song_number_groups_active.value.includes(topic)) {
-        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(topic), 1);
+        song_number_groups_active.value.splice(
+            song_number_groups_active.value.indexOf(topic),
+            1,
+        );
     } else {
         song_number_groups_active.value.push(topic);
     }
@@ -166,7 +195,7 @@ function toggleDropdown(topic: string) {
     song_number_groups_active.value.forEach((group_id) => {
         var index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
-    })
+    });
     saveGroupOpened(route.fullPath, ids);
 }
 </script>
@@ -174,9 +203,17 @@ function toggleDropdown(topic: string) {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="goBack()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <img
+                @click="goBack()"
+                class="ionicon title--left"
+                src="/assets/chevron-back-outline.svg"
+            />
             <h1 class="title--center">{{ title }}</h1>
-            <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
+            <img
+                @click="toggleAlphabetical()"
+                class="ionicon title--right"
+                :src="icon"
+            />
         </div>
     </div>
 
@@ -186,13 +223,45 @@ function toggleDropdown(topic: string) {
     <div v-else class="main-content">
         <!-- Each Topical Section -->
         <div v-if="!isAlphabetical">
-            <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
-                <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
-                    <div class="song-title">{{topic}}</div>
-                    <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(topic.toString())}"/>
+            <div
+                v-for="(_topic_songs, topic) in topical_index"
+                :key="topic"
+                class="song-group-container"
+                ref="song_group_elements"
+            >
+                <div
+                    class="song-group-title-container"
+                    @click="toggleDropdown(topic.toString())"
+                >
+                    <div class="song-title">{{ topic }}</div>
+                    <img
+                        class="ionicon nav__icon dropdown-icon"
+                        src="/assets/chevron-back-outline.svg"
+                        :class="{
+                            'dropdown-icon-active':
+                                song_number_groups_active.includes(
+                                    topic.toString(),
+                                ),
+                        }"
+                    />
                 </div>
-                <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(topic.toString())}">
-                    <div class="song-button-container" :class="{'song-button-container-active': song_number_groups_active.includes(topic.toString())}">
+                <div
+                    class="wrapper"
+                    :class="{
+                        'wrapper-active': song_number_groups_active.includes(
+                            topic.toString(),
+                        ),
+                    }"
+                >
+                    <div
+                        class="song-button-container"
+                        :class="{
+                            'song-button-container-active':
+                                song_number_groups_active.includes(
+                                    topic.toString(),
+                                ),
+                        }"
+                    >
                         <RouterLink
                             v-for="song in topical_index[topic]"
                             :key="song.title + song.number"
@@ -204,11 +273,13 @@ function toggleDropdown(topic: string) {
                                 <div class="song__title">{{ song.title }}</div>
                             </div>
                             <div class="booktext--right">
-                                <div class="song__number">#{{ song.number }}</div>
+                                <div class="song__number">
+                                    #{{ song.number }}
+                                </div>
                             </div>
                         </RouterLink>
-                    </div>     
-                </div>     
+                    </div>
+                </div>
             </div>
         </div>
         <div class="song-list" v-else>

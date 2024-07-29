@@ -31,7 +31,8 @@ onMounted(async () => {
         let page = await pdfDoc.getPage(pageNum);
 
         // We need a better way of picking the scale...
-        const target_scale = Capacitor.getPlatform() == "web" ? 5 : window.devicePixelRatio;
+        const target_scale =
+            Capacitor.getPlatform() == "web" ? 5 : window.devicePixelRatio;
         let viewport = page.getViewport({ scale: target_scale });
         canvas.height = viewport.height;
         canvas.width = viewport.width;

@@ -29,7 +29,7 @@ import { migrate } from "@/scripts/migrate";
 async function load() {
     await loadBookSources();
     await migrate();
-    
+
     app.mount("#app");
 }
 load();

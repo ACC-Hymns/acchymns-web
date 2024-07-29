@@ -2,7 +2,11 @@
 import { useBookSummary } from "@/composables/book_metadata";
 import { getBookDataSummary } from "@/scripts/book_import";
 import router from "@/router";
-import { BookSourceType, type BookDataSummary, type BookSummary } from "@/scripts/types";
+import {
+    BookSourceType,
+    type BookDataSummary,
+    type BookSummary,
+} from "@/scripts/types";
 import { Capacitor } from "@capacitor/core";
 import { onMounted, ref } from "vue";
 
@@ -13,7 +17,7 @@ const props = withDefaults(
     }>(),
     {
         withLink: true,
-    }
+    },
 );
 
 const {
@@ -29,13 +33,17 @@ const book_data_summary = ref<BookDataSummary>();
 
 onMounted(async () => {
     book_data_summary.value = await getBookDataSummary(book.value);
-})
-
+});
 </script>
 <template>
     <!-- Book has been successfully loaded -->
     <template v-if="isFinished && book != null">
-        <component :is="withLink ? 'RouterLink' : 'div'" :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
+        <component
+            :is="withLink ? 'RouterLink' : 'div'"
+            :to="`selection/${book.name.short}`"
+            class="book"
+            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
+        >
             <div class="book_title">{{ book.name.medium }}</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
@@ -49,7 +57,10 @@ onMounted(async () => {
         </component>
     </template>
     <template v-else-if="!isFinished && isSlowFetch">
-        <div class="book" :style="`background: linear-gradient(135deg, #a3a298, #4d4c47)`">
+        <div
+            class="book"
+            :style="`background: linear-gradient(135deg, #a3a298, #4d4c47)`"
+        >
             <div class="book_title">Loading...</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
@@ -58,7 +69,10 @@ onMounted(async () => {
         </div>
     </template>
     <template v-else-if="isFinished">
-        <div class="book" :style="`background: linear-gradient(135deg, #000000, #000000)`">
+        <div
+            class="book"
+            :style="`background: linear-gradient(135deg, #000000, #000000)`"
+        >
             <div class="book_title">Unknown</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>

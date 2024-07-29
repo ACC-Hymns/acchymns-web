@@ -16,11 +16,17 @@ const mappings = {
 };
 
 // When running, capacitor injects these env variables
-const target_dir = path.join(process.env.CAPACITOR_ROOT_DIR, mappings[process.env.CAPACITOR_PLATFORM_NAME]);
+const target_dir = path.join(
+    process.env.CAPACITOR_ROOT_DIR,
+    mappings[process.env.CAPACITOR_PLATFORM_NAME],
+);
 
 const books = fs.readdirSync(target_dir);
 for (const book of books) {
-    if (process.env.CAPACITOR_PLATFORM_NAME == "web" || bundled_books.includes(book)) {
+    if (
+        process.env.CAPACITOR_PLATFORM_NAME == "web" ||
+        bundled_books.includes(book)
+    ) {
         // Minify the json files if we're on the web, or if this book is supposed to be bundled on mobile
         const book_files = fs.readdirSync(path.join(target_dir, book));
         for (const file of book_files) {

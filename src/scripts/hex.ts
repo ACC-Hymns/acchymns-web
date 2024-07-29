@@ -21,7 +21,12 @@ function componentToHex(c: number) {
 }
 
 function rgbToHex(rgb: RGB) {
-    return "#" + componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
+    return (
+        "#" +
+        componentToHex(rgb.r) +
+        componentToHex(rgb.g) +
+        componentToHex(rgb.b)
+    );
 }
 
 function darken(input: string) {

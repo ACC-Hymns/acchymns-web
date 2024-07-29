@@ -7,7 +7,12 @@ import { resetOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Preferences } from "@capacitor/preferences";
-import { download_update_package, generate_force_update_package, getBookFromId, loadBookSources } from "@/scripts/book_import";
+import {
+    download_update_package,
+    generate_force_update_package,
+    getBookFromId,
+    loadBookSources,
+} from "@/scripts/book_import";
 import { ref } from "vue";
 import type { UpdatePackage } from "@/scripts/types";
 import HomeBookBox from "@/components/HomeBookBox.vue";
@@ -17,7 +22,7 @@ import { Capacitor } from "@capacitor/core";
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
 const is_prerelease = version.includes("Beta") || version.includes("Alpha");
-const isWeb = Capacitor.getPlatform() === "web"
+const isWeb = Capacitor.getPlatform() === "web";
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
@@ -41,52 +46,58 @@ async function clearFetchCache() {
 
 async function forceUpdate() {
     let updates = await generate_force_update_package();
-    for(let update of updates) {
+    for (let update of updates) {
         update.book_summary = await getBookFromId(update.book_short);
     }
     update_packages.value = updates;
 }
 
 function delayUpdate() {
+    if (update_progress.value > 0) return;
 
-    if(update_progress.value > 0)
-        return;
+    (update_background_element.value as unknown as HTMLElement).style.opacity =
+        "0.0";
+    (update_panel_element.value as unknown as HTMLElement).style.opacity =
+        "0.0";
 
-    (update_background_element.value as unknown as HTMLElement).style.opacity = '0.0';
-    (update_panel_element.value as unknown as HTMLElement).style.opacity = '0.0';
-
-    update_packages.value = []
+    update_packages.value = [];
 }
 
 async function startUpdate() {
-    if(update_progress.value > 0)
-        return;
+    if (update_progress.value > 0) return;
 
     var progresses: number[] = [update_packages.value.length];
-    for(let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
+    for (let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
         let pkg = update_packages.value[pkg_id];
-        await download_update_package(pkg, (progress: number) => {
-            progresses[pkg_id] = progress;
-            update_progress.value = progresses.reduce((partialSum, a) => partialSum + a, 0)/update_packages.value.length
-        }, () => {
-            update_progress.value = 0;
-            update_packages.value = [];
-        })
+        await download_update_package(
+            pkg,
+            (progress: number) => {
+                progresses[pkg_id] = progress;
+                update_progress.value =
+                    progresses.reduce((partialSum, a) => partialSum + a, 0) /
+                    update_packages.value.length;
+            },
+            () => {
+                update_progress.value = 0;
+                update_packages.value = [];
+            },
+        );
     }
 }
 
 async function clearAllData() {
     const confirmed = await Dialog.confirm({
         title: "Clear All Data",
-        message: "Are you sure you want to clear ALL your data? This includes bookmarks and imported books!",
+        message:
+            "Are you sure you want to clear ALL your data? This includes bookmarks and imported books!",
         okButtonTitle: "Yes",
         cancelButtonTitle: "No",
     });
 
     if (confirmed.value) {
         localStorage.clear();
-        Preferences.remove({ 'key': "bookSources"});
-        Preferences.remove({ 'key': "bookOrder"});
+        Preferences.remove({ key: "bookSources" });
+        Preferences.remove({ key: "bookOrder" });
         loadBookSources();
         Toast.show({
             text: "Cleared All Data!",
@@ -96,25 +107,46 @@ async function clearAllData() {
 </script>
 
 <template>
-    <div :class="{'modal-open': update_packages.length > 0}">
+    <div :class="{ 'modal-open': update_packages.length > 0 }">
         <div v-if="update_packages.length > 0" class="update-section">
-            <div class="background-blur" ref="update_background_element">
-            </div>
+            <div class="background-blur" ref="update_background_element"></div>
             <div class="update-panel" ref="update_panel_element">
                 <h2>Hymnal Updates</h2>
                 <p>Updates found for:</p>
                 <div>
-                    <div v-for="(update, update_index) in update_packages" :key="update.book_short">
-                        <HomeBookBox v-if="update_index < 5" :src="update.book_summary?.srcUrl || ''" class="update-book-list-entry" :with-link="false"></HomeBookBox>
-                        <div v-else-if="update_index == 5" class="update-book-list-entry more-update">
+                    <div
+                        v-for="(update, update_index) in update_packages"
+                        :key="update.book_short"
+                    >
+                        <HomeBookBox
+                            v-if="update_index < 5"
+                            :src="update.book_summary?.srcUrl || ''"
+                            class="update-book-list-entry"
+                            :with-link="false"
+                        ></HomeBookBox>
+                        <div
+                            v-else-if="update_index == 5"
+                            class="update-book-list-entry more-update"
+                        >
                             <h4>{{ update_packages.length - 5 }} more...</h4>
                         </div>
                     </div>
                 </div>
                 <div class="update-button-layout">
-                    <a class="update-button" @click="delayUpdate" :style="{opacity: update_progress > 0 ? 0.3 : 1}">Later</a>
+                    <a
+                        class="update-button"
+                        @click="delayUpdate"
+                        :style="{ opacity: update_progress > 0 ? 0.3 : 1 }"
+                        >Later</a
+                    >
                     <a class="update-button-blue" @click="startUpdate">
-                        <ProgressBar v-if="update_progress > 0" :radius="15" :progress="update_progress*100" :stroke="3" :transform="'rotate(-90) translate(-24, 0)'"></ProgressBar>
+                        <ProgressBar
+                            v-if="update_progress > 0"
+                            :radius="15"
+                            :progress="update_progress * 100"
+                            :stroke="3"
+                            :transform="'rotate(-90) translate(-24, 0)'"
+                        ></ProgressBar>
                         <span v-else>Update</span>
                     </a>
                 </div>
@@ -123,23 +155,40 @@ async function clearAllData() {
 
         <div class="menu">
             <div class="title">
-                <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+                <img
+                    @click="back()"
+                    class="ionicon title--left"
+                    src="/assets/chevron-back-outline.svg"
+                />
                 <h1 class="title--center">Help</h1>
             </div>
         </div>
 
         <div class="settings main-content">
-            <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
+            <a
+                href="https://forms.gle/Ezh7d8LFsN5eKdo87"
+                class="settings-option"
+            >
                 <span>Report a Bug</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
             </a>
-            <a href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA" class="settings-option">
+            <a
+                href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA"
+                class="settings-option"
+            >
                 <span>Privacy Policy</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
             </a>
-            <RouterLink v-if="is_prerelease" to="/settings/help/console" class="settings-option">
+            <RouterLink
+                v-if="is_prerelease"
+                to="/settings/help/console"
+                class="settings-option"
+            >
                 <span>Debug Console</span>
-                <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+                <img
+                    class="entrypoint ionicon"
+                    src="/assets/chevron-forward-outline.svg"
+                />
             </RouterLink>
             <a v-if="!isWeb" class="settings-option" @click="forceUpdate()">
                 <span>Force Update Hymnals</span>
@@ -151,7 +200,6 @@ async function clearAllData() {
                 <span>Clear All Data</span>
             </a>
         </div>
-
     </div>
     <nav class="nav">
         <RouterLink to="/" class="nav__link">
@@ -181,7 +229,7 @@ async function clearAllData() {
 }
 
 .update-section {
-    opacity: 1.0;
+    opacity: 1;
     transition: opacity 0.5s;
 }
 
@@ -199,11 +247,11 @@ async function clearAllData() {
     display: flex;
     justify-content: center;
 }
-.update-button-blue{
+.update-button-blue {
     width: 50px;
     height: 20px;
     background-color: var(--blue);
-    color:white;
+    color: white;
     padding: 15px;
     border-radius: 15px;
     margin: 0 0 0 15px;
@@ -213,7 +261,7 @@ async function clearAllData() {
     width: 50px;
     height: 20px;
     background-color: gray;
-    color:white;
+    color: white;
     padding: 15px;
     border-radius: 15px;
 }
@@ -228,7 +276,7 @@ async function clearAllData() {
     height: 100vh;
     backdrop-filter: blur(1px);
     background-color: var(--overlay-color);
-    position: fixed;    
+    position: fixed;
     z-index: 5;
     opacity: 1;
     transition: opacity 0.5s;
@@ -251,10 +299,12 @@ async function clearAllData() {
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     z-index: 6;
     transform: translate(-50%, -50%);
-    transition: opacity 0.5s, visibility 0.5s ease;
+    transition:
+        opacity 0.5s,
+        visibility 0.5s ease;
     opacity: 1;
     text-align: center;
     padding: 15px;
-    color: var(--color)
+    color: var(--color);
 }
 </style>

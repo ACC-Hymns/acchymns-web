@@ -20,7 +20,7 @@ enum BookSourceType {
     HIDDEN,
     PREVIEW,
     IMPORTED,
-    DOWNLOADED
+    DOWNLOADED,
 }
 
 type BookDataSummary = {
@@ -34,7 +34,7 @@ type BookDataSummary = {
     };
     primaryColor?: string;
     secondaryColor?: string;
-}
+};
 
 type Song = {
     title: string;
@@ -66,22 +66,22 @@ type SearchParams = {
 };
 
 type BookSignature = {
-    name: string,
-    hash: string,
-    parent?: BookSignature,
-    children?: BookSignature[]
+    name: string;
+    hash: string;
+    parent?: BookSignature;
+    children?: BookSignature[];
 };
 
 type DownloadPromise = {
-    cancel: () => Promise<void>,
-    promise: Promise<void>
-}
+    cancel: () => Promise<void>;
+    promise: Promise<void>;
+};
 
 type UpdatePackage = {
-    book_short: string,
-    book_summary?: BookSummary,
-    paths: string[]
-}
+    book_short: string;
+    book_summary?: BookSummary;
+    paths: string[];
+};
 
 type BibleVerse = {
     text: string;
@@ -103,5 +103,21 @@ type Bible = {
     books: BibleBook[];
 };
 
-export type { BookSummary, Song, SongList, SongSearchInfo, SongReference, BookIndex, SearchParams, BibleVerse, BibleChapter, BibleBook, Bible, BookSignature, UpdatePackage, DownloadPromise, BookDataSummary };
+export type {
+    BookSummary,
+    Song,
+    SongList,
+    SongSearchInfo,
+    SongReference,
+    BookIndex,
+    SearchParams,
+    BibleVerse,
+    BibleChapter,
+    BibleBook,
+    Bible,
+    BookSignature,
+    UpdatePackage,
+    DownloadPromise,
+    BookDataSummary,
+};
 export { BookSourceType };

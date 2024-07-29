@@ -41,7 +41,10 @@ export function useCache<T>(url: RequestInfo | URL) {
     };
 }
 
-export async function fetchCachedJSON<T>(url: RequestInfo | URL, options: UseCachedFetchOptions): Promise<T | null> {
+export async function fetchCachedJSON<T>(
+    url: RequestInfo | URL,
+    options: UseCachedFetchOptions,
+): Promise<T | null> {
     const cache = useCache<T>(url);
     const cached = cache.retrieve();
     const { cacheLife = 1000 * 60 * 60 } = options; // An hour in milliseconds is the default
@@ -86,7 +89,10 @@ export async function fetchCachedJSON<T>(url: RequestInfo | URL, options: UseCac
     return null;
 }
 
-export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCachedFetchOptions) {
+export function useCachedJSONFetch<T>(
+    url: RequestInfo | URL,
+    options: UseCachedFetchOptions,
+) {
     const result: Ref<T | null> = ref(null);
     const isFetching = ref<boolean>(false);
     const isSlowFetch = ref<boolean>(false);
@@ -117,7 +123,10 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
         try {
             if (options.timeout == undefined) {
                 // When no timeout is set, a slow fetch is 5 seconds
-                const slow_fetch_id = setTimeout(() => (isSlowFetch.value = true), 5000);
+                const slow_fetch_id = setTimeout(
+                    () => (isSlowFetch.value = true),
+                    5000,
+                );
                 const resp = await fetch(url, { ...options });
                 isFetching.value = false;
                 clearTimeout(slow_fetch_id);
@@ -125,11 +134,17 @@ export function useCachedJSONFetch<T>(url: RequestInfo | URL, options: UseCached
                 result.value = json;
             } else {
                 // When a timeout is set, a slow fetch is 20% of the timeout duration, or past the threshold if used
-                const slow_fetch_id = setTimeout(() => (isSlowFetch.value = true), options.slowFetchThreshold ?? 0.2 * options.timeout);
+                const slow_fetch_id = setTimeout(
+                    () => (isSlowFetch.value = true),
+                    options.slowFetchThreshold ?? 0.2 * options.timeout,
+                );
 
                 // Set up an abort controller to abort the request if desired
                 const controller = new AbortController();
-                const id = setTimeout(() => controller.abort(), options.timeout);
+                const id = setTimeout(
+                    () => controller.abort(),
+                    options.timeout,
+                );
                 const resp = await fetch(url, {
                     ...options,
                     signal: controller.signal,

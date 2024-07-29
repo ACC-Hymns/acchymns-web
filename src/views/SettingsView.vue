@@ -29,11 +29,17 @@ async function resetAllOptions() {
     <div class="settings">
         <RouterLink to="/settings/about" class="settings-option">
             <span>About App</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img
+                class="entrypoint ionicon"
+                src="/assets/chevron-forward-outline.svg"
+            />
         </RouterLink>
         <RouterLink to="/settings/help" class="settings-option">
             <span>Help</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img
+                class="entrypoint ionicon"
+                src="/assets/chevron-forward-outline.svg"
+            />
         </RouterLink>
     </div>
 
@@ -41,15 +47,24 @@ async function resetAllOptions() {
     <div class="settings">
         <RouterLink to="/settings/options" class="settings-option">
             <span>Preferences</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img
+                class="entrypoint ionicon"
+                src="/assets/chevron-forward-outline.svg"
+            />
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
             <span>Import Hymnals</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img
+                class="entrypoint ionicon"
+                src="/assets/chevron-forward-outline.svg"
+            />
         </RouterLink>
         <RouterLink to="/settings/connect" class="settings-option">
             <span>Broadcast</span>
-            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img
+                class="entrypoint ionicon"
+                src="/assets/chevron-forward-outline.svg"
+            />
         </RouterLink>
         <a class="settings-option" @click="resetAllOptions()">
             <span>Reset Settings</span>

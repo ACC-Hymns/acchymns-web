@@ -13,7 +13,11 @@ const props = defineProps<SongReference>();
 let song_img_type = ref("");
 let panzoom_container = ref<HTMLDivElement>();
 
-function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: string]: BookSummary }): string {
+function getSongSrc(
+    bookShort: string,
+    songNum: string,
+    BOOK_METADATA: { [k: string]: BookSummary },
+): string {
     const fileName = songNum + "." + BOOK_METADATA[bookShort].fileExtension;
     return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
@@ -30,8 +34,14 @@ let song_img_src = ref("");
 let error_is_active = ref(false);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
-const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
-const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
+const override_system_theme = useLocalStorage(
+    "ACCOptions.overrideSystemTheme",
+    false,
+);
+const user_prefers_dark_mode = useLocalStorage(
+    "ACCOptions.overrideDarkMode",
+    false,
+);
 let song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
@@ -57,7 +67,7 @@ onMounted(async () => {
     song_img_type.value = BOOK_METADATA[props.book].fileExtension;
     song_img_src.value = songSrc;
     panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
-        beforeWheel: e => {
+        beforeWheel: (e) => {
             return e.shiftKey;
         },
         maxZoom: 3,
@@ -89,26 +99,20 @@ class IntersectionObserverManager {
         try {
             this._observedNodes.delete(node);
             this._observer.unobserve(node);
-        } catch(e) {
-
-        }
+        } catch (e) {}
     }
     disconnect() {
         try {
             this._observedNodes.clear();
             this._observer.disconnect();
-        } catch(e) {
-
-        }
+        } catch (e) {}
     }
     refresh() {
         for (let node of this._observedNodes) {
             try {
                 this._observer.unobserve(node as Element);
                 this._observer.observe(node as Element);
-            } catch(e) {
-
-            }
+            } catch (e) {}
         }
     }
 }
@@ -119,7 +123,8 @@ const observer = new IntersectionObserverManager(
             for (const entry of entries) {
                 let rootRect = entry.boundingClientRect;
                 let visibleRect = entry.intersectionRect;
-                if (visibleRect.height < rootRect.height) panzoom.setVerticalPan(true);
+                if (visibleRect.height < rootRect.height)
+                    panzoom.setVerticalPan(true);
                 else panzoom.setVerticalPan(false);
             }
         },
@@ -127,8 +132,8 @@ const observer = new IntersectionObserverManager(
             root: null,
             rootMargin: "0px",
             threshold: 1,
-        }
-    )
+        },
+    ),
 );
 
 onUpdated(async () => {
@@ -141,8 +146,20 @@ onUpdated(async () => {
         <img src="/assets/wifi_off.svg" class="wifi-fallback" />
     </div>
     <div v-else ref="panzoom_container" class="panzoom-container">
-        <PDFWrapper v-if="song_img_type == 'pdf'" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
-        <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
+        <PDFWrapper
+            v-if="song_img_type == 'pdf'"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
+        <img
+            v-else-if="song_img_type !== ''"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
     </div>
 </template>
 
