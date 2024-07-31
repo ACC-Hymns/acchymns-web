@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { useBookSummary } from "@/composables/book_metadata";
 import { getBookDataSummary } from "@/scripts/book_import";
-import router from "@/router";
-import {
-    BookSourceType,
-    type BookDataSummary,
-    type BookSummary,
-} from "@/scripts/types";
+import { type BookDataSummary } from "@/scripts/types";
 import { Capacitor } from "@capacitor/core";
 import { onMounted, ref } from "vue";
 
@@ -73,7 +68,7 @@ onMounted(async () => {
             class="book"
             :style="`background: linear-gradient(135deg, #000000, #000000)`"
         >
-            <div class="book_title">Unknown</div>
+            <div class="book_title">Unavailable</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
             <!-- Maybe show a disconnected wifi symbol? -->

@@ -1,16 +1,7 @@
 <script setup lang="ts">
-import { useBookSummary } from "@/composables/book_metadata";
-import { getBookDataSummary } from "@/scripts/book_import";
-import router from "@/router";
-import {
-    BookSourceType,
-    type BookDataSummary,
-    type BookSummary,
-} from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
-import { onMounted, ref } from "vue";
+import { type BookDataSummary } from "@/scripts/types";
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         summary: BookDataSummary;
         isEnabled?: boolean;

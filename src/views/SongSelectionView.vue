@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from "vue";
 import {
-    download_import_summary,
     getAllBookMetaData,
     getSongMetaData,
     handle_missing_book,
@@ -21,12 +20,6 @@ import {
     removeGroupOpened,
     removeScrollPosition,
 } from "@/router/scroll";
-import { known_references } from "@/scripts/constants";
-import { useCapacitorPreferences } from "@/composables/preferences";
-import { BookSourceType, type BookDataSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
-import { Network } from "@capacitor/network";
-import { Toast } from "@capacitor/toast";
 
 const props = defineProps<{
     book: string;
@@ -124,16 +117,6 @@ function toggleDropdown(group: string[]) {
     });
     saveGroupOpened(route.fullPath, ids);
 }
-
-const scrollIntoViewWithOffset = (selector: HTMLElement, offset: number) => {
-    window.scrollTo({
-        behavior: "smooth",
-        top:
-            selector.getBoundingClientRect().top -
-            document.body.getBoundingClientRect().top -
-            offset,
-    });
-};
 
 function getRangeString(start: string, end: string) {
     if (start == end) {
