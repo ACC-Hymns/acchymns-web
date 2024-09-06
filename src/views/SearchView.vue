@@ -155,20 +155,15 @@ function checkmarked(selected: boolean) {
     }
 }
 
-onUpdated(async () => {
-    for (var i = 0; i < book_filters.value?.length; i++) {
-        const img = book_filters.value?.at(i)?.children[0].children[0];
-        const rgb = hexToRgb(available_books.value.at(i)?.primaryColor ?? "#000000");
-        if (rgb?.length !== 3) {
-            alert("Invalid format!");
-            return;
-        }
-        const color = new Color(rgb[0], rgb[1], rgb[2]);
-        const solver = new Solver(color);
-        const result = solver.solve();
-        img?.setAttribute("style", `${result.filter}`);
+function calculateIconFilter(color: string) {
+    const rgb = hexToRgb(color ?? "#000000");
+    if (rgb?.length !== 3) {
+        return "";
     }
-});
+    const solver = new Solver(new Color(rgb[0], rgb[1], rgb[2]));
+    const result = solver.solve();
+    return result.filter;
+}
 </script>
 
 <template>
@@ -199,7 +194,7 @@ onUpdated(async () => {
                 </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
+                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" :style="calculateIconFilter(book.primaryColor)"/>
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>
