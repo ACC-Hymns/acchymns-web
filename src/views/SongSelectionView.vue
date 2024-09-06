@@ -51,21 +51,14 @@ onMounted(async () => {
 
     let song_count = song_numbers.value.length;
     let num_groups = Math.ceil(song_count/100);
-    if (song_count % 100 == 0) {
-        num_groups += 1;
-    }
 
     // Dividing songs into groups of 100
     for (let i = 0; i < num_groups; i++) {
+        const re = new RegExp(/[a-z]/, "i");
         song_number_groups.value?.push(song_numbers.value.filter((song) => {
-            const re = new RegExp(/[a-z]/, "i");
             let song_num = song.replace(re, "");
 
-            if (Number(song_num) >= i*100 && Number(song_num) < ((i+1)*100)) {
-                return true;
-            }
-
-            return false;
+            return i*100 < Number(song_num) && Number(song_num) <= ((i+1)*100);
         }));
     }
 
