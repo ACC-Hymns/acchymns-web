@@ -384,7 +384,7 @@ function get_lock_icon() {
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a @click="bibleReading = true" class="settings-option">
-                    <span>Set Biblie Reading</span>
+                    <span>Set Bible Reading</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a @click="clear" class="settings-option">

@@ -111,27 +111,16 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-const filter_content = ref<Element>();
+const isOpen = ref<bool>(false);
 
-var isOpen = false;
-
-function resetModals() {
-    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
-    isOpen = false;
+function resetDropdown() {
+    isOpen.value = false;
 }
-
-function showDropdown() {
-    if (filter_content.value?.classList.contains("dropdown-content-active")) {
-        filter_content.value?.classList.remove("dropdown-content-active");
-        isOpen = false;
-    } else {
-        isOpen = true;
-        filter_content.value?.classList.add("dropdown-content-active");
-    }
+function toggleDropdown() {
+    isOpen.value = !isOpen.value;
 }
 
 let book_filters = ref<Element[]>([]);
-let all_hymnals_filter = ref<Element>();
 
 function filterBook(short_book_name: string) {
     isOpen = true;
@@ -167,7 +156,6 @@ function calculateIconFilter(color: string) {
 </script>
 
 <template>
-    <div @click="resetModals" class="blocker">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -181,13 +169,13 @@ function calculateIconFilter(color: string) {
             </button>
         </div>
         <div class="filters">
-            <a @click="showDropdown()" class="dropdown">
+            <a @click="toggleDropdown()" v-click-away="resetDropdown" class="dropdown">
                 <p class="dropdown-text">Filters</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
-            <div class="dropdown-content" ref="filter_content">
+            <div class="dropdown-content" :class="isOpen ? 'dropdown-content-active' : ''">
                 <a>
-                    <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
+                    <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
@@ -222,7 +210,6 @@ function calculateIconFilter(color: string) {
                 <div class="song__title">Show more</div>
             </div>
         </div>
-    </div>
 
     <nav class="nav">
         <RouterLink to="/" class="nav__link">
