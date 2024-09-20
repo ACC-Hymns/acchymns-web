@@ -108,6 +108,7 @@ async function addImportedURL(input_book: BookDataSummary, show_on_success: bool
 }
 
 async function addImportedBookByCode(short_book_name: string) {
+    short_book_name = short_book_name.toUpperCase();
     if (short_book_name in known_references) {
         const to_import = book_sources.value.find(b => b.id == short_book_name);
         if(to_import == undefined)
@@ -203,7 +204,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 
     <div class="main-content">
         <div class="input-option reference-option">
-            <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Reference" />
+            <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Book Code" />
             <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
                 <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
             </a>
