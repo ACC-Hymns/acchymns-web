@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "ES",
+		"medium": "Evangeliumssaeger",
+		"long": "Evangeliumssaeger"
+	},
+	"primaryColor": "#424245",
+	"secondaryColor": "#222224",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
