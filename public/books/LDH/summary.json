@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "LDH",
+		"medium": "Lobet Den Herrn",
+		"long": "Lobet Den Herrn"
+	},
+	"primaryColor": "#C44343",
+	"secondaryColor": "#AD3131",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
