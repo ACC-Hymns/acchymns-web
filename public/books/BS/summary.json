@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "BS",
+		"medium": "Beerdigungslieder",
+		"long": "Beerdigungslieder"
+	},
+	"primaryColor": "#424245",
+	"secondaryColor": "#222224",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}

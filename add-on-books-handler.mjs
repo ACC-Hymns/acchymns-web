@@ -8,7 +8,7 @@ import path from "node:path";
 import process from "node:process";
 
 // These are where the json files end up after `npx cap sync`
-const bundled_books = ["ZH", "GH", "HG", "JH"];
+const bundled_books = ["ZH", "GH", "JH"];
 const mappings = {
     ios: "ios/App/App/public/books",
     android: "android/app/src/main/assets/public/books",
