@@ -23,6 +23,8 @@ const public_references = {
     ZHG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHG`,
     BS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/BS`,
     LDH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/LDH`,
+    ES: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ES`,
+    MO: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/MO`,
     ZHH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHH`,
     ZHR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHR`,
     HS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HS`,
