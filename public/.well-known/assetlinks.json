@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.ChristopherW.acchmns",
+            "sha256_cert_fingerprints": [
+                "BA:76:90:E0:62:1C:A7:8C:13:11:AC:C7:27:4C:C9:93:86:45:7E:E3:A6:81:6D:B9:02:4C:FA:9C:BB:5E:9D:B4"
+            ]
+        }
+    }
+]
