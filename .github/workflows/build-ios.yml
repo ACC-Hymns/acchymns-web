@@ -98,7 +98,7 @@ jobs:
                   <key>provisioningProfiles</key>
                   <dict>
                     <key>com.ChristopherW.acchmns</key>
-                    <string>Publishing Profile</string>
+                    <string>October2024PublishingProvision</string>
                   </dict>
                   <key>signingCertificate</key>
                   <string>Apple Distribution</string>
