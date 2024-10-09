@@ -1,8 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import { App, URLOpenListenerEvent } from '@capacitor/app';
 
-import VueApp from "./App.vue";
+import App from "./App.vue";
 import router from "./router";
 
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
@@ -13,23 +12,10 @@ import "@/assets/css/globals.css";
 import "@/assets/css/fonts.css";
 import "@/scripts/dark_mode";
 
-const app = createApp(VueApp);
+const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
-
-App.addListener('appUrlOpen', function (event: URLOpenListenerEvent) {
-    // Example url: https://acchymns.app/HSZ/2
-    // slug = /tabs/tabs2
-    const slug = event.url.split('.app').pop();
-  
-    // We only push to the route if there is a slug present
-    if (slug) {
-        router.push({
-            path: slug,
-        });
-    }
-});
 
 // set webview settings
 setBackForwardNavigationGestures(true);
