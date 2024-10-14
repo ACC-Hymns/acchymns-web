@@ -111,27 +111,16 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-const filter_content = ref<Element>();
+const isOpen = ref<bool>(false);
 
-var isOpen = false;
-
-function resetModals() {
-    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
-    isOpen = false;
+function resetDropdown() {
+    isOpen.value = false;
 }
-
-function showDropdown() {
-    if (filter_content.value?.classList.contains("dropdown-content-active")) {
-        filter_content.value?.classList.remove("dropdown-content-active");
-        isOpen = false;
-    } else {
-        isOpen = true;
-        filter_content.value?.classList.add("dropdown-content-active");
-    }
+function toggleDropdown() {
+    isOpen.value = !isOpen.value;
 }
 
 let book_filters = ref<Element[]>([]);
-let all_hymnals_filter = ref<Element>();
 
 function filterBook(short_book_name: string) {
     isOpen = true;
@@ -155,24 +144,18 @@ function checkmarked(selected: boolean) {
     }
 }
 
-onUpdated(async () => {
-    for (var i = 0; i < book_filters.value?.length; i++) {
-        const img = book_filters.value?.at(i)?.children[0].children[0];
-        const rgb = hexToRgb(available_books.value.at(i)?.primaryColor ?? "#000000");
-        if (rgb?.length !== 3) {
-            alert("Invalid format!");
-            return;
-        }
-        const color = new Color(rgb[0], rgb[1], rgb[2]);
-        const solver = new Solver(color);
-        const result = solver.solve();
-        img?.setAttribute("style", `${result.filter}`);
+function calculateIconFilter(color: string) {
+    const rgb = hexToRgb(color ?? "#000000");
+    if (rgb?.length !== 3) {
+        return "";
     }
-});
+    const solver = new Solver(new Color(rgb[0], rgb[1], rgb[2]));
+    const result = solver.solve();
+    return result.filter;
+}
 </script>
 
 <template>
-    <div @click="resetModals" class="blocker">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -186,20 +169,20 @@ onUpdated(async () => {
             </button>
         </div>
         <div class="filters">
-            <a @click="showDropdown()" class="dropdown">
+            <a @click="toggleDropdown()" v-click-away="resetDropdown" class="dropdown">
                 <p class="dropdown-text">Filters</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
-            <div class="dropdown-content" ref="filter_content">
+            <div class="dropdown-content" :class="isOpen ? 'dropdown-content-active' : ''">
                 <a>
-                    <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
+                    <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
+                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" :style="calculateIconFilter(book.primaryColor)"/>
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>
@@ -227,7 +210,6 @@ onUpdated(async () => {
                 <div class="song__title">Show more</div>
             </div>
         </div>
-    </div>
 
     <nav class="nav">
         <RouterLink to="/" class="nav__link">

@@ -45,6 +45,10 @@ const { back } = useNavigator();
             <h3 class="release">Vue Draggable</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies.vuedraggable) }}</h5>
         </a>
+        <a href="https://github.com/SortableJS/vue.draggable.next/" class="attribution">
+            <h3 class="release">Vue3 Click Away</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["vue3-click-away"]) }}</h5>
+        </a>
         <a href="https://github.com/notoriousb1t/polymorph" class="attribution">
             <h3 class="release">Polymorph.js</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">{{ clean_version(dependencies["polymorph-js"]) }}</h5>
