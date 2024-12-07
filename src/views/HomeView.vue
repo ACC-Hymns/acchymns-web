@@ -13,6 +13,7 @@ import draggable from 'vuedraggable'
 import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 var hasConnection = ref<boolean>(false);
 let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
@@ -116,7 +117,6 @@ async function move_book(e: BookOrderEvent) {
 }
 
 function delayUpdate() {
-
     if(update_progress.value > 0)
         return;
 
@@ -265,24 +265,8 @@ function tooltipVisible(visible: boolean) {
             </template>
         </div>
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    
+    <NavigationBar current_page="home" />
 </template>
 
 <style scoped>

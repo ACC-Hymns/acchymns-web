@@ -8,6 +8,7 @@ import { hexToRgb, Color, Solver } from "@/scripts/color";
 import { known_references, prepackaged_books } from "@/scripts/constants";
 import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
 import { stripSearchText } from "@/scripts/search";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -196,24 +197,7 @@ function calculateIconFilter(color: string) {
             </div>
         </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/search.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="search" />
 </template>
 
 <style>

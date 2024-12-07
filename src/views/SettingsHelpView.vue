@@ -150,26 +150,9 @@ async function clearAllData() {
                 <span>Clear All Data</span>
             </a>
         </div>
-
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+
+    <NavigationBar current_page="settings" />
 </template>
 
 <style scoped>

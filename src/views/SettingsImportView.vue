@@ -5,7 +5,6 @@ import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
-const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
@@ -14,6 +13,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 let downloadProgress = ref(new Map<string, number>());
 let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
@@ -263,24 +263,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <div style="padding-bottom: 200px"></div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>
