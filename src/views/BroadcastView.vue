@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
-import { validate_token, request_client, get } from "@/scripts/broadcast";
-import type {ChurchData, TokenAuthResponse} from "@/scripts/broadcast";
-import { Preferences } from "@capacitor/preferences";
-import type { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-
-let authorized = ref<boolean>(false);
-let church_id = ref<string>('');
+import { ref } from "vue";
+import { useBroadcastAPI } from "@/composables/broadcast";
+import type { ChurchData } from "@/scripts/broadcast";
 
 let song_number = ref<string>("");
 let verses = ref<string>("");
 let color = ref<string>("");
-let book_name = ref<string>("");
+let book_name = ref<string>("Unauthorized");
 let verses_visible = ref<boolean>(false);
-let bible_reading = ref<boolean>(false);
+let is_bible_reading = ref<boolean>(false);
 let top_text = ref<string>("");
 let bottom_text = ref<string>("");
 
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
+const hours = ref<string>('');
+const minutes = ref<string>('');
+const seconds = ref<string>('');
 function clock() {
     let d = new Date();
     let h = d.getHours();
@@ -29,97 +27,58 @@ function clock() {
     let mDeg = m * 6 + s * (360/3600);
     let sDeg = s * 6;
 
-
     hours.value = "rotate("+hDeg+"deg)";
     minutes.value = "rotate("+mDeg+"deg)";
     seconds.value = "rotate("+sDeg+"deg)";
 }
+setInterval(clock, 100);
 
-let client: DynamoDBClient;
+const broadcast_api = useBroadcastAPI();
 
 async function set_data() {
-    let data: ChurchData = (await get(client, church_id.value)).Item as unknown as ChurchData;
-    bible_reading.value = data.BOOK_ID.S == "BIBLE";
-
-    if(bible_reading.value) {
-      top_text.value = data.SONG_NUMBER.S;
-      bottom_text.value = data.BOOK_COLOR.S;
-    } else {
-      song_number.value = data.SONG_NUMBER.S;
-
-      verses_visible.value = false;
-      if(data.VERSES.NS[0] == -1) {
-          verses.value = "";
-      } else if (data.VERSES.NS[0] == -2) {
-          verses.value = "All Verses";
-      } else {
-          data.VERSES.NS.sort((a, b) => a - b);
-          verses.value = data.VERSES.NS.join(", ");
-          verses_visible.value = true;
-      }
-      color.value = data.BOOK_COLOR.S;
-      book_name.value = data.BOOK_ID.S;
-    }
-}
-let old_bg_color = '';
-onMounted(async () => {
-    old_bg_color = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = "white";
-
-    clock();
-
-    setInterval(clock, 100);
-    setInterval(set_data, 2000);
-
-    let token = await Preferences.get({ key: "broadcasting_auth_token"});
-    let response = await validate_token(token.value || "");
-    authorized.value = response.status == 200;
-    church_id.value = (response.data as TokenAuthResponse).church_id;
-    console.log("Authorized: " + authorized.value)
-    if (!authorized.value) {
-        book_name.value = "Unauthorized";
+    if (!broadcast_api.is_ready) {
         return;
     }
-    client = request_client();
+    let data: ChurchData = await broadcast_api.getCurrentBroadcast() as ChurchData;
+    is_bible_reading.value = data.BOOK_ID.S == "BIBLE";
 
-    set_data();
-});
+    if(is_bible_reading.value) {
+        top_text.value = data.SONG_NUMBER.S;
+        bottom_text.value = data.BOOK_COLOR.S;
+    } else {
+        song_number.value = data.SONG_NUMBER.S;
 
-onUnmounted(() => {
-    document.body.style.backgroundColor = old_bg_color;
-})
-
-let hours = ref<string>('');
-let minutes = ref<string>('');
-let seconds = ref<string>('');
-
-function calculate_text_width(text: string, font: string) {
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext("2d");
-    if (context == null) {
-        return 0;
+        verses_visible.value = false;
+        if(data.VERSES.NS[0] == -1) {
+            verses.value = "";
+        } else if (data.VERSES.NS[0] == -2) {
+            verses.value = "All Verses";
+        } else {
+            data.VERSES.NS.sort((a, b) => a - b);
+            verses.value = data.VERSES.NS.join(", ");
+            verses_visible.value = true;
+        }
+        color.value = data.BOOK_COLOR.S;
+        book_name.value = data.BOOK_ID.S;
     }
-    context.font = font;
-    let metrics = context.measureText(text);
-    return metrics.width;
 }
-
+setInterval(set_data, 2000);
 </script>
 
 <template>
     <div class="info-seperator">
-        <div v-if="bible_reading" class="song-info">
+        <div v-if="is_bible_reading" class="song-info">
           <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
           <h2 class="bottom-text">{{ bottom_text }}</h2>
           
         </div>
         <div v-else class="song-info">
-            <h1 class="song-number">{{ song_number}}</h1>
+            <h1 class="song-number">{{ song_number }}</h1>
             <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
             <h2 class="verses">{{ verses }}</h2>
             <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
         </div>
-        <div class="clock" :class="{'clock-bible-long': top_text.length > 8 && bible_reading, 'clock-song': song_number.length > 0, 'clock-bible': top_text.length <= 8 && bible_reading}">
+        <div class="clock" :class="{'clock-bible-long': top_text.length > 8 && is_bible_reading, 'clock-song': song_number.length > 0, 'clock-bible': top_text.length <= 8 && is_bible_reading}">
             <div class="dot"></div>
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
@@ -127,11 +86,17 @@ function calculate_text_width(text: string, font: string) {
             </div>
             <div>
             </div>
-            <div class="diallines" v-for="i in 61" :key="i" :style="{transform: 'rotate(' + 6 * (i - 2) + 'deg)'}"></div>
+            <div class="diallines" v-for="i in 60" :key="i" :style="{transform: 'rotate(' + 6 * i + 'deg)'}"></div>
         </div>
     </div>
 
 </template>
+
+<style>
+body {
+    background-color: white;
+}
+</style>
 
 <style scoped>
 .top-text {
@@ -320,7 +285,7 @@ span {
   margin-left: -2px;
   transform-origin: 50% 300px;
 }
-.diallines:nth-of-type(5n) {
+.diallines:nth-of-type(5n + 3) {
   position: absolute;
   z-index: 2;
   width: 8px;
