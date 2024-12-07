@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from "vue";
-import { download_import_summary, getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
+import { getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
 import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
-import { known_references } from "@/scripts/constants";
-import { useCapacitorPreferences } from "@/composables/preferences";
-import { BookSourceType, type BookDataSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
-import { Network } from "@capacitor/network";
-import { Toast } from "@capacitor/toast";
+
 
 const props = defineProps<{
     book: string;

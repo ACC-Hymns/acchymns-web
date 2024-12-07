@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import { checkForUpdates, download_update_package, fetchBookSummary, getBookFromId, getBookUrls, loadBookSources } from "@/scripts/book_import";
+import { checkForUpdates, download_update_package, getBookFromId, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { computed, nextTick, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import { BookSourceType, type BookDataSummary, type BookSummary, type UpdatePackage } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
 import draggable from 'vuedraggable'
 import { Preferences } from "@capacitor/preferences";

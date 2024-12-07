@@ -3,7 +3,6 @@ import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import { RouterLink } from "vue-router";
 import { clearCache } from "@/composables/cached_fetch";
-import { resetOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Preferences } from "@capacitor/preferences";

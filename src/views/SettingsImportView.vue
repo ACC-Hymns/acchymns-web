@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref } from "vue";
+import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
-import { RouterLink, onBeforeRouteLeave } from "vue-router";
+import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
@@ -11,8 +11,7 @@ import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
-import router from "@/router";
-import { download_book, loadBookSources, checkForUpdates, delete_import_summary, download_import_summary } from "@/scripts/book_import";
+import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { RouterLink, createRouterMatcher } from "vue-router";
+import { RouterLink, } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
-import axios, { Axios, type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse } from "@/scripts/types";
-import { fetchCachedJSON } from "@/composables/cached_fetch";
 import router from "@/router";
 import { Capacitor } from "@capacitor/core";
 const { back } = useNavigator();

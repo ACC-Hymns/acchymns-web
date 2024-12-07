@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useCapacitorPreferences } from "@/composables/preferences";
 import { onMounted, onUnmounted, ref } from "vue";
-import { RouterLink } from "vue-router";
 import { validate_token, request_client, get } from "@/scripts/broadcast";
 import type {ChurchData, TokenAuthResponse} from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";

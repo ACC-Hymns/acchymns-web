@@ -9,14 +9,10 @@ import type { BookSummary, SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
-import { useLocalStorage, useSwipe } from "@vueuse/core";
 import { interpolate } from "polymorph-js";
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Capacitor, CapacitorHttp } from '@capacitor/core';
-import { branch } from "@/scripts/constants";
+import { Capacitor } from '@capacitor/core';
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
-import { Preferences } from "@capacitor/preferences";
 import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 
 const props = defineProps<SongReference>();

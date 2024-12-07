@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
 import { Capacitor } from "@capacitor/core";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerURL;
