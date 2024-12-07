@@ -29,9 +29,8 @@ const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
 const broadcasting_auth_token = useCapacitorPreferences<string>("broadcasting_auth_token", "");
 let church_id = ref<string>('');
 let authorized = ref<boolean>(false);
-let broadcasting = ref<boolean>(false);
+let is_broadcasting = ref<boolean>(false);
 let verses = ref<number[]>([]);
-let verse_input = ref<string>("");
 
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
@@ -41,12 +40,6 @@ const isConnected = ref<boolean>(false);
 const isLandscape = ref<boolean>(false);
 const window_height = () => window.innerHeight;
 const window_width = () => window.innerWidth;
-const image_props = computed(() => {
-    return {
-        book: props.book,
-        number: props.number,
-    };
-});
 
 async function toggleBookmark() {
     if (!is_bookmarked.value) {
@@ -285,18 +278,13 @@ let elapsed_timer: number = -1;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
-let broadcast_button = ref();
 
 function open_broadcast() {
-    broadcasting.value = true;
-    let button = (broadcast_button.value as HTMLElement);
-    button?.style.setProperty("opacity", "0");
+    is_broadcasting.value = true;
 }
 
 function close_broadcast() {
-    broadcasting.value = false;
-    let button = (broadcast_button.value as HTMLElement);
-    button?.style.setProperty("opacity", "1");
+    is_broadcasting.value = false;
 }
 
 async function broadcast(e: MouseEvent) {
@@ -305,8 +293,7 @@ async function broadcast(e: MouseEvent) {
 
     await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
-    let button = (e.target as Element).parentElement;
-    broadcasting.value = false;
+    is_broadcasting.value = false;
 }
 
 const updateTime = async () => {
@@ -571,12 +558,12 @@ function get_note_icon(note: string) {
         </div>
     </div>
     
-    <div class="broadcast-button-container" v-if="authorized" ref="broadcast_button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
+    <div class="broadcast-button-container" v-if="authorized" :class="{ 'arrow-hidden-right': !menu_bar_visible}" v-show="!is_broadcasting">
         <div class="broadcast-button">
-            <img @click="(e) => open_broadcast()" class="ionicon" src="/assets/radio-outline.svg">
+            <img @click="open_broadcast()" class="ionicon" src="/assets/radio-outline.svg">
         </div>
     </div>
-    <div class="broadcast-container" v-if="authorized && broadcasting" @touchmove="(e) => e.preventDefault()">
+    <div class="broadcast-container" v-if="authorized && is_broadcasting" @touchmove="(e) => e.preventDefault()">
         <h1>Broadcast</h1>
         <div class="close-button">
             <img @click="close_broadcast()" class="ionicon" src="/assets/close.svg" />
@@ -584,7 +571,7 @@ function get_note_icon(note: string) {
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br>
         <h3>Verses</h3>
-        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="() => {
                 verses = [];
                 verses.push(-2);
             }">
@@ -592,7 +579,7 @@ function get_note_icon(note: string) {
         </a>
         <br>
         <div class="verse-list">
-            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
+            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="() => {
 
                 if(verses[0] == -2) 
                     verses = [];
@@ -621,7 +608,7 @@ function get_note_icon(note: string) {
             hideMedia()
         }"
     >
-        <SongContainer :book="image_props.book" :number="image_props.number" ref="song_container"></SongContainer>
+        <SongContainer :book="props.book" :number="props.number" ref="song_container"></SongContainer>
     </div>
     
 </template>
