@@ -4,6 +4,7 @@ import { resetOptions } from "@/stores/options";
 import { Dialog } from "@capacitor/dialog";
 import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 async function resetAllOptions() {
     const confirmed = await Dialog.confirm({

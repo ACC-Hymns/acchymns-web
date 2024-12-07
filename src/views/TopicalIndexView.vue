@@ -5,6 +5,7 @@ import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 const props = defineProps<{
     book: string;

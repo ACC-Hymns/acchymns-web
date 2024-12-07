@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
+import NavigationBar from "@/components/NavigationBar.vue";
 const { back } = useNavigator();
 
 // This is retrieved from the package.json

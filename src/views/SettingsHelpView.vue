@@ -12,6 +12,7 @@ import type { UpdatePackage } from "@/scripts/types";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { Capacitor } from "@capacitor/core";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;

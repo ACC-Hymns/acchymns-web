@@ -3,8 +3,6 @@ import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from '@capacitor/network';
 import { Capacitor } from "@capacitor/core";
-import { RouterLink } from "vue-router";
-import { useNavigator } from "@/router/navigator";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";

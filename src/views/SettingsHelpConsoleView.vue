@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import { useConsoleStore } from "@/stores/console";

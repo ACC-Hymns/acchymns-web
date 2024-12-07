@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
 import axios, { type AxiosResponse } from 'axios';

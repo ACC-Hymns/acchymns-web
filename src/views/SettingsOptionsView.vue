@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed } from "vue";
-import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
+import NavigationBar from "@/components/NavigationBar.vue";
 const { back } = useNavigator();
 
 let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
