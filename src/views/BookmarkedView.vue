@@ -2,19 +2,13 @@
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted } from "vue";
-import { Capacitor } from "@capacitor/core";
 import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
-
+import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
 
 let search_query = ref("");
 let stripped_query = computed(() => {
-    return search_query.value
-        .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-        .replace(/s{2,}/g, " ")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
+    return stripSearchText(search_query.value);
 });
 let available_songs = ref<SongSearchInfo[]>([]);
 
@@ -41,19 +35,8 @@ onMounted(async () => {
             title: song.title ?? "",
             number: bookmark.number,
             book: BOOK_METADATA[bookmark.book],
-            stripped_title: (song?.title ?? "")
-                .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-                .replace(/s{2,}/g, " ")
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/\p{Diacritic}/gu, ""),
-            stripped_first_line:
-                song?.first_line
-                    ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    ?.replace(/s{2,}/g, " ")
-                    ?.toLowerCase()
-                    ?.normalize("NFD")
-                    ?.replace(/\p{Diacritic}/gu, "") ?? "",
+            stripped_title: stripSearchText(song.title ?? ""),
+            stripped_first_line: stripSearchText(song.first_line ?? ""),
         } as SongSearchInfo);
     }
 });

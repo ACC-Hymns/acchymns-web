@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch, onUpdated, nextTick } from "vue";
+import { getAllSongMetaData, getAllBookMetaData, getBookDataSummaryFromName } from "@/scripts/book_import";
+import { computed, ref, onMounted, watch, nextTick } from "vue";
 import { useSessionStorage } from "@vueuse/core";
-import { Capacitor } from "@capacitor/core";
-import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
+import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary } from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
 import { known_references, prepackaged_books } from "@/scripts/constants";
 import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
+import { stripSearchText } from "@/scripts/search";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -19,12 +19,7 @@ const search_params = useSessionStorage<SearchParams>("searchParams", { search: 
 
 const search_query = ref(search_params.value.search);
 const stripped_query = computed(() => {
-    return search_query.value
-        .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-        .replace(/s{2,}/g, " ")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
+    return stripSearchText(search_query.value);
 });
 
 watch(search_query, new_query => {
@@ -66,6 +61,7 @@ const limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
@@ -81,19 +77,8 @@ onMounted(async () => {
                 title: song?.title ?? "",
                 number: song_number,
                 book: BOOK_METADATA[book],
-                stripped_title: song.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .replace(/s{2,}/g, " ")
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/\p{Diacritic}/gu, ""),
-                stripped_first_line:
-                    song?.first_line
-                        ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                        ?.replace(/s{2,}/g, " ")
-                        ?.toLowerCase()
-                        ?.normalize("NFD")
-                        ?.replace(/\p{Diacritic}/gu, "") ?? "",
+                stripped_title: stripSearchText(song?.title ?? ""),
+                stripped_first_line: stripSearchText(song?.first_line ?? ""),
             } as SongSearchInfo);
         }
     }
@@ -111,7 +96,7 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-const isOpen = ref<bool>(false);
+const isOpen = ref<boolean>(false);
 
 function resetDropdown() {
     isOpen.value = false;
@@ -123,7 +108,7 @@ function toggleDropdown() {
 let book_filters = ref<Element[]>([]);
 
 function filterBook(short_book_name: string) {
-    isOpen = true;
+    isOpen.value = true;
     if (search_params.value.bookFilters.includes(short_book_name)) {
         let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
         search_params.value.bookFilters.splice(index, 1);
