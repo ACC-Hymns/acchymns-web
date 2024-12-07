@@ -15,15 +15,13 @@ import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-var hasConnection = ref<boolean>(false);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
+let is_connected = ref<boolean>(false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
-let tooltip = ref<Element>();
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
-let editting_order = ref<boolean>(false);
+let is_editing_order = ref<boolean>(false);
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -51,7 +49,7 @@ let customized_books = ref<BookDataSummary[]>([]);
 
 async function sort_books() {
     let book_order = JSON.parse((await Preferences.get({key: "bookOrder"})).value || "[]") as string[];
-    let available_books = book_sources.value.filter((book) => filter_book(book, hasConnection.value));
+    let available_books = book_sources.value.filter((book) => filter_book(book, is_connected.value));
     let temp_books: BookDataSummary[] = [];
     for(let id of book_order) {
         if(available_books.find(book => book.id == id)) {
@@ -71,13 +69,13 @@ async function sort_books() {
 }
 
 onMounted(async () => {
-    hasConnection.value = (await Network.getStatus()).connected;
-    console.log("Connected to the internet: " + hasConnection.value);
+    is_connected.value = (await Network.getStatus()).connected;
+    console.log("Connected to the internet: " + is_connected.value);
 
     book_sources.value = await loadBookSources();
     await sort_books();
 
-    if(hasConnection && update_reminder.value <= Date.now()) {
+    if(is_connected && update_reminder.value <= Date.now()) {
         let update_results: UpdatePackage[] = await checkForUpdates();
         for(let update of update_results) {
             update.book_summary = await getBookFromId(update.book_short);
@@ -86,8 +84,8 @@ onMounted(async () => {
     }
 
     Network.addListener('networkStatusChange', async () => {
-        hasConnection.value = (await Network.getStatus()).connected;
-        console.log("Connected to the internet: " + hasConnection.value);
+        is_connected.value = (await Network.getStatus()).connected;
+        console.log("Connected to the internet: " + is_connected.value);
 
         book_sources.value = await loadBookSources();
         await sort_books();
@@ -147,25 +145,8 @@ async function startUpdate() {
 }
 
 function filter_book(book: BookDataSummary, hasConnection: boolean) {
-    if(hasConnection) {
-        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.IMPORTED || book.status == BookSourceType.DOWNLOADED;
-    } else {
-        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED;
-    }
+    return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED || (hasConnection && book.status == BookSourceType.IMPORTED);
 }
-
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        import_books_tooltip_status.value = true;
-    }, 1000);
-}
-
-function tooltipVisible(visible: boolean) {
-    return visible ? "padding-top: 50px;" : "";
-}
-
 </script>
 
 <template>
@@ -196,26 +177,26 @@ function tooltipVisible(visible: boolean) {
 
         <div class="page-heading">
             <h1>Home</h1>
-            <a v-if="!editting_order" @click="editting_order = !editting_order" class="confirm-text-container">
+            <a v-if="!is_editing_order" @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <img class="ionicon" src="/assets/create-outline.svg" />
             </a>
-            <a v-else @click="editting_order = !editting_order" class="confirm-text-container">
+            <a v-else @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <h3 class="confirm-text">Confirm</h3>
                 <img class="ionicon" src="/assets/checkmark-circle-outline.svg" />
             </a>
         </div>
         <div id="appsection">
 
-            <div v-if="editting_order">
+            <div v-if="is_editing_order">
                 <draggable 
-                    :list="customized_books.filter(book => filter_book(book, hasConnection))" 
+                    :list="customized_books.filter(book => filter_book(book, is_connected))" 
                     :component-data="{
                         tag: 'div',
                         type: 'transition-group',
                         name: 'flip-list'
                     }"
                     v-bind="dragOptions"
-                    :key="customized_books.filter(book => filter_book(book, hasConnection)).length" 
+                    :key="customized_books.filter(book => filter_book(book, is_connected)).length" 
                     @change="(e: BookOrderEvent) => move_book(e)" 
                     item-key="book" 
                     handle=".handle"
@@ -236,12 +217,10 @@ function tooltipVisible(visible: boolean) {
                 </draggable>
             </div>
             <div v-else>
-                <HomeBookBox v-for="book in customized_books.filter(book => filter_book(book, hasConnection))" :key="book.id" :src="book.src"></HomeBookBox>
+                <HomeBookBox v-for="book in customized_books.filter(book => filter_book(book, is_connected))" :key="book.id" :src="book.src"></HomeBookBox>
             </div>
             
-
-
-            <div v-if="!hasConnection">
+            <div v-if="!is_connected">
                 <div v-if="book_sources.filter(book => book.status == BookSourceType.IMPORTED).length > 0" class="warning-label-container">
                     <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
                     <h5 class="warning-label">The hymnals below require an internet connection</h5>
@@ -250,7 +229,7 @@ function tooltipVisible(visible: boolean) {
             </div>
 
             <div>
-                <RouterLink to="/settings/import" v-if="hasConnection">
+                <RouterLink to="/settings/import" v-if="is_connected">
                     <img class="ionicon import-books-button" src="/assets/add-circle-outline.svg" />
                 </RouterLink>
             </div>
