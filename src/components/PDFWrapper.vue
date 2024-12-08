@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import pdfjsWorkerURL from "pdfjs-dist/legacy/build/pdf.worker.min?url";
 import { Capacitor } from "@capacitor/core";
@@ -15,7 +15,12 @@ const emit = defineEmits<{
 
 let root = ref<HTMLDivElement>();
 
-onMounted(async () => {
+watch([props], async () => {
+    // If this is a "page turn", clear the current page
+    if (root.value && root.value.hasChildNodes()) {
+        root.value.innerHTML = "";
+    }
+
     let pdfDoc;
     try {
         pdfDoc = await pdfjsLib.getDocument(props.src).promise;
@@ -58,7 +63,7 @@ onMounted(async () => {
             return;
         }
     }
-});
+}, { immediate: true });
 </script>
 
 <template>

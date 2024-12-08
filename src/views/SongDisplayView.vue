@@ -14,6 +14,7 @@ import { Capacitor } from '@capacitor/core';
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
+import { useBroadcastAPI } from "@/composables/broadcast";
 
 const props = defineProps<SongReference>();
 
@@ -26,11 +27,10 @@ var isMobile = Capacitor.getPlatform() !== "web";
 const book_summary = ref<BookSummary>();
 
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
-const broadcasting_auth_token = useCapacitorPreferences<string>("broadcasting_auth_token", "");
-let church_id = ref<string>('');
-let authorized = ref<boolean>(false);
-let is_broadcasting = ref<boolean>(false);
+let is_broadcast_menu_open = ref<boolean>(false);
 let verses = ref<number[]>([]);
+
+const broadcast_api = useBroadcastAPI();
 
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
@@ -39,7 +39,6 @@ const is_bookmarked = computed(() => {
 const isConnected = ref<boolean>(false);
 const isLandscape = ref<boolean>(false);
 const window_height = () => window.innerHeight;
-const window_width = () => window.innerWidth;
 
 async function toggleBookmark() {
     if (!is_bookmarked.value) {
@@ -140,54 +139,7 @@ function setup_audiosource(audio_source: HTMLAudioElement) {
         audio_source_exists.value = false;
         setMediaType(null, true);
     });
-    audio_source.addEventListener('play', () => {
-
-    })
-    audio_source.addEventListener('pause', () => {
-
-    })
 }
-let swipe_origin: Touch;
-let left_indicator_opacity = ref<number>(0);
-let right_indicator_opacity = ref<number>(0);
-const song_container = ref<HTMLElement | null>(null);
-const desired_magnitude = window_width()/4;
-// const swipe_handler = useSwipe(song_container, {
-//     onSwipeStart(e: TouchEvent) {
-//         swipe_origin = e.changedTouches[0];
-//     },
-//     onSwipe(e: TouchEvent) {
-//         let zoom = (song_container.value as any).getZoom();
-//         if(zoom > 1)
-//             return;
-//         let x = e.changedTouches[0].clientX;
-//         let startX = swipe_origin.clientX;
-//         let magnitude = Math.abs(x - startX);
-//         let direction = (x - startX) > 0 ? 1 : -1;
-//         left_indicator_opacity.value = (direction == 1) ? Math.max((magnitude) / desired_magnitude, 0) : 0;
-//         right_indicator_opacity.value = (direction == -1) ?  Math.max((magnitude) / desired_magnitude, 0) : 0;
-//     },
-//     onSwipeEnd(e: TouchEvent) {
-//         left_indicator_opacity.value = 0;
-//         right_indicator_opacity.value = 0;
-//         let zoom = (song_container.value as any).getZoom();
-//         if(zoom > 1)
-//             return;
-//         let x = e.changedTouches[0].clientX;
-//         let startX = swipe_origin.clientX;
-//         let magnitude = Math.abs(x - startX);
-
-//         if(magnitude < desired_magnitude)
-//             return;
-
-//         let direction = (x - startX) > 0 ? -1 : 1;
-//         if(direction == 1) {
-//             traverse_song(1);
-//         } else {
-//             traverse_song(-1);
-//         }
-//     }
-// });
 
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
@@ -238,27 +190,21 @@ onMounted(async () => {
     ScreenOrientation.addListener('screenOrientationChange', async () => {
         if(previous_orientation == (await ScreenOrientation.orientation()).type)
             return;
+    
         if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
             isLandscape.value = false;
             previous_orientation = (await ScreenOrientation.orientation()).type;
 
-            if(!media_starting_notes.value)
-                panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
-            else
-                panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
         } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
             isLandscape.value = true;
             previous_orientation = (await ScreenOrientation.orientation()).type;
-            if(!media_starting_notes.value)
-                panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
-            else
-                panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
         }
+        
+        if(!media_starting_notes.value)
+            panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
+        else
+            panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
     });
-
-    let response = await validate_token(broadcasting_auth_token.value);
-    authorized.value = response.status == 200;
-    church_id.value = (response.data as TokenAuthResponse).church_id;
 });
 
 onUnmounted(() => {
@@ -279,21 +225,13 @@ let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
 
-function open_broadcast() {
-    is_broadcasting.value = true;
-}
-
-function close_broadcast() {
-    is_broadcasting.value = false;
-}
-
-async function broadcast(e: MouseEvent) {
-    if(church_id.value == null)
+async function broadcast() {
+    if(broadcast_api.church_id.value == null)
         return;
 
-    await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
+    await set(request_client(), broadcast_api.church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
-    is_broadcasting.value = false;
+    is_broadcast_menu_open.value = false;
 }
 
 const updateTime = async () => {
@@ -376,8 +314,7 @@ async function playMedia() {
         elapsed_timer = setInterval(() => {
             updateTime();
         }, 1000, 0);
-    }
-    else {
+    } else {
         audio_source.value?.pause();
         clearInterval(elapsed_timer);
     }
@@ -431,27 +368,23 @@ function hideMedia() {
 
 async function traverse_song(dir: number) {
     const SONG_METADATA = await getSongMetaData(props.book);
-    
-    let num = '0';
+
     if(SONG_METADATA == null) {
         console.error("Error loading song metadata. Cannot traverse song.");
         return;
-    } else {
-        let song_numbers = Object.keys(SONG_METADATA).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
-        let index = song_numbers.findIndex(song => song == props.number);
-        if(index == -1) {
-            console.error("Error finding song in metadata. Cannot traverse song.");
-            return;
-        }
-        if(index + dir < 0 || index + dir >= song_numbers.length) {
-            console.error("Cannot traverse song. Out of bounds.");
-            return;
-        }
-        num = song_numbers[index + dir];
-    }
+    } 
 
-    await router.replace(window.history.state.back);
-    await router.replace(`/display/${props.book}/${num}`);
+    const song_numbers = Object.keys(SONG_METADATA).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+    const index = song_numbers.findIndex(song => song == props.number);
+    if(index == -1) {
+        console.error("Error finding song in metadata. Cannot traverse song.");
+        return;
+    }
+    if(index + dir < 0 || index + dir >= song_numbers.length) {
+        console.error("Cannot traverse song. Out of bounds.");
+        return;
+    }
+    await router.replace(`/display/${props.book}/${song_numbers[index + dir]}`);
 }
 
 function get_note_icon(note: string) {
@@ -495,13 +428,6 @@ function get_note_icon(note: string) {
         </div>
     </div>
 
-
-    <div v-if="left_indicator_opacity > 0 && Number(props.number) > 1" class="flip-indicator flip-indicator-left" :style="{opacity: left_indicator_opacity}">
-        <img class="ionicon" src="/assets/chevron-back-outline.svg" />
-    </div>
-    <div v-if="right_indicator_opacity > 0 && Number(props.number) < song_count" class="flip-indicator flip-indicator-right" :style="{opacity: right_indicator_opacity}">
-        <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
-    </div>
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
         <div class="media-panel-blur"></div> 
         <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => panel.dragStart(e, e.touches[0].pageY)" @touchmove="(e) => panel.drag(e, e.touches[0].pageY)" @touchend="(e) => panel.dragEnd(e)">
@@ -558,29 +484,30 @@ function get_note_icon(note: string) {
         </div>
     </div>
     
-    <div class="broadcast-button-container" v-if="authorized" :class="{ 'arrow-hidden-right': !menu_bar_visible}" v-show="!is_broadcasting">
+    <div class="broadcast-button-container" v-if="broadcast_api.is_authorized" :class="{ 'arrow-hidden-right': !menu_bar_visible}" v-show="!is_broadcast_menu_open">
         <div class="broadcast-button">
-            <img @click="open_broadcast()" class="ionicon" src="/assets/radio-outline.svg">
+            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg">
         </div>
     </div>
-    <div class="broadcast-container" v-if="authorized && is_broadcasting" @touchmove="(e) => e.preventDefault()">
+    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="(e) => e.preventDefault()">
         <h1>Broadcast</h1>
         <div class="close-button">
-            <img @click="close_broadcast()" class="ionicon" src="/assets/close.svg" />
+            <img @click="is_broadcast_menu_open = false" class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br>
         <h3>Verses</h3>
         <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="() => {
-                verses = [];
-                verses.push(-2);
+                if(verses[0] == -2) 
+                    verses = [];
+                else
+                    verses = [-2];
             }">
             All
         </a>
         <br>
         <div class="verse-list">
             <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="() => {
-
                 if(verses[0] == -2) 
                     verses = [];
 
@@ -592,7 +519,7 @@ function get_note_icon(note: string) {
                 {{ verse }}
             </a>
         </div>
-        <button class="send-button" @click="(e) => broadcast(e)">Send</button>
+        <button class="send-button" @click="broadcast()">Send</button>
     </div>
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
         @mouseup="(e) => {
@@ -608,7 +535,7 @@ function get_note_icon(note: string) {
             hideMedia()
         }"
     >
-        <SongContainer :book="props.book" :number="props.number" ref="song_container"></SongContainer>
+        <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
     
 </template>
