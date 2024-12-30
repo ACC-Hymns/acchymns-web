@@ -3,7 +3,7 @@ import { RouterLink, createRouterMatcher } from "vue-router";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
 import axios, { Axios, type AxiosResponse } from 'axios';
-import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse } from "@/scripts/broadcast";
+import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse, set_bg_color, get } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse } from "@/scripts/types";
 import { fetchCachedJSON } from "@/composables/cached_fetch";
@@ -13,10 +13,11 @@ const { back } = useNavigator();
 
 const unlocked = ref<boolean>(false);
 const input = ref<string>("");
-const status = ref<UserStatus>(UserStatus.Authorized)
+const status = ref<UserStatus>(UserStatus.None);
 let platform = ref<string>(Capacitor.getPlatform());
 let login_error = ref<boolean>(false);
 let selected_church = ref('LOADING');
+let hexinput = ref<HTMLInputElement>();
 let churches = ref<ChurchData[]>([]);
 let bible = ref<Bible>();
 let touched_pin = ref<number>(0);
@@ -41,7 +42,7 @@ async function authorize(response: AxiosResponse<any,any>) {
             churches.value.push(value);
         }
         selected_church.value = auth.church_id;
-
+        await populate_bg_color();
     } else {
         console.log(response.data);
         setTimeout(() => {
@@ -50,6 +51,13 @@ async function authorize(response: AxiosResponse<any,any>) {
         }, 400);
     }
 }
+
+async function populate_bg_color() {
+  let church_data: ChurchData = (await get(request_client(), selected_church.value)).Item as unknown as ChurchData;
+  if(hexinput.value) {
+    hexinput.value.value = church_data.BG_COLOR.S;
+  }
+} 
 
 async function clear() {
     await set(request_client(), selected_church.value, "", "", [-1], "");
@@ -76,12 +84,28 @@ function enter_pin(value: number) {
     input.value += value;
 }
 
-function back_button() {
+async function back_button() {
     if(bibleReading.value) {
         bibleReading.value = false;
+        await populate_bg_color();
     } else {
         back();
     }
+}
+
+async function set_bg() {
+  if(!hexinput.value)
+    return;
+
+  let value = hexinput.value.value;
+
+  if(value == "")
+    value = "#FFFFFF";
+  
+  if(value[0] != "#")
+    return;
+
+  await set_bg_color(request_client(), selected_church.value, value);
 }
 
 async function handle_tap(index: number) {
@@ -118,6 +142,8 @@ async function handle_tap(index: number) {
 onMounted(async () => {
     selected_church.value = "...";
     bible.value = (await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible || { version: "", books: []};
+    
+    let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
 
     for(let [index, book] of bible.value.books.entries()) {
         if(index > 38)
@@ -128,7 +154,6 @@ onMounted(async () => {
     fix_chapter_range();
     fix_verse_range();
 
-    let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
     if (broadcasting_auth_token.value != "" && broadcasting_auth_token.value != undefined) {
         let token_response = await validate_token(broadcasting_auth_token.value);
         if(token_response.status != 200)
@@ -143,6 +168,7 @@ onMounted(async () => {
         }
 
         selected_church.value = token_response_data.church_id;
+        await populate_bg_color();
     } else {
         return signout();
     }
@@ -166,7 +192,6 @@ async function broadcast(e: MouseEvent) {
     }
 
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
-    bibleReading.value = false;
 }
 
 let bibleReading = ref<boolean>(false);
@@ -282,26 +307,34 @@ function get_lock_icon() {
             </div>
         </div>
         <div class="keypad">
-            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{'opacity': (i == 10) ? 0 : 1}">
+            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0"
+                :style="{'opacity': (i == 10) ? 0 : 1}">
                 <a v-if="i == 10"></a>
-                <a v-else-if="i == 11"><h4>0</h4></a>
+                <a v-else-if="i == 11">
+                    <h4>0</h4>
+                </a>
                 <a v-else-if="i == 12" class="backspace">
                     <img class="ionicon keyicon" src="/assets/backspace.svg" />
                 </a>
-                <a v-else><h4>{{ i }}</h4></a>
+                <a v-else>
+                    <h4>{{ i }}</h4>
+                </a>
             </div>
         </div>
     </div>
     <div class="main-content" v-else-if="status == UserStatus.Authorized">
-        <div v-if="bibleReading">            
-          <div class="center-container">
+        <div v-if="bibleReading">
+            <div class="center-container">
                 <h3>Reading Type</h3>
                 <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a @click="(e) => read_type_changed(e,1)" class="biblebook" :class="{'selected': read_type == 1}">Start Only</a>
-                    <a @click="(e) => read_type_changed(e,2)" class="biblebook" :class="{'selected': read_type == 2}">Start End</a>
-                    <a @click="(e) => read_type_changed(e,3)" class="biblebook" :class="{'selected': read_type == 3}">Start End Chapter</a>
+                    <a @click="(e) => read_type_changed(e,1)" class="biblebook"
+                        :class="{'selected': read_type == 1}">Start Only</a>
+                    <a @click="(e) => read_type_changed(e,2)" class="biblebook"
+                        :class="{'selected': read_type == 2}">Start End</a>
+                    <a @click="(e) => read_type_changed(e,3)" class="biblebook"
+                        :class="{'selected': read_type == 3}">Start End Chapter</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -309,14 +342,16 @@ function get_lock_icon() {
                 <div class="book-selector">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)" v-for="b in old_testament" :key="b.name">{{ b.name }}</a>
+                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)"
+                        v-for="b in old_testament" :key="b.name">{{ b.name }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
                 <div class="book-selector">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)" v-for="b in new_testament" :key="b.name">{{ b.name }}</a>
+                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)"
+                        v-for="b in new_testament" :key="b.name">{{ b.name }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -326,7 +361,9 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': c.num == chapter_start}" @click="(e: Event) => chapter_start_changed(e)" v-for="c in get_chapter_start_list(book)" :key="c.num">{{ c.num }}</a>
+                    <a class="biblebook" :class="{'selected': c.num == chapter_start}"
+                        @click="(e: Event) => chapter_start_changed(e)" v-for="c in get_chapter_start_list(book)"
+                        :key="c.num">{{ c.num }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -338,7 +375,9 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': v.num == verse_start}" @click="(e: Event) => verse_start_changed(e)" v-for="v in get_verse_start_list(book, chapter_start)" :key="v.num">{{ v.num }}</a>
+                    <a class="biblebook" :class="{'selected': v.num == verse_start}"
+                        @click="(e: Event) => verse_start_changed(e)"
+                        v-for="v in get_verse_start_list(book, chapter_start)" :key="v.num">{{ v.num }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -350,7 +389,9 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': c.num == chapter_end}" @click="(e: Event) => chapter_end_changed(e)" v-for="c in get_chapter_end_list(book)" :key="c.num">{{ c.num }}</a>
+                    <a class="biblebook" :class="{'selected': c.num == chapter_end}"
+                        @click="(e: Event) => chapter_end_changed(e)" v-for="c in get_chapter_end_list(book)"
+                        :key="c.num">{{ c.num }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -362,7 +403,10 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': v.num == verse_end}" @click="(e: Event) => verse_end_changed(e)" v-for="v in get_verse_end_list(book, read_type == 3 ? chapter_end : chapter_start)" :key="v.num">{{ v.num }}</a>
+                    <a class="biblebook" :class="{'selected': v.num == verse_end}"
+                        @click="(e: Event) => verse_end_changed(e)"
+                        v-for="v in get_verse_end_list(book, read_type == 3 ? chapter_end : chapter_start)"
+                        :key="v.num">{{ v.num }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -371,8 +415,8 @@ function get_lock_icon() {
                 <div>
                     <button class="send-button" @click="(e) => broadcast(e)">Send</button>
                 </div>
-            <button class="settings-button" @click="bibleReading = false">Back</button>
-              
+                <button class="settings-button" @click="back_button()">Back</button>
+
             </div>
         </div>
         <div v-else-if="status == UserStatus.Authorized" class="center-container">
@@ -384,17 +428,23 @@ function get_lock_icon() {
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a @click="bibleReading = true" class="settings-option">
-                    <span>Set Biblie Reading</span>
+                    <span>Set Bible Reading</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
+                <a @click="set_bg()" class="settings-option">
+                    <span>
+                      Set Background Color
+                      <input ref="hexinput" class="hexinput" type="text" placeholder="#FFFFFF"/>
+                    </span>
+                </a>
                 <a @click="clear" class="settings-option">
-                    <span>Clear Screeen</span>
+                    <span>Clear Screen</span>
                 </a>
                 <a @click="signout" class="settings-option">
                     <span>Log Out</span>
                 </a>
             </div>
-        </div>      
+        </div>
         <nav class="nav">
             <RouterLink to="/" class="nav__link">
                 <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
@@ -412,7 +462,16 @@ function get_lock_icon() {
                 <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
                 <span class="nav__text">Settings</span>
             </RouterLink>
-        </nav>  
+        </nav>
+    </div>
+    <div v-else class="lds-ring-container">
+        <!--Loading Ring-->
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 </template>
 
@@ -425,6 +484,13 @@ label {
 }
 :root {
     --key-size: 8vh;
+}
+
+.hexinput {
+  background-color: var(--slider-base);
+  width: 6em;
+  border-radius: 15px;
+  margin: 0 15px;
 }
 
 .login-instructions {
@@ -701,5 +767,77 @@ label {
     flex-direction: column;
     align-items: left;
     justify-content: left;
+}
+
+@keyframes fade-in-3s-delay {
+  0% {
+    opacity: 0%;
+  }
+  30% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.lds-ring-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 61.16px);
+    margin-top: 61.16px;
+    animation: 5s fade-in-3s-delay;
+}
+
+.lds-ring {
+    /* change color here */
+    color: var(--back-color);
+}
+
+.lds-ring,
+.lds-ring div {
+    box-sizing: border-box;
+}
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border: 6px solid currentColor;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: currentColor transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
