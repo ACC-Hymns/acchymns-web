@@ -588,13 +588,16 @@ function get_note_icon(note: string) {
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br>
         <h3>Verses</h3>
-        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+        <div class="verse-list">
+            <div></div>
+            <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
                 verses = [];
                 verses.push(-2);
             }">
             All
-        </a>
-        <br>
+            </a>
+            <div></div>
+        </div>
         <div class="verse-list">
             <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
 
@@ -683,13 +686,13 @@ function get_note_icon(note: string) {
 }
 .verse-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 15px 0;
 }
 .broadcast-container {
     width: 75%;
     min-height: max-content;
-    background-color: var(--div-color);
+    background-color: var(--toolbar);
     border-radius: 15px;
     position: fixed;
     top: 50%;

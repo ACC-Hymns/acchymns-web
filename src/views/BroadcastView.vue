@@ -18,18 +18,29 @@ let verses_visible = ref<boolean>(false);
 let bible_reading = ref<boolean>(false);
 let top_text = ref<string>("");
 let bottom_text = ref<string>("");
+let verse_numbers = ref<number[]>([]);
 
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
+
+function getClockTime() {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return {
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+    };
+}
+
 function clock() {
-    let d = new Date();
-    let h = d.getHours();
-    let m = d.getMinutes();
-    let s = d.getSeconds();
+    let t = getClockTime();
     
-    let hDeg = h * 30 + m * (360/720);
-    let mDeg = m * 6 + s * (360/3600);
-    let sDeg = s * 6;
+    let hDeg = t.hours * 30 + t.minutes * (360/720);
+    let mDeg = t.minutes * 6 + t.seconds * (360/3600);
+    let sDeg = t.seconds * 6;
 
 
     hours.value = "rotate("+hDeg+"deg)";
@@ -37,7 +48,27 @@ function clock() {
     seconds.value = "rotate("+sDeg+"deg)";
 }
 
+function getDigitalTime() {
+    let t = getClockTime();
+    // 12 hour format
+    let hours = t.hours;
+    let minutes = t.minutes;
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let strTime = hours + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + ampm;
+    return strTime;
+}
+
 let client: DynamoDBClient;
+
+function getFontSize(textLength: number) {
+  var baseSize = 35;
+  if( textLength >= baseSize) {
+    const fontSize = 8;
+    return `${fontSize}em`;
+  }
+}
 
 async function set_data() {
     let data: ChurchData = (await get(client, church_id.value)).Item as unknown as ChurchData;
@@ -56,17 +87,30 @@ async function set_data() {
           verses.value = "All Verses";
       } else {
           data.VERSES.NS.sort((a, b) => a - b);
+          verse_numbers.value = data.VERSES.NS;
           verses.value = data.VERSES.NS.join(", ");
           verses_visible.value = true;
+          let element = (verses_text.value as HTMLElement);
+          if(element)
+            element.style.fontSize = getFontSize(verses.value.length) || "10em";
       }
+
       color.value = data.BOOK_COLOR.S;
       book_name.value = data.BOOK_ID.S;
     }
+
+    if(song_number.value.length > 0 || bible_reading.value) {
+      document.body.style.backgroundColor = "white";
+    } else {
+      document.body.style.backgroundColor = data.BG_COLOR.S;
+    }
 }
 let old_bg_color = '';
+const verses_text = ref<Element>();
 onMounted(async () => {
     old_bg_color = document.body.style.backgroundColor;
     document.body.style.backgroundColor = "white";
+    document.body.style.transition = "background-color 1s";
 
     clock();
 
@@ -87,24 +131,16 @@ onMounted(async () => {
     set_data();
 });
 
+
+
 onUnmounted(() => {
     document.body.style.backgroundColor = old_bg_color;
-})
+});
 
 let hours = ref<string>('');
 let minutes = ref<string>('');
 let seconds = ref<string>('');
 
-function calculate_text_width(text: string, font: string) {
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext("2d");
-    if (context == null) {
-        return 0;
-    }
-    context.font = font;
-    let metrics = context.measureText(text);
-    return metrics.width;
-}
 
 </script>
 
@@ -113,15 +149,17 @@ function calculate_text_width(text: string, font: string) {
         <div v-if="bible_reading" class="song-info">
           <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
           <h2 class="bottom-text">{{ bottom_text }}</h2>
-          
+          <h2 class="digital-clock">{{getDigitalTime()}}</h2>
         </div>
         <div v-else class="song-info">
-            <h1 class="song-number">{{ song_number}}</h1>
-            <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
-            <h2 class="verses">{{ verses }}</h2>
-            <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
+          <h1 class="song-number">{{ song_number}}</h1>
+          <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
+          <h2 class="verses" ref="verses_text">{{ verses }}</h2>
+          <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
+          <h2 v-if="song_number.length > 0" class="digital-clock">{{getDigitalTime()}}</h2>
         </div>
-        <div class="clock" :class="{'clock-bible-long': top_text.length > 8 && bible_reading, 'clock-song': song_number.length > 0, 'clock-bible': top_text.length <= 8 && bible_reading}">
+
+        <div v-if="song_number.length == 0 && !bible_reading" class="clock">
             <div class="dot"></div>
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
@@ -136,8 +174,12 @@ function calculate_text_width(text: string, font: string) {
 </template>
 
 <style scoped>
+.wall-color {
+  background-color: #EACFA3;
+}
+
 .top-text {
-    font-size: 16em;
+    font-size: 15em;
     color: #000000;
     margin: 0 5%;
     top: 10%;
@@ -159,6 +201,18 @@ function calculate_text_width(text: string, font: string) {
     height: 100%;
 }
 
+.digital-clock {
+    font-size: 10em;
+    color: #000000;
+    bottom: 5%;
+    position: fixed;
+    margin: 0px 5%;
+    width: 50%;
+    right: 0;
+    text-align: right;
+    line-height: 1;
+}
+
 .info-seperator {
     display: flex;
     justify-content: space-between;
@@ -176,7 +230,7 @@ function calculate_text_width(text: string, font: string) {
 }
 
 .song-number {
-    font-size: 30em;
+    font-size: 38em;
     color: #000000;
     margin: 0 5%;
     top: 0;
@@ -184,22 +238,45 @@ function calculate_text_width(text: string, font: string) {
     margin: 0 5%;
     line-height: 1;
 }
+
+.verses-container {
+  position: fixed;
+  right: 0;
+}
+
+.verses-grid {
+  display: grid;
+  gap: 10px;
+  width: 5vw;
+  height: 5vw;
+}
+
+.verse {
+    font-size: 6em;
+    color: #333;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #e0e0e0;
+    width: 100%;
+    padding: 0 0%;
+    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.308);
+}
+
 .verses {
     font-size: 10em;
     color: #000000;
     margin: 0 5%;
-    top: 50%;
+    top: 60%;
     position: fixed;
     margin: 0 5%;
     max-width: 60%;
-    word-wrap: break-word;
-    white-space: pre-wrap;
 }
 .verses-label {
     font-size: 5em;
     color: #000000;
     margin: 0 5%;
-    top: 43%;
+    top: 55%;
     position: fixed;
     margin: 0 5%;
 }
