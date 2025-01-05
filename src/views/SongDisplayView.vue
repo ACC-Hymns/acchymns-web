@@ -225,6 +225,9 @@ onMounted(async () => {
         Network.addListener("networkStatusChange", async (details) => {
             isConnected.value = details.connected;
             if(!isConnected.value) {
+                audio_source.value?.pause();
+                morph();
+                media_is_playing.value = false;
                 audio_source_exists.value = false;
                 audio_source.value = new Audio();
                 setMediaType(null, true);
