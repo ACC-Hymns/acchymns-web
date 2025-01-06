@@ -164,6 +164,7 @@ let seconds = ref<string>('');
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
                 <div class="minute-hand" :style="{transform: minutes}"></div>
+                <div class="second-hand" :style="{transform: seconds}"></div>
             </div>
             <div>
               <span v-for="i in 12" :class="('h' + i)">{{ i }}</span>
@@ -322,13 +323,13 @@ let seconds = ref<string>('');
 .hour-hand {
   position: absolute;
   z-index: 5;
-  width: 8px;
-  height: 130px;
+  width: 12px;
+  height: 132px;
   background: #333;
   top: 158px;
   transform-origin: 50% 144px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
 }
@@ -336,12 +337,12 @@ let seconds = ref<string>('');
 .minute-hand {
   position: absolute;
   z-index: 6;
-  width: 8px;
+  width: 12px;
   height: 200px;
   background: #666;
   top: 92px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 210px;
@@ -350,12 +351,12 @@ let seconds = ref<string>('');
 .second-hand {
   position: absolute;
   z-index: 7;
-  width: 4px;
+  width: 6px;
   height: 240px;
   background: red;
   top: 52px;
   left: 50%;
-  margin-left: -2px;
+  margin-left: -3px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 250px;
@@ -390,7 +391,7 @@ span {
   margin-top: -41px;
 }
 .h4 {
-  bottom: 25%;
+  bottom: 24%;
   left: 80%;
 }
 .h5 {
