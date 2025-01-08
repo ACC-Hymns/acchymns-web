@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "ES",
+		"medium": "Evangeliumssänger",
+		"long": "Evangeliumssänger mit Anhang"
+	},
+	"primaryColor": "#424245",
+	"secondaryColor": "#222224",
+	"fileExtension": "jpg",
+	"addOn": true,
+	"indexAvailable": false
+}
