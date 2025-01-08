@@ -53,6 +53,7 @@ a, img {
     --media-type: var(--slider-base);
     --button-tap: #CCCCCC;
     --blue: #2196f3;
+    --blue-disabled: #7ebdf1;
 }
 
 :root[data-theme="dark"] {
@@ -83,6 +84,7 @@ a, img {
     --media-type: var(--menu-color);
     --button-tap: #575757;
     --blue: #2196f3;
+    --blue-disabled: #7ebdf1;
 }
 
 h1, h2, h3, h4, h5 {

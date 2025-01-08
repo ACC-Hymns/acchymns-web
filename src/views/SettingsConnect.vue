@@ -5,10 +5,11 @@ import { onMounted, ref } from "vue";
 import axios, { Axios, type AxiosResponse } from 'axios';
 import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse, set_bg_color, get } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
-import { type Bible, type BibleBook, type BibleChapter, type BibleVerse } from "@/scripts/types";
+import { type BookDataSummary, type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
 import { fetchCachedJSON } from "@/composables/cached_fetch";
 import router from "@/router";
 import { Capacitor } from "@capacitor/core";
+import { loadBookSources } from "@/scripts/book_import";
 const { back } = useNavigator();
 
 const unlocked = ref<boolean>(false);
@@ -21,6 +22,7 @@ let hexinput = ref<HTMLInputElement>();
 let churches = ref<ChurchData[]>([]);
 let bible = ref<Bible>();
 let touched_pin = ref<number>(0);
+let book_sources = ref<BookDataSummary[]>([]);
 
 async function check_code(code: string) {
     let response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
@@ -85,8 +87,9 @@ function enter_pin(value: number) {
 }
 
 async function back_button() {
-    if(bibleReading.value) {
+    if(bibleReading.value || songNumber.value) {
         bibleReading.value = false;
+        songNumber.value = false;
         await populate_bg_color();
     } else {
         back();
@@ -143,6 +146,9 @@ onMounted(async () => {
     selected_church.value = "...";
     bible.value = (await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible || { version: "", books: []};
     
+    let temp = await loadBookSources();
+    book_sources.value = temp.filter(b => b.status == BookSourceType.DOWNLOADED || b.status == BookSourceType.IMPORTED || b.status == BookSourceType.BUNDLED);
+    console.log(book_sources.value);
     let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
 
     for(let [index, book] of bible.value.books.entries()) {
@@ -174,7 +180,7 @@ onMounted(async () => {
     }
 });
 
-async function broadcast(e: MouseEvent) {
+async function broadcast_reading(e: MouseEvent) {
     let top_text = "";
     let bottom_text = "";
     if(read_type.value == 1) {
@@ -194,7 +200,27 @@ async function broadcast(e: MouseEvent) {
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
 }
 
+
 let bibleReading = ref<boolean>(false);
+let songNumber = ref<boolean>(false);
+
+let selected_hymnal = ref<number>(0);
+let song_number = ref<string>("");
+let verses = ref<number[]>([]);
+
+function set_selected_hymnal(e: Event, id: number) {
+    selected_hymnal.value = id;
+}
+
+async function broadcast_song_number(e: MouseEvent) {
+    let book = book_sources.value[selected_hymnal.value];
+    if(!book)
+        return book;
+
+    let number = song_number.value.replace(/^0+/, '');
+
+    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
+}
 
 let old_testament = ref<BibleBook[]>([]);
 let new_testament = ref<BibleBook[]>([]);
@@ -413,7 +439,62 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
                 <div>
-                    <button class="send-button" @click="(e) => broadcast(e)">Send</button>
+                    <button class="send-button" @click="(e) => broadcast_reading(e)">Send</button>
+                </div>
+                <button class="settings-button" @click="back_button()">Back</button>
+
+            </div>
+        </div>
+        <div v-else-if="songNumber">
+            <div class="center-container">
+                <h3>Hymnal</h3>
+                <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
+                    <a v-if="platform !== 'web'" class="biblebook space"></a>
+                    <a v-if="platform !== 'web'" class="biblebook space"></a>
+                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(e,i - 1)" class="biblebook"
+                        :class="{'selected': selected_hymnal == i - 1}" :style="{'background-color': book_sources[i - 1].primaryColor}">{{ book_sources[i - 1].name?.medium }}</a>
+                    <a v-if="platform !== 'web'" class="biblebook space"></a>
+                    <a v-if="platform !== 'web'" class="biblebook space"></a>
+                </div>
+
+                <div class="center-container">
+                    <h3>Song Number</h3>
+                    <input type="text" pattern="\d*" maxlength="3" class="number-input-bar" v-model="song_number" name="song" placeholder="#" />
+                </div>
+                <h3>Verses</h3>
+                <div class="verse-list">
+                    <div></div>
+                    <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+
+                        if(verses[0] == -2) {
+                            verses = [];
+                            return;
+                        } else {
+                            verses = [];  
+                            verses.push(-2);
+                        }
+                        
+                    }">
+                    All
+                    </a>
+                    <div></div>
+                </div>
+                <div class="verse-list">
+                    <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
+
+                        if(verses[0] == -2) 
+                            verses = [];
+
+                        if(verses.includes(verse))
+                            verses.splice(verses.indexOf(verse), 1);
+                        else
+                            verses.push(verse);
+                    }">
+                        {{ verse }}
+                    </a>
+                </div>
+                <div>
+                    <button class="send-button" :disabled="song_number.length == 0 || Number(song_number) == 0" @click="(e) => broadcast_song_number(e)">Send</button>
                 </div>
                 <button class="settings-button" @click="back_button()">Back</button>
 
@@ -425,6 +506,10 @@ function get_lock_icon() {
             <div class="settings width-100">
                 <a v-if="platform == 'web'" href="/broadcast" class="settings-option">
                     <span>Open Output Display</span>
+                    <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+                </a>
+                <a @click="songNumber = true" class="settings-option">
+                    <span>Set Song Number</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a @click="bibleReading = true" class="settings-option">
@@ -477,6 +562,37 @@ function get_lock_icon() {
 
 <style>
 @import "@/assets/css/settings.css";
+
+.verse {
+    color: var(--color);
+    border-radius: 50px;
+    background-color: var(--button-color);
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    padding: 15px 15px;
+    margin: 5px;
+}
+
+.verse-selected {
+    box-shadow: inset 0 0 0 4px var(--blue);
+}
+.verse-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 75%;
+    text-align: center;
+}
+
+.number-input-bar {
+    background-color: var(--search-color);
+    height: 40px;
+    width: 10vw;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    font-size: 22px;
+}
 
 label {
     font-size: 22px;
@@ -700,6 +816,11 @@ label {
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     margin: 20px;
     cursor: pointer;
+}
+
+.send-button:disabled {
+    background-color: var(--blue-disabled);
+    cursor: not-allowed;
 }
 
 .input-container {

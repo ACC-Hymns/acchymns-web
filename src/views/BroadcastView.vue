@@ -164,8 +164,10 @@ let seconds = ref<string>('');
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
                 <div class="minute-hand" :style="{transform: minutes}"></div>
+                <div class="second-hand" :style="{transform: seconds}"></div>
             </div>
             <div>
+              <span v-for="i in 12" :class="('h' + i)">{{ i }}</span>
             </div>
             <div class="diallines" v-for="i in 61" :key="i" :style="{transform: 'rotate(' + 6 * (i - 2) + 'deg)'}"></div>
         </div>
@@ -321,13 +323,13 @@ let seconds = ref<string>('');
 .hour-hand {
   position: absolute;
   z-index: 5;
-  width: 8px;
-  height: 130px;
+  width: 12px;
+  height: 132px;
   background: #333;
   top: 158px;
   transform-origin: 50% 144px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
 }
@@ -335,12 +337,12 @@ let seconds = ref<string>('');
 .minute-hand {
   position: absolute;
   z-index: 6;
-  width: 8px;
+  width: 12px;
   height: 200px;
   background: #666;
   top: 92px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 210px;
@@ -349,12 +351,12 @@ let seconds = ref<string>('');
 .second-hand {
   position: absolute;
   z-index: 7;
-  width: 4px;
+  width: 6px;
   height: 240px;
   background: red;
   top: 52px;
   left: 50%;
-  margin-left: -2px;
+  margin-left: -3px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 250px;
@@ -371,22 +373,56 @@ span {
 }
 
 .h12 {
-  top: 60px;
+  top: 5%;
   left: 50%;
   margin-left: -36px;
 }
+.h1 {
+  top: 10%;
+  left: 66%;
+}
+.h2 {
+  top: 25%;
+  left: 80%;
+}
 .h3 {
-  top: 260px;
-  right: 66px;
+  top: 50%;
+  right: 8%;  
+  margin-top: -41px;
+}
+.h4 {
+  bottom: 24%;
+  left: 80%;
+}
+.h5 {
+  bottom: 10%;
+  left: 66%;
 }
 .h6 {
-  bottom: 60px;
+  bottom: 5%;
   left: 50%;
   margin-left: -18px;
 }
+.h7 {
+  bottom: 10%;
+  left: 28%;
+}
+.h8 {
+  bottom: 25%;
+  left: 14%;
+}
 .h9 {
-  left: 66px;
-  top: 260px;
+  left: 8%;
+  top: 50%;
+  margin-top: -41px;
+}
+.h10 {
+  top: 25%;
+  left: 12%;
+}
+.h11 {
+  top: 10%;
+  left: 26%;
 }
 
 .diallines {
@@ -403,7 +439,7 @@ span {
   position: absolute;
   z-index: 2;
   width: 8px;
-  height: 50px;
+  height: 30px;
   background: #666;
   left: 50%;
   margin-left: -4px;

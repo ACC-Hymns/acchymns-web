@@ -225,6 +225,9 @@ onMounted(async () => {
         Network.addListener("networkStatusChange", async (details) => {
             isConnected.value = details.connected;
             if(!isConnected.value) {
+                audio_source.value?.pause();
+                morph();
+                media_is_playing.value = false;
                 audio_source_exists.value = false;
                 audio_source.value = new Audio();
                 setMediaType(null, true);
@@ -309,7 +312,8 @@ async function broadcast(e: MouseEvent) {
 
     await set(request_client(), church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
 
-    let button = (e.target as Element).parentElement;
+    let button = (broadcast_button.value as HTMLElement);
+    button?.style.setProperty("opacity", "1");
     broadcasting.value = false;
 }
 
