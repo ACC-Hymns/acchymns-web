@@ -216,7 +216,10 @@ async function broadcast_song_number(e: MouseEvent) {
     let book = book_sources.value[selected_hymnal.value];
     if(!book)
         return book;
-    await set(request_client(), selected_church.value, song_number.value, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
+
+    let number = song_number.value.replace(/^0+/, '');
+
+    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
 }
 
 let old_testament = ref<BibleBook[]>([]);
