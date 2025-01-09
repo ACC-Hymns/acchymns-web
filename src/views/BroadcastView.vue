@@ -100,7 +100,7 @@ async function set_data() {
     }
 
     if(song_number.value.length > 0 || bible_reading.value) {
-      document.body.style.backgroundColor = "white";
+      document.body.style.backgroundColor = "#b49264";
     } else {
       document.body.style.backgroundColor = data.BG_COLOR.S;
     }
@@ -109,7 +109,7 @@ let old_bg_color = '';
 const verses_text = ref<Element>();
 onMounted(async () => {
     old_bg_color = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = "white";
+    document.body.style.backgroundColor = "#b49264";
     document.body.style.transition = "background-color 1s";
 
     clock();
