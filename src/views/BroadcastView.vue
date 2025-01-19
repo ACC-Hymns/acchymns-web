@@ -23,6 +23,8 @@ let verse_numbers = ref<number[]>([]);
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
 
+
+let digital_time = ref<string>("");
 function getClockTime() {
     const date = new Date();
     const hours = date.getHours();
@@ -46,6 +48,8 @@ function clock() {
     hours.value = "rotate("+hDeg+"deg)";
     minutes.value = "rotate("+mDeg+"deg)";
     seconds.value = "rotate("+sDeg+"deg)";
+
+    digital_time.value = getDigitalTime();
 }
 
 function getDigitalTime() {
@@ -99,18 +103,12 @@ async function set_data() {
       book_name.value = data.BOOK_ID.S;
     }
 
-    if(song_number.value.length > 0 || bible_reading.value) {
-      document.body.style.backgroundColor = "white";
-    } else {
-      document.body.style.backgroundColor = data.BG_COLOR.S;
-    }
+    document.body.style.backgroundColor = data.BG_COLOR.S;
 }
 let old_bg_color = '';
 const verses_text = ref<Element>();
 onMounted(async () => {
     old_bg_color = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = "white";
-    document.body.style.transition = "background-color 1s";
 
     clock();
 
@@ -131,8 +129,6 @@ onMounted(async () => {
     set_data();
 });
 
-
-
 onUnmounted(() => {
     document.body.style.backgroundColor = old_bg_color;
 });
@@ -149,14 +145,14 @@ let seconds = ref<string>('');
         <div v-if="bible_reading" class="song-info">
           <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
           <h2 class="bottom-text">{{ bottom_text }}</h2>
-          <h2 class="digital-clock">{{getDigitalTime()}}</h2>
+          <h2 class="digital-clock">{{digital_time}}</h2>
         </div>
         <div v-else class="song-info">
           <h1 class="song-number">{{ song_number}}</h1>
           <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
           <h2 class="verses" ref="verses_text">{{ verses }}</h2>
           <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
-          <h2 v-if="song_number.length > 0" class="digital-clock">{{getDigitalTime()}}</h2>
+          <h2 v-if="song_number.length > 0" class="digital-clock">{{digital_time}}</h2>
         </div>
 
         <div v-if="song_number.length == 0 && !bible_reading" class="clock">
@@ -294,7 +290,7 @@ let seconds = ref<string>('');
 }
 
 .clock {
-  background: #ececec;
+  background: rgb(20, 20, 20);
   width: 600px;
   height: 600px;
   border-radius: 50%;
@@ -325,7 +321,8 @@ let seconds = ref<string>('');
   z-index: 5;
   width: 12px;
   height: 132px;
-  background: #333;
+  background: white;
+  box-shadow: 0 2px 4px -1px black;
   top: 158px;
   transform-origin: 50% 144px;
   left: 50%;
@@ -339,7 +336,8 @@ let seconds = ref<string>('');
   z-index: 6;
   width: 12px;
   height: 200px;
-  background: #666;
+  background: white;
+  box-shadow: 0 2px 4px -1px black;
   top: 92px;
   left: 50%;
   margin-left: -6px;
@@ -354,6 +352,7 @@ let seconds = ref<string>('');
   width: 6px;
   height: 240px;
   background: red;
+  box-shadow: 0 2px 4px -1px black;
   top: 52px;
   left: 50%;
   margin-left: -3px;
@@ -365,9 +364,9 @@ let seconds = ref<string>('');
 span {
   display: inline-block;
   position: absolute;
-  color: #333;
+  color: white;
   font-size: 72px;
-  font-family: 'Poiret One';
+  font-family: sans-serif;
   font-weight: 700;
   z-index: 4;
 }
@@ -375,7 +374,7 @@ span {
 .h12 {
   top: 5%;
   left: 50%;
-  margin-left: -36px;
+  margin-left: -40px;
 }
 .h1 {
   top: 10%;
@@ -401,7 +400,7 @@ span {
 .h6 {
   bottom: 5%;
   left: 50%;
-  margin-left: -18px;
+  margin-left: -22px;
 }
 .h7 {
   bottom: 10%;
@@ -429,18 +428,19 @@ span {
   position: absolute;
   z-index: 2;
   width: 4px;
-  height: 30px;
-  background: #666;
+  height: 10px;
+  background: white;
   left: 50%;
   margin-left: -2px;
   transform-origin: 50% 300px;
+  border-radius: 5px;
 }
 .diallines:nth-of-type(5n) {
   position: absolute;
   z-index: 2;
   width: 8px;
   height: 30px;
-  background: #666;
+  background: white;
   left: 50%;
   margin-left: -4px;
   transform-origin: 50% 300px;
