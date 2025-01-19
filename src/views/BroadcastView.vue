@@ -103,18 +103,12 @@ async function set_data() {
       book_name.value = data.BOOK_ID.S;
     }
 
-    if(song_number.value.length > 0 || bible_reading.value) {
-      document.body.style.backgroundColor = "#b49264";
-    } else {
-      document.body.style.backgroundColor = data.BG_COLOR.S;
-    }
+    document.body.style.backgroundColor = data.BG_COLOR.S;
 }
 let old_bg_color = '';
 const verses_text = ref<Element>();
 onMounted(async () => {
     old_bg_color = document.body.style.backgroundColor;
-    document.body.style.backgroundColor = "#b49264";
-    document.body.style.transition = "background-color 1s";
 
     clock();
 
@@ -231,7 +225,6 @@ let seconds = ref<string>('');
     bottom: 5%;
     position: fixed;
     margin: 0 5%;
-    text-shadow: 2px 2px #FF0000;
 }
 
 .song-number {
