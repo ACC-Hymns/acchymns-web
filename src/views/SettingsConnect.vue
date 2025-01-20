@@ -459,7 +459,7 @@ function get_lock_icon() {
                     <input type="text" pattern="\d*" maxlength="3" class="number-input-bar" v-model="song_number" name="song" placeholder="#" />
                 </div>
                 <h3>Verses</h3>
-                <div class="verse-list">
+                <div class="verse-list-wide">
                     <div></div>
                     <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
 
@@ -476,7 +476,7 @@ function get_lock_icon() {
                     </a>
                     <div></div>
                 </div>
-                <div class="verse-list">
+                <div class="verse-list-wide">
                     <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
 
                         if(verses[0] == -2) 
@@ -572,7 +572,7 @@ function get_lock_icon() {
 .verse-selected {
     box-shadow: inset 0 0 0 4px var(--blue);
 }
-.verse-list {
+.verse-list-wide {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     width: 75%;
@@ -601,7 +601,7 @@ label {
 
 .hexinput {
   background-color: var(--slider-base);
-  width: 6em;
+  width: 4em;
   border-radius: 15px;
   margin: 0 15px;
 }
