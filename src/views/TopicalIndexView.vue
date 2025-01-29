@@ -14,7 +14,6 @@ const router = useRouter();
 
 const show_list = ref(true);
 const error_active = ref(false);
-const scroll_topic_list = ref<Element | null>(null);
 
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");

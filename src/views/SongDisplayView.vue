@@ -417,15 +417,54 @@ function get_note_icon(note: string) {
             </div>
         </div>
     </div>
+
+    <!-- Buttons -->
     <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
         <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
             <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
-    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
+    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: `translateY(${panel.visible ? -panel.height * window_height() : 0}px)`}">
         <div class="page-button" :class="{ 'arrow-hidden-right': (!menu_bar_visible || Number(props.number) == song_count)}">
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
+    </div>
+    <div class="broadcast-button-container" v-if="broadcast_api.is_authorized" v-show="!is_broadcast_menu_open">
+        <div class="broadcast-button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
+            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg">
+        </div>
+    </div>
+    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="(e) => e.preventDefault()">
+        <h1>Broadcast</h1>
+        <div class="close-button">
+            <img @click="is_broadcast_menu_open = false" class="ionicon" src="/assets/close.svg" />
+        </div>
+        <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
+        <br>
+        <h3>Verses</h3>
+        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="() => {
+                if(verses[0] == -2) 
+                    verses = [];
+                else
+                    verses = [-2];
+            }">
+            All
+        </a>
+        <br>
+        <div class="verse-list">
+            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="() => {
+                if(verses[0] == -2) 
+                    verses = [];
+
+                if(verses.includes(verse))
+                    verses.splice(verses.indexOf(verse), 1);
+                else
+                    verses.push(verse);
+            }">
+                {{ verse }}
+            </a>
+        </div>
+        <button class="send-button" @click="broadcast()">Send</button>
     </div>
 
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
@@ -483,44 +522,6 @@ function get_note_icon(note: string) {
             </div>
         </div>
     </div>
-    
-    <div class="broadcast-button-container" v-if="broadcast_api.is_authorized" :class="{ 'arrow-hidden-right': !menu_bar_visible}" v-show="!is_broadcast_menu_open">
-        <div class="broadcast-button">
-            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg">
-        </div>
-    </div>
-    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="(e) => e.preventDefault()">
-        <h1>Broadcast</h1>
-        <div class="close-button">
-            <img @click="is_broadcast_menu_open = false" class="ionicon" src="/assets/close.svg" />
-        </div>
-        <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
-        <br>
-        <h3>Verses</h3>
-        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="() => {
-                if(verses[0] == -2) 
-                    verses = [];
-                else
-                    verses = [-2];
-            }">
-            All
-        </a>
-        <br>
-        <div class="verse-list">
-            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="() => {
-                if(verses[0] == -2) 
-                    verses = [];
-
-                if(verses.includes(verse))
-                    verses.splice(verses.indexOf(verse), 1);
-                else
-                    verses.push(verse);
-            }">
-                {{ verse }}
-            </a>
-        </div>
-        <button class="send-button" @click="broadcast()">Send</button>
-    </div>
     <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
         @mouseup="(e) => {
             if(Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5)
@@ -541,35 +542,6 @@ function get_note_icon(note: string) {
 </template>
 
 <style>
-.flip-indicator {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    border-radius: 50px;
-    height: 10vw;
-    width: 10vw;
-    max-height: 50px;
-    max-width: 50px;
-    margin: 0 15px;
-    background-color: var(--button-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.indicator-text {
-    text-align: center;
-    font-size: 5vw;
-    color: var(--back-color);
-    margin: 0;
-}
-.flip-indicator-left {
-    left: 0;
-}
-.flip-indicator-right {
-    right: 0;
-}
 .send-button {
     background-color: var(--blue);
     color: white;
@@ -612,15 +584,11 @@ function get_note_icon(note: string) {
     text-align: center;
     padding: 15px;
 }
+
 .broadcast-button-container {
     position: fixed;
     top: calc(61.16px + env(safe-area-inset-top) + 15px);
-    width: 100%;
-    display: flex;
-    justify-content: right;
     z-index: 1;
-    transition: opacity 0.25s, transform 0.3s;
-    opacity: 1;
 }
 
 .broadcast-button {
