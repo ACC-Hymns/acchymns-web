@@ -12,7 +12,6 @@ const props = defineProps<{
 }>();
 const router = useRouter();
 
-const show_list = ref(true);
 const error_active = ref(false);
 
 let book_ref = ref("");
@@ -101,40 +100,6 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-function hideList(topic: string) {
-    if (show_list.value) {
-        show_list.value = false;
-        active_topic.value = topic;
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        }, 10);
-    } else {
-        showList();
-    }
-}
-
-function showList() {
-    show_list.value = true;
-    active_topic.value = "";
-    setTimeout(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }, 10);
-}
-
-function goBack() {
-    if (show_list.value) {
-        router.back();
-    } else {
-        showList();
-    }
-}
-
 let isAlphabetical = useSessionStorage<boolean>("isAlphabetical", false);
 const alphabeticalSongs = ref<Song[]>([]);
 let title = ref("Topical Index");
@@ -178,7 +143,7 @@ function toggleDropdown(topic: string) {
 <template>
     <div class="menu">
         <div class="title">
-            <img @click="goBack()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
+            <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">{{ title }}</h1>
             <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
         </div>

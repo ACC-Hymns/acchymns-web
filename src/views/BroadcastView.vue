@@ -112,7 +112,7 @@ setInterval(set_data, 1000);
                 <div class="minute-hand" :style="{ transform: minutes }"></div>
                 <div class="second-hand" :style="{ transform: seconds }"></div>
             </div>
-            <span v-for="i in 12" :style="clockNumberPosition(i)">{{ i }}</span>
+            <span v-for="i in 12" :key="i" :style="clockNumberPosition(i)">{{ i }}</span>
             <div class="diallines" v-for="i in 60" :key="i" :style="{ transform: 'rotate(' + 6 * i + 'deg)' }"></div>
         </div>
     </div>

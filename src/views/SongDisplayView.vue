@@ -13,7 +13,7 @@ import { interpolate } from "polymorph-js";
 import { Capacitor } from "@capacitor/core";
 import { Network } from "@capacitor/network";
 import { ScreenOrientation } from "@capacitor/screen-orientation";
-import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
+import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 
 const props = defineProps<SongReference>();
@@ -327,7 +327,7 @@ async function playMedia() {
     media_is_playing.value = !media_is_playing.value;
 }
 
-function release_audio_position(e: Event) {
+function release_audio_position() {
     media_is_scrubbing.value = false;
     if (media_is_playing.value && audio_source.value?.paused && !audio_source.value?.ended) audio_source.value?.play();
 }
@@ -347,7 +347,7 @@ function secondsToTimestamp(seconds: number) {
     return `${minutes}:${remaining_seconds < 10 ? "0" : ""}${remaining_seconds}`;
 }
 
-function toggleMenu(e: any) {
+function toggleMenu() {
     menu_bar_visible.value = !menu_bar_visible.value;
 }
 
@@ -516,7 +516,7 @@ function get_note_icon(note: string) {
                     class="media-timeline"
                     :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
                     :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
-                    @change="e => release_audio_position(e)"
+                    @change="release_audio_position()"
                     :style="{
                         background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
                             (media_timestamp_elapsed / media_timestamp_end) * 100
@@ -588,14 +588,14 @@ function get_note_icon(note: string) {
         @mousedown="e => (hide_touch_pos = { x: e.screenX, y: e.screenY })"
         @mouseup="
             e => {
-                if (Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5) toggleMenu(e);
+                if (Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5) toggleMenu();
             }
         "
         @touchstart="e => (hide_touch_pos = { x: e.touches[0].screenX, y: e.touches[0].screenY })"
         @touchend="
             e => {
                 if (Math.abs(hide_touch_pos.x - e.changedTouches[0].screenX) < 5 && Math.abs(hide_touch_pos.y - e.changedTouches[0].screenY) < 5)
-                    toggleMenu(e);
+                    toggleMenu();
             }
         "
         @touchmove="

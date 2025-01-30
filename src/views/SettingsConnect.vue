@@ -17,7 +17,6 @@ import {
 } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
-import router from "@/router";
 import { Capacitor } from "@capacitor/core";
 import { loadBookSources } from "@/scripts/book_import";
 const { back } = useNavigator();
@@ -47,10 +46,7 @@ async function authorize(response: AxiosResponse<any, any>) {
         status.value = UserStatus.Authorized;
 
         let data = await scan(request_client());
-        churches.value = [];
-        for (const [key, value] of Object.entries(data)) {
-            churches.value.push(value);
-        }
+        churches.value = Object.values(data);
         selected_church.value = auth.church_id;
         await populate_bg_color();
     } else {
@@ -78,10 +74,6 @@ async function signout() {
     status.value = UserStatus.Unauthorized;
     input.value = "";
     unlocked.value = false;
-}
-
-function view_output() {
-    router.push({ path: "/broadcast" });
 }
 
 function backspace_pin() {
@@ -167,10 +159,7 @@ onMounted(async () => {
 
         status.value = UserStatus.Authorized;
         let data = await scan(request_client());
-        churches.value = [];
-        for (const [key, value] of Object.entries(data)) {
-            churches.value.push(value);
-        }
+        churches.value = Object.values(data);
 
         selected_church.value = token_response_data.church_id;
         await populate_bg_color();
@@ -179,7 +168,7 @@ onMounted(async () => {
     }
 });
 
-async function broadcast_reading(e: MouseEvent) {
+async function broadcast_reading() {
     let top_text = "";
     let bottom_text = "";
     if (read_type.value == 1) {
@@ -208,11 +197,11 @@ let selected_hymnal = ref<number>(0);
 let song_number = ref<string>("");
 let verses = ref<number[]>([]);
 
-function set_selected_hymnal(e: Event, id: number) {
+function set_selected_hymnal(id: number) {
     selected_hymnal.value = id;
 }
 
-async function broadcast_song_number(e: MouseEvent) {
+async function broadcast_song_number() {
     let book = book_sources.value[selected_hymnal.value];
     if (!book) return book;
     await set(request_client(), selected_church.value, song_number.value, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
@@ -321,12 +310,12 @@ function get_lock_icon() {
             <p>Please enter 4-digit PIN</p>
         </div>
         <div class="pin-input-container" :class="{ 'pin-input--error': login_error }">
-            <div v-for="i in 4" :class="input.length == i - 1 ? 'pin-space-active' : 'pin-space'">
+            <div v-for="i in 4" :key="i" :class="input.length == i - 1 ? 'pin-space-active' : 'pin-space'">
                 <img v-if="input.length >= i" class="ionicon pin-dot" src="/assets/ellipse.svg" />
             </div>
         </div>
         <div class="keypad">
-            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{ opacity: i == 10 ? 0 : 1 }">
+            <div class="key" v-for="i in 12" :key="i" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{ opacity: i == 10 ? 0 : 1 }">
                 <a v-if="i == 10"></a>
                 <a v-else-if="i == 11">
                     <h4>0</h4>
@@ -459,7 +448,7 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
                 <div>
-                    <button class="send-button" @click="e => broadcast_reading(e)">Send</button>
+                    <button class="send-button" @click="broadcast_reading()">Send</button>
                 </div>
                 <button class="settings-button" @click="back_button()">Back</button>
             </div>
@@ -472,7 +461,8 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a
                         v-for="i in book_sources.length"
-                        @click="e => set_selected_hymnal(e, i - 1)"
+                        :key="i"
+                        @click="set_selected_hymnal(i - 1)"
                         class="biblebook"
                         :class="{ selected: selected_hymnal == i - 1 }"
                         :style="{ 'background-color': book_sources[i - 1].primaryColor }"
@@ -527,11 +517,7 @@ function get_lock_icon() {
                     </a>
                 </div>
                 <div>
-                    <button
-                        class="send-button"
-                        :disabled="song_number.length == 0 || Number(song_number) == 0"
-                        @click="e => broadcast_song_number(e)"
-                    >
+                    <button class="send-button" :disabled="song_number.length == 0 || Number(song_number) == 0" @click="broadcast_song_number()">
                         Send
                     </button>
                 </div>

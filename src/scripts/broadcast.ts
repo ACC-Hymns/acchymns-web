@@ -1,5 +1,4 @@
 import { DynamoDBClient, GetItemCommand, ScanCommand, UpdateItemCommand, type UpdateItemCommandInput } from "@aws-sdk/client-dynamodb";
-import type { BookSummary, Song } from "./types";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 import axios from "axios";
 

@@ -11,8 +11,8 @@ import {
 } from "@/scripts/types";
 import { branch, known_references, prepackaged_book_urls, prepackaged_books, public_references } from "@/scripts/constants";
 import { Preferences } from "@capacitor/preferences";
-import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
-import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
+import { Directory, Filesystem } from "@capacitor/filesystem";
+import type { DownloadFileResult } from "@capacitor/filesystem";
 import { Capacitor } from "@capacitor/core";
 import { Network } from "@capacitor/network";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -314,14 +314,14 @@ async function handle_missing_book(book_short: string) {
             if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
                 return;
             } else {
-                if (await addImportedURL(to_import, false)) {
+                if (await addImportedURL(to_import)) {
                     router.go(0);
                 }
             }
         }
     }
 
-    async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
+    async function addImportedURL(input_book: BookDataSummary): Promise<boolean> {
         const book = book_sources.value.find(b => b.id == input_book.id);
         if (book == undefined) return false;
 
@@ -590,7 +590,6 @@ function download_book(
                 throw new Error("Download Cancelled");
             }
 
-            const download_progress = `${(i / num_of_songs) * 100}%`;
             progress_callback(book, (i / num_of_songs) * 100);
 
             // check for final song

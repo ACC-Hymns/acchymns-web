@@ -92,13 +92,6 @@ function toggleDropdown(group: string[]) {
     saveGroupOpened(route.fullPath, ids);
 }
 
-const scrollIntoViewWithOffset = (selector: HTMLElement, offset: number) => {
-    window.scrollTo({
-        behavior: "smooth",
-        top: selector.getBoundingClientRect().top - document.body.getBoundingClientRect().top - offset,
-    });
-};
-
 function getRangeString(start: string, end: string) {
     if (start == end) {
         return start;
@@ -143,7 +136,7 @@ function getRangeString(start: string, end: string) {
             </RouterLink>
         </div>
         <!-- Buttons with song grouping enabled -->
-        <div v-else v-for="group in song_number_groups" class="song-group-container" ref="song_group_elements">
+        <div v-else v-for="(group, index) in song_number_groups" :key="index" class="song-group-container" ref="song_group_elements">
             <div>
                 <div class="song-group-title-container" @click="toggleDropdown(group)">
                     <div class="song-title">{{ getRangeString(group[0], group[group.length - 1]) }}</div>

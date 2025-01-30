@@ -241,6 +241,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
                 </div>
                 <BaseBookBox
                     v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)"
+                    :key="book.id"
                     :summary="book"
                     :isEnabled="false"
                 ></BaseBookBox>

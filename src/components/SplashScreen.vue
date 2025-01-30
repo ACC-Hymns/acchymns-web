@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 let landing_complete = useLocalStorage<boolean>("update3showcase", false);
 
@@ -96,7 +96,13 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
         </div>
         <div class="bottom-container">
             <div class="progress">
-                <img v-for="index in 3" class="ionicon progress-icon" :src="active(scroll_index == index - 1)" @click="scroll_to_index(index - 1)" />
+                <img
+                    v-for="index in 3"
+                    :key="index"
+                    class="ionicon progress-icon"
+                    :src="active(scroll_index == index - 1)"
+                    @click="scroll_to_index(index - 1)"
+                />
             </div>
             <div class="details">
                 <h1 class="change-header" :class="{ 'scrolling-text': is_scrolling }">{{ change_headers[scroll_index] }}</h1>

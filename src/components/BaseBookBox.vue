@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type BookDataSummary } from "@/scripts/types";
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         summary: BookDataSummary;
         isEnabled?: boolean;
