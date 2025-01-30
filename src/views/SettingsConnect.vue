@@ -318,7 +318,6 @@ function get_lock_icon() {
         </div>
     </div>
     <div v-if="status == UserStatus.Unauthorized" class="login-container">
-
         <div class="login-instructions">
             <img class="ionicon" :class="{'unlocked': unlocked}" :src="get_lock_icon()" />
             <p>Please enter 4-digit PIN</p>
@@ -461,7 +460,6 @@ function get_lock_icon() {
                 <div class="verse-list-wide">
                     <div></div>
                     <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
-
                         if(verses[0] == -2) {
                             verses = [];
                             return;
@@ -469,7 +467,6 @@ function get_lock_icon() {
                             verses = [];  
                             verses.push(-2);
                         }
-                        
                     }">
                     All
                     </a>
@@ -477,7 +474,6 @@ function get_lock_icon() {
                 </div>
                 <div class="verse-list-wide">
                     <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
-
                         if(verses[0] == -2) 
                             verses = [];
 

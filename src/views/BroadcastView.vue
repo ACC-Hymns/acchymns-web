@@ -3,15 +3,6 @@ import { ref } from "vue";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import type { ChurchData } from "@/scripts/broadcast";
 
-let song_number = ref<string>("");
-let verses = ref<string>("");
-let color = ref<string>("");
-let book_name = ref<string>("Unauthorized");
-let verses_visible = ref<boolean>(false);
-let is_bible_reading = ref<boolean>(false);
-let top_text = ref<string>("");
-let bottom_text = ref<string>("");
-
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
 const hours = ref<string>('');
@@ -28,9 +19,9 @@ function clock() {
     let mDeg = m * 6 + s * (360/3600);
     let sDeg = s * 6;
 
-    hours.value = "rotate("+hDeg+"deg)";
-    minutes.value = "rotate("+mDeg+"deg)";
-    seconds.value = "rotate("+sDeg+"deg)";
+    hours.value = `rotate(${hDeg}deg)`;
+    minutes.value = `rotate(${mDeg}deg)`;
+    seconds.value = `rotate(${sDeg}deg)`;
     
     // 12 hour format
     let am_pm = h >= 12 ? 'PM' : 'AM';
@@ -39,7 +30,29 @@ function clock() {
     digital_time.value = `${hrs}:${m < 10 ? '0' + m : m} ${am_pm}`;
 }
 
+function clockNumberPosition(index: number) {
+    const radius = 225;
+    const angle = ((index - 3) * 30) * (Math.PI / 180); // Offset for correct placement
+    const x = radius * Math.cos(angle);
+    const y = radius * Math.sin(angle);
+    
+    return {
+        transform: `translate(${x}px, ${y}px)`,
+    };
+}
+
 setInterval(clock, 100);
+
+const song_number = ref<string>("");
+const verses = ref<string>("");
+const verses_font_size = ref<string>("10rem");
+const color = ref<string>("");
+const bg_color = ref<string>("#b49267");
+const book_name = ref<string>("Unauthorized");
+const verses_visible = ref<boolean>(false);
+const is_bible_reading = ref<boolean>(false);
+const top_text = ref<string>("");
+const bottom_text = ref<string>("");
 
 const broadcast_api = useBroadcastAPI();
 
@@ -47,6 +60,7 @@ async function set_data() {
     if (!broadcast_api.is_ready) {
         return;
     }
+
     let data: ChurchData = await broadcast_api.getCurrentBroadcast() as ChurchData;
     is_bible_reading.value = data.BOOK_ID.S == "BIBLE";
 
@@ -64,16 +78,19 @@ async function set_data() {
         } else {
             data.VERSES.NS.sort((a, b) => a - b);
             verses.value = data.VERSES.NS.join(", ");
+            verses_font_size.value = verses.value.length > 30 ? "8rem" : "10rem";
             verses_visible.value = true;
         }
         color.value = data.BOOK_COLOR.S;
         book_name.value = data.BOOK_ID.S;
+        bg_color.value = data.BG_COLOR.S;
     }
 }
-setInterval(set_data, 2000);
+setInterval(set_data, 1000);
 </script>
 
 <template>
+    <div class="background-cover"></div>
     <div class="info-seperator">
         <div v-if="is_bible_reading" class="song-info">
           <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
@@ -95,24 +112,19 @@ setInterval(set_data, 2000);
                 <div class="minute-hand" :style="{transform: minutes}"></div>
                 <div class="second-hand" :style="{transform: seconds}"></div>
             </div>
-            <div>
-              <span v-for="i in 12" :class="('h' + i)">{{ i }}</span>
-            </div>
+            <span v-for="i in 12" :style="clockNumberPosition(i)">{{ i }}</span>
             <div class="diallines" v-for="i in 60" :key="i" :style="{transform: 'rotate(' + 6 * i + 'deg)'}"></div>
         </div>
     </div>
-
 </template>
 
-<style>
-body {
-    background-color: white;
-}
-</style>
-
 <style scoped>
-.wall-color {
-  background-color: #EACFA3;
+.background-cover {
+    background-color: v-bind(bg_color);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
 }
 
 .top-text {
@@ -176,32 +188,8 @@ body {
     line-height: 1;
 }
 
-.verses-container {
-  position: fixed;
-  right: 0;
-}
-
-.verses-grid {
-  display: grid;
-  gap: 10px;
-  width: 5vw;
-  height: 5vw;
-}
-
-.verse {
-    font-size: 6em;
-    color: #333;
-    border-radius: 50%;
-    text-align: center;
-    background-color: #e0e0e0;
-    width: 100%;
-    padding: 0 0%;
-    
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.308);
-}
-
 .verses {
-    font-size: 10em;
+    font-size: v-bind(verses_font_size);
     color: #000000;
     margin: 0 5%;
     top: 60%;
@@ -209,6 +197,7 @@ body {
     margin: 0 5%;
     max-width: 60%;
 }
+
 .verses-label {
     font-size: 5em;
     color: #000000;
@@ -218,16 +207,7 @@ body {
     margin: 0 5%;
 }
 
-.clock-bible-long {
-  transform: translate(25vw, 12vh);
-}
-.clock-bible {
-  transform: translateX(25vw);
-}
-.clock-song {
-  transform: translateX(25vw);
-}
-
+/* Clock CSS */
 .clock {
   background: rgb(20, 20, 20);
   width: 600px;
@@ -301,66 +281,22 @@ body {
 }
 
 span {
-  display: inline-block;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   color: white;
   font-size: 72px;
   font-family: sans-serif;
   font-weight: 700;
   z-index: 4;
-}
-
-.h12 {
-  top: 5%;
-  left: 50%;
-  margin-left: -40px;
-}
-.h1 {
-  top: 10%;
-  left: 66%;
-}
-.h2 {
-  top: 25%;
-  left: 80%;
-}
-.h3 {
-  top: 50%;
-  right: 8%;  
-  margin-top: -41px;
-}
-.h4 {
-  bottom: 24%;
-  left: 80%;
-}
-.h5 {
-  bottom: 10%;
-  left: 66%;
-}
-.h6 {
-  bottom: 5%;
-  left: 50%;
-  margin-left: -22px;
-}
-.h7 {
-  bottom: 10%;
-  left: 28%;
-}
-.h8 {
-  bottom: 25%;
-  left: 14%;
-}
-.h9 {
-  left: 8%;
-  top: 50%;
-  margin-top: -41px;
-}
-.h10 {
-  top: 25%;
-  left: 12%;
-}
-.h11 {
-  top: 10%;
-  left: 26%;
+  transform-origin: center;
 }
 
 .diallines {
@@ -374,7 +310,7 @@ span {
   transform-origin: 50% 300px;
   border-radius: 5px;
 }
-.diallines:nth-of-type(5n + 3) {
+.diallines:nth-of-type(5n + 2) {
   position: absolute;
   z-index: 2;
   width: 8px;
@@ -384,5 +320,4 @@ span {
   margin-left: -4px;
   transform-origin: 50% 300px;
 }
-
 </style>
