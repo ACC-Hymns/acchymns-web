@@ -16,9 +16,10 @@ onMounted(async () => {
     console.log("Loading MusicXML");
     console.log(root.value)
     try {
-        let osmd = new OpenSheetMusicDisplay(root.value as HTMLDivElement, {
+        const osmd = new OpenSheetMusicDisplay(root.value as HTMLDivElement, {
             autoResize: false,
             backend: "canvas",
+            disableCursor: false,
             pageBackgroundColor: "white",
             stretchLastSystemLine: true,
             autoGenerateMultipleRestMeasuresFromRestMeasures: false,
@@ -28,10 +29,11 @@ onMounted(async () => {
             newSystemFromNewPageInXML: true,
             onXMLRead: fixXML,
         });
-        
+        osmd.setLogLevel("debug");
         await osmd.load(props.src);
         await osmd.render();
-    } catch {
+    } catch (e) {
+        console.log(e);
         emit("error");
         return;
     }

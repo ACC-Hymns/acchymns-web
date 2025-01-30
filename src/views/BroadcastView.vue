@@ -3,9 +3,6 @@ import { ref } from "vue";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import type { ChurchData } from "@/scripts/broadcast";
 
-let hours = ref<string>("");
-let minutes = ref<string>("");
-
 // Thanks to Vasko Petrov for supplying the clock
 // https://codepen.io/vaskopetrov/pen/yVEXjz
 const hours = ref<string>("");
