@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { useBookSummary } from "@/composables/book_metadata";
 import { getBookDataSummary } from "@/scripts/book_import";
-import router from "@/router";
-import { BookSourceType, type BookDataSummary, type BookSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
+import { type BookDataSummary } from "@/scripts/types";
 import { onMounted, ref } from "vue";
 
 const props = withDefaults(

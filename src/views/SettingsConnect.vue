@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { RouterLink, createRouterMatcher } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
-import axios, { Axios, type AxiosResponse } from 'axios';
-import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse, set_bg_color, get } from "@/scripts/broadcast";
+import axios, { type AxiosResponse } from 'axios';
+import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse, set_bg_color, get  } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
-import { type BookDataSummary, type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
-import { fetchCachedJSON } from "@/composables/cached_fetch";
+import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
 import router from "@/router";
 import { Capacitor } from "@capacitor/core";
 import { loadBookSources } from "@/scripts/book_import";
@@ -319,7 +318,6 @@ function get_lock_icon() {
         </div>
     </div>
     <div v-if="status == UserStatus.Unauthorized" class="login-container">
-
         <div class="login-instructions">
             <img class="ionicon" :class="{'unlocked': unlocked}" :src="get_lock_icon()" />
             <p>Please enter 4-digit PIN</p>
@@ -462,7 +460,6 @@ function get_lock_icon() {
                 <div class="verse-list-wide">
                     <div></div>
                     <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
-
                         if(verses[0] == -2) {
                             verses = [];
                             return;
@@ -470,7 +467,6 @@ function get_lock_icon() {
                             verses = [];  
                             verses.push(-2);
                         }
-                        
                     }">
                     All
                     </a>
@@ -478,7 +474,6 @@ function get_lock_icon() {
                 </div>
                 <div class="verse-list-wide">
                     <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
-
                         if(verses[0] == -2) 
                             verses = [];
 
@@ -527,24 +522,8 @@ function get_lock_icon() {
                 </a>
             </div>
         </div>
-        <nav class="nav">
-            <RouterLink to="/" class="nav__link">
-                <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-                <span class="nav__text">Home</span>
-            </RouterLink>
-            <RouterLink to="/search" class="nav__link">
-                <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-                <span class="nav__text">Search</span>
-            </RouterLink>
-            <RouterLink to="/bookmarks" class="nav__link">
-                <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-                <span class="nav__text">Bookmarks</span>
-            </RouterLink>
-            <RouterLink to="/settings" class="nav__link nav__link--active">
-                <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-                <span class="nav__text">Settings</span>
-            </RouterLink>
-        </nav>
+
+        <NavigationBar current_page="settings" />
     </div>
     <div v-else class="lds-ring-container">
         <!--Loading Ring-->

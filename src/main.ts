@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 
 import App from "./App.vue";
+import VueClickAway from "vue3-click-away";
 import router from "./router";
 
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
@@ -15,6 +16,7 @@ import "@/scripts/dark_mode";
 const app = createApp(App);
 
 app.use(createPinia());
+app.use(VueClickAway);
 app.use(router);
 
 // set webview settings

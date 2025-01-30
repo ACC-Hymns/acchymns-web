@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from "vue";
-import { download_import_summary, getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
+import { getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
 import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
-import { known_references } from "@/scripts/constants";
-import { useCapacitorPreferences } from "@/composables/preferences";
-import { BookSourceType, type BookDataSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
-import { Network } from "@capacitor/network";
-import { Toast } from "@capacitor/toast";
+import NavigationBar from "@/components/NavigationBar.vue";
+
 
 const props = defineProps<{
     book: string;
@@ -51,21 +47,14 @@ onMounted(async () => {
 
     let song_count = song_numbers.value.length;
     let num_groups = Math.ceil(song_count/100);
-    if (song_count % 100 == 0) {
-        num_groups += 1;
-    }
 
     // Dividing songs into groups of 100
     for (let i = 0; i < num_groups; i++) {
+        const re = new RegExp(/[a-z]/, "i");
         song_number_groups.value?.push(song_numbers.value.filter((song) => {
-            const re = new RegExp(/[a-z]/, "i");
             let song_num = song.replace(re, "");
 
-            if (Number(song_num) >= i*100 && Number(song_num) < ((i+1)*100)) {
-                return true;
-            }
-
-            return false;
+            return i*100 < Number(song_num) && Number(song_num) <= ((i+1)*100);
         }));
     }
 
@@ -169,24 +158,7 @@ function getRangeString(start: string, end: string) {
         </div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="home" />
 </template>
 
 <style scoped>

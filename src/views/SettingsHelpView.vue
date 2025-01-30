@@ -3,7 +3,6 @@ import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import { RouterLink } from "vue-router";
 import { clearCache } from "@/composables/cached_fetch";
-import { resetOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Preferences } from "@capacitor/preferences";
@@ -13,6 +12,7 @@ import type { UpdatePackage } from "@/scripts/types";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { Capacitor } from "@capacitor/core";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
@@ -151,26 +151,9 @@ async function clearAllData() {
                 <span>Clear All Data</span>
             </a>
         </div>
-
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+
+    <NavigationBar current_page="settings" />
 </template>
 
 <style scoped>

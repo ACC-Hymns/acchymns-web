@@ -5,6 +5,7 @@ import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router"
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 const props = defineProps<{
     book: string;
@@ -13,7 +14,6 @@ const router = useRouter();
 
 const show_list = ref(true);
 const error_active = ref(false);
-const scroll_topic_list = ref<Element | null>(null);
 
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
@@ -229,24 +229,7 @@ function toggleDropdown(topic: string) {
         </div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="home" />
 </template>
 
 <style>

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import { getAllSongMetaData, getAllBookMetaData, getBookDataSummary, fetchBookSummary, getBookDataSummaryFromName } from "@/scripts/book_import";
-import { computed, ref, onMounted, watch, onUpdated, nextTick } from "vue";
+import { getAllSongMetaData, getAllBookMetaData, getBookDataSummaryFromName } from "@/scripts/book_import";
+import { computed, ref, onMounted, watch, nextTick } from "vue";
 import { useSessionStorage } from "@vueuse/core";
-import { Capacitor } from "@capacitor/core";
-import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary, BookSourceType } from "@/scripts/types";
+import { type BookSummary, type Song, type SongSearchInfo, type SearchParams, type BookDataSummary } from "@/scripts/types";
 import { hexToRgb, Color, Solver } from "@/scripts/color";
 import { known_references, prepackaged_books } from "@/scripts/constants";
 import { saveScrollPosition, restoreScrollPosition} from "@/router/scroll";
+import { stripSearchText } from "@/scripts/search";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -19,12 +20,7 @@ const search_params = useSessionStorage<SearchParams>("searchParams", { search: 
 
 const search_query = ref(search_params.value.search);
 const stripped_query = computed(() => {
-    return search_query.value
-        .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-        .replace(/s{2,}/g, " ")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
+    return stripSearchText(search_query.value);
 });
 
 watch(search_query, new_query => {
@@ -66,6 +62,7 @@ const limited_search_results = computed(() => {
     return search_results.value.slice(0, display_limit.value);
 });
 
+
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
     const SONG_METADATA = await getAllSongMetaData();
@@ -81,19 +78,8 @@ onMounted(async () => {
                 title: song?.title ?? "",
                 number: song_number,
                 book: BOOK_METADATA[book],
-                stripped_title: song.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .replace(/s{2,}/g, " ")
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/\p{Diacritic}/gu, ""),
-                stripped_first_line:
-                    song?.first_line
-                        ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                        ?.replace(/s{2,}/g, " ")
-                        ?.toLowerCase()
-                        ?.normalize("NFD")
-                        ?.replace(/\p{Diacritic}/gu, "") ?? "",
+                stripped_title: stripSearchText(song?.title ?? ""),
+                stripped_first_line: stripSearchText(song?.first_line ?? ""),
             } as SongSearchInfo);
         }
     }
@@ -111,30 +97,19 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-const filter_content = ref<Element>();
+const isOpen = ref<boolean>(false);
 
-var isOpen = false;
-
-function resetModals() {
-    if (filter_content.value?.classList.contains("dropdown-content-active") && !isOpen) filter_content.value?.classList.remove("dropdown-content-active");
-    isOpen = false;
+function resetDropdown() {
+    isOpen.value = false;
 }
-
-function showDropdown() {
-    if (filter_content.value?.classList.contains("dropdown-content-active")) {
-        filter_content.value?.classList.remove("dropdown-content-active");
-        isOpen = false;
-    } else {
-        isOpen = true;
-        filter_content.value?.classList.add("dropdown-content-active");
-    }
+function toggleDropdown() {
+    isOpen.value = !isOpen.value;
 }
 
 let book_filters = ref<Element[]>([]);
-let all_hymnals_filter = ref<Element>();
 
 function filterBook(short_book_name: string) {
-    isOpen = true;
+    isOpen.value = true;
     if (search_params.value.bookFilters.includes(short_book_name)) {
         let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
         search_params.value.bookFilters.splice(index, 1);
@@ -155,24 +130,18 @@ function checkmarked(selected: boolean) {
     }
 }
 
-onUpdated(async () => {
-    for (var i = 0; i < book_filters.value?.length; i++) {
-        const img = book_filters.value?.at(i)?.children[0].children[0];
-        const rgb = hexToRgb(available_books.value.at(i)?.primaryColor ?? "#000000");
-        if (rgb?.length !== 3) {
-            alert("Invalid format!");
-            return;
-        }
-        const color = new Color(rgb[0], rgb[1], rgb[2]);
-        const solver = new Solver(color);
-        const result = solver.solve();
-        img?.setAttribute("style", `${result.filter}`);
+function calculateIconFilter(color: string) {
+    const rgb = hexToRgb(color ?? "#000000");
+    if (rgb?.length !== 3) {
+        return "";
     }
-});
+    const solver = new Solver(new Color(rgb[0], rgb[1], rgb[2]));
+    const result = solver.solve();
+    return result.filter;
+}
 </script>
 
 <template>
-    <div @click="resetModals" class="blocker">
         <h1 class="pagetitle">Search</h1>
         <div class="search-bar">
             <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
@@ -186,20 +155,20 @@ onUpdated(async () => {
             </button>
         </div>
         <div class="filters">
-            <a @click="showDropdown()" class="dropdown">
+            <a @click="toggleDropdown()" v-click-away="resetDropdown" class="dropdown">
                 <p class="dropdown-text">Filters</p>
                 <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
             </a>
-            <div class="dropdown-content" ref="filter_content">
+            <div class="dropdown-content" :class="isOpen ? 'dropdown-content-active' : ''">
                 <a>
-                    <div class="dropdown-content-top-item" ref="all_hymnals_filter" @click="clearFilters">
+                    <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
                 <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                     <div class="dropdown-content-item">
-                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" />
+                        <img class="ionicon" :src="checkmarked(search_params.bookFilters.includes(book.name.short))" :style="calculateIconFilter(book.primaryColor)"/>
                         <div class="dropdown-content-text">{{ book.name.medium }}</div>
                     </div>
                 </a>
@@ -227,26 +196,8 @@ onUpdated(async () => {
                 <div class="song__title">Show more</div>
             </div>
         </div>
-    </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/search.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="search" />
 </template>
 
 <style>
