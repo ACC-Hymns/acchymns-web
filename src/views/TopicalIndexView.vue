@@ -36,7 +36,7 @@ const songs_to_display = computed(() => {
 
 onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
-    if(!_.fullPath.includes("/display")) {
+    if (!_.fullPath.includes("/display")) {
         removeGroupOpened(from.fullPath);
         removeScrollPosition(from.fullPath);
     }
@@ -62,7 +62,9 @@ onMounted(async () => {
                 notes: BOOK_SONG_METADATA[song_number].notes,
             });
         }
-        topical_index.value[topic_name].sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+        topical_index.value[topic_name].sort((a, b) =>
+            a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
+        );
     }
     song_number_groups.value = Object.keys(topical_index.value);
     for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
@@ -74,7 +76,9 @@ onMounted(async () => {
             first_line: song?.first_line,
         });
     }
-    alphabeticalSongs.value.sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
+    alphabeticalSongs.value.sort((a, b) =>
+        a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
+    );
 
     if (isAlphabetical.value) {
         title.value = "Alphabetical Index";
@@ -85,10 +89,10 @@ onMounted(async () => {
     }
 
     let group_ids = getGroupOpened(route.fullPath);
-    if(group_ids != undefined) {
-        group_ids.forEach((id) => {
+    if (group_ids != undefined) {
+        group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
-        })
+        });
     }
 
     // Restoring position in book
@@ -163,10 +167,10 @@ function toggleDropdown(topic: string) {
     }
 
     let ids: number[] = [];
-    song_number_groups_active.value.forEach((group_id) => {
+    song_number_groups_active.value.forEach(group_id => {
         var index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
-    })
+    });
     saveGroupOpened(route.fullPath, ids);
 }
 </script>
@@ -188,11 +192,18 @@ function toggleDropdown(topic: string) {
         <div v-if="!isAlphabetical">
             <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
                 <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
-                    <div class="song-title">{{topic}}</div>
-                    <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(topic.toString())}"/>
+                    <div class="song-title">{{ topic }}</div>
+                    <img
+                        class="ionicon nav__icon dropdown-icon"
+                        src="/assets/chevron-back-outline.svg"
+                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(topic.toString()) }"
+                    />
                 </div>
-                <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(topic.toString())}">
-                    <div class="song-button-container" :class="{'song-button-container-active': song_number_groups_active.includes(topic.toString())}">
+                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(topic.toString()) }">
+                    <div
+                        class="song-button-container"
+                        :class="{ 'song-button-container-active': song_number_groups_active.includes(topic.toString()) }"
+                    >
                         <RouterLink
                             v-for="song in topical_index[topic]"
                             :key="song.title + song.number"
@@ -207,8 +218,8 @@ function toggleDropdown(topic: string) {
                                 <div class="song__number">#{{ song.number }}</div>
                             </div>
                         </RouterLink>
-                    </div>     
-                </div>     
+                    </div>
+                </div>
             </div>
         </div>
         <div class="song-list" v-else>

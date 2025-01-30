@@ -8,7 +8,7 @@ import { ref, onMounted, computed, onUpdated, watch } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
-const props = defineProps<SongReference>(); 
+const props = defineProps<SongReference>();
 
 let song_img_type = ref("");
 let panzoom_container = ref<HTMLDivElement>();
@@ -67,17 +67,20 @@ onMounted(async () => {
 
     BOOK_METADATA = await getAllBookMetaData();
 
-    watch([props], () => {
-        error_is_active.value = false;
-        if (BOOK_METADATA[props.book] == undefined) {
-            error_is_active.value = true;
-            return;
-        }
-        const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
-        song_img_type.value = BOOK_METADATA[props.book].fileExtension;
-        song_img_src.value = songSrc;
-    },
-    { immediate: true });
+    watch(
+        [props],
+        () => {
+            error_is_active.value = false;
+            if (BOOK_METADATA[props.book] == undefined) {
+                error_is_active.value = true;
+                return;
+            }
+            const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
+            song_img_type.value = BOOK_METADATA[props.book].fileExtension;
+            song_img_src.value = songSrc;
+        },
+        { immediate: true },
+    );
 });
 
 class IntersectionObserverManager {
@@ -96,26 +99,20 @@ class IntersectionObserverManager {
         try {
             this._observedNodes.delete(node);
             this._observer.unobserve(node);
-        } catch(e) {
-
-        }
+        } catch (e) {}
     }
     disconnect() {
         try {
             this._observedNodes.clear();
             this._observer.disconnect();
-        } catch(e) {
-
-        }
+        } catch (e) {}
     }
     refresh() {
         for (let node of this._observedNodes) {
             try {
                 this._observer.unobserve(node as Element);
                 this._observer.observe(node as Element);
-            } catch(e) {
-
-            }
+            } catch (e) {}
         }
     }
 }
@@ -134,8 +131,8 @@ const observer = new IntersectionObserverManager(
             root: null,
             rootMargin: "0px",
             threshold: 1,
-        }
-    )
+        },
+    ),
 );
 
 onUpdated(async () => {
@@ -148,8 +145,20 @@ onUpdated(async () => {
         <img src="/assets/wifi_off.svg" class="wifi-fallback" />
     </div>
     <div v-else ref="panzoom_container" class="panzoom-container">
-        <PDFWrapper v-if="song_img_type == 'pdf'" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
-        <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
+        <PDFWrapper
+            v-if="song_img_type == 'pdf'"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
+        <img
+            v-else-if="song_img_type !== ''"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
     </div>
 </template>
 

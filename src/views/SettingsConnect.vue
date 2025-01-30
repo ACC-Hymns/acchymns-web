@@ -2,8 +2,19 @@
 import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 import { onMounted, ref } from "vue";
-import axios, { type AxiosResponse } from 'axios';
-import { UserStatus, request_client, scan, set, validate_token, type ChurchData, type TokenAuthResponse, type AuthResponse, set_bg_color, get  } from "@/scripts/broadcast";
+import axios, { type AxiosResponse } from "axios";
+import {
+    UserStatus,
+    request_client,
+    scan,
+    set,
+    validate_token,
+    type ChurchData,
+    type TokenAuthResponse,
+    type AuthResponse,
+    set_bg_color,
+    get,
+} from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
 import router from "@/router";
@@ -16,7 +27,7 @@ const input = ref<string>("");
 const status = ref<UserStatus>(UserStatus.None);
 let platform = ref<string>(Capacitor.getPlatform());
 let login_error = ref<boolean>(false);
-let selected_church = ref('LOADING');
+let selected_church = ref("LOADING");
 let hexinput = ref<HTMLInputElement>();
 let churches = ref<ChurchData[]>([]);
 let bible = ref<Bible>();
@@ -24,17 +35,15 @@ let touched_pin = ref<number>(0);
 let book_sources = ref<BookDataSummary[]>([]);
 
 async function check_code(code: string) {
-    let response = await axios.post('https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/',
-        {
-            code: code
-        }
-    );
+    let response = await axios.post("https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/", {
+        code: code,
+    });
     return response;
 }
-async function authorize(response: AxiosResponse<any,any>) {
+async function authorize(response: AxiosResponse<any, any>) {
     let auth = response.data as AuthResponse;
-    if(response.status == 200) {
-        await Preferences.set({ key: "broadcasting_auth_token", value: auth.token});
+    if (response.status == 200) {
+        await Preferences.set({ key: "broadcasting_auth_token", value: auth.token });
         status.value = UserStatus.Authorized;
 
         let data = await scan(request_client());
@@ -54,29 +63,29 @@ async function authorize(response: AxiosResponse<any,any>) {
 }
 
 async function populate_bg_color() {
-  let church_data: ChurchData = (await get(request_client(), selected_church.value)).Item as unknown as ChurchData;
-  if(hexinput.value) {
-    hexinput.value.value = church_data.BG_COLOR.S;
-  }
-} 
+    let church_data: ChurchData = (await get(request_client(), selected_church.value)).Item as unknown as ChurchData;
+    if (hexinput.value) {
+        hexinput.value.value = church_data.BG_COLOR.S;
+    }
+}
 
 async function clear() {
     await set(request_client(), selected_church.value, "", "", [-1], "");
 }
 
 async function signout() {
-    await Preferences.set({ key: "broadcasting_auth_token", value: ""});
+    await Preferences.set({ key: "broadcasting_auth_token", value: "" });
     status.value = UserStatus.Unauthorized;
     input.value = "";
     unlocked.value = false;
 }
 
 function view_output() {
-    router.push({path: "/broadcast"})
+    router.push({ path: "/broadcast" });
 }
 
 function backspace_pin() {
-    if(input.value.length > 0) {
+    if (input.value.length > 0) {
         input.value = input.value.substring(0, input.value.length - 1);
     }
 }
@@ -86,7 +95,7 @@ function enter_pin(value: number) {
 }
 
 async function back_button() {
-    if(bibleReading.value || songNumber.value) {
+    if (bibleReading.value || songNumber.value) {
         bibleReading.value = false;
         songNumber.value = false;
         await populate_bg_color();
@@ -96,44 +105,36 @@ async function back_button() {
 }
 
 async function set_bg() {
-  if(!hexinput.value)
-    return;
+    if (!hexinput.value) return;
 
-  let value = hexinput.value.value;
+    let value = hexinput.value.value;
 
-  if(value == "")
-    value = "#FFFFFF";
-  
-  if(value[0] != "#")
-    return;
+    if (value == "") value = "#FFFFFF";
 
-  await set_bg_color(request_client(), selected_church.value, value);
+    if (value[0] != "#") return;
+
+    await set_bg_color(request_client(), selected_church.value, value);
 }
 
 async function handle_tap(index: number) {
-    if(index == 10)
-        return;
+    if (index == 10) return;
 
     touched_pin.value = index;
 
-    if(index == 12) {
+    if (index == 12) {
         backspace_pin();
     } else if (index == 11) {
         enter_pin(0);
-    }
-    else {
+    } else {
         enter_pin(index);
     }
 
-    
-    if(input.value.length > 4)
-        return;
+    if (input.value.length > 4) return;
 
-    if(input.value.length == 4) {
+    if (input.value.length == 4) {
         let response = await check_code(input.value);
         unlocked.value = response.status == 200;
-        if(!unlocked.value)
-            login_error.value = true;
+        if (!unlocked.value) login_error.value = true;
 
         setTimeout(() => {
             authorize(response);
@@ -143,26 +144,25 @@ async function handle_tap(index: number) {
 
 onMounted(async () => {
     selected_church.value = "...";
-    bible.value = (await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible || { version: "", books: []};
-    
-    let temp = await loadBookSources();
-    book_sources.value = temp.filter(b => b.status == BookSourceType.DOWNLOADED || b.status == BookSourceType.IMPORTED || b.status == BookSourceType.BUNDLED);
-    console.log(book_sources.value);
-    let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token"});
+    bible.value = ((await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible) || { version: "", books: [] };
 
-    for(let [index, book] of bible.value.books.entries()) {
-        if(index > 38)
-            new_testament.value.push(book);
-        else
-            old_testament.value.push(book);
+    let temp = await loadBookSources();
+    book_sources.value = temp.filter(
+        b => b.status == BookSourceType.DOWNLOADED || b.status == BookSourceType.IMPORTED || b.status == BookSourceType.BUNDLED,
+    );
+    console.log(book_sources.value);
+    let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token" });
+
+    for (let [index, book] of bible.value.books.entries()) {
+        if (index > 38) new_testament.value.push(book);
+        else old_testament.value.push(book);
     }
     fix_chapter_range();
     fix_verse_range();
 
     if (broadcasting_auth_token.value != "" && broadcasting_auth_token.value != undefined) {
         let token_response = await validate_token(broadcasting_auth_token.value);
-        if(token_response.status != 200)
-            return signout();
+        if (token_response.status != 200) return signout();
         let token_response_data = token_response.data as TokenAuthResponse;
 
         status.value = UserStatus.Authorized;
@@ -182,23 +182,24 @@ onMounted(async () => {
 async function broadcast_reading(e: MouseEvent) {
     let top_text = "";
     let bottom_text = "";
-    if(read_type.value == 1) {
+    if (read_type.value == 1) {
         top_text = `${book.value}`;
-        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books.find(b => b.name == book.value)?.chapters.find(c => c.num == chapter_start.value)?.verses.length}`;
-    } else if(read_type.value == 2) {
+        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books
+            .find(b => b.name == book.value)
+            ?.chapters.find(c => c.num == chapter_start.value)?.verses.length}`;
+    } else if (read_type.value == 2) {
         top_text = `${book.value}`;
-        if(verse_start.value == verse_end.value)
-            bottom_text = `${chapter_start.value}:${verse_start.value}`;
-        else
-            bottom_text = `${chapter_start.value}:${verse_start.value}-${verse_end.value}`;
+        if (verse_start.value == verse_end.value) bottom_text = `${chapter_start.value}:${verse_start.value}`;
+        else bottom_text = `${chapter_start.value}:${verse_start.value}-${verse_end.value}`;
     } else {
         top_text = `${book.value} `;
-        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books.find(b => b.name == book.value)?.chapters.find(c => c.num == chapter_start.value)?.verses.length}, ${chapter_end.value}:1-${verse_end.value}`;
+        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books
+            .find(b => b.name == book.value)
+            ?.chapters.find(c => c.num == chapter_start.value)?.verses.length}, ${chapter_end.value}:1-${verse_end.value}`;
     }
 
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
 }
-
 
 let bibleReading = ref<boolean>(false);
 let songNumber = ref<boolean>(false);
@@ -213,8 +214,7 @@ function set_selected_hymnal(e: Event, id: number) {
 
 async function broadcast_song_number(e: MouseEvent) {
     let book = book_sources.value[selected_hymnal.value];
-    if(!book)
-        return book;
+    if (!book) return book;
     await set(request_client(), selected_church.value, song_number.value, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
 }
 
@@ -228,23 +228,22 @@ let verse_end = ref(1);
 let read_type = ref(1);
 
 function fix_chapter_range() {
-    if(chapter_start.value > get_chapter_start_list(book.value).length) {
+    if (chapter_start.value > get_chapter_start_list(book.value).length) {
         chapter_start.value = 1;
     }
-    if(chapter_end.value > get_chapter_end_list(book.value).length) {
+    if (chapter_end.value > get_chapter_end_list(book.value).length) {
         chapter_end.value = chapter_start.value;
     }
 }
 
 function fix_verse_range() {
-    if(verse_start.value > get_verse_start_list(book.value, chapter_start.value).length) {
+    if (verse_start.value > get_verse_start_list(book.value, chapter_start.value).length) {
         verse_start.value = 1;
     }
-    if(verse_end.value > get_verse_end_list(book.value, (read_type.value == 3 ? chapter_end.value : chapter_start.value)).length) {
-        verse_end.value = (read_type.value == 3 ? 1 : verse_start.value);
+    if (verse_end.value > get_verse_end_list(book.value, read_type.value == 3 ? chapter_end.value : chapter_start.value).length) {
+        verse_end.value = read_type.value == 3 ? 1 : verse_start.value;
     }
-    if(read_type.value == 1)
-        verse_end.value = get_verse_start_list(book.value, chapter_start.value).length;
+    if (read_type.value == 1) verse_end.value = get_verse_start_list(book.value, chapter_start.value).length;
 }
 function book_changed(e: Event) {
     book.value = (e.target as HTMLSelectElement).innerText;
@@ -270,16 +269,16 @@ function read_type_changed(e: Event, id: number) {
 }
 
 function get_chapter_start_list(book: string) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: []};
+    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
     return b.chapters;
 }
 
 function get_chapter_end_list(book: string) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: []};
+    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
     let chapter_end_list: BibleChapter[] = [];
-    if(chapter_start.value > 0) {
+    if (chapter_start.value > 0) {
         for (let i = chapter_start.value + 1; i <= b?.chapters.length; i++) {
-            chapter_end_list.push(b.chapters[i-1]);
+            chapter_end_list.push(b.chapters[i - 1]);
         }
         return chapter_end_list;
     }
@@ -287,17 +286,17 @@ function get_chapter_end_list(book: string) {
 }
 
 function get_verse_start_list(book: string, chapter: number) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: []};
-    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: []};
+    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
     return c.verses;
 }
 function get_verse_end_list(book: string, chapter: number) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: []};
-    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: []};
+    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
     let verse_end_list: BibleVerse[] = [];
-    if(verse_start.value > 0) {
-        for (let i = (read_type.value == 3) ? 1 : verse_start.value; i <= c?.verses.length; i++) {
-            verse_end_list.push(c.verses[i-1]);
+    if (verse_start.value > 0) {
+        for (let i = read_type.value == 3 ? 1 : verse_start.value; i <= c?.verses.length; i++) {
+            verse_end_list.push(c.verses[i - 1]);
         }
         return verse_end_list;
     }
@@ -307,7 +306,6 @@ function get_verse_end_list(book: string, chapter: number) {
 function get_lock_icon() {
     return unlocked.value ? import.meta.env.BASE_URL + "assets/lock-open-outline.svg" : import.meta.env.BASE_URL + "assets/lock-closed-outline.svg";
 }
-
 </script>
 
 <template>
@@ -319,17 +317,16 @@ function get_lock_icon() {
     </div>
     <div v-if="status == UserStatus.Unauthorized" class="login-container">
         <div class="login-instructions">
-            <img class="ionicon" :class="{'unlocked': unlocked}" :src="get_lock_icon()" />
+            <img class="ionicon" :class="{ unlocked: unlocked }" :src="get_lock_icon()" />
             <p>Please enter 4-digit PIN</p>
         </div>
-        <div class="pin-input-container" :class="{'pin-input--error': login_error }">
-            <div v-for="i in 4" :class="(input.length == i - 1) ? 'pin-space-active' : 'pin-space'">
+        <div class="pin-input-container" :class="{ 'pin-input--error': login_error }">
+            <div v-for="i in 4" :class="input.length == i - 1 ? 'pin-space-active' : 'pin-space'">
                 <img v-if="input.length >= i" class="ionicon pin-dot" src="/assets/ellipse.svg" />
             </div>
         </div>
         <div class="keypad">
-            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0"
-                :style="{'opacity': (i == 10) ? 0 : 1}">
+            <div class="key" v-for="i in 12" @click="handle_tap(i)" @animationend="touched_pin = 0" :style="{ opacity: i == 10 ? 0 : 1 }">
                 <a v-if="i == 10"></a>
                 <a v-else-if="i == 11">
                     <h4>0</h4>
@@ -347,15 +344,12 @@ function get_lock_icon() {
         <div v-if="bibleReading">
             <div class="center-container">
                 <h3>Reading Type</h3>
-                <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
+                <div class="book-selector" :class="{ 'hide-scrollbar': platform !== 'web' }">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a @click="(e) => read_type_changed(e,1)" class="biblebook"
-                        :class="{'selected': read_type == 1}">Start Only</a>
-                    <a @click="(e) => read_type_changed(e,2)" class="biblebook"
-                        :class="{'selected': read_type == 2}">Start End</a>
-                    <a @click="(e) => read_type_changed(e,3)" class="biblebook"
-                        :class="{'selected': read_type == 3}">Start End Chapter</a>
+                    <a @click="e => read_type_changed(e, 1)" class="biblebook" :class="{ selected: read_type == 1 }">Start Only</a>
+                    <a @click="e => read_type_changed(e, 2)" class="biblebook" :class="{ selected: read_type == 2 }">Start End</a>
+                    <a @click="e => read_type_changed(e, 3)" class="biblebook" :class="{ selected: read_type == 3 }">Start End Chapter</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -363,16 +357,28 @@ function get_lock_icon() {
                 <div class="book-selector">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)"
-                        v-for="b in old_testament" :key="b.name">{{ b.name }}</a>
+                    <a
+                        class="biblebook"
+                        :class="{ selected: b.name == book }"
+                        @click="(e: Event) => book_changed(e)"
+                        v-for="b in old_testament"
+                        :key="b.name"
+                        >{{ b.name }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
                 <div class="book-selector">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': b.name == book}" @click="(e: Event) => book_changed(e)"
-                        v-for="b in new_testament" :key="b.name">{{ b.name }}</a>
+                    <a
+                        class="biblebook"
+                        :class="{ selected: b.name == book }"
+                        @click="(e: Event) => book_changed(e)"
+                        v-for="b in new_testament"
+                        :key="b.name"
+                        >{{ b.name }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -382,9 +388,14 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': c.num == chapter_start}"
-                        @click="(e: Event) => chapter_start_changed(e)" v-for="c in get_chapter_start_list(book)"
-                        :key="c.num">{{ c.num }}</a>
+                    <a
+                        class="biblebook"
+                        :class="{ selected: c.num == chapter_start }"
+                        @click="(e: Event) => chapter_start_changed(e)"
+                        v-for="c in get_chapter_start_list(book)"
+                        :key="c.num"
+                        >{{ c.num }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -396,9 +407,14 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': v.num == verse_start}"
+                    <a
+                        class="biblebook"
+                        :class="{ selected: v.num == verse_start }"
                         @click="(e: Event) => verse_start_changed(e)"
-                        v-for="v in get_verse_start_list(book, chapter_start)" :key="v.num">{{ v.num }}</a>
+                        v-for="v in get_verse_start_list(book, chapter_start)"
+                        :key="v.num"
+                        >{{ v.num }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -410,9 +426,14 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': c.num == chapter_end}"
-                        @click="(e: Event) => chapter_end_changed(e)" v-for="c in get_chapter_end_list(book)"
-                        :key="c.num">{{ c.num }}</a>
+                    <a
+                        class="biblebook"
+                        :class="{ selected: c.num == chapter_end }"
+                        @click="(e: Event) => chapter_end_changed(e)"
+                        v-for="c in get_chapter_end_list(book)"
+                        :key="c.num"
+                        >{{ c.num }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -424,30 +445,39 @@ function get_lock_icon() {
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a class="biblebook" :class="{'selected': v.num == verse_end}"
+                    <a
+                        class="biblebook"
+                        :class="{ selected: v.num == verse_end }"
                         @click="(e: Event) => verse_end_changed(e)"
                         v-for="v in get_verse_end_list(book, read_type == 3 ? chapter_end : chapter_start)"
-                        :key="v.num">{{ v.num }}</a>
+                        :key="v.num"
+                        >{{ v.num }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
                 <div>
-                    <button class="send-button" @click="(e) => broadcast_reading(e)">Send</button>
+                    <button class="send-button" @click="e => broadcast_reading(e)">Send</button>
                 </div>
                 <button class="settings-button" @click="back_button()">Back</button>
-
             </div>
         </div>
         <div v-else-if="songNumber">
             <div class="center-container">
                 <h3>Hymnal</h3>
-                <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
+                <div class="book-selector" :class="{ 'hide-scrollbar': platform !== 'web' }">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(e,i - 1)" class="biblebook"
-                        :class="{'selected': selected_hymnal == i - 1}" :style="{'background-color': book_sources[i - 1].primaryColor}">{{ book_sources[i - 1].name?.medium }}</a>
+                    <a
+                        v-for="i in book_sources.length"
+                        @click="e => set_selected_hymnal(e, i - 1)"
+                        class="biblebook"
+                        :class="{ selected: selected_hymnal == i - 1 }"
+                        :style="{ 'background-color': book_sources[i - 1].primaryColor }"
+                        >{{ book_sources[i - 1].name?.medium }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -459,42 +489,58 @@ function get_lock_icon() {
                 <h3>Verses</h3>
                 <div class="verse-list-wide">
                     <div></div>
-                    <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
-                        if(verses[0] == -2) {
-                            verses = [];
-                            return;
-                        } else {
-                            verses = [];  
-                            verses.push(-2);
-                        }
-                    }">
-                    All
+                    <a
+                        class="verse"
+                        :class="{ 'verse-selected': verses[0] == -2 }"
+                        @click="
+                            e => {
+                                if (verses[0] == -2) {
+                                    verses = [];
+                                    return;
+                                } else {
+                                    verses = [];
+                                    verses.push(-2);
+                                }
+                            }
+                        "
+                    >
+                        All
                     </a>
                     <div></div>
                 </div>
                 <div class="verse-list-wide">
-                    <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="(e) => {
-                        if(verses[0] == -2) 
-                            verses = [];
+                    <a
+                        v-for="verse in 12"
+                        :key="verse"
+                        class="verse"
+                        :class="{ 'verse-selected': verses.includes(verse) }"
+                        @click="
+                            e => {
+                                if (verses[0] == -2) verses = [];
 
-                        if(verses.includes(verse))
-                            verses.splice(verses.indexOf(verse), 1);
-                        else
-                            verses.push(verse);
-                    }">
+                                if (verses.includes(verse)) verses.splice(verses.indexOf(verse), 1);
+                                else verses.push(verse);
+                            }
+                        "
+                    >
                         {{ verse }}
                     </a>
                 </div>
                 <div>
-                    <button class="send-button" :disabled="song_number.length == 0 || Number(song_number) == 0" @click="(e) => broadcast_song_number(e)">Send</button>
+                    <button
+                        class="send-button"
+                        :disabled="song_number.length == 0 || Number(song_number) == 0"
+                        @click="e => broadcast_song_number(e)"
+                    >
+                        Send
+                    </button>
                 </div>
                 <button class="settings-button" @click="back_button()">Back</button>
-
             </div>
         </div>
         <div v-else-if="status == UserStatus.Authorized" class="center-container">
-            <h1 style="margin-bottom: 0px;">Authorized</h1>
-            <h3 style="margin-top: 0px;">as {{ selected_church }}</h3>
+            <h1 style="margin-bottom: 0px">Authorized</h1>
+            <h3 style="margin-top: 0px">as {{ selected_church }}</h3>
             <div class="settings width-100">
                 <a v-if="platform == 'web'" href="/broadcast" class="settings-option">
                     <span>Open Output Display</span>
@@ -510,8 +556,8 @@ function get_lock_icon() {
                 </a>
                 <a @click="set_bg()" class="settings-option">
                     <span>
-                      Set Background Color
-                      <input ref="hexinput" class="hexinput" type="text" placeholder="#FFFFFF"/>
+                        Set Background Color
+                        <input ref="hexinput" class="hexinput" type="text" placeholder="#FFFFFF" />
                     </span>
                 </a>
                 <a @click="clear" class="settings-option">
@@ -579,10 +625,10 @@ label {
 }
 
 .hexinput {
-  background-color: var(--slider-base);
-  width: 4em;
-  border-radius: 15px;
-  margin: 0 15px;
+    background-color: var(--slider-base);
+    width: 4em;
+    border-radius: 15px;
+    margin: 0 15px;
 }
 
 .login-instructions {
@@ -676,7 +722,7 @@ label {
     display: grid;
     grid-template-columns: var(--key-size) var(--key-size) var(--key-size);
     grid-template-rows: var(--key-size) var(--key-size) var(--key-size) var(--key-size);
-    gap: calc(var(--key-size)/2);
+    gap: calc(var(--key-size) / 2);
 }
 .backspace {
     display: flex;
@@ -694,7 +740,7 @@ label {
     color: var(--color);
     user-select: none;
     -moz-user-select: none;
-    -webkit-user-select: none;    
+    -webkit-user-select: none;
     transition: background-color 0.1s ease-out;
 }
 .key:active {
@@ -709,7 +755,7 @@ label {
 
 .book-selector {
     display: flex;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
     overflow: auto;
     width: 95vw;
 
@@ -721,7 +767,7 @@ label {
         right: 0;
         bottom: 15px;
         pointer-events: none;
-        background-image: linear-gradient(to right, rgba(255,255,255,0), var(--background) 85%);
+        background-image: linear-gradient(to right, rgba(255, 255, 255, 0), var(--background) 85%);
         width: 30px;
     }
     &:before {
@@ -731,14 +777,14 @@ label {
         left: 0;
         bottom: 15px;
         pointer-events: none;
-        background-image: linear-gradient(to left, rgba(255,255,255,0), var(--background) 85%);
+        background-image: linear-gradient(to left, rgba(255, 255, 255, 0), var(--background) 85%);
         width: 30px;
     }
 }
 
 .number-selector {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     flex-direction: column;
     overflow: auto;
     width: 95vw;
@@ -766,9 +812,9 @@ label {
     width: 5px;
 }
 .selected {
-    -webkit-box-shadow:inset 0px 0px 0px 4px var(--blue);
-    -moz-box-shadow:inset 0px 0px 0px 4px var(--blue);
-    box-shadow:inset 0px 0px 0px 4px var(--blue);
+    -webkit-box-shadow: inset 0px 0px 0px 4px var(--blue);
+    -moz-box-shadow: inset 0px 0px 0px 4px var(--blue);
+    box-shadow: inset 0px 0px 0px 4px var(--blue);
 }
 
 .width-100 {
@@ -867,15 +913,15 @@ label {
 }
 
 @keyframes fade-in-3s-delay {
-  0% {
-    opacity: 0%;
-  }
-  30% {
-    opacity: 0%;
-  }
-  100% {
-    opacity: 100%;
-  }
+    0% {
+        opacity: 0%;
+    }
+    30% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
 }
 
 .lds-ring-container {

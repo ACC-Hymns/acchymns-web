@@ -11,27 +11,23 @@ let scroll_target = ref<HTMLElement>();
 const isDarkMode = ref<boolean>(false);
 const BASE_URL = import.meta.env.BASE_URL;
 
-let change_headers = ref<string[]>([
-    "Customization",
-    "Download for Later",
-    "Media Player"
-]);
+let change_headers = ref<string[]>(["Customization", "Download for Later", "Media Player"]);
 let change_details = ref<string[]>([
     "Rearrange the home page to look the way you want it to.",
     "Download hymnals for later use without needing an internet connection.",
-    "Sing along with the piano using the media player. Currently only available on certain hymnals."
+    "Sing along with the piano using the media player. Currently only available on certain hymnals.",
 ]);
 
 onMounted(() => {
-    isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    isDarkMode.value = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
         isDarkMode.value = event.matches;
     });
 });
 
 function scrollHandler(e: UIEvent) {
-    let target = (e.target as HTMLElement);
+    let target = e.target as HTMLElement;
     let scroll_percentage = target.scrollLeft / target.offsetWidth;
     let nearest_index = Math.round(scroll_percentage);
     let distance = Math.min(Math.abs(nearest_index - scroll_percentage), 1);
@@ -44,13 +40,11 @@ function exit() {
 }
 
 function scroll_to_index(index: number) {
-    if(scroll_target.value == undefined)
-        return;
+    if (scroll_target.value == undefined) return;
     scroll_target.value.scrollTo({
         left: scroll_target.value.offsetWidth * index,
-        behavior: "smooth"
+        behavior: "smooth",
     });
-
 }
 
 function action() {
@@ -59,7 +53,6 @@ function action() {
     } else {
         scroll_to_index(scroll_index.value + 1);
     }
-
 }
 
 function active(selected: boolean) {
@@ -73,37 +66,46 @@ function active(selected: boolean) {
 function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
     return dark_mode ? s2 : s1;
 }
-
 </script>
 
 <template>
     <div class="fill">
         <div class="welcome-page">
-            <div class="swipe-view" @scroll="(e) => scrollHandler(e)" ref="scroll_target">
+            <div class="swipe-view" @scroll="e => scrollHandler(e)" ref="scroll_target">
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/rearrange.gif', BASE_URL + 'assets/demos/rearrange-dark.gif', isDarkMode)" />
+                    <img
+                        class="demo-image demo-image-border"
+                        :src="compute_dark_mode(BASE_URL + 'assets/demos/rearrange.gif', BASE_URL + 'assets/demos/rearrange-dark.gif', isDarkMode)"
+                    />
                 </section>
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/download.gif', BASE_URL + 'assets/demos/download-dark.gif', isDarkMode)" />
+                    <img
+                        class="demo-image demo-image-border"
+                        :src="compute_dark_mode(BASE_URL + 'assets/demos/download.gif', BASE_URL + 'assets/demos/download-dark.gif', isDarkMode)"
+                    />
                 </section>
                 <section>
-                    <img class="demo-image demo-image-border" :src="compute_dark_mode(BASE_URL + 'assets/demos/mediaplayer.png', BASE_URL + 'assets/demos/mediaplayer-dark.png', isDarkMode)" />
+                    <img
+                        class="demo-image demo-image-border"
+                        :src="
+                            compute_dark_mode(BASE_URL + 'assets/demos/mediaplayer.png', BASE_URL + 'assets/demos/mediaplayer-dark.png', isDarkMode)
+                        "
+                    />
                 </section>
             </div>
         </div>
         <div class="bottom-container">
             <div class="progress">
-                <img v-for="index in 3" class="ionicon progress-icon" :src="active(scroll_index == index - 1)" @click="scroll_to_index(index - 1)"/>
+                <img v-for="index in 3" class="ionicon progress-icon" :src="active(scroll_index == index - 1)" @click="scroll_to_index(index - 1)" />
             </div>
             <div class="details">
-                <h1 class="change-header" :class="{'scrolling-text': is_scrolling}">{{ change_headers[scroll_index] }}</h1>
-                <p class="change-details" :class="{'scrolling-text': is_scrolling}">{{ change_details[scroll_index] }}</p>
+                <h1 class="change-header" :class="{ 'scrolling-text': is_scrolling }">{{ change_headers[scroll_index] }}</h1>
+                <p class="change-details" :class="{ 'scrolling-text': is_scrolling }">{{ change_details[scroll_index] }}</p>
             </div>
             <a class="start-button" @click="action">
-                <p class="song__title">{{ (scroll_index == change_headers.length - 1) ? "Continue" : "Next"}}</p>
+                <p class="song__title">{{ scroll_index == change_headers.length - 1 ? "Continue" : "Next" }}</p>
             </a>
         </div>
-
     </div>
 </template>
 
@@ -175,30 +177,27 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
     scroll-snap-coordinate: 0 0;
     scroll-snap-type: x mandatory;
     flex: 1;
-    display:flex;
+    display: flex;
     -webkit-overflow-scrolling: touch;
     height: 50vh;
     background-color: var(--background);
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
     z-index: 1;
-    
 
     section {
         width: 100vw;
         height: 100%;
-        flex:0 0 100vw;
+        flex: 0 0 100vw;
         scroll-snap-align: start;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
 }
 
-
 .swipe-view::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .start-button {

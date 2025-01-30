@@ -10,9 +10,9 @@ import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { interpolate } from "polymorph-js";
-import { Capacitor } from '@capacitor/core';
+import { Capacitor } from "@capacitor/core";
 import { Network } from "@capacitor/network";
-import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { request_client, set, validate_token, type TokenAuthResponse } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 
@@ -66,7 +66,7 @@ class DraggablePanel {
         this.previous = 0;
         this.visible = false;
         this.elastic = false;
-        this.height = (screen.orientation.type.includes("landscape")) ? 0.8 : 0.4;
+        this.height = screen.orientation.type.includes("landscape") ? 0.8 : 0.4;
     }
     dragFallOff(x: number) {
         var result = (Math.log(x + 0.368) + 1) / 4;
@@ -80,15 +80,14 @@ class DraggablePanel {
     drag(e: Event, pageY: number) {
         e.preventDefault();
 
-        if(isLandscape.value) {
-            this.height = (1 - pageY / window.innerHeight) - this.start + this.previous;
-        } else {  
-            this.height = this.dragFallOff((1 - pageY / window.innerHeight) - this.start) + this.previous;
+        if (isLandscape.value) {
+            this.height = 1 - pageY / window.innerHeight - this.start + this.previous;
+        } else {
+            this.height = this.dragFallOff(1 - pageY / window.innerHeight - this.start) + this.previous;
         }
 
         if (this.height < (isLandscape.value ? 0.2 : 0.1) || isNaN(this.height)) {
-            if(!(media_starting_notes.value && !media_is_playing.value))
-                this.height = (isLandscape.value ? 0.2 : 0.1);
+            if (!(media_starting_notes.value && !media_is_playing.value)) this.height = isLandscape.value ? 0.2 : 0.1;
         }
         if (this.height <= 0.01 || isNaN(this.height)) {
             this.height = 0.005;
@@ -96,8 +95,7 @@ class DraggablePanel {
     }
     dragEnd(e: Event) {
         e.preventDefault();
-        if (this.height > (isLandscape.value ? 0.4 : 0.2))
-            this.height = (isLandscape.value ? 0.8 : 0.4);
+        if (this.height > (isLandscape.value ? 0.4 : 0.2)) this.height = isLandscape.value ? 0.8 : 0.4;
         else {
             if (media_starting_notes.value && media_is_playing.value == false) {
                 this.height = 0.005;
@@ -105,7 +103,7 @@ class DraggablePanel {
                     this.visible = false;
                 }, 250);
             } else {
-                this.height = (isLandscape.value ? 0.2 : 0.1);
+                this.height = isLandscape.value ? 0.2 : 0.1;
             }
         }
         this.elastic = true;
@@ -113,7 +111,6 @@ class DraggablePanel {
             this.elastic = false;
         }, 250);
     }
-
 }
 
 type Coordinate = {
@@ -127,14 +124,14 @@ let audio_source_exists = ref<boolean>(false);
 let previous_orientation: OrientationType | undefined;
 
 function setup_audiosource(audio_source: HTMLAudioElement) {
-    audio_source.addEventListener('loadedmetadata', () => {
-            console.log("Audio Loaded!");
+    audio_source.addEventListener("loadedmetadata", () => {
+        console.log("Audio Loaded!");
         audio_source_exists.value = true;
         media_timestamp_end.value = audio_source?.duration || 0;
 
         setMediaType(null, false);
-    })
-    audio_source.addEventListener('error', () => {
+    });
+    audio_source.addEventListener("error", () => {
         console.error("Error loading audio");
         audio_source_exists.value = false;
         setMediaType(null, true);
@@ -145,27 +142,27 @@ onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
     book_summary.value = BOOK_METADATA[props.book];
-    
-    if(SONG_METADATA != null) {
+
+    if (SONG_METADATA != null) {
         const song_data = SONG_METADATA[props.number];
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
         isConnected.value = (await Network.getStatus()).connected;
-        if(!isConnected.value) {
+        if (!isConnected.value) {
             audio_source_exists.value = false;
             audio_source.value = new Audio();
         } else {
-            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
-            audio_source.value.preload = 'metadata';
+            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
+            audio_source.value.preload = "metadata";
             setup_audiosource(audio_source.value);
         }
 
         setMediaType(null, true);
-        
-        Network.addListener("networkStatusChange", async (details) => {
+
+        Network.addListener("networkStatusChange", async details => {
             isConnected.value = details.connected;
-            if(!isConnected.value) {
+            if (!isConnected.value) {
                 audio_source.value?.pause();
                 morph();
                 media_is_playing.value = false;
@@ -173,40 +170,36 @@ onMounted(async () => {
                 audio_source.value = new Audio();
                 setMediaType(null, true);
             } else {
-                audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,);
-                audio_source.value.preload = 'metadata';
+                audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
+                audio_source.value.preload = "metadata";
                 setup_audiosource(audio_source.value);
                 audio_source.value?.load();
             }
-        })
+        });
     } else {
-        console.log("book doesn't exist")
+        console.log("book doesn't exist");
         await handle_missing_book(props.book);
     }
 
     previous_orientation = (await ScreenOrientation.orientation()).type;
-    if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
+    if ((await ScreenOrientation.orientation()).type == "portrait-primary") {
         isLandscape.value = false;
-    } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
+    } else if ((await ScreenOrientation.orientation()).type.includes("landscape")) {
         isLandscape.value = true;
     }
-    ScreenOrientation.addListener('screenOrientationChange', async () => {
-        if(previous_orientation == (await ScreenOrientation.orientation()).type)
-            return;
-    
-        if((await ScreenOrientation.orientation()).type == 'portrait-primary') {
+    ScreenOrientation.addListener("screenOrientationChange", async () => {
+        if (previous_orientation == (await ScreenOrientation.orientation()).type) return;
+
+        if ((await ScreenOrientation.orientation()).type == "portrait-primary") {
             isLandscape.value = false;
             previous_orientation = (await ScreenOrientation.orientation()).type;
-
-        } else if((await ScreenOrientation.orientation()).type.includes('landscape')) {
+        } else if ((await ScreenOrientation.orientation()).type.includes("landscape")) {
             isLandscape.value = true;
             previous_orientation = (await ScreenOrientation.orientation()).type;
         }
-        
-        if(!media_starting_notes.value)
-            panel.value.height = (isLandscape.value) ? 0.2 : 0.1;
-        else
-            panel.value.height = (isLandscape.value) ? 0.8 : 0.4;
+
+        if (!media_starting_notes.value) panel.value.height = isLandscape.value ? 0.2 : 0.1;
+        else panel.value.height = isLandscape.value ? 0.8 : 0.4;
     });
 });
 
@@ -216,9 +209,8 @@ onUnmounted(() => {
     audio_source.value = undefined;
 });
 
-
 let menu_bar_visible = ref<boolean>(true);
-let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0});
+let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
 let media_starting_notes = ref<boolean>(false);
 let media_is_playing = ref<boolean>(false);
 let media_timestamp_elapsed = ref<number>(0);
@@ -229,26 +221,33 @@ let large_timeline = ref();
 let mini_timeline = ref();
 
 async function broadcast() {
-    if(broadcast_api.church_id.value == null)
-        return;
+    if (broadcast_api.church_id.value == null) return;
 
-    await set(request_client(), broadcast_api.church_id.value, props.number, book_summary.value?.name.medium || props.book, verses.value, book_summary.value?.primaryColor || "#000000");
+    await set(
+        request_client(),
+        broadcast_api.church_id.value,
+        props.number,
+        book_summary.value?.name.medium || props.book,
+        verses.value,
+        book_summary.value?.primaryColor || "#000000",
+    );
 
     is_broadcast_menu_open.value = false;
 }
 
 const updateTime = async () => {
     media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-    
-    if(audio_source.value == undefined)
-        return;
+
+    if (audio_source.value == undefined) return;
     let lt = large_timeline.value as HTMLInputElement;
     let mt = mini_timeline.value as HTMLInputElement;
-    let percentage = audio_source.value.currentTime/audio_source.value.duration*100;
-    if(lt) lt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
-    if(mt) mt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
-    
-    if(audio_source.value.ended && media_is_scrubbing.value == false) {
+    let percentage = (audio_source.value.currentTime / audio_source.value.duration) * 100;
+    if (lt)
+        lt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
+    if (mt)
+        mt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
+
+    if (audio_source.value.ended && media_is_scrubbing.value == false) {
         morph();
         media_is_playing.value = false;
         clearInterval(elapsed_timer);
@@ -256,7 +255,7 @@ const updateTime = async () => {
 };
 
 async function play_all_notes() {
-    if(media_is_playing.value) {
+    if (media_is_playing.value) {
         playMedia();
     }
 
@@ -264,7 +263,7 @@ async function play_all_notes() {
     player.play(notes);
 }
 async function play_note(note: string) {
-    if(media_is_playing.value) {
+    if (media_is_playing.value) {
         playMedia();
     }
     player.stop();
@@ -285,9 +284,8 @@ async function close_media_panel() {
     media_is_playing.value = false;
 }
 
-
 function setMediaType(event: any, value: boolean) {
-    if(event) event.preventDefault();
+    if (event) event.preventDefault();
     media_starting_notes.value = value;
     isPlaying.value = !panel.value.visible;
 }
@@ -295,14 +293,14 @@ function setMediaType(event: any, value: boolean) {
 let morphed_path = ref<string>(play_path);
 
 function morph() {
-    let path_order = (media_is_playing.value ? [pause_path, play_path] : [play_path, pause_path]);
+    let path_order = media_is_playing.value ? [pause_path, play_path] : [play_path, pause_path];
     let interpolator = interpolate(path_order, {
         addPoints: 0,
         origin: { x: 0, y: 0 },
-        optimize: 'fill',
-        precision: 0
-    })
-    animate((path) => {
+        optimize: "fill",
+        precision: 0,
+    });
+    animate(path => {
         morphed_path.value = path;
     }, interpolator);
 }
@@ -311,12 +309,16 @@ async function playMedia() {
     morph();
 
     // Play the media
-    if(!media_is_playing.value) {
+    if (!media_is_playing.value) {
         audio_source.value?.play();
-        updateTime()
-        elapsed_timer = setInterval(() => {
-            updateTime();
-        }, 1000, 0);
+        updateTime();
+        elapsed_timer = setInterval(
+            () => {
+                updateTime();
+            },
+            1000,
+            0,
+        );
     } else {
         audio_source.value?.pause();
         clearInterval(elapsed_timer);
@@ -327,16 +329,14 @@ async function playMedia() {
 
 function release_audio_position(e: Event) {
     media_is_scrubbing.value = false;
-    if(media_is_playing.value && audio_source.value?.paused && !audio_source.value?.ended)
-        audio_source.value?.play();
+    if (media_is_playing.value && audio_source.value?.paused && !audio_source.value?.ended) audio_source.value?.play();
 }
 
 function set_audio_position(percentage: number) {
     media_is_scrubbing.value = true;
     let source = audio_source.value;
-    if(source == undefined)
-        return;
-    source.currentTime = source.duration * percentage/100;
+    if (source == undefined) return;
+    source.currentTime = (source.duration * percentage) / 100;
 
     updateTime();
 }
@@ -344,7 +344,7 @@ function set_audio_position(percentage: number) {
 function secondsToTimestamp(seconds: number) {
     let minutes = Math.floor(seconds / 60);
     let remaining_seconds = Math.floor(seconds % 60);
-    return `${minutes}:${remaining_seconds < 10 ? '0' : ''}${remaining_seconds}`;
+    return `${minutes}:${remaining_seconds < 10 ? "0" : ""}${remaining_seconds}`;
 }
 
 function toggleMenu(e: any) {
@@ -352,7 +352,7 @@ function toggleMenu(e: any) {
 }
 
 function hideMedia() {
-    if(audio_source_exists.value == false) {
+    if (audio_source_exists.value == false) {
         panel.value.height = 0.005;
         panel.value.elastic = true;
         setTimeout(() => {
@@ -362,7 +362,7 @@ function hideMedia() {
         return;
     }
 
-    panel.value.height = (isLandscape.value ? 0.2 : 0.1);
+    panel.value.height = isLandscape.value ? 0.2 : 0.1;
     panel.value.elastic = true;
     setTimeout(() => {
         panel.value.elastic = false;
@@ -372,18 +372,18 @@ function hideMedia() {
 async function traverse_song(dir: number) {
     const SONG_METADATA = await getSongMetaData(props.book);
 
-    if(SONG_METADATA == null) {
+    if (SONG_METADATA == null) {
         console.error("Error loading song metadata. Cannot traverse song.");
         return;
-    } 
+    }
 
     const song_numbers = Object.keys(SONG_METADATA).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
     const index = song_numbers.findIndex(song => song == props.number);
-    if(index == -1) {
+    if (index == -1) {
         console.error("Error finding song in metadata. Cannot traverse song.");
         return;
     }
-    if(index + dir < 0 || index + dir >= song_numbers.length) {
+    if (index + dir < 0 || index + dir >= song_numbers.length) {
         console.error("Cannot traverse song. Out of bounds.");
         return;
     }
@@ -391,17 +391,15 @@ async function traverse_song(dir: number) {
 }
 
 function get_note_icon(note: string) {
-    let modified_note = note.replace('#', '').replace('b', '');
-    
-    if(notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note))
-        return treble_note_icons[modified_note];
+    let modified_note = note.replace("#", "").replace("b", "");
+
+    if (notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
     return bass_note_icons[modified_note];
 }
-
 </script>
 
 <template>
-    <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible}">
+    <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
                 <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
@@ -422,90 +420,149 @@ function get_note_icon(note: string) {
     </div>
 
     <!-- Buttons -->
-    <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: 'translateY(' + (panel.visible ? (-panel.height * window_height() + 'px') : '0') + ')'}">
-        <div class="page-button" :class="{ 'arrow-hidden-left': (!menu_bar_visible || Number(props.number) == 1)}">
+    <div
+        class="page-button-container left"
+        v-if="panel.height < 0.7 || !panel.visible"
+        :style="{ transform: 'translateY(' + (panel.visible ? -panel.height * window_height() + 'px' : '0') + ')' }"
+    >
+        <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }">
             <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
-    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible" :style="{transform: `translateY(${panel.visible ? -panel.height * window_height() : 0}px)`}">
-        <div class="page-button" :class="{ 'arrow-hidden-right': (!menu_bar_visible || Number(props.number) == song_count)}">
+    <div
+        class="page-button-container right"
+        v-if="panel.height < 0.7 || !panel.visible"
+        :style="{ transform: `translateY(${panel.visible ? -panel.height * window_height() : 0}px)` }"
+    >
+        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }">
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
     <div class="broadcast-button-container" v-if="broadcast_api.is_authorized" v-show="!is_broadcast_menu_open">
-        <div class="broadcast-button" :class="{ 'arrow-hidden-right': !menu_bar_visible}">
-            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg">
+        <div class="broadcast-button" :class="{ 'arrow-hidden-right': !menu_bar_visible }">
+            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg" />
         </div>
     </div>
-    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="(e) => e.preventDefault()">
+    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()">
         <h1>Broadcast</h1>
         <div class="close-button">
             <img @click="is_broadcast_menu_open = false" class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
-        <br>
+        <br />
         <h3>Verses</h3>
-        <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="() => {
-                if(verses[0] == -2) 
-                    verses = [];
-                else
-                    verses = [-2];
-            }">
+        <a
+            class="verse"
+            :class="{ 'verse-selected': verses[0] == -2 }"
+            @click="
+                () => {
+                    if (verses[0] == -2) verses = [];
+                    else verses = [-2];
+                }
+            "
+        >
             All
         </a>
-        <br>
+        <br />
         <div class="verse-list">
-            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse)}" @click="() => {
-                if(verses[0] == -2) 
-                    verses = [];
+            <a
+                v-for="verse in 12"
+                :key="verse"
+                class="verse"
+                :class="{ 'verse-selected': verses.includes(verse) }"
+                @click="
+                    () => {
+                        if (verses[0] == -2) verses = [];
 
-                if(verses.includes(verse))
-                    verses.splice(verses.indexOf(verse), 1);
-                else
-                    verses.push(verse);
-            }">
+                        if (verses.includes(verse)) verses.splice(verses.indexOf(verse), 1);
+                        else verses.push(verse);
+                    }
+                "
+            >
                 {{ verse }}
             </a>
         </div>
         <button class="send-button" @click="broadcast()">Send</button>
     </div>
 
-    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic}" :style="'height:' + (panel.height * 100) + '%'">  
-        <div class="media-panel-blur"></div> 
-        <div class="handle-bar-container" v-if="isMobile" @touchstart="(e) => panel.dragStart(e, e.touches[0].pageY)" @touchmove="(e) => panel.drag(e, e.touches[0].pageY)" @touchend="(e) => panel.dragEnd(e)">
+    <div
+        class="media-panel-content"
+        :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic }"
+        :style="'height:' + panel.height * 100 + '%'"
+    >
+        <div class="media-panel-blur"></div>
+        <div
+            class="handle-bar-container"
+            v-if="isMobile"
+            @touchstart="e => panel.dragStart(e, e.touches[0].pageY)"
+            @touchmove="e => panel.drag(e, e.touches[0].pageY)"
+            @touchend="e => panel.dragEnd(e)"
+        >
             <div class="handle-bar"></div>
         </div>
-        <div class="close-button" :style="{ opacity: (panel.height < (isLandscape ? 0.3 : 0.15) ? '0' : '1')}">
+        <div class="close-button" :style="{ opacity: panel.height < (isLandscape ? 0.3 : 0.15) ? '0' : '1' }">
             <img @click="close_media_panel()" class="ionicon" src="/assets/close.svg" />
         </div>
-        <div v-if="panel.height <= (isLandscape ? 0.3 : 0.15) && panel.visible && audio_source_exists" class="mini-playback-container" :style="{ opacity: (panel.height <= (isLandscape ? 0.2 : 0.1)) ? '1' : '0'}">
+        <div
+            v-if="panel.height <= (isLandscape ? 0.3 : 0.15) && panel.visible && audio_source_exists"
+            class="mini-playback-container"
+            :style="{ opacity: panel.height <= (isLandscape ? 0.2 : 0.1) ? '1' : '0' }"
+        >
             <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
             <div class="progress-bar">
-                <input type="range" ref="mini_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
+                <input
+                    type="range"
+                    ref="mini_timeline"
+                    class="media-timeline"
+                    :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
+                    :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
+                    @change="e => release_audio_position(e)"
+                    :style="{
+                        background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
+                            (media_timestamp_elapsed / media_timestamp_end) * 100
+                        }%, var(--slider-base) ${(media_timestamp_elapsed / media_timestamp_end) * 100}%, var(--slider-base) 100%)`,
+                    }"
+                />
             </div>
             <p class="timestamp-right">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
         </div>
-        <div class="media-type" :style="{ opacity: (panel.height < (isLandscape ? 0.4 : 0.2)) ? '0' : '1'}">
-            <div v-if="audio_source_exists && isConnected" :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, false)">
-                <p class="media-type-title">Piano</p>           
+        <div class="media-type" :style="{ opacity: panel.height < (isLandscape ? 0.4 : 0.2) ? '0' : '1' }">
+            <div
+                v-if="audio_source_exists && isConnected"
+                :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                @click="e => setMediaType(e, false)"
+            >
+                <p class="media-type-title">Piano</p>
             </div>
-            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="(e) => setMediaType(e, true)">
+            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="e => setMediaType(e, true)">
                 <p class="media-type-title">Starting Notes</p>
             </div>
         </div>
         <div v-if="!media_starting_notes && panel.visible" class="media-controls">
-            <div class="playback-container" :style="{ opacity: (panel.height < (isLandscape ? 0.5 : 0.25)) ? '0' : '1'}">
+            <div class="playback-container" :style="{ opacity: panel.height < (isLandscape ? 0.5 : 0.25) ? '0' : '1' }">
                 <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
-            <div class="timeline" :style="{ opacity: (panel.height < (isLandscape ? 0.8 : 0.4)) ? '0' : '1'}">
+            <div class="timeline" :style="{ opacity: panel.height < (isLandscape ? 0.8 : 0.4) ? '0' : '1' }">
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
                 <div class="progress-bar-large">
-                    <input type="range" ref="large_timeline" class="media-timeline" :value="media_timestamp_elapsed/media_timestamp_end*100" :onInput="(e) => set_audio_position(Number((e.target as HTMLInputElement).value))" @change="(e) => release_audio_position(e)" :style="{background: `linear-gradient(to right, var(--color) 0%, var(--color) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) ${media_timestamp_elapsed/media_timestamp_end*100}%, var(--slider-base) 100%)`}">
+                    <input
+                        type="range"
+                        ref="large_timeline"
+                        class="media-timeline"
+                        :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
+                        :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
+                        @change="e => release_audio_position(e)"
+                        :style="{
+                            background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
+                                (media_timestamp_elapsed / media_timestamp_end) * 100
+                            }%, var(--slider-base) ${(media_timestamp_elapsed / media_timestamp_end) * 100}%, var(--slider-base) 100%)`,
+                        }"
+                    />
                 </div>
                 <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
             </div>
@@ -525,23 +582,30 @@ function get_note_icon(note: string) {
             </div>
         </div>
     </div>
-    <div class="w-100" style="height: 100vh" @mousedown="(e) => hide_touch_pos = {x: e.screenX, y: e.screenY}" 
-        @mouseup="(e) => {
-            if(Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5)
-                toggleMenu(e)
-        }" @touchstart="(e) => hide_touch_pos = {x: e.touches[0].screenX, y: e.touches[0].screenY}" 
-        @touchend="(e) => {
-            if(Math.abs(hide_touch_pos.x - e.changedTouches[0].screenX) < 5 && Math.abs(hide_touch_pos.y - e.changedTouches[0].screenY) < 5)
-                toggleMenu(e)
-        }"
-
-        @touchmove="(e) => {
-            hideMedia()
-        }"
+    <div
+        class="w-100"
+        style="height: 100vh"
+        @mousedown="e => (hide_touch_pos = { x: e.screenX, y: e.screenY })"
+        @mouseup="
+            e => {
+                if (Math.abs(hide_touch_pos.x - e.screenX) < 5 && Math.abs(hide_touch_pos.y - e.screenY) < 5) toggleMenu(e);
+            }
+        "
+        @touchstart="e => (hide_touch_pos = { x: e.touches[0].screenX, y: e.touches[0].screenY })"
+        @touchend="
+            e => {
+                if (Math.abs(hide_touch_pos.x - e.changedTouches[0].screenX) < 5 && Math.abs(hide_touch_pos.y - e.changedTouches[0].screenY) < 5)
+                    toggleMenu(e);
+            }
+        "
+        @touchmove="
+            e => {
+                hideMedia();
+            }
+        "
     >
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
-    
 </template>
 
 <style>
@@ -582,7 +646,9 @@ function get_note_icon(note: string) {
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     z-index: 1;
     transform: translate(-50%, -50%);
-    transition: opacity 0.5s, visibility 0.5s ease;
+    transition:
+        opacity 0.5s,
+        visibility 0.5s ease;
     opacity: 1;
     text-align: center;
     padding: 15px;
@@ -621,7 +687,7 @@ function get_note_icon(note: string) {
     -ms-user-select: none;
     user-select: none;
     -webkit-appearance: none;
-    appearance: none; 
+    appearance: none;
     font: 16px;
     color: var(--color);
     width: 100%;
@@ -637,14 +703,14 @@ function get_note_icon(note: string) {
     -ms-user-select: none;
     user-select: none;
     -webkit-appearance: none;
-    appearance: none; 
+    appearance: none;
     height: 15px;
     width: 15px;
     background-color: white;
     border-radius: 50%;
     border: none;
-    transition: .2s ease-in-out;
-    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
+    transition: 0.2s ease-in-out;
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
 
@@ -653,14 +719,14 @@ function get_note_icon(note: string) {
     -ms-user-select: none;
     user-select: none;
     -webkit-appearance: none;
-    appearance: none; 
+    appearance: none;
     height: 15px;
     width: 15px;
     background-color: white;
     border-radius: 50%;
     border: none;
-    transition: .2s ease-in-out;
-    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.5);
+    transition: 0.2s ease-in-out;
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
 .close-button {
@@ -705,14 +771,14 @@ function get_note_icon(note: string) {
     width: 50%;
     margin: 0 10px;
     align-items: center;
-    display: flex;    
+    display: flex;
     overflow: visible;
 }
 .progress-bar-large {
     width: 60%;
     margin: 0 10px;
     align-items: center;
-    display: flex;    
+    display: flex;
     overflow: visible;
 }
 .mini-playback-container {
@@ -743,13 +809,13 @@ function get_note_icon(note: string) {
     filter: var(--svg-polar);
     width: 8vw;
     height: 8vw;
-    max-width:  30px;
+    max-width: 30px;
     max-height: 30px;
 }
 .starting-note-icon {
     width: 15vw;
     height: 15vw;
-    max-width:  75px;
+    max-width: 75px;
     max-height: 75px;
     filter: var(--svg-polar);
 }
@@ -766,7 +832,7 @@ function get_note_icon(note: string) {
     min-height: 15px;
     width: 15vw;
     height: 15vw;
-    max-width:  75px;
+    max-width: 75px;
     max-height: 75px;
     cursor: pointer;
     transition: background-color 0.1s ease-out;
@@ -827,8 +893,8 @@ function get_note_icon(note: string) {
     right: 15px;
 }
 
-.media-type-title  {
-    margin: 0px  0px;
+.media-type-title {
+    margin: 0px 0px;
     color: var(--color);
     font-weight: bold;
     font-size: small;
@@ -852,13 +918,13 @@ function get_note_icon(note: string) {
     padding: 0px 25px;
 }
 .media-type {
-    background-color: var(--media-type);;
+    background-color: var(--media-type);
     width: max-content;
     height: 35px;
     border-radius: 25px;
     margin: 45px auto;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 0px 1px;
     transition: opacity 0.25s ease-in;
@@ -884,9 +950,11 @@ function get_note_icon(note: string) {
     left: 0;
     bottom: 0;
     z-index: 1;
-    transition: opacity 0.125s ease-in, visibility 0.125s ease;
+    transition:
+        opacity 0.125s ease-in,
+        visibility 0.125s ease;
     opacity: 1;
-    visibility: visible;    
+    visibility: visible;
     overflow: visible;
 }
 .media-panel-blur {

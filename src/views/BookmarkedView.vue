@@ -16,7 +16,11 @@ let available_songs = ref<SongSearchInfo[]>([]);
 let search_results = computed(() => {
     return available_songs.value
         .filter(s => {
-            return s.stripped_title?.includes(stripped_query.value) || s?.stripped_first_line?.includes(stripped_query.value) || s?.number?.includes(stripped_query.value);
+            return (
+                s.stripped_title?.includes(stripped_query.value) ||
+                s?.stripped_first_line?.includes(stripped_query.value) ||
+                s?.number?.includes(stripped_query.value)
+            );
         })
         .sort((a, b) => a.title.localeCompare(b.title));
 });

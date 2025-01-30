@@ -6,7 +6,6 @@ import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-
 const props = defineProps<{
     book: string;
 }>();
@@ -16,7 +15,7 @@ const route = useRoute();
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
-    if(!_.fullPath.includes("/display")) {
+    if (!_.fullPath.includes("/display")) {
         removeGroupOpened(from.fullPath);
         removeScrollPosition(from.fullPath);
     }
@@ -30,7 +29,7 @@ let index_available = ref(false);
 let button_color = ref("#000000");
 let song_number_groups = ref<string[][]>([]);
 let song_number_groups_active = ref<string[][]>([]);
-let song_group_elements = ref<any[]>()
+let song_group_elements = ref<any[]>();
 let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
 
 onMounted(async () => {
@@ -46,16 +45,18 @@ onMounted(async () => {
     song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
 
     let song_count = song_numbers.value.length;
-    let num_groups = Math.ceil(song_count/100);
+    let num_groups = Math.ceil(song_count / 100);
 
     // Dividing songs into groups of 100
     for (let i = 0; i < num_groups; i++) {
         const re = new RegExp(/[a-z]/, "i");
-        song_number_groups.value?.push(song_numbers.value.filter((song) => {
-            let song_num = song.replace(re, "");
+        song_number_groups.value?.push(
+            song_numbers.value.filter(song => {
+                let song_num = song.replace(re, "");
 
-            return i*100 < Number(song_num) && Number(song_num) <= ((i+1)*100);
-        }));
+                return i * 100 < Number(song_num) && Number(song_num) <= (i + 1) * 100;
+            }),
+        );
     }
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
@@ -65,10 +66,10 @@ onMounted(async () => {
     useSessionStorage<boolean>("isAlphabetical", false).value = false;
 
     let group_ids = getGroupOpened(route.fullPath);
-    if(group_ids != undefined) {
-        group_ids.forEach((id) => {
+    if (group_ids != undefined) {
+        group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
-        })
+        });
     }
 
     // Restoring position in book
@@ -84,22 +85,19 @@ function toggleDropdown(group: string[]) {
         song_number_groups_active.value.push(group);
     }
     let ids: number[] = [];
-    song_number_groups_active.value.forEach((group_id) => {
+    song_number_groups_active.value.forEach(group_id => {
         var index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
-    })
+    });
     saveGroupOpened(route.fullPath, ids);
 }
 
 const scrollIntoViewWithOffset = (selector: HTMLElement, offset: number) => {
     window.scrollTo({
-        behavior: 'smooth',
-        top:
-        selector.getBoundingClientRect().top -
-        document.body.getBoundingClientRect().top -
-        offset,
-    })
-}
+        behavior: "smooth",
+        top: selector.getBoundingClientRect().top - document.body.getBoundingClientRect().top - offset,
+    });
+};
 
 function getRangeString(start: string, end: string) {
     if (start == end) {
@@ -134,27 +132,41 @@ function getRangeString(start: string, end: string) {
     <div v-else class="songs main-content">
         <!-- Buttons with song grouping disabled -->
         <div v-if="!song_group_enabled" class="song-button-container">
-            <RouterLink v-for="song_num in song_numbers" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
-                            {{ song_num }}
+            <RouterLink
+                v-for="song_num in song_numbers"
+                :key="song_num"
+                :to="`/display/${props.book}/${song_num}`"
+                class="song-btn"
+                :style="{ background: button_color }"
+            >
+                {{ song_num }}
             </RouterLink>
         </div>
         <!-- Buttons with song grouping enabled -->
-        <div v-else v-for="(group) in song_number_groups" class="song-group-container" ref="song_group_elements">
+        <div v-else v-for="group in song_number_groups" class="song-group-container" ref="song_group_elements">
             <div>
                 <div class="song-group-title-container" @click="toggleDropdown(group)">
-                    <div class="song-title">{{getRangeString(group[0], group[group.length - 1])}}</div>
-                    <img class="ionicon nav__icon dropdown-icon" src="/assets/chevron-back-outline.svg" :class="{'dropdown-icon-active': song_number_groups_active.includes(group)}"/>
+                    <div class="song-title">{{ getRangeString(group[0], group[group.length - 1]) }}</div>
+                    <img
+                        class="ionicon nav__icon dropdown-icon"
+                        src="/assets/chevron-back-outline.svg"
+                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(group) }"
+                    />
                 </div>
-                <div class="wrapper" :class="{'wrapper-active': song_number_groups_active.includes(group)}">
-                    <div class="song-button-container" :class="{'song-button-container-active': song_number_groups_active.includes(group)}">
-                        <RouterLink v-for="song_num in group" :key="song_num" :to="`/display/${props.book}/${song_num}`" class="song-btn" :style="{ background: button_color }">
+                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(group) }">
+                    <div class="song-button-container" :class="{ 'song-button-container-active': song_number_groups_active.includes(group) }">
+                        <RouterLink
+                            v-for="song_num in group"
+                            :key="song_num"
+                            :to="`/display/${props.book}/${song_num}`"
+                            class="song-btn"
+                            :style="{ background: button_color }"
+                        >
                             {{ song_num }}
                         </RouterLink>
-                    </div>     
-                </div>     
-                
+                    </div>
+                </div>
             </div>
-            
         </div>
     </div>
 
@@ -162,7 +174,6 @@ function getRangeString(start: string, end: string) {
 </template>
 
 <style scoped>
-
 .songs {
     display: flex;
     flex-direction: column;
@@ -179,7 +190,7 @@ function getRangeString(start: string, end: string) {
     border-radius: 15px;
 }
 
-.song-group-title-container{
+.song-group-title-container {
     margin: 15px 20px;
     display: flex;
     justify-content: space-between;
