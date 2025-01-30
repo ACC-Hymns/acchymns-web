@@ -2,25 +2,20 @@
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted } from "vue";
-import { Capacitor } from "@capacitor/core";
 import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
-
+import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 let search_query = ref("");
 let stripped_query = computed(() => {
-    return search_query.value
-        .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-        .replace(/s{2,}/g, " ")
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
+    return stripSearchText(search_query.value);
 });
 let available_songs = ref<SongSearchInfo[]>([]);
 
 let search_results = computed(() => {
     return available_songs.value
-        .filter((s) => {
+        .filter(s => {
             return (
                 s.stripped_title?.includes(stripped_query.value) ||
                 s?.stripped_first_line?.includes(stripped_query.value) ||
@@ -45,19 +40,8 @@ onMounted(async () => {
             title: song.title ?? "",
             number: bookmark.number,
             book: BOOK_METADATA[bookmark.book],
-            stripped_title: (song?.title ?? "")
-                .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-                .replace(/s{2,}/g, " ")
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/\p{Diacritic}/gu, ""),
-            stripped_first_line:
-                song?.first_line
-                    ?.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    ?.replace(/s{2,}/g, " ")
-                    ?.toLowerCase()
-                    ?.normalize("NFD")
-                    ?.replace(/\p{Diacritic}/gu, "") ?? "",
+            stripped_title: stripSearchText(song.title ?? ""),
+            stripped_first_line: stripSearchText(song.first_line ?? ""),
         } as SongSearchInfo);
     }
 });
@@ -100,24 +84,7 @@ onMounted(async () => {
         </RouterLink>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/bookmark.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="bookmarks" />
 </template>
 
 <style>

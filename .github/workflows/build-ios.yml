@@ -98,7 +98,7 @@ jobs:
                   <key>provisioningProfiles</key>
                   <dict>
                     <key>com.ChristopherW.acchmns</key>
-                    <string>Publishing Profile</string>
+                    <string>October2024PublishingProvision</string>
                   </dict>
                   <key>signingCertificate</key>
                   <string>Apple Distribution</string>
@@ -122,7 +122,7 @@ jobs:
           xcrun altool --upload-package "ios/App/output/ACC Hymns.ipa" --type "ios" --asc-public-id ${{ secrets.ASC_PUBLIC_ID }} --apple-id ${{ secrets.APP_APPLE_ID }} --bundle-version ${{ env.BUILD_NUMBER }} --bundle-short-version-string "${{ env.PACKAGE_NUMBER }}" --bundle-id "com.ChristopherW.acchmns" -u ${{ secrets.APPLE_ID }} -p ${{ secrets.APPLE_PASS }}
 
       - name: Upload release IPA
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-ipa
           path: ios/App/output/*.ipa

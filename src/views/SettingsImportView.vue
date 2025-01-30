@@ -1,37 +1,17 @@
 <script setup lang="ts">
-import {
-    computed,
-    onBeforeUnmount,
-    onMounted,
-    onUnmounted,
-    onUpdated,
-    ref,
-} from "vue";
+import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from "@capacitor/network";
 import { Capacitor } from "@capacitor/core";
-import { RouterLink, onBeforeRouteLeave } from "vue-router";
-import { useNavigator } from "@/router/navigator";
-const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
-import router from "@/router";
-import {
-    download_book,
-    loadBookSources,
-    checkForUpdates,
-    delete_import_summary,
-    download_import_summary,
-} from "@/scripts/book_import";
-import {
-    BookSourceType,
-    type BookDataSummary,
-    type DownloadPromise,
-} from "@/scripts/types";
+import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
+import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 let downloadProgress = ref(new Map<string, number>());
 let downloads = ref<Map<string, DownloadPromise>>(
@@ -51,39 +31,29 @@ const book_sources = useCapacitorPreferences<BookDataSummary[]>(
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
-    let books = book_sources.value.filter(
-        (book) => book.status == BookSourceType.PREVIEW,
-    );
+    let books = book_sources.value.filter(book => book.status == BookSourceType.PREVIEW);
     return books;
 });
 
 // Imported books
 const imported_books = computed(() => {
-    return book_sources.value.filter(
-        (book) => book.status == BookSourceType.IMPORTED,
-    );
+    return book_sources.value.filter(book => book.status == BookSourceType.IMPORTED);
 });
 
 // Downloaded books
 const downloaded_books = computed(() => {
-    return book_sources.value.filter(
-        (book) => book.status == BookSourceType.DOWNLOADED,
-    );
+    return book_sources.value.filter(book => book.status == BookSourceType.DOWNLOADED);
 });
 
 const reference_input = ref("");
 
-async function addImportedURL(
-    input_book: BookDataSummary,
-    show_on_success: boolean = true,
-): Promise<boolean> {
-    let book = book_sources.value.find((b) => b.id == input_book.id);
+async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
+    let book = book_sources.value.find(b => b.id == input_book.id);
     if (book == undefined) return false;
 
     let connection = (await Network.getStatus()).connected;
     if (connection) {
-        if (Capacitor.getPlatform() !== "web")
-            await download_import_summary(book);
+        if (Capacitor.getPlatform() !== "web") await download_import_summary(book);
     } else {
         await Toast.show({
             text: "No internet connection.",
@@ -136,10 +106,9 @@ async function addImportedURL(
 }
 
 async function addImportedBookByCode(short_book_name: string) {
+    short_book_name = short_book_name.toUpperCase();
     if (short_book_name in known_references) {
-        const to_import = book_sources.value.find(
-            (b) => b.id == short_book_name,
-        );
+        const to_import = book_sources.value.find(b => b.id == short_book_name);
         if (to_import == undefined) return;
 
         // Check for duplicate url
@@ -192,19 +161,14 @@ async function download_finish(book: BookDataSummary, new_url: string) {
 }
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
-    book_to_remove.status = Object.keys(public_references).includes(
-        book_to_remove.id,
-    )
-        ? BookSourceType.PREVIEW
-        : BookSourceType.HIDDEN;
+    book_to_remove.status = Object.keys(public_references).includes(book_to_remove.id) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
 
     if (downloads.value.has(book_to_remove.id)) {
         downloads.value.get(book_to_remove.id)?.cancel();
         downloadProgress.value.delete(book_to_remove.id);
     }
 
-    if (Capacitor.getPlatform() !== "web")
-        await delete_import_summary(book_to_remove);
+    if (Capacitor.getPlatform() !== "web") await delete_import_summary(book_to_remove);
 
     await Toast.show({
         text: "Successfully removed hymnal!",
@@ -243,21 +207,9 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 
     <div class="main-content">
         <div class="input-option reference-option">
-            <input
-                v-model.trim="reference_input"
-                type="text"
-                class="search-bar"
-                placeholder="Reference"
-            />
-            <a
-                :disabled="reference_input.length === 0"
-                @click="addImportedBookByCode(reference_input)"
-                class="reference-button"
-            >
-                <img
-                    class="ionicon enter-button-icon"
-                    src="/assets/enter-outline.svg"
-                />
+            <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Book Code" />
+            <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
+                <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
             </a>
         </div>
 
@@ -368,24 +320,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <div style="padding-bottom: 200px"></div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>

@@ -50,13 +50,10 @@ for (const book of books) {
     }
 
     // Check for blank notes (is a production issue, so we should know about it so we can add missing songs)
-    for (const [song_number, song_reference] of Object.entries(
-        song_references,
-    )) {
+    for (const [song_number, song_reference] of Object.entries(song_references)) {
         if (
             song_reference["notes"] != undefined &&
-            (song_reference["notes"].join("").trim() == "" ||
-                song_reference["notes"].some((note) => note.trim() == ""))
+            (song_reference["notes"].join("").trim() == "" || song_reference["notes"].some(note => note.trim() == ""))
         ) {
             console.log(`Blank notes for song #${song_number}`);
             blank_notes.push(book + " - " + song_number);

@@ -1,25 +1,10 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref } from "vue";
-import {
-    getAllBookMetaData,
-    getSongMetaData,
-    handle_missing_book,
-} from "@/scripts/book_import";
-import {
-    RouterLink,
-    useRouter,
-    useRoute,
-    onBeforeRouteLeave,
-} from "vue-router";
+import { getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
+import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-import {
-    saveScrollPosition,
-    restoreScrollPosition,
-    saveGroupOpened,
-    getGroupOpened,
-    removeGroupOpened,
-    removeScrollPosition,
-} from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 const props = defineProps<{
     book: string;
@@ -45,10 +30,7 @@ let button_color = ref("#000000");
 let song_number_groups = ref<string[][]>([]);
 let song_number_groups_active = ref<string[][]>([]);
 let song_group_elements = ref<any[]>();
-let song_group_enabled = useLocalStorage<boolean>(
-    "ACCOptions.songGroupEnabled",
-    true,
-);
+let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -66,18 +48,15 @@ onMounted(async () => {
 
     let song_count = song_numbers.value.length;
     let num_groups = Math.ceil(song_count / 100);
-    if (song_count % 100 == 0) {
-        num_groups += 1;
-    }
 
     // Dividing songs into groups of 100
     for (let i = 0; i < num_groups; i++) {
+        const re = new RegExp(/[a-z]/, "i");
         song_number_groups.value?.push(
-            song_numbers.value.filter((song) => {
-                const re = new RegExp(/[a-z]/, "i");
-                let song_num = Number(song.replace(re, ""));
+            song_numbers.value.filter(song => {
+                let song_num = song.replace(re, "");
 
-                return song_num >= i * 100 && song_num < (i + 1) * 100;
+                return i * 100 < Number(song_num) && Number(song_num) <= (i + 1) * 100;
             }),
         );
     }
@@ -90,7 +69,7 @@ onMounted(async () => {
 
     let group_ids = getGroupOpened(route.fullPath);
     if (group_ids != undefined) {
-        group_ids.forEach((id) => {
+        group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
         });
     }
@@ -111,7 +90,7 @@ function toggleDropdown(group: string[]) {
         song_number_groups_active.value.push(group);
     }
     let ids: number[] = [];
-    song_number_groups_active.value.forEach((group_id) => {
+    song_number_groups_active.value.forEach(group_id => {
         var index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
     });
@@ -169,43 +148,18 @@ function getRangeString(start: string, end: string) {
             </RouterLink>
         </div>
         <!-- Buttons with song grouping enabled -->
-        <div
-            v-else
-            v-for="group in song_number_groups"
-            class="song-group-container"
-            ref="song_group_elements"
-        >
+        <div v-else v-for="(group, index) in song_number_groups" :key="index" class="song-group-container" ref="song_group_elements">
             <div>
-                <div
-                    class="song-group-title-container"
-                    @click="toggleDropdown(group)"
-                >
-                    <div class="song-title">
-                        {{ getRangeString(group[0], group[group.length - 1]) }}
-                    </div>
+                <div class="song-group-title-container" @click="toggleDropdown(group)">
+                    <div class="song-title">{{ getRangeString(group[0], group[group.length - 1]) }}</div>
                     <img
                         class="ionicon nav__icon dropdown-icon"
                         src="/assets/chevron-back-outline.svg"
-                        :class="{
-                            'dropdown-icon-active':
-                                song_number_groups_active.includes(group),
-                        }"
+                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(group) }"
                     />
                 </div>
-                <div
-                    class="wrapper"
-                    :class="{
-                        'wrapper-active':
-                            song_number_groups_active.includes(group),
-                    }"
-                >
-                    <div
-                        class="song-button-container"
-                        :class="{
-                            'song-button-container-active':
-                                song_number_groups_active.includes(group),
-                        }"
-                    >
+                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(group) }">
+                    <div class="song-button-container" :class="{ 'song-button-container-active': song_number_groups_active.includes(group) }">
                         <RouterLink
                             v-for="song_num in group"
                             :key="song_num"
@@ -221,24 +175,7 @@ function getRangeString(start: string, end: string) {
         </div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="home" />
 </template>
 
 <style scoped>

@@ -1,5 +1,3 @@
-import type { RouteLocationNormalizedLoaded } from "vue-router";
-
 type BookSummary = {
     name: {
         short: string;

@@ -30,11 +30,7 @@ export function useCapacitorPreferences(
     initialValue: MaybeComputedRef<number>,
     options?: UseStorageAsyncOptions<number>,
 ): RemovableRef<number>;
-export function useCapacitorPreferences<T>(
-    key: string,
-    initialValue: MaybeComputedRef<T>,
-    options?: UseStorageAsyncOptions<T>,
-): RemovableRef<T>;
+export function useCapacitorPreferences<T>(key: string, initialValue: MaybeComputedRef<T>, options?: UseStorageAsyncOptions<T>): RemovableRef<T>;
 export function useCapacitorPreferences<T = unknown>(
     key: string,
     initialValue: MaybeComputedRef<null>,

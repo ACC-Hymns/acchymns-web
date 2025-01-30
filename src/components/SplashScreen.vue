@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLocalStorage } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 let landing_complete = useLocalStorage<boolean>("update3showcase", false);
 
@@ -11,11 +11,7 @@ let scroll_target = ref<HTMLElement>();
 const isDarkMode = ref<boolean>(false);
 const BASE_URL = import.meta.env.BASE_URL;
 
-let change_headers = ref<string[]>([
-    "Customization",
-    "Download for Later",
-    "Media Player",
-]);
+let change_headers = ref<string[]>(["Customization", "Download for Later", "Media Player"]);
 let change_details = ref<string[]>([
     "Rearrange the home page to look the way you want it to.",
     "Download hymnals for later use without needing an internet connection.",
@@ -23,15 +19,11 @@ let change_details = ref<string[]>([
 ]);
 
 onMounted(() => {
-    isDarkMode.value = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-    ).matches;
+    isDarkMode.value = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-            isDarkMode.value = event.matches;
-        });
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
+        isDarkMode.value = event.matches;
+    });
 });
 
 function scrollHandler(e: UIEvent) {
@@ -79,44 +71,24 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
 <template>
     <div class="fill">
         <div class="welcome-page">
-            <div
-                class="swipe-view"
-                @scroll="(e) => scrollHandler(e)"
-                ref="scroll_target"
-            >
+            <div class="swipe-view" @scroll="e => scrollHandler(e)" ref="scroll_target">
                 <section>
                     <img
                         class="demo-image demo-image-border"
-                        :src="
-                            compute_dark_mode(
-                                BASE_URL + 'assets/demos/rearrange.gif',
-                                BASE_URL + 'assets/demos/rearrange-dark.gif',
-                                isDarkMode,
-                            )
-                        "
+                        :src="compute_dark_mode(BASE_URL + 'assets/demos/rearrange.gif', BASE_URL + 'assets/demos/rearrange-dark.gif', isDarkMode)"
+                    />
+                </section>
+                <section>
+                    <img
+                        class="demo-image demo-image-border"
+                        :src="compute_dark_mode(BASE_URL + 'assets/demos/download.gif', BASE_URL + 'assets/demos/download-dark.gif', isDarkMode)"
                     />
                 </section>
                 <section>
                     <img
                         class="demo-image demo-image-border"
                         :src="
-                            compute_dark_mode(
-                                BASE_URL + 'assets/demos/download.gif',
-                                BASE_URL + 'assets/demos/download-dark.gif',
-                                isDarkMode,
-                            )
-                        "
-                    />
-                </section>
-                <section>
-                    <img
-                        class="demo-image demo-image-border"
-                        :src="
-                            compute_dark_mode(
-                                BASE_URL + 'assets/demos/mediaplayer.png',
-                                BASE_URL + 'assets/demos/mediaplayer-dark.png',
-                                isDarkMode,
-                            )
+                            compute_dark_mode(BASE_URL + 'assets/demos/mediaplayer.png', BASE_URL + 'assets/demos/mediaplayer-dark.png', isDarkMode)
                         "
                     />
                 </section>
@@ -126,33 +98,18 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
             <div class="progress">
                 <img
                     v-for="index in 3"
+                    :key="index"
                     class="ionicon progress-icon"
                     :src="active(scroll_index == index - 1)"
                     @click="scroll_to_index(index - 1)"
                 />
             </div>
             <div class="details">
-                <h1
-                    class="change-header"
-                    :class="{ 'scrolling-text': is_scrolling }"
-                >
-                    {{ change_headers[scroll_index] }}
-                </h1>
-                <p
-                    class="change-details"
-                    :class="{ 'scrolling-text': is_scrolling }"
-                >
-                    {{ change_details[scroll_index] }}
-                </p>
+                <h1 class="change-header" :class="{ 'scrolling-text': is_scrolling }">{{ change_headers[scroll_index] }}</h1>
+                <p class="change-details" :class="{ 'scrolling-text': is_scrolling }">{{ change_details[scroll_index] }}</p>
             </div>
             <a class="start-button" @click="action">
-                <p class="song__title">
-                    {{
-                        scroll_index == change_headers.length - 1
-                            ? "Continue"
-                            : "Next"
-                    }}
-                </p>
+                <p class="song__title">{{ scroll_index == change_headers.length - 1 ? "Continue" : "Next" }}</p>
             </a>
         </div>
     </div>

@@ -39,29 +39,23 @@ export async function migrate() {
     }
 
     // migrate old imported book config to new system
-    const external_books = (await Preferences.get({ key: "externalBooks" }))
-        .value;
+    const external_books = (await Preferences.get({ key: "externalBooks" })).value;
     if (external_books != null) {
         await loadBookSources();
         const book_sources_raw = await Preferences.get({ key: "bookSources" });
-        const book_sources: BookDataSummary[] = JSON.parse(
-            book_sources_raw.value ?? "[]",
-        );
+        const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
         const book_urls: string[] = JSON.parse(external_books ?? "[]");
         for (const b in book_urls) {
             const book_url_segments = book_urls[b].split("/");
             const book_id = book_url_segments[book_url_segments.length - 1];
-            const new_book = book_sources.find((b) => b.id == book_id);
+            const new_book = book_sources.find(b => b.id == book_id);
 
             if (new_book == undefined) continue;
 
             new_book.status = BookSourceType.IMPORTED;
         }
-        Preferences.set({
-            key: "bookSources",
-            value: JSON.stringify(book_sources),
-        });
+        Preferences.set({ key: "bookSources", value: JSON.stringify(book_sources) });
         Preferences.remove({ key: "externalBooks" });
     }
 

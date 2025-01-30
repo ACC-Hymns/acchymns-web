@@ -9,16 +9,10 @@ import {
     type UpdatePackage,
     type DownloadPromise,
 } from "@/scripts/types";
-import {
-    branch,
-    known_references,
-    prepackaged_book_urls,
-    prepackaged_books,
-    public_references,
-} from "@/scripts/constants";
+import { branch, known_references, prepackaged_book_urls, prepackaged_books, public_references } from "@/scripts/constants";
 import { Preferences } from "@capacitor/preferences";
-import { Directory, Encoding, Filesystem } from "@capacitor/filesystem";
-import type { DownloadFileResult, FileInfo } from "@capacitor/filesystem";
+import { Directory, Filesystem } from "@capacitor/filesystem";
+import type { DownloadFileResult } from "@capacitor/filesystem";
 import { Capacitor } from "@capacitor/core";
 import { Network } from "@capacitor/network";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -26,16 +20,8 @@ import router from "@/router";
 
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
-    const book_sources: BookDataSummary[] = JSON.parse(
-        book_sources_raw.value ?? "[]",
-    );
-    return book_sources
-        .filter(
-            (b) =>
-                b.status != BookSourceType.PREVIEW &&
-                b.status != BookSourceType.HIDDEN,
-        )
-        .map((b) => b.src);
+    const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
+    return book_sources.filter(b => b.status != BookSourceType.PREVIEW && b.status != BookSourceType.HIDDEN).map(b => b.src);
 }
 
 function getPathFromSignatureNode(node: BookSignature): string {
@@ -65,10 +51,7 @@ function verifySignatures(
                 hash: local.hash,
                 parent: local.parent,
             };
-            const result = verifySignatures(
-                local.children[i],
-                origin.children[i],
-            );
+            const result = verifySignatures(local.children[i], origin.children[i]);
             if (result != null && result != undefined) {
                 results = results.concat(result);
             }
@@ -82,9 +65,7 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
     console.log("Checking for updates...");
     if (Capacitor.getPlatform() !== "web") {
         const book_signature: BookSignature[] = await (
-            await fetch(
-                `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/book_signatures.json`,
-            )
+            await fetch(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/book_signatures.json`)
         ).json();
         const return_packages: UpdatePackage[] = [];
 
@@ -110,30 +91,18 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
 
             if (file.type != "directory") continue;
 
-            if (
-                !prepackaged_books
-                    .concat(Object.keys(known_references))
-                    .includes(file.name)
-            )
-                continue;
+            if (!prepackaged_books.concat(Object.keys(known_references)).includes(file.name)) continue;
 
             const signature_blob = await Filesystem.readFile({
                 directory: Directory.Documents,
                 path: `Hymnals/${file.name}/.signature`,
             });
-            const signature_data = JSON.parse(
-                atob(signature_blob.data.toString()),
-            );
-            const updated_signature_data = book_signature.find(
-                (sig) => sig.name == signature_data.name,
-            );
+            const signature_data = JSON.parse(atob(signature_blob.data.toString()));
+            const updated_signature_data = book_signature.find(sig => sig.name == signature_data.name);
             if (updated_signature_data == undefined) continue;
 
             console.log(`Verification Results (${signature_data.name})`);
-            const verification_error = verifySignatures(
-                signature_data,
-                updated_signature_data,
-            );
+            const verification_error = verifySignatures(signature_data, updated_signature_data);
 
             if (verification_error.length < 1) continue;
 
@@ -163,12 +132,8 @@ async function loadBookSources() {
 
     console.log("Loading Pre-Packaged Books...");
     for (const url in prepackaged_book_urls) {
-        const existing = book_sources.find(
-            (b) => b.src == prepackaged_book_urls[url],
-        );
-        const summary: BookSummary | null = await fetchBookSummary(
-            prepackaged_book_urls[url],
-        );
+        const existing = book_sources.find(b => b.src == prepackaged_book_urls[url]);
+        const summary: BookSummary | null = await fetchBookSummary(prepackaged_book_urls[url]);
 
         if (existing != undefined) {
             existing.name = summary?.name;
@@ -189,9 +154,7 @@ async function loadBookSources() {
 
     // load downloaded books
     console.log("Loading Downloaded Books...");
-    book_sources = book_sources.filter(
-        (b) => b.status != BookSourceType.DOWNLOADED,
-    );
+    book_sources = book_sources.filter(b => b.status != BookSourceType.DOWNLOADED);
     if (Capacitor.getPlatform() !== "web") {
         try {
             await Filesystem.stat({
@@ -215,12 +178,7 @@ async function loadBookSources() {
 
             if (file.type != "directory") continue;
 
-            if (
-                !prepackaged_books
-                    .concat(Object.keys(known_references))
-                    .includes(file.name)
-            )
-                continue;
+            if (!prepackaged_books.concat(Object.keys(known_references)).includes(file.name)) continue;
 
             try {
                 await Filesystem.stat({
@@ -231,16 +189,12 @@ async function loadBookSources() {
                 continue;
             }
 
-            const existing_book = book_sources.find(
-                (book) => book.id == file.name,
-            );
+            const existing_book = book_sources.find(book => book.id == file.name);
             if (existing_book != undefined) {
                 book_sources.splice(book_sources.indexOf(existing_book), 1);
             }
 
-            const summary: BookSummary | null = await fetchBookSummary(
-                Capacitor.convertFileSrc(file.uri),
-            );
+            const summary: BookSummary | null = await fetchBookSummary(Capacitor.convertFileSrc(file.uri));
 
             book_sources.push({
                 id: file.name,
@@ -261,8 +215,7 @@ async function loadBookSources() {
                 skip = true;
                 if (book_sources[b].status == BookSourceType.IMPORTED) {
                     if (Capacitor.getPlatform() === "web") {
-                        const summary: BookSummary | null =
-                            await fetchBookSummary(book_sources[b].src);
+                        const summary: BookSummary | null = await fetchBookSummary(book_sources[b].src);
                         if (summary) {
                             book_sources[b].name = summary.name;
                             book_sources[b].primaryColor = summary.primaryColor;
@@ -281,16 +234,9 @@ async function loadBookSources() {
                         source_path = result.uri;
                     } catch (e) {
                         if ((await Network.getStatus()).connected) {
-                            console.log(
-                                "No local summary found for " +
-                                    book +
-                                    ". Downloading now...",
-                            );
-                            const result = await download_import_summary(
-                                book_sources[b],
-                            );
-                            source_path =
-                                result.path?.replace("/summary.json", "") || "";
+                            console.log("No local summary found for " + book + ". Downloading now...");
+                            const result = await download_import_summary(book_sources[b]);
+                            source_path = result.path?.replace("/summary.json", "") || "";
                         } else {
                             console.log(
                                 "No local summary found for " +
@@ -302,9 +248,7 @@ async function loadBookSources() {
 
                     if (source_path == "") break;
 
-                    const summary: BookSummary | null = await fetchBookSummary(
-                        Capacitor.convertFileSrc(source_path),
-                    );
+                    const summary: BookSummary | null = await fetchBookSummary(Capacitor.convertFileSrc(source_path));
                     if (summary) {
                         book_sources[b].name = summary.name;
                         book_sources[b].primaryColor = summary.primaryColor;
@@ -320,9 +264,7 @@ async function loadBookSources() {
 
         const entry: BookDataSummary = {
             id: book,
-            status: Object.keys(public_references).includes(book)
-                ? BookSourceType.PREVIEW
-                : BookSourceType.HIDDEN,
+            status: Object.keys(public_references).includes(book) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN,
             src: url,
         };
 
@@ -330,10 +272,7 @@ async function loadBookSources() {
     }
 
     console.log("Finished loading sources!");
-    Preferences.set({
-        key: "bookSources",
-        value: JSON.stringify(book_sources),
-    });
+    Preferences.set({ key: "bookSources", value: JSON.stringify(book_sources) });
     return book_sources;
 }
 
@@ -341,17 +280,13 @@ async function getBookDataSummary(book: BookSummary | null) {
     if (book == null) return;
 
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
-    const book_sources: BookDataSummary[] = JSON.parse(
-        book_sources_raw.value ?? "[]",
-    );
+    const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
     return book_sources.find((b) => b.id == book.name.short);
 }
 async function getBookDataSummaryFromName(book: string) {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
-    const book_sources: BookDataSummary[] = JSON.parse(
-        book_sources_raw.value ?? "[]",
-    );
+    const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
     return book_sources.find((b) => b.id == book);
 }
@@ -385,9 +320,7 @@ async function handle_missing_book(book_short: string) {
     await addImportedBookByCode(book_short);
     async function addImportedBookByCode(short_book_name: string) {
         if (short_book_name in known_references) {
-            const to_import = book_sources.value.find(
-                (b) => b.id == short_book_name,
-            );
+            const to_import = book_sources.value.find(b => b.id == short_book_name);
             if (to_import == undefined) return;
 
             // Check for duplicate url
@@ -397,24 +330,20 @@ async function handle_missing_book(book_short: string) {
             ) {
                 return;
             } else {
-                if (await addImportedURL(to_import, false)) {
+                if (await addImportedURL(to_import)) {
                     router.go(0);
                 }
             }
         }
     }
 
-    async function addImportedURL(
-        input_book: BookDataSummary,
-        show_on_success: boolean = true,
-    ): Promise<boolean> {
-        const book = book_sources.value.find((b) => b.id == input_book.id);
+    async function addImportedURL(input_book: BookDataSummary): Promise<boolean> {
+        const book = book_sources.value.find(b => b.id == input_book.id);
         if (book == undefined) return false;
 
         const connection = (await Network.getStatus()).connected;
         if (connection) {
-            if (Capacitor.getPlatform() !== "web")
-                await download_import_summary(book);
+            if (Capacitor.getPlatform() !== "web") await download_import_summary(book);
         } else {
             return false;
         }
@@ -452,23 +381,15 @@ async function handle_missing_book(book_short: string) {
 
 async function generate_force_update_package() {
     const update_packages: UpdatePackage[] = [];
-    const local_hashes: BookSignature[] = await (
-        await fetch(import.meta.env.BASE_URL + `book_signatures.json`)
-    ).json();
+    const local_hashes: BookSignature[] = await (await fetch(import.meta.env.BASE_URL + `book_signatures.json`)).json();
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
-    const book_sources: BookDataSummary[] = JSON.parse(
-        book_sources_raw.value ?? "[]",
-    );
-    const local_books = book_sources.filter(
-        (book) => book.status == BookSourceType.DOWNLOADED,
-    );
+    const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
+    const local_books = book_sources.filter(book => book.status == BookSourceType.DOWNLOADED);
     for (const book of local_books) {
-        const hash = local_hashes.find((hash) => hash.name == book.id);
+        const hash = local_hashes.find(hash => hash.name == book.id);
         if (hash == undefined) continue;
         const signatures = await collect_signatures(hash);
-        const paths = (await signatures).map((sig) =>
-            getPathFromSignatureNode(sig),
-        );
+        const paths = (await signatures).map(sig => getPathFromSignatureNode(sig));
 
         const update: UpdatePackage = {
             book_short: book.id,
@@ -479,11 +400,7 @@ async function generate_force_update_package() {
     return update_packages;
 }
 
-async function download_update_package(
-    update: UpdatePackage,
-    progress_callback: (progress: number) => void,
-    finish_callback: () => void,
-) {
+async function download_update_package(update: UpdatePackage, progress_callback: (progress: number) => void, finish_callback: () => void) {
     for (let i = 0; i < update.paths.length; i++) {
         const path = update.paths[i];
         console.log(`Downloading (${update.book_short}/${path})`);
@@ -567,9 +484,7 @@ function download_book(
         progress_callback: (book: BookDataSummary, progress: number) => void,
         finish_callback: (book: BookDataSummary, url: string) => void,
     ) {
-        const book_summary = await fetchBookSummary(
-            `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`,
-        );
+        const book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`);
         const ext = book_summary?.fileExtension;
         const songs: SongList | null = await getSongMetaData(book.id);
         const num_of_songs = Object.entries(songs as any).length;
@@ -654,7 +569,7 @@ function download_book(
         const chunk_size = 10;
         let download_chunk_count = 0;
         function wait_for_downloads(): Promise<void> {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 const start_time = Date.now();
                 function check() {
                     if (download_chunk_count <= 0) resolve();
@@ -691,7 +606,6 @@ function download_book(
                 throw new Error("Download Cancelled");
             }
 
-            const download_progress = `${(i / num_of_songs) * 100}%`;
             progress_callback(book, (i / num_of_songs) * 100);
 
             // check for final song

@@ -3,7 +3,6 @@ import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 import { RouterLink } from "vue-router";
 import { clearCache } from "@/composables/cached_fetch";
-import { resetOptions } from "@/stores/options";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Preferences } from "@capacitor/preferences";
@@ -18,6 +17,7 @@ import type { UpdatePackage } from "@/scripts/types";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { Capacitor } from "@capacitor/core";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 // This is retrieved from the package.json
 const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
@@ -55,10 +55,8 @@ async function forceUpdate() {
 function delayUpdate() {
     if (update_progress.value > 0) return;
 
-    (update_background_element.value as unknown as HTMLElement).style.opacity =
-        "0.0";
-    (update_panel_element.value as unknown as HTMLElement).style.opacity =
-        "0.0";
+    (update_background_element.value as unknown as HTMLElement).style.opacity = "0.0";
+    (update_panel_element.value as unknown as HTMLElement).style.opacity = "0.0";
 
     update_packages.value = [];
 }
@@ -73,9 +71,7 @@ async function startUpdate() {
             pkg,
             (progress: number) => {
                 progresses[pkg_id] = progress;
-                update_progress.value =
-                    progresses.reduce((partialSum, a) => partialSum + a, 0) /
-                    update_packages.value.length;
+                update_progress.value = progresses.reduce((partialSum, a) => partialSum + a, 0) / update_packages.value.length;
             },
             () => {
                 update_progress.value = 0;
@@ -114,31 +110,20 @@ async function clearAllData() {
                 <h2>Hymnal Updates</h2>
                 <p>Updates found for:</p>
                 <div>
-                    <div
-                        v-for="(update, update_index) in update_packages"
-                        :key="update.book_short"
-                    >
+                    <div v-for="(update, update_index) in update_packages" :key="update.book_short">
                         <HomeBookBox
                             v-if="update_index < 5"
                             :src="update.book_summary?.srcUrl || ''"
                             class="update-book-list-entry"
                             :with-link="false"
                         ></HomeBookBox>
-                        <div
-                            v-else-if="update_index == 5"
-                            class="update-book-list-entry more-update"
-                        >
+                        <div v-else-if="update_index == 5" class="update-book-list-entry more-update">
                             <h4>{{ update_packages.length - 5 }} more...</h4>
                         </div>
                     </div>
                 </div>
                 <div class="update-button-layout">
-                    <a
-                        class="update-button"
-                        @click="delayUpdate"
-                        :style="{ opacity: update_progress > 0 ? 0.3 : 1 }"
-                        >Later</a
-                    >
+                    <a class="update-button" @click="delayUpdate" :style="{ opacity: update_progress > 0 ? 0.3 : 1 }">Later</a>
                     <a class="update-button-blue" @click="startUpdate">
                         <ProgressBar
                             v-if="update_progress > 0"
@@ -201,24 +186,8 @@ async function clearAllData() {
             </a>
         </div>
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+
+    <NavigationBar current_page="settings" />
 </template>
 
 <style scoped>

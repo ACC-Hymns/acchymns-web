@@ -15,11 +15,7 @@ const strokeDashoffset = computed(() => {
 });
 </script>
 <template>
-    <svg
-        :height="radius * 2"
-        :width="radius * 2"
-        style="overflow: visible; padding: 0px"
-    >
+    <svg :height="radius * 2" :width="radius * 2" style="overflow: visible; padding: 0px">
         <circle
             stroke="white"
             fill="transparent"

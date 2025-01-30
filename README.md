@@ -73,10 +73,12 @@ Thanks for supplying PDFs, scans, advice, or assistance.
 
 - Bro. Ceda Bekic
 - Bro. Peter Denzinger
+- Bro. Zoltan Dobosi
 - Sis. Rosina Stefan
-- Seby Nitz
+- Bro. Seby Nitz
+- Elias Prohaszka
 - Joey Nitz
-- Susie Nitz
+- Susan Nitz
 - Neven Jokic
 - Alyssa Nenadov
 - Riley Nenadov

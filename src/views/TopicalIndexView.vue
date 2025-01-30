@@ -13,23 +13,15 @@ import {
 } from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
-import {
-    saveScrollPosition,
-    restoreScrollPosition,
-    saveGroupOpened,
-    getGroupOpened,
-    removeGroupOpened,
-    removeScrollPosition,
-} from "@/router/scroll";
+import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 const props = defineProps<{
     book: string;
 }>();
 const router = useRouter();
 
-const show_list = ref(true);
 const error_active = ref(false);
-const scroll_topic_list = ref<Element | null>(null);
 
 let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
@@ -79,11 +71,7 @@ onMounted(async () => {
             });
         }
         topical_index.value[topic_name].sort((a, b) =>
-            a.title
-                .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                .localeCompare(
-                    b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
-                ),
+            a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
         );
     }
     song_number_groups.value = Object.keys(topical_index.value);
@@ -97,9 +85,7 @@ onMounted(async () => {
         });
     }
     alphabeticalSongs.value.sort((a, b) =>
-        a.title
-            .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-            .localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
+        a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
     );
 
     if (isAlphabetical.value) {
@@ -112,7 +98,7 @@ onMounted(async () => {
 
     let group_ids = getGroupOpened(route.fullPath);
     if (group_ids != undefined) {
-        group_ids.forEach((id) => {
+        group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
         });
     }
@@ -122,40 +108,6 @@ onMounted(async () => {
     // The v-for for song buttons now should be active, so we can scroll to the saved position
     restoreScrollPosition(route.fullPath);
 });
-
-function hideList(topic: string) {
-    if (show_list.value) {
-        show_list.value = false;
-        active_topic.value = topic;
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        }, 10);
-    } else {
-        showList();
-    }
-}
-
-function showList() {
-    show_list.value = true;
-    active_topic.value = "";
-    setTimeout(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }, 10);
-}
-
-function goBack() {
-    if (show_list.value) {
-        router.back();
-    } else {
-        showList();
-    }
-}
 
 let isAlphabetical = useSessionStorage<boolean>("isAlphabetical", false);
 const alphabeticalSongs = ref<Song[]>([]);
@@ -192,7 +144,7 @@ function toggleDropdown(topic: string) {
     }
 
     let ids: number[] = [];
-    song_number_groups_active.value.forEach((group_id) => {
+    song_number_groups_active.value.forEach(group_id => {
         var index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
     });
@@ -203,11 +155,7 @@ function toggleDropdown(topic: string) {
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="goBack()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">{{ title }}</h1>
             <img
                 @click="toggleAlphabetical()"
@@ -223,44 +171,19 @@ function toggleDropdown(topic: string) {
     <div v-else class="main-content">
         <!-- Each Topical Section -->
         <div v-if="!isAlphabetical">
-            <div
-                v-for="(_topic_songs, topic) in topical_index"
-                :key="topic"
-                class="song-group-container"
-                ref="song_group_elements"
-            >
-                <div
-                    class="song-group-title-container"
-                    @click="toggleDropdown(topic.toString())"
-                >
+            <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
+                <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
                     <div class="song-title">{{ topic }}</div>
                     <img
                         class="ionicon nav__icon dropdown-icon"
                         src="/assets/chevron-back-outline.svg"
-                        :class="{
-                            'dropdown-icon-active':
-                                song_number_groups_active.includes(
-                                    topic.toString(),
-                                ),
-                        }"
+                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(topic.toString()) }"
                     />
                 </div>
-                <div
-                    class="wrapper"
-                    :class="{
-                        'wrapper-active': song_number_groups_active.includes(
-                            topic.toString(),
-                        ),
-                    }"
-                >
+                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(topic.toString()) }">
                     <div
                         class="song-button-container"
-                        :class="{
-                            'song-button-container-active':
-                                song_number_groups_active.includes(
-                                    topic.toString(),
-                                ),
-                        }"
+                        :class="{ 'song-button-container-active': song_number_groups_active.includes(topic.toString()) }"
                     >
                         <RouterLink
                             v-for="song in topical_index[topic]"
@@ -300,24 +223,7 @@ function toggleDropdown(topic: string) {
         </div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="home" />
 </template>
 
 <style>

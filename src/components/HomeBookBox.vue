@@ -2,7 +2,6 @@
 import { useBookSummary } from "@/composables/book_metadata";
 import { getBookDataSummary } from "@/scripts/book_import";
 import { type BookDataSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
 import { onMounted, ref } from "vue";
 
 const props = withDefaults(

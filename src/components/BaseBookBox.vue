@@ -15,9 +15,9 @@ withDefaults(
     <component
         :is="'div'"
         class="book"
-        :style="`background: linear-gradient(135deg, ${summary.primaryColor}, ${
-            summary.secondaryColor
-        }); filter: brightness(${isEnabled ? 1.0 : 0.4});`"
+        :style="`background: linear-gradient(135deg, ${summary.primaryColor}, ${summary.secondaryColor}); filter: brightness(${
+            isEnabled ? 1.0 : 0.4
+        });`"
     >
         <div class="book_title">{{ summary.name?.medium }}</div>
         <!-- Allow a consumer to insert whatever they'd like -->

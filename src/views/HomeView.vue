@@ -1,38 +1,27 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import {
-    checkForUpdates,
-    download_update_package,
-    fetchBookSummary,
-    getBookFromId,
-    getBookUrls,
-    loadBookSources,
-} from "@/scripts/book_import";
+import { checkForUpdates, download_update_package, getBookFromId, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { computed, nextTick, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import {
-    BookSourceType,
-    type BookDataSummary,
-    type BookSummary,
-    type UpdatePackage,
-} from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
 import draggable from "vuedraggable";
 import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
+import NavigationBar from "@/components/NavigationBar.vue";
 
-var hasConnection = ref<boolean>(false);
+let is_connected = ref<boolean>(false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
-let editting_order = ref<boolean>(false);
+let is_editing_order = ref<boolean>(false);
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -59,29 +48,21 @@ const book_sources = ref<BookDataSummary[]>([]);
 let customized_books = ref<BookDataSummary[]>([]);
 
 async function sort_books() {
-    let book_order = JSON.parse(
-        (await Preferences.get({ key: "bookOrder" })).value || "[]",
-    ) as string[];
-    let available_books = book_sources.value.filter((book) =>
-        filter_book(book, hasConnection.value),
-    );
+    let book_order = JSON.parse((await Preferences.get({ key: "bookOrder" })).value || "[]") as string[];
+    let available_books = book_sources.value.filter(book => filter_book(book, is_connected.value));
     let temp_books: BookDataSummary[] = [];
     for (let id of book_order) {
-        if (available_books.find((book) => book.id == id)) {
-            temp_books.push(
-                available_books.find(
-                    (book) => book.id == id,
-                ) as BookDataSummary,
-            );
+        if (available_books.find(book => book.id == id)) {
+            temp_books.push(available_books.find(book => book.id == id) as BookDataSummary);
             available_books.splice(
-                available_books.findIndex((book) => book.id == id),
+                available_books.findIndex(book => book.id == id),
                 1,
             );
         }
     }
     temp_books = temp_books.concat(available_books);
-    temp_books.forEach(async (book) => {
-        let summary = book_sources.value.find((source) => source.id == book.id);
+    temp_books.forEach(async book => {
+        let summary = book_sources.value.find(source => source.id == book.id);
         book.primaryColor = summary?.primaryColor;
         book.secondaryColor = summary?.secondaryColor;
         book.name = summary?.name;
@@ -91,13 +72,13 @@ async function sort_books() {
 }
 
 onMounted(async () => {
-    hasConnection.value = (await Network.getStatus()).connected;
-    console.log("Connected to the internet: " + hasConnection.value);
+    is_connected.value = (await Network.getStatus()).connected;
+    console.log("Connected to the internet: " + is_connected.value);
 
     book_sources.value = await loadBookSources();
     await sort_books();
 
-    if (hasConnection && update_reminder.value <= Date.now()) {
+    if (is_connected && update_reminder.value <= Date.now()) {
         let update_results: UpdatePackage[] = await checkForUpdates();
         for (let update of update_results) {
             update.book_summary = await getBookFromId(update.book_short);
@@ -106,8 +87,8 @@ onMounted(async () => {
     }
 
     Network.addListener("networkStatusChange", async () => {
-        hasConnection.value = (await Network.getStatus()).connected;
-        console.log("Connected to the internet: " + hasConnection.value);
+        is_connected.value = (await Network.getStatus()).connected;
+        console.log("Connected to the internet: " + is_connected.value);
 
         book_sources.value = await loadBookSources();
         await sort_books();
@@ -138,10 +119,8 @@ async function move_book(e: BookOrderEvent) {
 function delayUpdate() {
     if (update_progress.value > 0) return;
 
-    (update_background_element.value as unknown as HTMLElement).style.opacity =
-        "0.0";
-    (update_panel_element.value as unknown as HTMLElement).style.opacity =
-        "0.0";
+    (update_background_element.value as unknown as HTMLElement).style.opacity = "0.0";
+    (update_panel_element.value as unknown as HTMLElement).style.opacity = "0.0";
     setTimeout(() => {
         update_reminder.value = Date.now() + 86400000;
     }, 500);
@@ -157,9 +136,7 @@ async function startUpdate() {
             pkg,
             (progress: number) => {
                 progresses[pkg_id] = progress;
-                update_progress.value =
-                    progresses.reduce((partialSum, a) => partialSum + a, 0) /
-                    update_packages.value.length;
+                update_progress.value = progresses.reduce((partialSum, a) => partialSum + a, 0) / update_packages.value.length;
             },
             () => {
                 update_progress.value = 0;
@@ -172,62 +149,34 @@ async function startUpdate() {
 }
 
 function filter_book(book: BookDataSummary, hasConnection: boolean) {
-    if (hasConnection) {
-        return (
-            book.status == BookSourceType.BUNDLED ||
-            book.status == BookSourceType.IMPORTED ||
-            book.status == BookSourceType.DOWNLOADED
-        );
-    } else {
-        return (
-            book.status == BookSourceType.BUNDLED ||
-            book.status == BookSourceType.DOWNLOADED
-        );
-    }
+    return (
+        book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED || (hasConnection && book.status == BookSourceType.IMPORTED)
+    );
 }
 </script>
 
 <template>
-    <div
-        :class="{
-            'modal-open':
-                update_packages.length > 0 && update_reminder <= Date.now(),
-        }"
-    >
-        <div
-            v-if="update_packages.length > 0 && update_reminder <= Date.now()"
-            class="update-section"
-        >
+    <div :class="{ 'modal-open': update_packages.length > 0 && update_reminder <= Date.now() }">
+        <div v-if="update_packages.length > 0 && update_reminder <= Date.now()" class="update-section">
             <div class="background-blur" ref="update_background_element"></div>
             <div class="update-panel" ref="update_panel_element">
                 <h2>Hymnal Updates</h2>
                 <p>Updates found for:</p>
                 <div>
-                    <div
-                        v-for="(update, update_index) in update_packages"
-                        :key="update.book_short"
-                    >
+                    <div v-for="(update, update_index) in update_packages" :key="update.book_short">
                         <HomeBookBox
                             v-if="update_index < 5"
                             :src="update.book_summary?.srcUrl || ''"
                             class="update-book-list-entry"
                             :with-link="false"
                         ></HomeBookBox>
-                        <div
-                            v-else-if="update_index == 5"
-                            class="update-book-list-entry more-update"
-                        >
+                        <div v-else-if="update_index == 5" class="update-book-list-entry more-update">
                             <h4>{{ update_packages.length - 5 }} more...</h4>
                         </div>
                     </div>
                 </div>
                 <div class="update-button-layout">
-                    <a
-                        class="update-button"
-                        @click="delayUpdate"
-                        :style="{ opacity: update_progress > 0 ? 0.3 : 1 }"
-                        >Later</a
-                    >
+                    <a class="update-button" @click="delayUpdate" :style="{ opacity: update_progress > 0 ? 0.3 : 1 }">Later</a>
                     <a class="update-button-blue" @click="startUpdate">
                         <ProgressBar
                             v-if="update_progress > 0"
@@ -244,18 +193,10 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
 
         <div class="page-heading">
             <h1>Home</h1>
-            <a
-                v-if="!editting_order"
-                @click="editting_order = !editting_order"
-                class="confirm-text-container"
-            >
+            <a v-if="!is_editing_order" @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <img class="ionicon" src="/assets/create-outline.svg" />
             </a>
-            <a
-                v-else
-                @click="editting_order = !editting_order"
-                class="confirm-text-container"
-            >
+            <a v-else @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <h3 class="confirm-text">Confirm</h3>
                 <img
                     class="ionicon"
@@ -264,24 +205,16 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
             </a>
         </div>
         <div id="appsection">
-            <div v-if="editting_order">
+            <div v-if="is_editing_order">
                 <draggable
-                    :list="
-                        customized_books.filter((book) =>
-                            filter_book(book, hasConnection),
-                        )
-                    "
+                    :list="customized_books.filter(book => filter_book(book, is_connected))"
                     :component-data="{
                         tag: 'div',
                         type: 'transition-group',
                         name: 'flip-list',
                     }"
                     v-bind="dragOptions"
-                    :key="
-                        customized_books.filter((book) =>
-                            filter_book(book, hasConnection),
-                        ).length
-                    "
+                    :key="customized_books.filter(book => filter_book(book, is_connected)).length"
                     @change="(e: BookOrderEvent) => move_book(e)"
                     item-key="book"
                     handle=".handle"
@@ -291,57 +224,35 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
                 >
                     <template #item="{ element }">
                         <BaseBookBox :summary="element">
-                            <img
-                                class="ionicon booktext--right handle"
-                                style="filter: invert(100%)"
-                                src="/assets/drag-handle.svg"
-                            />
+                            <img class="ionicon booktext--right handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
                         </BaseBookBox>
                     </template>
                 </draggable>
             </div>
             <div v-else>
                 <HomeBookBox
-                    v-for="book in customized_books.filter((book) =>
-                        filter_book(book, hasConnection),
-                    )"
+                    v-for="book in customized_books.filter(book => filter_book(book, is_connected))"
                     :key="book.id"
                     :src="book.src"
                 ></HomeBookBox>
             </div>
 
-            <div v-if="!hasConnection">
-                <div
-                    v-if="
-                        book_sources.filter(
-                            (book) => book.status == BookSourceType.IMPORTED,
-                        ).length > 0
-                    "
-                    class="warning-label-container"
-                >
-                    <img
-                        class="ionicon warning-icon"
-                        src="/assets/alert-circle-outline.svg"
-                    />
-                    <h5 class="warning-label">
-                        The hymnals below require an internet connection
-                    </h5>
+            <div v-if="!is_connected">
+                <div v-if="book_sources.filter(book => book.status == BookSourceType.IMPORTED).length > 0" class="warning-label-container">
+                    <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+                    <h5 class="warning-label">The hymnals below require an internet connection</h5>
                 </div>
                 <BaseBookBox
-                    v-for="book in book_sources.filter(
-                        (book) => book.status == BookSourceType.IMPORTED,
-                    )"
+                    v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)"
+                    :key="book.id"
                     :summary="book"
                     :isEnabled="false"
                 ></BaseBookBox>
             </div>
 
             <div>
-                <RouterLink to="/settings/import" v-if="hasConnection">
-                    <img
-                        class="ionicon import-books-button"
-                        src="/assets/add-circle-outline.svg"
-                    />
+                <RouterLink to="/settings/import" v-if="is_connected">
+                    <img class="ionicon import-books-button" src="/assets/add-circle-outline.svg" />
                 </RouterLink>
             </div>
 
@@ -364,24 +275,8 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
             </template>
         </div>
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+
+    <NavigationBar current_page="home" />
 </template>
 
 <style scoped>
