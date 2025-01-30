@@ -556,7 +556,7 @@ function get_note_icon(note: string) {
                         class="media-timeline"
                         :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
                         :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
-                        @change="e => release_audio_position(e)"
+                        @change="release_audio_position()"
                         :style="{
                             background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
                                 (media_timestamp_elapsed / media_timestamp_end) * 100

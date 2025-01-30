@@ -16,7 +16,7 @@ import {
     get,
 } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
-import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, BookSourceType } from "@/scripts/types";
+import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, type BookDataSummary, BookSourceType } from "@/scripts/types";
 import { Capacitor } from "@capacitor/core";
 import { loadBookSources } from "@/scripts/book_import";
 const { back } = useNavigator();
