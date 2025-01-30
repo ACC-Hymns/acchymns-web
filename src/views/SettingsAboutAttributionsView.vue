@@ -15,11 +15,7 @@ const { back } = useNavigator();
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="back()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Attributions</h1>
         </div>
     </div>
@@ -31,10 +27,7 @@ const { back } = useNavigator();
                 {{ clean_version(dependencies.tone) }}
             </h5>
         </a>
-        <a
-            href="https://anvaka.github.io/panzoom/demo/attach-via-script.html"
-            class="attribution"
-        >
+        <a href="https://anvaka.github.io/panzoom/demo/attach-via-script.html" class="attribution">
             <h3 class="release">Avanka Panzoom</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">
                 {{ clean_version(dependencies.panzoom) }}
@@ -58,10 +51,7 @@ const { back } = useNavigator();
                 {{ clean_version(dependencies["vue-router"]) }}
             </h5>
         </a>
-        <a
-            href="https://github.com/SortableJS/vue.draggable.next/"
-            class="attribution"
-        >
+        <a href="https://github.com/SortableJS/vue.draggable.next/" class="attribution">
             <h3 class="release">Vue Draggable</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">
                 {{ clean_version(dependencies.vuedraggable) }}
@@ -77,10 +67,7 @@ const { back } = useNavigator();
                 {{ clean_version(dependencies["polymorph-js"]) }}
             </h5>
         </a>
-        <a
-            href="https://github.com/marc136/node-folder-hash"
-            class="attribution"
-        >
+        <a href="https://github.com/marc136/node-folder-hash" class="attribution">
             <h3 class="release">Node Folder Hash</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">
                 {{ clean_version(dependencies["folder-hash"]) }}
@@ -98,10 +85,7 @@ const { back } = useNavigator();
                 {{ clean_version(dependencies["@capacitor/core"]) }}
             </h5>
         </a>
-        <a
-            href="https://github.com/ionic-team/pwa-elements"
-            class="attribution"
-        >
+        <a href="https://github.com/ionic-team/pwa-elements" class="attribution">
             <h3 class="release">Ionic PWA Elements</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">
                 {{ clean_version(dependencies["@ionic/pwa-elements"]) }}

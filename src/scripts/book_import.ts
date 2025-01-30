@@ -36,10 +36,7 @@ function getPathFromSignatureNode(node: BookSignature): string {
     return path;
 }
 
-function verifySignatures(
-    local: BookSignature,
-    origin: BookSignature,
-): BookSignature[] {
+function verifySignatures(local: BookSignature, origin: BookSignature): BookSignature[] {
     let results: BookSignature[] = [];
 
     if (local.hash != origin.hash) results = results.concat([local]);
@@ -126,9 +123,7 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
 
 async function loadBookSources() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
-    let book_sources: BookDataSummary[] = JSON.parse(
-        book_sources_raw.value ?? "[]",
-    );
+    let book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
     console.log("Loading Pre-Packaged Books...");
     for (const url in prepackaged_book_urls) {
@@ -219,8 +214,7 @@ async function loadBookSources() {
                         if (summary) {
                             book_sources[b].name = summary.name;
                             book_sources[b].primaryColor = summary.primaryColor;
-                            book_sources[b].secondaryColor =
-                                summary.secondaryColor;
+                            book_sources[b].secondaryColor = summary.secondaryColor;
                         }
                         break;
                     }
@@ -238,11 +232,7 @@ async function loadBookSources() {
                             const result = await download_import_summary(book_sources[b]);
                             source_path = result.path?.replace("/summary.json", "") || "";
                         } else {
-                            console.log(
-                                "No local summary found for " +
-                                    book +
-                                    ". Skipping...",
-                            );
+                            console.log("No local summary found for " + book + ". Skipping...");
                         }
                     }
 
@@ -282,13 +272,13 @@ async function getBookDataSummary(book: BookSummary | null) {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
-    return book_sources.find((b) => b.id == book.name.short);
+    return book_sources.find(b => b.id == book.name.short);
 }
 async function getBookDataSummaryFromName(book: string) {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
 
-    return book_sources.find((b) => b.id == book);
+    return book_sources.find(b => b.id == book);
 }
 
 async function collect_signatures(start: BookSignature) {
@@ -308,10 +298,7 @@ async function collect_signatures(start: BookSignature) {
     return hashes;
 }
 
-const book_sources = useCapacitorPreferences<BookDataSummary[]>(
-    "bookSources",
-    [],
-);
+const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
 async function handle_missing_book(book_short: string) {
     if (book_sources.value.length == 0) {
         book_sources.value = await loadBookSources();
@@ -324,10 +311,7 @@ async function handle_missing_book(book_short: string) {
             if (to_import == undefined) return;
 
             // Check for duplicate url
-            if (
-                to_import.status == BookSourceType.IMPORTED ||
-                to_import.status == BookSourceType.DOWNLOADED
-            ) {
+            if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
                 return;
             } else {
                 if (await addImportedURL(to_import)) {
@@ -639,14 +623,8 @@ function download_book(
     };
 }
 
-async function fetchBookSummary(
-    url: string,
-    options: RequestInit & { timeout?: number } = { timeout: 500 },
-) {
-    return await fetchCachedJSON<BookSummary>(
-        `${url}/summary.json`,
-        options,
-    ).then((book) => {
+async function fetchBookSummary(url: string, options: RequestInit & { timeout?: number } = { timeout: 500 }) {
+    return await fetchCachedJSON<BookSummary>(`${url}/summary.json`, options).then(book => {
         if (book == null) {
             return null;
         }
@@ -658,15 +636,11 @@ async function fetchBookSummary(
 async function getAllBookMetaData() {
     const now = performance.now();
     const book_urls = await getBookUrls();
-    const to_fetch = book_urls.map((url) => fetchBookSummary(url));
+    const to_fetch = book_urls.map(url => fetchBookSummary(url));
 
-    const bookSummary = (await Promise.all(to_fetch)).filter(
-        (summary) => summary != null,
-    ) as BookSummary[];
+    const bookSummary = (await Promise.all(to_fetch)).filter(summary => summary != null) as BookSummary[];
 
-    const temp = Object.fromEntries(
-        bookSummary.map((summary, _) => [summary.name.short, summary]),
-    );
+    const temp = Object.fromEntries(bookSummary.map((summary, _) => [summary.name.short, summary]));
     console.log("BOOK_METADATA:", performance.now() - now);
     return temp;
 }
@@ -674,41 +648,25 @@ async function getAllBookMetaData() {
 async function getAllSongMetaData() {
     const now = performance.now();
     const book_urls = await getBookUrls();
-    const to_fetch = book_urls.map((url) =>
-        fetchCachedJSON<SongList>(`${url}/songs.json`, {}),
-    );
+    const to_fetch = book_urls.map(url => fetchCachedJSON<SongList>(`${url}/songs.json`, {}));
 
-    const bookSongs = (await Promise.all(to_fetch)).filter(
-        (list) => list != null,
-    ) as SongList[];
+    const bookSongs = (await Promise.all(to_fetch)).filter(list => list != null) as SongList[];
     const BOOK_METADATA = await getAllBookMetaData();
-    const temp = Object.fromEntries(
-        Object.keys(BOOK_METADATA).map((book_name, i) => [
-            book_name,
-            bookSongs[i],
-        ]),
-    );
+    const temp = Object.fromEntries(Object.keys(BOOK_METADATA).map((book_name, i) => [book_name, bookSongs[i]]));
     console.log("SONG_METADATA:", performance.now() - now);
     return temp;
 }
 
-async function getSongMetaData(
-    book_short_name: string,
-): Promise<SongList | null> {
+async function getSongMetaData(book_short_name: string): Promise<SongList | null> {
     const BOOK_METADATA = await getAllBookMetaData();
     console.log(BOOK_METADATA);
     if (BOOK_METADATA[book_short_name] !== undefined) {
-        return await fetchCachedJSON(
-            `${BOOK_METADATA[book_short_name].srcUrl}/songs.json`,
-            {},
-        );
+        return await fetchCachedJSON(`${BOOK_METADATA[book_short_name].srcUrl}/songs.json`, {});
     }
     return null;
 }
 
-async function getBookFromId(
-    book_short_name: string,
-): Promise<BookSummary | undefined> {
+async function getBookFromId(book_short_name: string): Promise<BookSummary | undefined> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
         return BOOK_METADATA[book_short_name];
@@ -716,15 +674,10 @@ async function getBookFromId(
     return undefined;
 }
 
-async function getBookIndex(
-    book_short_name: string,
-): Promise<BookIndex | null> {
+async function getBookIndex(book_short_name: string): Promise<BookIndex | null> {
     const BOOK_METADATA = await getAllBookMetaData();
     if (BOOK_METADATA[book_short_name] !== undefined) {
-        return await fetchCachedJSON(
-            `${BOOK_METADATA[book_short_name].srcUrl}/index.json`,
-            {},
-        );
+        return await fetchCachedJSON(`${BOOK_METADATA[book_short_name].srcUrl}/index.json`, {});
     }
     return null;
 }

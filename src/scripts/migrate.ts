@@ -17,9 +17,7 @@ export async function migrate() {
         // All that's required to migrate, is to move bookmark data from localStorage to Capacitor Storage.
         // and to change from { book: string, song: string } to { book: string, number: string }
         const bookmarks = JSON.parse(localStorage.getItem("bookmarks") ?? "[]");
-        let new_bookmarks = JSON.parse(
-            (await Preferences.get({ key: "bookmarks" })).value ?? "[]",
-        ); // Don't overwrite existing bookmarks just in case
+        let new_bookmarks = JSON.parse((await Preferences.get({ key: "bookmarks" })).value ?? "[]"); // Don't overwrite existing bookmarks just in case
         for (const bookmark of bookmarks) {
             if (bookmark.song) {
                 new_bookmarks.push({

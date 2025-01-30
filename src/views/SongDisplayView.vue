@@ -2,11 +2,7 @@
 import SongContainer from "@/components/SongContainer.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
 import { onMounted, ref, computed, onUnmounted } from "vue";
-import {
-    getSongMetaData,
-    getAllBookMetaData,
-    handle_missing_book,
-} from "@/scripts/book_import";
+import { getSongMetaData, getAllBookMetaData, handle_missing_book } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
 import type { BookSummary, SongReference } from "@/scripts/types";
@@ -37,13 +33,7 @@ let verses = ref<number[]>([]);
 const broadcast_api = useBroadcastAPI();
 
 const is_bookmarked = computed(() => {
-    return (
-        -1 !=
-        bookmarks.value.findIndex(
-            (bookmark) =>
-                bookmark.book == props.book && bookmark.number == props.number,
-        )
-    );
+    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
 const isConnected = ref<boolean>(false);
@@ -57,10 +47,7 @@ async function toggleBookmark() {
             text: `#${props.number} added to Bookmarks`,
         });
     } else {
-        const index = bookmarks.value.findIndex(
-            (bookmark) =>
-                bookmark.book == props.book && bookmark.number == props.number,
-        );
+        const index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
         bookmarks.value.splice(index, 1); // Remove the bookmarked song
         await Toast.show({
             text: `#${props.number} removed from Bookmarks`,
@@ -151,15 +138,13 @@ function setup_audiosource(audio_source: HTMLAudioElement) {
     });
 }
 
-async function prepAudio(network_status: ConnectionStatus) {
+async function _prepAudio(network_status: ConnectionStatus) {
     isConnected.value = network_status.connected;
     if (!isConnected.value) {
         audio_source_exists.value = false;
         audio_source.value = new Audio();
     } else {
-        audio_source.value = new Audio(
-            `https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`,
-        );
+        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
         audio_source.value.preload = "metadata";
         setup_audiosource(audio_source.value);
         audio_source.value?.load();
@@ -430,43 +415,19 @@ function get_note_icon(note: string) {
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
-                <img
-                    @click="router.back()"
-                    class="ionicon"
-                    src="/assets/chevron-back-outline.svg"
-                />
+                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             </div>
             <div class="title--center">
                 <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
                 <template v-if="notes.length != 0">
-                    <img
-                        v-if="!panel.visible"
-                        @click="toggle_media_panel()"
-                        class="ionicon"
-                        src="/assets/musical-notes-outline.svg"
-                    />
-                    <img
-                        v-else
-                        class="ionicon"
-                        @click="toggle_media_panel()"
-                        src="/assets/musical-notes.svg"
-                    />
+                    <img v-if="!panel.visible" @click="toggle_media_panel()" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img
-                    v-if="is_bookmarked"
-                    @click="toggleBookmark()"
-                    class="ionicon"
-                    src="/assets/bookmark.svg"
-                />
-                <img
-                    v-else
-                    @click="toggleBookmark()"
-                    class="ionicon"
-                    src="/assets/bookmark-outline.svg"
-                />
+                <img v-if="is_bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
+                <img v-else @click="toggleBookmark()" class="ionicon" src="/assets/bookmark-outline.svg" />
             </div>
         </div>
     </div>
@@ -579,16 +540,8 @@ function get_note_icon(note: string) {
             <p class="timestamp-right">
                 {{ secondsToTimestamp(media_timestamp_end) }}
             </p>
-            <svg
-                @click="playMedia()"
-                class="mini-play-button"
-                viewBox="0 0 512 512"
-            >
-                <path
-                    id="svg_content"
-                    class="play-button-path"
-                    :d="morphed_path"
-                ></path>
+            <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
+                <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: panel.height < (isLandscape ? 0.4 : 0.2) ? '0' : '1' }">
@@ -634,24 +587,13 @@ function get_note_icon(note: string) {
         <div v-if="media_starting_notes" class="starting-notes-container">
             <div class="note-container">
                 <div class="note-button" @click="play_all_notes()">
-                    <img
-                        class="ionicon starting-note-icon-all"
-                        src="/assets/musical-notes.svg"
-                    />
+                    <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
                 </div>
                 <p class="note-name">All</p>
             </div>
-            <div
-                v-for="note in notes"
-                :key="note"
-                class="note-container"
-                @click="play_note(note)"
-            >
+            <div v-for="note in notes" :key="note" class="note-container" @click="play_note(note)">
                 <div class="note-button">
-                    <img
-                        class="ionicon starting-note-icon"
-                        :src="get_note_icon(note)"
-                    />
+                    <img class="ionicon starting-note-icon" :src="get_note_icon(note)" />
                 </div>
                 <p class="note-name">{{ note }}</p>
             </div>

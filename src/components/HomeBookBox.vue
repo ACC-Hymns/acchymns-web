@@ -51,10 +51,7 @@ onMounted(async () => {
         </component>
     </template>
     <template v-else-if="!isFinished && isSlowFetch">
-        <div
-            class="book"
-            :style="`background: linear-gradient(135deg, #a3a298, #4d4c47)`"
-        >
+        <div class="book" :style="`background: linear-gradient(135deg, #a3a298, #4d4c47)`">
             <div class="book_title">Loading...</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
@@ -63,10 +60,7 @@ onMounted(async () => {
         </div>
     </template>
     <template v-else-if="isFinished">
-        <div
-            class="book"
-            :style="`background: linear-gradient(135deg, #000000, #000000)`"
-        >
+        <div class="book" :style="`background: linear-gradient(135deg, #000000, #000000)`">
             <div class="book_title">Unavailable</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>

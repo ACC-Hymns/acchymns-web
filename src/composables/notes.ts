@@ -37,21 +37,17 @@ const treble_note_icons: { [note: string]: string } = {
     C6: import.meta.env.BASE_URL + "assets/note_icons/treble/C6.svg",
 };
 
-const notes_loaded = Object.fromEntries(
-    notes_to_load.map((note) => [note, false]),
-);
+const notes_loaded = Object.fromEntries(notes_to_load.map(note => [note, false]));
 
 const sampler = new Tone.Sampler().toDestination();
 Tone.context.lookAhead = 0.05;
 
 for (const note of notes_to_load) {
-    fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`).then(
-        async (resp) => {
-            const url = URL.createObjectURL(await resp.blob());
-            sampler.add(note, url);
-            notes_loaded[note] = true;
-        },
-    );
+    fetch(import.meta.env.BASE_URL + `assets/notes/${note}.mp3`).then(async resp => {
+        const url = URL.createObjectURL(await resp.blob());
+        sampler.add(note, url);
+        notes_loaded[note] = true;
+    });
 }
 
 const interval = useLocalStorage<number>("ACCOptions.playbackInterval", 0.25);
@@ -69,7 +65,7 @@ const player = {
 
         await Tone.start();
 
-        if (!Object.values(notes_loaded).every((v) => v)) {
+        if (!Object.values(notes_loaded).every(v => v)) {
             console.log("Not all notes have been loaded!");
             return;
         }

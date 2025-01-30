@@ -18,13 +18,9 @@ for (const book of books) {
     console.log("Checking", book);
 
     // Check missing image/reference mappings
-    const song_references = JSON.parse(
-        fs.readFileSync(path.join("public/books", book, "songs.json")),
-    );
+    const song_references = JSON.parse(fs.readFileSync(path.join("public/books", book, "songs.json")));
     const song_numbers = Object.keys(song_references);
-    const image_titles = fs
-        .readdirSync(path.join("public/books", book, "songs"))
-        .map((file) => file.split(".")[0]);
+    const image_titles = fs.readdirSync(path.join("public/books", book, "songs")).map(file => file.split(".")[0]);
     for (const song_number of song_numbers) {
         if (!image_titles.includes(song_number)) {
             console.log("Missing image for", song_number);
@@ -39,9 +35,7 @@ for (const book of books) {
     }
 
     // Check for missing references (not a production issue, but we should know about it so we can add missing songs)
-    const song_numbers_int = song_numbers.map((reference) =>
-        parseInt(reference),
-    ); // Songs ending with a/b should still be converted
+    const song_numbers_int = song_numbers.map(reference => parseInt(reference)); // Songs ending with a/b should still be converted
     const max_song_number = Math.max(...song_numbers_int);
     for (let i = 1; i <= max_song_number; i++) {
         if (!song_numbers_int.includes(i)) {
@@ -72,8 +66,7 @@ if (missing_number.length > 0) {
 }
 
 const branch_name = execSync("git branch --show-current").toString().trimEnd();
-const is_production_or_staging =
-    branch_name == "staging" || branch_name == "main";
+const is_production_or_staging = branch_name == "staging" || branch_name == "main";
 
 if (blank_notes.length > 0) {
     console.log("Blank notes:");
@@ -81,11 +74,7 @@ if (blank_notes.length > 0) {
 }
 
 // Fail if there are missing references or images
-if (
-    missing_images.length > 0 ||
-    missing_number.length > 0 ||
-    (blank_notes.length > 0 && is_production_or_staging)
-) {
+if (missing_images.length > 0 || missing_number.length > 0 || (blank_notes.length > 0 && is_production_or_staging)) {
     //process.exit(1); I'M SORRY DALLAS BUT I GOTTA DO WHAT I GOTTA DO
 }
 process.exit(0);

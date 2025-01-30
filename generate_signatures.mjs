@@ -13,15 +13,9 @@ async function run() {
         let book = books_to_hash[book_id];
         let result = await hashElement(`public/books/${book}`, options);
         book_hashes.push(result);
-        fs.writeFileSync(
-            `public/books/${book}/.signature`,
-            JSON.stringify(result, null, "\t"),
-        );
+        fs.writeFileSync(`public/books/${book}/.signature`, JSON.stringify(result, null, "\t"));
     }
-    fs.writeFileSync(
-        "public/book_signatures.json",
-        JSON.stringify(book_hashes, null, "\t"),
-    );
+    fs.writeFileSync("public/book_signatures.json", JSON.stringify(book_hashes, null, "\t"));
 }
 
 run();

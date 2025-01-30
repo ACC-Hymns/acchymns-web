@@ -240,26 +240,18 @@ function book_changed(e: Event) {
     fix_verse_range();
 }
 function chapter_start_changed(e: Event) {
-    chapter_start.value = Number.parseInt(
-        (e.target as HTMLSelectElement).innerText,
-    );
+    chapter_start.value = Number.parseInt((e.target as HTMLSelectElement).innerText);
     fix_verse_range();
 }
 function chapter_end_changed(e: Event) {
-    chapter_end.value = Number.parseInt(
-        (e.target as HTMLSelectElement).innerText,
-    );
+    chapter_end.value = Number.parseInt((e.target as HTMLSelectElement).innerText);
     fix_verse_range();
 }
 function verse_start_changed(e: Event) {
-    verse_start.value = Number.parseInt(
-        (e.target as HTMLSelectElement).innerText,
-    );
+    verse_start.value = Number.parseInt((e.target as HTMLSelectElement).innerText);
 }
 function verse_end_changed(e: Event) {
-    verse_end.value = Number.parseInt(
-        (e.target as HTMLSelectElement).innerText,
-    );
+    verse_end.value = Number.parseInt((e.target as HTMLSelectElement).innerText);
 }
 function read_type_changed(e: Event, id: number) {
     read_type.value = id;
@@ -301,20 +293,14 @@ function get_verse_end_list(book: string, chapter: number) {
 }
 
 function get_lock_icon() {
-    return unlocked.value
-        ? import.meta.env.BASE_URL + "assets/lock-open-outline.svg"
-        : import.meta.env.BASE_URL + "assets/lock-closed-outline.svg";
+    return unlocked.value ? import.meta.env.BASE_URL + "assets/lock-open-outline.svg" : import.meta.env.BASE_URL + "assets/lock-closed-outline.svg";
 }
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="back_button()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="back_button()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">
                 {{ bibleReading ? "Bible Reading" : "Broadcast" }}
             </h1>
@@ -544,16 +530,9 @@ function get_lock_icon() {
             <h1 style="margin-bottom: 0px">Authorized</h1>
             <h3 style="margin-top: 0px">as {{ selected_church }}</h3>
             <div class="settings width-100">
-                <a
-                    v-if="platform == 'web'"
-                    href="/broadcast"
-                    class="settings-option"
-                >
+                <a v-if="platform == 'web'" href="/broadcast" class="settings-option">
                     <span>Open Output Display</span>
-                    <img
-                        class="entrypoint ionicon"
-                        src="/assets/chevron-forward-outline.svg"
-                    />
+                    <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a @click="songNumber = true" class="settings-option">
                     <span>Set Song Number</span>

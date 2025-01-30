@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
+import { computed, onBeforeUnmount, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from "@capacitor/network";
 import { Capacitor } from "@capacitor/core";
@@ -7,16 +7,13 @@ import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
-import { useLocalStorage } from "@vueuse/core";
 import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import NavigationBar from "@/components/NavigationBar.vue";
 
 let downloadProgress = ref(new Map<string, number>());
-let downloads = ref<Map<string, DownloadPromise>>(
-    new Map<string, DownloadPromise>(),
-);
+let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
 onBeforeUnmount(async () => {
     downloads.value.forEach(async (value, key) => {
         await value.cancel();
@@ -24,10 +21,7 @@ onBeforeUnmount(async () => {
     });
 });
 
-const book_sources = useCapacitorPreferences<BookDataSummary[]>(
-    "bookSources",
-    [],
-);
+const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
@@ -112,10 +106,7 @@ async function addImportedBookByCode(short_book_name: string) {
         if (to_import == undefined) return;
 
         // Check for duplicate url
-        if (
-            to_import.status == BookSourceType.IMPORTED ||
-            to_import.status == BookSourceType.DOWNLOADED
-        ) {
+        if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
             await Toast.show({
                 text: `Hymnal (${short_book_name}) already imported!`,
             });
@@ -176,8 +167,7 @@ async function removeImportedURL(book_to_remove: BookDataSummary) {
 }
 async function deleteBook(book_to_delete: BookDataSummary) {
     book_to_delete.status = BookSourceType.IMPORTED;
-    book_to_delete.src =
-        known_references[book_to_delete.id as keyof typeof known_references];
+    book_to_delete.src = known_references[book_to_delete.id as keyof typeof known_references];
     await Filesystem.rmdir({
         directory: Directory.Documents,
         path: `Hymnals/${book_to_delete.id}`,
@@ -196,11 +186,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="$router.back()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="$router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Import Hymnals</h1>
         </div>
     </div>
@@ -216,64 +202,28 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <!-- Publicly available, but not imported books -->
         <h2 v-if="preview_books.length != 0">Available Hymnals</h2>
         <div v-if="preview_books.length != 0" class="warning-label-container">
-            <img
-                class="ionicon warning-icon"
-                src="/assets/alert-circle-outline.svg"
-            />
-            <h5 class="warning-label">
-                The hymnals below require an internet connection
-            </h5>
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
         </div>
         <div>
-            <HomeBookBox
-                v-for="book in preview_books"
-                :key="book.id"
-                :src="book.src"
-                :with-link="false"
-            >
+            <HomeBookBox v-for="book in preview_books" :key="book.id" :src="book.src" :with-link="false">
                 <button @click="addImportedURL(book)">
-                    <img
-                        class="ionicon ionicon-custom booktext--right add-button-icon"
-                        src="/assets/add-circle-outline.svg"
-                    />
+                    <img class="ionicon ionicon-custom booktext--right add-button-icon" src="/assets/add-circle-outline.svg" />
                 </button>
             </HomeBookBox>
         </div>
 
         <!-- Imported Books -->
         <h2 v-if="imported_books.length != 0">Imported Hymnals</h2>
-        <div
-            v-if="imported_books.length != 0 && preview_books.length == 0"
-            class="warning-label-container"
-        >
-            <img
-                class="ionicon warning-icon"
-                src="/assets/alert-circle-outline.svg"
-            />
-            <h5 class="warning-label">
-                The hymnals below require an internet connection
-            </h5>
+        <div v-if="imported_books.length != 0 && preview_books.length == 0" class="warning-label-container">
+            <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+            <h5 class="warning-label">The hymnals below require an internet connection</h5>
         </div>
         <div>
-            <HomeBookBox
-                id="import-book"
-                v-for="book in imported_books"
-                :key="book.id"
-                :src="book.src"
-                :with-link="false"
-            >
+            <HomeBookBox id="import-book" v-for="book in imported_books" :key="book.id" :src="book.src" :with-link="false">
                 <div class="button-array">
-                    <button
-                        v-if="
-                            (downloadProgress.get(book.id) || 0) < 1 &&
-                            Capacitor.getPlatform() !== 'web'
-                        "
-                        @click="download(book)"
-                    >
-                        <img
-                            class="ionicon ionicon-custom add-button-icon"
-                            src="/assets/arrow-down-circle-outline.svg"
-                        />
+                    <button v-if="(downloadProgress.get(book.id) || 0) < 1 && Capacitor.getPlatform() !== 'web'" @click="download(book)">
+                        <img class="ionicon ionicon-custom add-button-icon" src="/assets/arrow-down-circle-outline.svg" />
                     </button>
                     <ProgressBar
                         v-if="
@@ -287,10 +237,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
                         :transform="'rotate(-90) translate(-25 -8)'"
                     ></ProgressBar>
                     <button @click="removeImportedURL(book)">
-                        <img
-                            class="ionicon ionicon-custom add-button-icon"
-                            src="/assets/close.svg"
-                        />
+                        <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
                     </button>
                 </div>
             </HomeBookBox>
@@ -299,19 +246,10 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <!-- Downloaded Books -->
         <h2 v-if="downloaded_books.length != 0">Downloaded Hymnals</h2>
         <div>
-            <HomeBookBox
-                id="import-book"
-                v-for="book in downloaded_books"
-                :key="book.id"
-                :src="book.src"
-                :with-link="false"
-            >
+            <HomeBookBox id="import-book" v-for="book in downloaded_books" :key="book.id" :src="book.src" :with-link="false">
                 <div class="button-array">
                     <button @click="deleteBook(book)">
-                        <img
-                            class="ionicon ionicon-custom add-button-icon"
-                            src="/assets/trash-outline.svg"
-                        />
+                        <img class="ionicon ionicon-custom add-button-icon" src="/assets/trash-outline.svg" />
                     </button>
                 </div>
             </HomeBookBox>
@@ -365,8 +303,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 }
 
 .ionicon-custom {
-    filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg)
-        brightness(103%) contrast(93%);
+    filter: invert(100%) sepia(9%) saturate(7497%) hue-rotate(180deg) brightness(103%) contrast(93%);
 }
 
 .book {

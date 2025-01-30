@@ -6,12 +6,7 @@ import { clearCache } from "@/composables/cached_fetch";
 import { Toast } from "@capacitor/toast";
 import { Dialog } from "@capacitor/dialog";
 import { Preferences } from "@capacitor/preferences";
-import {
-    download_update_package,
-    generate_force_update_package,
-    getBookFromId,
-    loadBookSources,
-} from "@/scripts/book_import";
+import { download_update_package, generate_force_update_package, getBookFromId, loadBookSources } from "@/scripts/book_import";
 import { ref } from "vue";
 import type { UpdatePackage } from "@/scripts/types";
 import HomeBookBox from "@/components/HomeBookBox.vue";
@@ -84,8 +79,7 @@ async function startUpdate() {
 async function clearAllData() {
     const confirmed = await Dialog.confirm({
         title: "Clear All Data",
-        message:
-            "Are you sure you want to clear ALL your data? This includes bookmarks and imported books!",
+        message: "Are you sure you want to clear ALL your data? This includes bookmarks and imported books!",
         okButtonTitle: "Yes",
         cancelButtonTitle: "No",
     });
@@ -140,40 +134,23 @@ async function clearAllData() {
 
         <div class="menu">
             <div class="title">
-                <img
-                    @click="back()"
-                    class="ionicon title--left"
-                    src="/assets/chevron-back-outline.svg"
-                />
+                <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
                 <h1 class="title--center">Help</h1>
             </div>
         </div>
 
         <div class="settings main-content">
-            <a
-                href="https://forms.gle/Ezh7d8LFsN5eKdo87"
-                class="settings-option"
-            >
+            <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
                 <span>Report a Bug</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
             </a>
-            <a
-                href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA"
-                class="settings-option"
-            >
+            <a href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA" class="settings-option">
                 <span>Privacy Policy</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
             </a>
-            <RouterLink
-                v-if="is_prerelease"
-                to="/settings/help/console"
-                class="settings-option"
-            >
+            <RouterLink v-if="is_prerelease" to="/settings/help/console" class="settings-option">
                 <span>Debug Console</span>
-                <img
-                    class="entrypoint ionicon"
-                    src="/assets/chevron-forward-outline.svg"
-                />
+                <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
             </RouterLink>
             <a v-if="!isWeb" class="settings-option" @click="forceUpdate()">
                 <span>Force Update Hymnals</span>

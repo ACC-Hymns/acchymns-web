@@ -11,11 +11,7 @@ function useNavigator() {
         const current_route = router.currentRoute.value;
         const last_section = current_route.fullPath.lastIndexOf("/");
 
-        console.log(
-            "Current Route:",
-            current_route.fullPath,
-            current_route.path,
-        );
+        console.log("Current Route:", current_route.fullPath, current_route.path);
 
         // This route is the root, or a child of the root
         if (last_section == 0) {

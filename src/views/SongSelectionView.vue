@@ -42,9 +42,7 @@ onMounted(async () => {
         error_active.value = true;
         return;
     }
-    song_numbers.value = Object.keys(songs).sort((a, b) =>
-        a.localeCompare(b, "en", { numeric: true }),
-    );
+    song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
 
     let song_count = song_numbers.value.length;
     let num_groups = Math.ceil(song_count / 100);
@@ -82,10 +80,7 @@ onMounted(async () => {
 
 function toggleDropdown(group: string[]) {
     if (song_number_groups_active.value.includes(group)) {
-        song_number_groups_active.value.splice(
-            song_number_groups_active.value.indexOf(group),
-            1,
-        );
+        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(group), 1);
     } else {
         song_number_groups_active.value.push(group);
     }
@@ -110,21 +105,14 @@ function getRangeString(start: string, end: string) {
     <div class="menu">
         <div class="title">
             <div class="title--left">
-                <img
-                    @click="router.back()"
-                    class="ionicon"
-                    src="/assets/chevron-back-outline.svg"
-                />
+                <img @click="router.back()" class="ionicon" src="/assets/chevron-back-outline.svg" />
             </div>
             <div class="title--center">
                 <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
                 <div>
-                    <RouterLink
-                        v-if="index_available"
-                        :to="`/topical/${props.book}`"
-                    >
+                    <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
                         <img class="ionicon" src="/assets/book-outline.svg" />
                     </RouterLink>
                 </div>

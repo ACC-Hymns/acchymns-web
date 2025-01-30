@@ -1,16 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, nextTick } from "vue";
-import {
-    getAllBookMetaData,
-    getSongMetaData,
-    getBookIndex,
-} from "@/scripts/book_import";
-import {
-    RouterLink,
-    onBeforeRouteLeave,
-    useRoute,
-    useRouter,
-} from "vue-router";
+import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
+import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import type { Song } from "@/scripts/types";
 import { useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
@@ -135,10 +126,7 @@ let song_number_groups_active = ref<string[]>([]);
 const route = useRoute();
 function toggleDropdown(topic: string) {
     if (song_number_groups_active.value.includes(topic)) {
-        song_number_groups_active.value.splice(
-            song_number_groups_active.value.indexOf(topic),
-            1,
-        );
+        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(topic), 1);
     } else {
         song_number_groups_active.value.push(topic);
     }
@@ -157,11 +145,7 @@ function toggleDropdown(topic: string) {
         <div class="title">
             <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">{{ title }}</h1>
-            <img
-                @click="toggleAlphabetical()"
-                class="ionicon title--right"
-                :src="icon"
-            />
+            <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
         </div>
     </div>
 
@@ -196,9 +180,7 @@ function toggleDropdown(topic: string) {
                                 <div class="song__title">{{ song.title }}</div>
                             </div>
                             <div class="booktext--right">
-                                <div class="song__number">
-                                    #{{ song.number }}
-                                </div>
+                                <div class="song__number">#{{ song.number }}</div>
                             </div>
                         </RouterLink>
                     </div>

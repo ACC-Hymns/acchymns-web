@@ -12,14 +12,8 @@ let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
 let song_group_enabled = useLocalStorage("ACCOptions.songGroupEnabled", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
-const override_system_theme = useLocalStorage(
-    "ACCOptions.overrideSystemTheme",
-    false,
-);
-const user_prefers_dark_mode = useLocalStorage(
-    "ACCOptions.overrideDarkMode",
-    false,
-);
+const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
+const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
 let song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
@@ -34,11 +28,7 @@ const dark_mode = computed(() => {
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="back()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Preferences</h1>
         </div>
     </div>
@@ -99,28 +89,12 @@ const dark_mode = computed(() => {
             </div>
             <div v-show="staggered_notes" class="settings-option">
                 <span class="setting-label">Playback Interval</span>
-                <input
-                    v-model="playback_interval"
-                    class="slider-setting"
-                    type="range"
-                    step="0.05"
-                    min="0.1"
-                    max="1"
-                />
-                <span class="slider-value"
-                    >{{ playback_interval * 1000 }} ms</span
-                >
+                <input v-model="playback_interval" class="slider-setting" type="range" step="0.05" min="0.1" max="1" />
+                <span class="slider-value">{{ playback_interval * 1000 }} ms</span>
             </div>
             <div class="settings-option">
                 <span class="setting-label">Playback Duration</span>
-                <input
-                    v-model="playback_duration"
-                    class="slider-setting"
-                    type="range"
-                    step="0.5"
-                    min="0.5"
-                    max="5"
-                />
+                <input v-model="playback_duration" class="slider-setting" type="range" step="0.5" min="0.5" max="5" />
                 <span class="slider-value">{{ playback_duration }} sec</span>
             </div>
         </div>

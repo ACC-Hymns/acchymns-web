@@ -50,11 +50,7 @@ onMounted(async () => {
 <template>
     <h1 class="pagetitle">Bookmarks</h1>
     <div class="search-bar">
-        <input
-            v-model="search_query"
-            placeholder="Search for a song title or number..."
-            aria-label="Search through site content"
-        />
+        <input v-model="search_query" placeholder="Search for a song title or number..." aria-label="Search through site content" />
         <button disabled>
             <svg viewBox="0 0 1024 1024">
                 <path

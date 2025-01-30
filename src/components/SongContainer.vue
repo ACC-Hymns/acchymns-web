@@ -14,11 +14,7 @@ const props = defineProps<SongReference>();
 let song_img_type = ref("");
 let panzoom_container = ref<HTMLDivElement>();
 
-function getSongSrc(
-    bookShort: string,
-    songNum: string,
-    BOOK_METADATA: { [k: string]: BookSummary },
-): string {
+function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: string]: BookSummary }): string {
     const fileName = songNum + "." + BOOK_METADATA[bookShort].fileExtension;
     return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
@@ -35,14 +31,8 @@ let song_img_src = ref("");
 let error_is_active = ref(false);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
-const override_system_theme = useLocalStorage(
-    "ACCOptions.overrideSystemTheme",
-    false,
-);
-const user_prefers_dark_mode = useLocalStorage(
-    "ACCOptions.overrideDarkMode",
-    false,
-);
+const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
+const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
 let song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
@@ -61,7 +51,7 @@ let BOOK_METADATA: { [k: string]: BookSummary };
 
 onMounted(async () => {
     panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
-        beforeWheel: (e) => {
+        beforeWheel: e => {
             return e.shiftKey;
         },
         maxZoom: 3,
@@ -140,8 +130,7 @@ const observer = new IntersectionObserverManager(
             for (const entry of entries) {
                 let rootRect = entry.boundingClientRect;
                 let visibleRect = entry.intersectionRect;
-                if (visibleRect.height < rootRect.height)
-                    panzoom.setVerticalPan(true);
+                if (visibleRect.height < rootRect.height) panzoom.setVerticalPan(true);
                 else panzoom.setVerticalPan(false);
             }
         },
@@ -173,7 +162,7 @@ onUpdated(async () => {
         <!-- We don't have all the MXL from certain books, if that is the case, we try to substitute it with a PDF version -->
         <MusicXMLWrapper
             v-else-if="song_img_type == 'musicxml' || song_img_type == 'mxl'"
-            @error="error_is_active = true" 
+            @error="error_is_active = true"
             :src="song_img_src"
             class="song-img"
             :class="{ 'inverted-song': actually_invert }"

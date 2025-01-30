@@ -108,7 +108,7 @@ type BookOrderEvent = {
     };
 };
 async function move_book(e: BookOrderEvent) {
-    let book_order = customized_books.value.map((book) => book.id);
+    let book_order = customized_books.value.map(book => book.id);
     let moved_book = e.moved.element;
     book_order.splice(e.moved.oldIndex, 1);
     book_order.splice(e.moved.newIndex, 0, moved_book.id);
@@ -198,10 +198,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
             </a>
             <a v-else @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <h3 class="confirm-text">Confirm</h3>
-                <img
-                    class="ionicon"
-                    src="/assets/checkmark-circle-outline.svg"
-                />
+                <img class="ionicon" src="/assets/checkmark-circle-outline.svg" />
             </a>
         </div>
         <div id="appsection">
@@ -257,19 +254,10 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
             </div>
 
             <template v-if="Capacitor.getPlatform() === 'web'">
-                <a
-                    class="app-button-container play-store-width"
-                    href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns"
-                >
-                    <img
-                        class="app-button"
-                        src="/assets/en_badge_web_generic.png"
-                    />
+                <a class="app-button-container play-store-width" href="https://play.google.com/store/apps/details?id=com.ChristopherW.acchmns">
+                    <img class="app-button" src="/assets/en_badge_web_generic.png" />
                 </a>
-                <a
-                    class="app-button-container app-store-width"
-                    href="https://apps.apple.com/us/app/acc-hymns/id1634426405"
-                >
+                <a class="app-button-container app-store-width" href="https://apps.apple.com/us/app/acc-hymns/id1634426405">
                     <img class="app-button" src="/assets/Appstore_badge.svg" />
                 </a>
             </template>

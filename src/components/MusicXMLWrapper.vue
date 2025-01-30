@@ -14,7 +14,7 @@ let root = ref<HTMLDivElement>();
 
 onMounted(async () => {
     console.log("Loading MusicXML");
-    console.log(root.value)
+    console.log(root.value);
     try {
         const osmd = new OpenSheetMusicDisplay(root.value as HTMLDivElement, {
             autoResize: false,
@@ -52,7 +52,6 @@ function fixXML(xml: string): string {
     }
     return xml;
 }
-
 </script>
 
 <template>

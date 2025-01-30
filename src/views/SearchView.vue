@@ -26,20 +26,18 @@ const stripped_query = computed(() => {
     return stripSearchText(search_query.value);
 });
 
-watch(search_query, (new_query) => {
+watch(search_query, new_query => {
     search_params.value.search = new_query;
 });
 
 const available_songs = ref<SongSearchInfo[]>([]);
 const available_books = ref<BookSummary[]>([]);
-const book_data_summaries = ref<Map<string, BookDataSummary>>(
-    new Map<string, BookDataSummary>(),
-);
+const book_data_summaries = ref<Map<string, BookDataSummary>>(new Map<string, BookDataSummary>());
 
 const search_results = computed(() => {
     if (search_params.value.bookFilters.length > 0) {
         return available_songs.value
-            .filter((s) => {
+            .filter(s => {
                 return (
                     (s.stripped_title?.includes(stripped_query.value) ||
                         s?.stripped_first_line?.includes(stripped_query.value) ||
@@ -47,13 +45,7 @@ const search_results = computed(() => {
                     search_params.value.bookFilters.find(b => b == s.book.name.short)
                 );
             })
-            .sort((a, b) =>
-                a.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .localeCompare(
-                        b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
-                    ),
-            );
+            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     } else {
         if (search_query.value === "") return [];
         return available_songs.value
@@ -64,13 +56,7 @@ const search_results = computed(() => {
                     s?.number == stripped_query.value
                 );
             })
-            .sort((a, b) =>
-                a.title
-                    .replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")
-                    .localeCompare(
-                        b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, ""),
-                    ),
-            );
+            .sort((a, b) => a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")));
     }
 });
 
@@ -131,9 +117,7 @@ let book_filters = ref<Element[]>([]);
 function filterBook(short_book_name: string) {
     isOpen.value = true;
     if (search_params.value.bookFilters.includes(short_book_name)) {
-        let index = search_params.value.bookFilters.findIndex(
-            (b) => b == short_book_name,
-        );
+        let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
         search_params.value.bookFilters.splice(index, 1);
     } else {
         search_params.value.bookFilters.push(short_book_name);

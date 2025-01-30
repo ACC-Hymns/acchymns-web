@@ -13,9 +13,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
 
     if (!env.VITE_GIT_BRANCH) {
         // Inject the current branch for use with remote books
-        process.env.VITE_GIT_BRANCH = execSync("git branch --show-current")
-            .toString()
-            .trimEnd();
+        process.env.VITE_GIT_BRANCH = execSync("git branch --show-current").toString().trimEnd();
     }
 
     process.env.VITE_APP_VERSION = process.env.npm_package_version;
@@ -25,11 +23,9 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     if (process.env.VITE_GIT_BRANCH == "main") {
         process.env.VITE_FULL_PROGRAM_VERSION = process.env.npm_package_version;
     } else if (process.env.VITE_GIT_BRANCH == "staging") {
-        process.env.VITE_FULL_PROGRAM_VERSION =
-            "Beta " + process.env.npm_package_version;
+        process.env.VITE_FULL_PROGRAM_VERSION = "Beta " + process.env.npm_package_version;
     } else {
-        process.env.VITE_FULL_PROGRAM_VERSION =
-            "Alpha " + process.env.npm_package_version;
+        process.env.VITE_FULL_PROGRAM_VERSION = "Alpha " + process.env.npm_package_version;
     }
 
     console.log("Current App Version:", process.env.VITE_APP_VERSION);

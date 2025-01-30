@@ -10,20 +10,13 @@ const console_store = useConsoleStore();
 <template>
     <div class="menu">
         <div class="title">
-            <img
-                @click="back()"
-                class="ionicon title--left"
-                src="/assets/chevron-back-outline.svg"
-            />
+            <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <h1 class="title--center">Application Logs</h1>
         </div>
     </div>
 
     <div class="main-content settings">
-        <div
-            class="internal-console"
-            v-html="console_store.logs.replaceAll('\n', '<br>')"
-        ></div>
+        <div class="internal-console" v-html="console_store.logs.replaceAll('\n', '<br>')"></div>
     </div>
 
     <NavigationBar current_page="settings" />

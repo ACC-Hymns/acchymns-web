@@ -41,9 +41,7 @@ export function useCapacitorPreferences<T = unknown>(
  * Reactive Capacitor Preferences.
  * This code is adapted from here: https://vueuse.org/core/useStorageAsync/
  */
-export function useCapacitorPreferences<
-    T extends string | number | boolean | object | null,
->(
+export function useCapacitorPreferences<T extends string | number | boolean | object | null>(
     key: string,
     initialValue: MaybeComputedRef<T>,
     options: UseStorageAsyncOptions<T> = {},
