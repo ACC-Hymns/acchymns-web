@@ -18,12 +18,16 @@ export type ChurchData = {
   },
   BOOK_COLOR: {
     S: string;
+  },
+  BG_COLOR: {
+    S: string;
   }
 }
 
 export enum UserStatus {
   Unauthorized = 'Unauthorized',
   Authorized = 'Authorized',
+  None = 'None'
 }
 
 export type TokenAuthResponse = {
@@ -95,19 +99,43 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
         },
         ":book_color": {
           "S": color
-        },
+        }
       },
       "ExpressionAttributeNames": {
         "#B": "BOOK_ID",
         "#S": "SONG_NUMBER",
         "#V": "VERSES",
-        "#C": "BOOK_COLOR"
+        "#C": "BOOK_COLOR",
       },
       "ReturnValues": "ALL_NEW",
     }
     const command = new UpdateItemCommand(data as unknown as UpdateItemCommandInput);
     const response = await client.send(command);
     return response;
+}
+
+export async function set_bg_color(client: DynamoDBClient, church_id: string, bg_color: string) {
+  const data = {
+    "TableName": "ACCHYMNS_DISPLAY_DATA",
+    "Key": {
+      "CHURCH_ID": {
+        "S": church_id,
+      }
+    },
+    "UpdateExpression": "SET #BG = :bg_color",
+    "ExpressionAttributeValues": {
+      ":bg_color": {
+        "S": bg_color
+      }
+    },
+    "ExpressionAttributeNames": {
+      "#BG": "BG_COLOR"
+    },
+    "ReturnValues": "ALL_NEW",
+  }
+  const command = new UpdateItemCommand(data as unknown as UpdateItemCommandInput);
+  const response = await client.send(command);
+  return response;
 }
 
 export async function get(client: DynamoDBClient, church_id: string) {

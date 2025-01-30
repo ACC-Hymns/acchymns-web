@@ -17,6 +17,7 @@ let bottom_text = ref<string>("");
 const hours = ref<string>('');
 const minutes = ref<string>('');
 const seconds = ref<string>('');
+const digital_time = ref<string>('');
 function clock() {
     let d = new Date();
     let h = d.getHours();
@@ -30,7 +31,14 @@ function clock() {
     hours.value = "rotate("+hDeg+"deg)";
     minutes.value = "rotate("+mDeg+"deg)";
     seconds.value = "rotate("+sDeg+"deg)";
+    
+    // 12 hour format
+    let am_pm = h >= 12 ? 'PM' : 'AM';
+    let hrs = h % 12;
+    hrs = h ? h : 12; // the hour '0' should be '12'
+    digital_time.value = `${hrs}:${m < 10 ? '0' + m : m} ${am_pm}`;
 }
+
 setInterval(clock, 100);
 
 const broadcast_api = useBroadcastAPI();
@@ -70,21 +78,25 @@ setInterval(set_data, 2000);
         <div v-if="is_bible_reading" class="song-info">
           <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
           <h2 class="bottom-text">{{ bottom_text }}</h2>
-          
+          <h2 class="digital-clock">{{ digital_time }}</h2>
         </div>
         <div v-else class="song-info">
-            <h1 class="song-number">{{ song_number }}</h1>
-            <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
-            <h2 class="verses">{{ verses }}</h2>
-            <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
+          <h1 class="song-number">{{ song_number}}</h1>
+          <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
+          <h2 class="verses" ref="verses_text">{{ verses }}</h2>
+          <h2 class="book-name" :style="{color: color}">{{ book_name }}</h2>
+          <h2 v-if="song_number.length > 0" class="digital-clock">{{ digital_time }}</h2>
         </div>
-        <div class="clock" :class="{'clock-bible-long': top_text.length > 8 && is_bible_reading, 'clock-song': song_number.length > 0, 'clock-bible': top_text.length <= 8 && is_bible_reading}">
+
+        <div v-if="song_number.length == 0 && !is_bible_reading" class="clock">
             <div class="dot"></div>
             <div>
                 <div class="hour-hand" :style="{transform: hours}"></div>
                 <div class="minute-hand" :style="{transform: minutes}"></div>
+                <div class="second-hand" :style="{transform: seconds}"></div>
             </div>
             <div>
+              <span v-for="i in 12" :class="('h' + i)">{{ i }}</span>
             </div>
             <div class="diallines" v-for="i in 60" :key="i" :style="{transform: 'rotate(' + 6 * i + 'deg)'}"></div>
         </div>
@@ -99,8 +111,12 @@ body {
 </style>
 
 <style scoped>
+.wall-color {
+  background-color: #EACFA3;
+}
+
 .top-text {
-    font-size: 16em;
+    font-size: 15em;
     color: #000000;
     margin: 0 5%;
     top: 10%;
@@ -122,6 +138,18 @@ body {
     height: 100%;
 }
 
+.digital-clock {
+    font-size: 10em;
+    color: #000000;
+    bottom: 5%;
+    position: fixed;
+    margin: 0px 5%;
+    width: 50%;
+    right: 0;
+    text-align: right;
+    line-height: 1;
+}
+
 .info-seperator {
     display: flex;
     justify-content: space-between;
@@ -139,7 +167,7 @@ body {
 }
 
 .song-number {
-    font-size: 30em;
+    font-size: 38em;
     color: #000000;
     margin: 0 5%;
     top: 0;
@@ -147,22 +175,45 @@ body {
     margin: 0 5%;
     line-height: 1;
 }
+
+.verses-container {
+  position: fixed;
+  right: 0;
+}
+
+.verses-grid {
+  display: grid;
+  gap: 10px;
+  width: 5vw;
+  height: 5vw;
+}
+
+.verse {
+    font-size: 6em;
+    color: #333;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #e0e0e0;
+    width: 100%;
+    padding: 0 0%;
+    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.308);
+}
+
 .verses {
     font-size: 10em;
     color: #000000;
     margin: 0 5%;
-    top: 50%;
+    top: 60%;
     position: fixed;
     margin: 0 5%;
     max-width: 60%;
-    word-wrap: break-word;
-    white-space: pre-wrap;
 }
 .verses-label {
     font-size: 5em;
     color: #000000;
     margin: 0 5%;
-    top: 43%;
+    top: 55%;
     position: fixed;
     margin: 0 5%;
 }
@@ -178,7 +229,7 @@ body {
 }
 
 .clock {
-  background: #ececec;
+  background: rgb(20, 20, 20);
   width: 600px;
   height: 600px;
   border-radius: 50%;
@@ -207,13 +258,14 @@ body {
 .hour-hand {
   position: absolute;
   z-index: 5;
-  width: 8px;
-  height: 130px;
-  background: #333;
+  width: 12px;
+  height: 132px;
+  background: white;
+  box-shadow: 0 2px 4px -1px black;
   top: 158px;
   transform-origin: 50% 144px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
 }
@@ -221,12 +273,13 @@ body {
 .minute-hand {
   position: absolute;
   z-index: 6;
-  width: 8px;
+  width: 12px;
   height: 200px;
-  background: #666;
+  background: white;
+  box-shadow: 0 2px 4px -1px black;
   top: 92px;
   left: 50%;
-  margin-left: -4px;
+  margin-left: -6px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 210px;
@@ -235,12 +288,13 @@ body {
 .second-hand {
   position: absolute;
   z-index: 7;
-  width: 4px;
+  width: 6px;
   height: 240px;
   background: red;
+  box-shadow: 0 2px 4px -1px black;
   top: 52px;
   left: 50%;
-  margin-left: -2px;
+  margin-left: -3px;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   transform-origin: 50% 250px;
@@ -249,48 +303,83 @@ body {
 span {
   display: inline-block;
   position: absolute;
-  color: #333;
+  color: white;
   font-size: 72px;
-  font-family: 'Poiret One';
+  font-family: sans-serif;
   font-weight: 700;
   z-index: 4;
 }
 
 .h12 {
-  top: 60px;
+  top: 5%;
   left: 50%;
-  margin-left: -36px;
+  margin-left: -40px;
+}
+.h1 {
+  top: 10%;
+  left: 66%;
+}
+.h2 {
+  top: 25%;
+  left: 80%;
 }
 .h3 {
-  top: 260px;
-  right: 66px;
+  top: 50%;
+  right: 8%;  
+  margin-top: -41px;
+}
+.h4 {
+  bottom: 24%;
+  left: 80%;
+}
+.h5 {
+  bottom: 10%;
+  left: 66%;
 }
 .h6 {
-  bottom: 60px;
+  bottom: 5%;
   left: 50%;
-  margin-left: -18px;
+  margin-left: -22px;
+}
+.h7 {
+  bottom: 10%;
+  left: 28%;
+}
+.h8 {
+  bottom: 25%;
+  left: 14%;
 }
 .h9 {
-  left: 66px;
-  top: 260px;
+  left: 8%;
+  top: 50%;
+  margin-top: -41px;
+}
+.h10 {
+  top: 25%;
+  left: 12%;
+}
+.h11 {
+  top: 10%;
+  left: 26%;
 }
 
 .diallines {
   position: absolute;
   z-index: 2;
   width: 4px;
-  height: 30px;
-  background: #666;
+  height: 10px;
+  background: white;
   left: 50%;
   margin-left: -2px;
   transform-origin: 50% 300px;
+  border-radius: 5px;
 }
 .diallines:nth-of-type(5n + 3) {
   position: absolute;
   z-index: 2;
   width: 8px;
-  height: 50px;
-  background: #666;
+  height: 30px;
+  background: white;
   left: 50%;
   margin-left: -4px;
   transform-origin: 50% 300px;

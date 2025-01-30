@@ -166,6 +166,9 @@ onMounted(async () => {
         Network.addListener("networkStatusChange", async (details) => {
             isConnected.value = details.connected;
             if(!isConnected.value) {
+                audio_source.value?.pause();
+                morph();
+                media_is_playing.value = false;
                 audio_source_exists.value = false;
                 audio_source.value = new Audio();
                 setMediaType(null, true);
@@ -565,13 +568,13 @@ function get_note_icon(note: string) {
 }
 .verse-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 15px 0;
 }
 .broadcast-container {
     width: 75%;
     min-height: max-content;
-    background-color: var(--div-color);
+    background-color: var(--toolbar);
     border-radius: 15px;
     position: fixed;
     top: 50%;
