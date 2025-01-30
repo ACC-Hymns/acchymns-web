@@ -61,7 +61,7 @@ onMounted(async () => {
     </template>
     <template v-else-if="isFinished">
         <div class="book" :style="`background: linear-gradient(135deg, #000000, #000000)`">
-            <div class="book_title">Unknown</div>
+            <div class="book_title">Unavailable</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
             <!-- Maybe show a disconnected wifi symbol? -->

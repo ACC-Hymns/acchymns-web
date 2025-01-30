@@ -29,6 +29,8 @@ function clock() {
     hrs = h ? h : 12; // the hour '0' should be '12'
     digital_time.value = `${hrs}:${m < 10 ? "0" + m : m} ${am_pm}`;
 }
+clock();
+setInterval(clock, 1000);
 
 function clockNumberPosition(index: number) {
     const radius = 225;

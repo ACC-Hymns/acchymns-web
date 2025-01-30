@@ -5,6 +5,7 @@ import { useNavigator } from "@/router/navigator";
 import NavigationBar from "@/components/NavigationBar.vue";
 const { back } = useNavigator();
 
+let only_starting_notes = useLocalStorage("ACCOptions.media.onlyStartingNotes", false);
 let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
 let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
@@ -63,6 +64,16 @@ const dark_mode = computed(() => {
                 <span>Invert Song Colors</span>
                 <label class="switch">
                     <input v-model="song_invert" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <h2>Media</h2>
+        <div class="settings">
+            <div class="settings-option">
+                <span>Only Play Starting Notes</span>
+                <label class="switch">
+                    <input v-model="only_starting_notes" type="checkbox" />
                     <span class="slider round"></span>
                 </label>
             </div>

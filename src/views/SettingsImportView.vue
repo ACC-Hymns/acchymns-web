@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
+import { computed, onBeforeUnmount, ref } from "vue";
 import { Toast } from "@capacitor/toast";
 import { Network } from "@capacitor/network";
 import { Capacitor } from "@capacitor/core";
@@ -7,7 +7,6 @@ import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
-import { useLocalStorage } from "@vueuse/core";
 import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
@@ -23,7 +22,6 @@ onBeforeUnmount(async () => {
 });
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
@@ -152,10 +150,6 @@ async function download_finish(book: BookDataSummary, new_url: string) {
         text: "Successfully downloaded hymnal!",
     });
 }
-
-onUpdated(() => {
-    if (!import_books_tooltip_status.value) import_books_tooltip_status.value = true;
-});
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
     book_to_remove.status = Object.keys(public_references).includes(book_to_remove.id) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;

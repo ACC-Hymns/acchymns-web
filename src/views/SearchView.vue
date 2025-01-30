@@ -16,7 +16,10 @@ onBeforeRouteLeave((_, from) => {
 });
 
 const route = useRoute();
-const search_params = useSessionStorage<SearchParams>("searchParams", { search: "", bookFilters: [] });
+const search_params = useSessionStorage<SearchParams>("searchParams", {
+    search: "",
+    bookFilters: [],
+});
 
 const search_query = ref(search_params.value.search);
 const stripped_query = computed(() => {

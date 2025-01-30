@@ -524,7 +524,9 @@ function get_note_icon(note: string) {
                     }"
                 />
             </div>
-            <p class="timestamp-right">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+            <p class="timestamp-right">
+                {{ secondsToTimestamp(media_timestamp_end) }}
+            </p>
             <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
@@ -564,7 +566,9 @@ function get_note_icon(note: string) {
                         }"
                     />
                 </div>
-                <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+                <p class="timestamp">
+                    {{ secondsToTimestamp(media_timestamp_end) }}
+                </p>
             </div>
         </div>
         <div v-if="media_starting_notes" class="starting-notes-container">

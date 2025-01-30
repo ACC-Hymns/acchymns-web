@@ -4,7 +4,9 @@ import { BookSourceType, type BookDataSummary } from "./types";
 
 export async function migrate() {
     const current_semver_version = import.meta.env.VITE_APP_VERSION;
-    const previous_semver_version = await Preferences.get({ key: "AppVersion" });
+    const previous_semver_version = await Preferences.get({
+        key: "AppVersion",
+    });
     if (previous_semver_version.value === current_semver_version) {
         return;
     }
@@ -18,14 +20,20 @@ export async function migrate() {
         let new_bookmarks = JSON.parse((await Preferences.get({ key: "bookmarks" })).value ?? "[]"); // Don't overwrite existing bookmarks just in case
         for (const bookmark of bookmarks) {
             if (bookmark.song) {
-                new_bookmarks.push({ book: bookmark.book, number: bookmark.song });
+                new_bookmarks.push({
+                    book: bookmark.book,
+                    number: bookmark.song,
+                });
             } else {
                 // We've already been migrated.??
                 new_bookmarks.push(bookmark);
             }
         }
         new_bookmarks = [...new Set(new_bookmarks)]; // Remove duplicates, if any
-        await Preferences.set({ key: "bookmarks", value: JSON.stringify(new_bookmarks) });
+        await Preferences.set({
+            key: "bookmarks",
+            value: JSON.stringify(new_bookmarks),
+        });
     }
 
     // migrate old imported book config to new system

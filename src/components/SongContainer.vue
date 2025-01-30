@@ -6,6 +6,7 @@ import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
 import { ref, onMounted, computed, onUpdated, watch } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
+import MusicXMLWrapper from "./MusicXMLWrapper.vue";
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
@@ -153,6 +154,14 @@ onUpdated(async () => {
     <div v-else ref="panzoom_container" class="panzoom-container">
         <PDFWrapper
             v-if="song_img_type == 'pdf'"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
+        <!-- We don't have all the MXL from certain books, if that is the case, we try to substitute it with a PDF version -->
+        <MusicXMLWrapper
+            v-else-if="song_img_type == 'musicxml' || song_img_type == 'mxl'"
             @error="error_is_active = true"
             :src="song_img_src"
             class="song-img"
