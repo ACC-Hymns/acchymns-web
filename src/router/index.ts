@@ -94,7 +94,7 @@ const router = createRouter({
         {
             path: "/broadcast",
             component: () => import("../views/BroadcastView.vue"),
-        }
+        },
     ],
 });
 

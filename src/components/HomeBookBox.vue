@@ -11,7 +11,7 @@ const props = withDefaults(
     }>(),
     {
         withLink: true,
-    }
+    },
 );
 
 const {
@@ -27,13 +27,17 @@ const book_data_summary = ref<BookDataSummary>();
 
 onMounted(async () => {
     book_data_summary.value = await getBookDataSummary(book.value);
-})
-
+});
 </script>
 <template>
     <!-- Book has been successfully loaded -->
     <template v-if="isFinished && book != null">
-        <component :is="withLink ? 'RouterLink' : 'div'" :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
+        <component
+            :is="withLink ? 'RouterLink' : 'div'"
+            :to="`selection/${book.name.short}`"
+            class="book"
+            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
+        >
             <div class="book_title">{{ book.name.medium }}</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>
