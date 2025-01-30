@@ -138,19 +138,6 @@ function setup_audiosource(audio_source: HTMLAudioElement) {
     });
 }
 
-async function _prepAudio(network_status: ConnectionStatus) {
-    isConnected.value = network_status.connected;
-    if (!isConnected.value) {
-        audio_source_exists.value = false;
-        audio_source.value = new Audio();
-    } else {
-        audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-        audio_source.value.preload = "metadata";
-        setup_audiosource(audio_source.value);
-        audio_source.value?.load();
-    }
-}
-
 onMounted(async () => {
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
