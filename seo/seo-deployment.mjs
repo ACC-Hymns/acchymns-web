@@ -8,7 +8,7 @@ import { parse } from "node-html-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import process from "node:process";
-import { generateSongPreview } from "./og-image-generation.mjs";
+// import { generateSongPreview } from "./og-image-generation.mjs";
 if (process.env.VITE_BASE_URL == undefined) {
     process.env.VITE_BASE_URL = "/";
 }
@@ -86,8 +86,8 @@ async function generateSongData(book) {
         const dup = parse(index_html);
         const head = dup.getElementsByTagName("head")[0];
         await fsp.mkdir(`${dist_dir}/display/${book}/${song}`, { recursive: true });
-        const og_png = await generateSongPreview(summary.name.medium, song, song_list[song].title, summary.primaryColor, summary.secondaryColor);
-        await fsp.writeFile(`${dist_dir}/display/${book}/${song}/og.png`, og_png);
+        // const og_png = await generateSongPreview(summary.name.medium, song, song_list[song].title, summary.primaryColor, summary.secondaryColor);
+        // await fsp.writeFile(`${dist_dir}/display/${book}/${song}/og.png`, og_png);
 
         head.insertAdjacentHTML(
             "beforeend",
@@ -95,7 +95,7 @@ async function generateSongData(book) {
                 song_list[song].title,
                 `#${song} from ${summary.name.medium} available online`,
                 `display/${book}/${song}`,
-                `display/${book}/${song}/og.png`, // Use the generated opengraph image
+                `assets/icons/180x180.png`, // Use the generated opengraph image once we have it uploading to the S3 bucket
                 "music.song"
             )
         );
