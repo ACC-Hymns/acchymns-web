@@ -26,7 +26,7 @@ onMounted(() => {
     });
 });
 
-function scrollHandler(e: UIEvent) {
+function scrollHandler(e: Event) {
     let target = e.target as HTMLElement;
     let scroll_percentage = target.scrollLeft / target.offsetWidth;
     let nearest_index = Math.round(scroll_percentage);
