@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 </script>
@@ -13,6 +13,21 @@ const { back } = useNavigator();
     </div>
 
     <div class="settings main-content">
+        <a class="changelog">
+            <h3 class="release" style="margin-bottom: 0px">[v3.0]</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2024-07-01</h5>
+            <ul style="margin-top: 5px">
+                <li class="change">Bug fixes</li>
+                <li class="change">Added song grouping</li>
+                <li class="change">Added home customization</li>
+                <li class="change">Added page flipping buttons</li>
+                <li class="change">Added ability to download books for offline use</li>
+                <li class="change">Added a media player for some hymnals</li>
+                <li class="change">Added broadcasting to TVs</li>
+                <li class="change">Added Hymns and Songs of Zion</li>
+                <li class="change">Added Харфа Сиона</li>
+            </ul>
+        </a>
         <a class="changelog">
             <h3 class="release" style="margin-bottom: 0px">[v2.0]</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2023-07-14</h5>
@@ -50,7 +65,7 @@ const { back } = useNavigator();
             <ul style="margin-top: 5px">
                 <li class="change">Added Zion's Harp</li>
                 <li class="change">Added Gospel Hymns</li>
-                <li class="change">Added Higher Ground</li>
+                <li class="change">Added Camp Book</li>
                 <li class="change">Added Junior Hymnal</li>
                 <li class="change">Added Search Page</li>
                 <li class="change">Added Bookmarks Page</li>
@@ -59,24 +74,7 @@ const { back } = useNavigator();
         </a>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>

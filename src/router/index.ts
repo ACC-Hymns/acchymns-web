@@ -5,6 +5,19 @@ import type { URLOpenListenerEvent } from "@capacitor/app";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
+    scrollBehavior(to, _, savedPosition) {
+        const overriden_routes = ["/selection"];
+        if (overriden_routes.some(route => to.path.startsWith(route))) {
+            console.log("[VueRouter] ScrollBehavior: overridden");
+            return;
+        }
+        // Otherwise just return to the last saved position after 100ms
+        if (savedPosition) {
+            return new Promise(resolve => {
+                setTimeout(() => resolve(savedPosition), 100);
+            });
+        }
+    },
     routes: [
         {
             path: "/",
@@ -71,8 +84,16 @@ const router = createRouter({
             component: () => import("../views/SettingsImportView.vue"),
         },
         {
+            path: "/settings/connect",
+            component: () => import("../views/SettingsConnect.vue"),
+        },
+        {
             path: "/:catchAll(.*)",
             component: () => import("../views/404View.vue"),
+        },
+        {
+            path: "/broadcast",
+            component: () => import("../views/BroadcastView.vue"),
         },
     ],
 });

@@ -4,7 +4,7 @@ import type { BookSummary, SongReference } from "@/scripts/types";
 import type { PanZoom } from "panzoom";
 import createPanZoom from "panzoom";
 import { Capacitor } from "@capacitor/core";
-import { ref, onMounted, readonly, computed, onUpdated } from "vue";
+import { ref, onMounted, computed, onUpdated, watch } from "vue";
 import PDFWrapper from "./PDFWrapper.vue";
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
@@ -17,6 +17,14 @@ function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: str
     const fileName = songNum + "." + BOOK_METADATA[bookShort].fileExtension;
     return `${BOOK_METADATA[bookShort].srcUrl}/songs/${fileName}`;
 }
+
+function getZoom() {
+    return panzoom.getTransform().scale;
+}
+
+defineExpose({
+    getZoom,
+});
 
 let song_img_src = ref("");
 let error_is_active = ref(false);
@@ -36,36 +44,43 @@ const dark_mode = computed(() => {
 
 const actually_invert = computed(() => dark_mode.value && song_invert.value);
 
-let panzoom_enabled = readonly(useLocalStorage("ACCOptions.panzoomEnable", true));
 let panzoom: PanZoom;
-var isMobile = Capacitor.getPlatform() !== "web";
+const isMobile = Capacitor.getPlatform() !== "web";
+let BOOK_METADATA: { [k: string]: BookSummary };
 
 onMounted(async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    console.log(BOOK_METADATA[props.book]);
-    if (BOOK_METADATA[props.book] == undefined) {
-        error_is_active.value = true;
-        return;
-    }
-    const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
-    song_img_type.value = BOOK_METADATA[props.book].fileExtension;
-    song_img_src.value = songSrc;
-    if (panzoom_enabled.value) {
-        panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
-            beforeWheel: e => {
-                return e.shiftKey;
-            },
-            maxZoom: 3,
-            minZoom: isMobile ? 1 : 0.25,
-            bounds: true,
-            boundsPadding: isMobile ? 1 : 0.5,
-        });
-    }
+    panzoom = createPanZoom(panzoom_container.value as HTMLDivElement, {
+        beforeWheel: e => {
+            return e.shiftKey;
+        },
+        maxZoom: 3,
+        minZoom: isMobile ? 1 : 0.25,
+        bounds: true,
+        boundsPadding: isMobile ? 1 : 0.5,
+        zoomDoubleClickSpeed: 1,
+    });
     if (isMobile) {
         setInterval(() => {
             observer.refresh();
         }, 10);
     }
+
+    BOOK_METADATA = await getAllBookMetaData();
+
+    watch(
+        [props],
+        () => {
+            error_is_active.value = false;
+            if (BOOK_METADATA[props.book] == undefined) {
+                error_is_active.value = true;
+                return;
+            }
+            const songSrc = getSongSrc(props.book, props.number, BOOK_METADATA);
+            song_img_type.value = BOOK_METADATA[props.book].fileExtension;
+            song_img_src.value = songSrc;
+        },
+        { immediate: true },
+    );
 });
 
 class IntersectionObserverManager {
@@ -81,17 +96,29 @@ class IntersectionObserverManager {
         this._observer.observe(node);
     }
     unobserve(node: Element) {
-        this._observedNodes.delete(node);
-        this._observer.unobserve(node);
+        try {
+            this._observedNodes.delete(node);
+            this._observer.unobserve(node);
+        } catch (e) {
+            console.log(e);
+        }
     }
     disconnect() {
-        this._observedNodes.clear();
-        this._observer.disconnect();
+        try {
+            this._observedNodes.clear();
+            this._observer.disconnect();
+        } catch (e) {
+            console.log(e);
+        }
     }
     refresh() {
         for (let node of this._observedNodes) {
-            this._observer.unobserve(node as Element);
-            this._observer.observe(node as Element);
+            try {
+                this._observer.unobserve(node as Element);
+                this._observer.observe(node as Element);
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
 }
@@ -110,8 +137,8 @@ const observer = new IntersectionObserverManager(
             root: null,
             rootMargin: "0px",
             threshold: 1,
-        }
-    )
+        },
+    ),
 );
 
 onUpdated(async () => {
@@ -124,8 +151,20 @@ onUpdated(async () => {
         <img src="/assets/wifi_off.svg" class="wifi-fallback" />
     </div>
     <div v-else ref="panzoom_container" class="panzoom-container">
-        <PDFWrapper v-if="song_img_type == 'pdf'" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
-        <img v-else-if="song_img_type !== ''" @error="error_is_active = true" :src="song_img_src" class="song-img" :class="{ 'inverted-song': actually_invert }" />
+        <PDFWrapper
+            v-if="song_img_type == 'pdf'"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
+        <img
+            v-else-if="song_img_type !== ''"
+            @error="error_is_active = true"
+            :src="song_img_src"
+            class="song-img"
+            :class="{ 'inverted-song': actually_invert }"
+        />
     </div>
 </template>
 

@@ -9,10 +9,10 @@ module.exports = {
         "prettier/prettier": [
             "error",
             {
-                // Override all options of `prettier` here
-                // @see https://prettier.io/docs/en/options.html
+                endOfLine: "lf",
                 tabWidth: 4,
-                printWidth: 200,
+                useTabs: false,
+                printWidth: 150,
                 arrowParens: "avoid",
             },
         ],

@@ -23,5 +23,5 @@ watch(
             document.documentElement.setAttribute("data-theme", "light");
         }
     },
-    { immediate: true }
+    { immediate: true },
 );

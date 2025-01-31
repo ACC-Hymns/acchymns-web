@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 import { computed } from "vue";
-import { RouterLink } from "vue-router";
 import { useNavigator } from "@/router/navigator";
+import NavigationBar from "@/components/NavigationBar.vue";
 const { back } = useNavigator();
 
 let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
 let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
-let panzoom_enabled = useLocalStorage("ACCOptions.panzoomEnable", true);
+let song_group_enabled = useLocalStorage("ACCOptions.songGroupEnabled", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
 const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
@@ -28,20 +28,23 @@ const dark_mode = computed(() => {
     <div class="menu">
         <div class="title">
             <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Options</h1>
+            <h1 class="title--center">Preferences</h1>
         </div>
     </div>
 
     <div class="main-content">
-        <h2>Theme</h2>
+        <h2>Accessibility</h2>
         <div class="settings">
             <div class="settings-option">
-                <span>Enable Pan & Zoom</span>
+                <span>Group Songs by Number</span>
                 <label class="switch">
-                    <input v-model="panzoom_enabled" type="checkbox" />
+                    <input v-model="song_group_enabled" type="checkbox" />
                     <span class="slider round"></span>
                 </label>
             </div>
+        </div>
+        <h2>Theme</h2>
+        <div class="settings">
             <div class="settings-option">
                 <span>Override System Theme</span>
                 <label class="switch">
@@ -86,24 +89,7 @@ const dark_mode = computed(() => {
         </div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>

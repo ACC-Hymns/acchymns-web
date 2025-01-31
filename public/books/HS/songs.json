@@ -544,7 +544,7 @@
 		"notes": ["G4", "D4", "B3", "G3"]
 	},
 	"137": {
-		"title": "",
+		"title": "Kéz a kézben",
 		"notes": ["D5", "G4", "B3", "G3"]
 	},
 	"138": {
@@ -1394,6 +1394,14 @@
 		"title": "Itt állok jászlad mellett",
 		"notes": ["F#4", "D4", "B3", "B2"]
 	},
+	"350": {
+		"title": "Bár Isten volt, és ember lett",
+		"notes": ["D4", "B3", "G3"]
+	},
+	"351": {
+		"title": "Szeretsz-e, mondd",
+		"notes": ["G4", "E4", "G3", "C3"]
+	},
 	"352": {
 		"title": "Mester, a bősz vihar",
 		"notes": ["G4", "E4", "C4", "C3"]
@@ -1410,6 +1418,10 @@
 		"title": "Galilea",
 		"notes": ["E4"]
 	},
+	"356": {
+		"title": "Sion lánya, örvendezz",
+		"notes": ["C5", "A4", "F4"]
+	},
 	"357": {
 		"title": "Hozsiánna",
 		"notes": ["F4"]
@@ -1417,6 +1429,10 @@
 	"358": {
 		"title": "Pálmákat szórjunk",
 		"notes": ["F4", "D4", "Bb3"]
+	},
+	"359": {
+		"title": "Hozsánna",
+		"notes": ["D4"]
 	},
 	"360": {
 		"title": "A  jöttöd miként várjam",
@@ -1564,7 +1580,7 @@
 	},
 	"396": {
 		"title": "Két hű szív",
-		"notes": ["A4"]
+		"notes": ["F#4"]
 	},
 	"397": {
 		"title": "Házasságnak alkotója",
@@ -1725,5 +1741,93 @@
 	"436": {
 		"title": "A mi Urunk",
 		"notes": ["C4", "E3", "C3"]
+	},
+	"437": {
+		"title": "Örvendj világ",
+		"notes": ["D4", "F#4", "A3", "D3"]
+	},
+	"438": {
+		"title": "Érett a búza",
+		"notes": ["Eb4", "G3", "Eb3"]
+	},
+	"439": {
+		"title": "Fel, zengjünk boldogan",
+		"notes": ["G4", "B3", "G3"]
+	},
+	"440": {
+		"title": "Itt e földi völgyben",
+		"notes": ["D4", "F#3", "D3"]
+	},
+	"441": {
+		"title": "Ha Jézus eljön",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"442": {
+		"title": "Keresztyének, keljetek fel",
+		"notes": ["Bb3", "Bb2"]
+	},
+	"443": {
+		"title": "Fény ragyog a távolból",
+		"notes": ["D4"]
+	},
+	"444": {
+		"title": "Mikor fogylyait",
+		"notes": ["Bb4", "G4", "Bb3", "Eb3"]
+	},
+	"445": {
+		"title": "Élteteket áldozzátok",
+		"notes": ["B4", "G4", "D4"]
+	},
+	"446": {
+		"title": "Menj az oltalmával",
+		"notes": ["D4", "Bb3", "F3", "Bb2"]
+	},
+	"447": {
+		"title": "Ím hálát mondunk",
+		"notes": ["Eb4", "Eb3"]
+	},
+	"448": {
+		"title": "Nem tudom, mit hoz a holnap",
+		"notes": ["Bb3", "D3", "Bb2"]
+	},
+	"449": {
+		"title": "Könyörülj Úr Isten rajtunk",
+		"notes": ["B4", "E4", "G3", "E3"]
+	},
+	"450": {
+		"title": "Egy nap ismét már elmúla",
+		"notes": ["E4", "C#4", "A3", "A2"]
+	},
+	"451": {
+		"title": "Szép hazámba",
+		"notes": ["F#4", "D4"]
+	},
+	"452": {
+		"title": "Hallod már ütött az óra",
+		"notes": ["F4", "A3", "F3"]
+	},
+	"453": {
+		"title": "Ó, áldott éj",
+		"notes": ["F4", "Db4", "Ab3", "Db3"]
+	},
+	"454": {
+		"title": "Istenünk, Te alkottad meg",
+		"notes": ["D3"]
+	},
+	"455": {
+		"title": "Tékozló fiú",
+		"notes": ["B4"]
+	},
+	"456": {
+		"title": "Krisztus katonái, sorakozzatok",
+		"notes": ["C5", "A4", "F3"]
+	},
+	"457": {
+		"title": "Ismerem Istenem égi",
+		"notes": ["G4", "D4", "Bb3", "G3"]
+	},
+	"458": {
+		"title": "Megköszönjük néktek",
+		"notes": ["Eb4", "G3", "Eb3"]
 	}
 }

@@ -1,19 +1,34 @@
 PODS:
-  - Capacitor (5.0.3):
+  - Capacitor (6.0.0):
     - CapacitorCordova
-  - CapacitorApp (5.0.2):
+  - CapacitorApp (6.0.0):
     - Capacitor
-  - CapacitorCordova (5.0.3)
-  - CapacitorPreferences (5.0.2):
+  - CapacitorCordova (6.0.0)
+  - CapacitorDialog (6.0.0):
     - Capacitor
-  - CapacitorToast (5.0.2):
+  - CapacitorFilesystem (6.0.0):
+    - Capacitor
+  - CapacitorNetwork (6.0.0):
+    - Capacitor
+  - CapacitorPluginIosWebviewConfigurator (0.0.1):
+    - Capacitor
+  - CapacitorPreferences (6.0.0):
+    - Capacitor
+  - CapacitorScreenOrientation (6.0.0):
+    - Capacitor
+  - CapacitorToast (6.0.0):
     - Capacitor
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDialog (from `../../node_modules/@capacitor/dialog`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
+  - CapacitorPluginIosWebviewConfigurator (from `../../node_modules/capacitor-plugin-ios-webview-configurator`)
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorScreenOrientation (from `../../node_modules/@capacitor/screen-orientation`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
 
 EXTERNAL SOURCES:
@@ -23,18 +38,33 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/app"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorDialog:
+    :path: "../../node_modules/@capacitor/dialog"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorNetwork:
+    :path: "../../node_modules/@capacitor/network"
+  CapacitorPluginIosWebviewConfigurator:
+    :path: "../../node_modules/capacitor-plugin-ios-webview-configurator"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorScreenOrientation:
+    :path: "../../node_modules/@capacitor/screen-orientation"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: 304a960e431f9e6f78556554ca71c41c1b2b9680
-  CapacitorApp: 28fef1fd75b2b3686e875216806fb8416d421097
-  CapacitorCordova: def732a63679698df6fb392bbe6d269a0b61e937
-  CapacitorPreferences: 0ad8838944f900284900d9647d9b0145c89ca27d
-  CapacitorToast: d785c9169585b9267b8392094298de7cb0eaa16e
+  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
+  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
+  CapacitorDialog: 64aa82840ee5e9c066f9e1a49c1e186afd3f24d2
+  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
+  CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
+  CapacitorPluginIosWebviewConfigurator: 4090b21ed635a5676718436bbbf386191d077271
+  CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorScreenOrientation: d78ce2b710bfcd1c32d3a090d32b6686c1c95e4f
+  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
 
-PODFILE CHECKSUM: 37e0a063ba91a475b3793c9f38827ea74a12facd
+PODFILE CHECKSUM: 7803bc90412ff56fd93167c678078196e4877553
 
 COCOAPODS: 1.12.1

@@ -2,11 +2,12 @@
 // import { defineStore } from "pinia";
 // import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
+import { Preferences } from "@capacitor/preferences";
+
 // export const usePreferencesStore = defineStore("Preferences", () => {
 //     const staggered_notes = useLocalStorage("ACCOptions.staggered", true);
 //     const playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
 //     const playback_duration = useLocalStorage("ACCOptions.playbackDuration", 3);
-//     const panzoom_enabled = useLocalStorage("ACCOptions.panzoomEnable", true);
 
 //     const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
 //     const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
@@ -38,4 +39,6 @@ export function resetOptions() {
             localStorage.removeItem(key);
         }
     }
+    Preferences.remove({ key: "bookOrder" });
+    Preferences.remove({ key: "broadcasting_auth_token" });
 }

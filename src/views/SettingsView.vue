@@ -1,5 +1,27 @@
+<!-- eslint-disable prettier/prettier -->
 <script setup lang="ts">
+import { resetOptions } from "@/stores/options";
+import { Dialog } from "@capacitor/dialog";
+import { Toast } from "@capacitor/toast";
 import { RouterLink } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
+
+async function resetAllOptions() {
+    const confirmed = await Dialog.confirm({
+        title: "Reset Options",
+        message: "Are you sure you want to reset your options?",
+        okButtonTitle: "Yes",
+        cancelButtonTitle: "No",
+    });
+
+    if (confirmed.value) {
+        resetOptions();
+        Toast.show({
+            text: "Reset Options!",
+        });
+    }
+}
+
 </script>
 
 <template>
@@ -16,36 +38,26 @@ import { RouterLink } from "vue-router";
         </RouterLink>
     </div>
 
-    <h2>Preferences</h2>
+    <h2>General</h2>
     <div class="settings">
         <RouterLink to="/settings/options" class="settings-option">
-            <span>Options</span>
+            <span>Preferences</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
         <RouterLink to="/settings/import" class="settings-option">
             <span>Import Hymnals</span>
             <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
         </RouterLink>
+        <RouterLink to="/settings/connect" class="settings-option">
+            <span>Broadcast</span>
+            <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+        </RouterLink>
+        <a class="settings-option" @click="resetAllOptions()">
+            <span>Reset Settings</span>
+        </a>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>
