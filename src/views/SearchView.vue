@@ -238,7 +238,7 @@ Keyboard.addListener("keyboardDidHide", () => {
 }
 
 .dropdown-content-wrapper {
-    padding-bottom: 80px;
+    padding-bottom: 100px;
     z-index: 1;
     position: absolute;
     transition: all 0.2s ease;
