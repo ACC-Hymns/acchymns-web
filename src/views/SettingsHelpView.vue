@@ -140,6 +140,10 @@ async function clearAllData() {
         </div>
 
         <div class="settings main-content">
+            <a href="https://forms.gle/1t7rtUkNaksEUtPEA" class="settings-option">
+                <span>Request a Book or Feature</span>
+                <img class="ionicon" src="/assets/link-outline.svg" />
+            </a>
             <a href="https://forms.gle/Ezh7d8LFsN5eKdo87" class="settings-option">
                 <span>Report a Bug</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
