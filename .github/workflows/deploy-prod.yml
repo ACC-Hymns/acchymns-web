@@ -14,6 +14,7 @@ jobs:
       - name: Build
         run: |
           echo "VITE_BASE_URL=/" > .env
+          echo "SEO_URL=https://acchymns.app" > .env
           npm i
           npm run deploy-check
           npm run build
