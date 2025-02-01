@@ -107,6 +107,7 @@ App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
 
     // We only push to the route if there is a slug present
     if (slug) {
+        console.log("[Deep Linking] Navigating to:", slug);
         router.push(slug);
     }
 });

@@ -8,7 +8,7 @@ import { parse } from "node-html-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import process from "node:process";
-// import { generateSongPreview } from "./og-image-generation.mjs";
+import { generateSongPreview } from "./og-image-generation.mjs";
 if (process.env.VITE_BASE_URL == undefined) {
     process.env.VITE_BASE_URL = "/";
 }
@@ -59,18 +59,22 @@ const index_html = fs.readFileSync(`${dist_dir}/index.html`, "utf-8");
 }
 
 // /selection/* <- book selection
-const books = ["ZH", "GH", "JH", "HG", "CH", "HZ", "ZG", "ZGE", "ZHJ", "ZHSP", "ZHG", "ZHH", "ZHR", "HS", "PC", "ARF", "ARFR"];
+const books = ["ZH", "GH", "JH", "HG", "CH", "HZ", "ZG", "ZGE", "ZHJ", "ZHSP", "ZHG", "ZHH", "ZHR", "HS", "PC", "ARF", "ARFR", "BS", "ES", "HSZ", "LDH", "MO", "XC"];
 for (const book of books) {
+    console.log("[SEO] Generating", book);
     const dup = parse(index_html);
     const head = dup.getElementsByTagName("head")[0];
     const summary = JSON.parse(fs.readFileSync(`public/books/${book}/summary.json`, "utf-8"));
+    const og_png = await generateSongPreview(summary.name.medium, summary.primaryColor, summary.secondaryColor);
+    await fsp.mkdir(`${dist_dir}/seo/${book}`, { recursive: true });
+    await fsp.writeFile(`${dist_dir}/seo/${book}/og.png`, og_png);
     head.insertAdjacentHTML(
         "beforeend",
         generateMetaTags(
             summary.name.long,
             `${summary.name.medium} available online and for download via the app store`,
             `selection/${book}`,
-            `assets/icons/180x180.png`, // We can replace this with some kind of custom image for each book
+            `seo/${book}/og.png`,
             "music.album"
         )
     );
@@ -79,15 +83,13 @@ for (const book of books) {
 }
 
 async function generateSongData(book) {
+    console.log("[SEO] Creating index.html for songs in:", book);
     const summary = JSON.parse(await fsp.readFile(`public/books/${book}/summary.json`, "utf-8"));
     const song_list = JSON.parse(await fsp.readFile(`public/books/${book}/songs.json`, "utf-8"));
     for (const song of Object.keys(song_list)) {
-        console.log(book, song);
         const dup = parse(index_html);
         const head = dup.getElementsByTagName("head")[0];
         await fsp.mkdir(`${dist_dir}/display/${book}/${song}`, { recursive: true });
-        // const og_png = await generateSongPreview(summary.name.medium, song, song_list[song].title, summary.primaryColor, summary.secondaryColor);
-        // await fsp.writeFile(`${dist_dir}/display/${book}/${song}/og.png`, og_png);
 
         head.insertAdjacentHTML(
             "beforeend",
@@ -95,13 +97,14 @@ async function generateSongData(book) {
                 song_list[song].title,
                 `#${song} from ${summary.name.medium} available online`,
                 `display/${book}/${song}`,
-                `assets/icons/180x180.png`, // Use the generated opengraph image once we have it uploading to the S3 bucket
+                `seo/${book}/og.png`, // Use the generated opengraph image
                 "music.song"
             )
         );
 
         await fsp.writeFile(`${dist_dir}/display/${book}/${song}/index.html`, dup.toString());
     }
+    console.log("[SEO] Completed creating index.html for songs in:", book);
 }
 
 // /display/*/* <- display song
