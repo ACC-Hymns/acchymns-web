@@ -103,11 +103,11 @@ const router = createRouter({
 App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
     // Example url: https://acchymns.app/tabs/tabs2
     // slug = /tabs/tabs2
+    console.log("[Deep Linking] Navigating to:", event.url);
     const slug = event.url.split(".app").pop();
 
     // We only push to the route if there is a slug present
     if (slug) {
-        console.log("[Deep Linking] Navigating to:", slug);
         router.push(slug);
     }
 });
