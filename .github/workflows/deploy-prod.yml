@@ -13,8 +13,8 @@ jobs:
       
       - name: Build
         run: |
-          echo "VITE_BASE_URL=/" > .env
-          echo "SEO_URL=https://acchymns.app" > .env
+          export VITE_BASE_URL="/"
+          export SEO_URL="https://acchymns.app"
           npm i
           npm run deploy-check
           npm run build
