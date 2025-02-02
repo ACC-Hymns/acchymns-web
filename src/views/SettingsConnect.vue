@@ -173,18 +173,18 @@ async function broadcast_reading() {
     let bottom_text = "";
     if (read_type.value == 1) {
         top_text = `${book.value}`;
-        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books
-            .find(b => b.name == book.value)
-            ?.chapters.find(c => c.num == chapter_start.value)?.verses.length}`;
+        bottom_text = `${chapter_start.value}:${verse_start.value}-${
+            bible.value?.books.find(b => b.name == book.value)?.chapters.find(c => c.num == chapter_start.value)?.verses.length
+        }`;
     } else if (read_type.value == 2) {
         top_text = `${book.value}`;
         if (verse_start.value == verse_end.value) bottom_text = `${chapter_start.value}:${verse_start.value}`;
         else bottom_text = `${chapter_start.value}:${verse_start.value}-${verse_end.value}`;
     } else {
         top_text = `${book.value} `;
-        bottom_text = `${chapter_start.value}:${verse_start.value}-${bible.value?.books
-            .find(b => b.name == book.value)
-            ?.chapters.find(c => c.num == chapter_start.value)?.verses.length}, ${chapter_end.value}:1-${verse_end.value}`;
+        bottom_text = `${chapter_start.value}:${verse_start.value}-${
+            bible.value?.books.find(b => b.name == book.value)?.chapters.find(c => c.num == chapter_start.value)?.verses.length
+        }, ${chapter_end.value}:1-${verse_end.value}`;
     }
 
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
