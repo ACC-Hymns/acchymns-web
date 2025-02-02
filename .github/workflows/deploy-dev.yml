@@ -26,8 +26,8 @@ jobs:
       - name: Build
         run: |
           cd build
-          echo "VITE_BASE_URL=/acchymns-dev/" > .env # We deploy to github.io/acchyms-dev, which we serve on the root
-          echo "SEO_URL=https://acc-hymns.github.io" > .env
+          export VITE_BASE_URL="/acchymns-dev/"
+          export SEO_URL="https://acc-hymns.github.io"
           npm i
           npm run deploy-check
           npm run build
