@@ -94,6 +94,31 @@ async function clearAllData() {
         });
     }
 }
+
+import { Share } from "@capacitor/share";
+import { useConsoleStore } from "@/stores/console";
+import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
+
+const platform = ref<string>(Capacitor.getPlatform());
+const console_store = useConsoleStore();
+
+async function exportLogs() {
+    // Create temp file
+    const { uri } = await Filesystem.writeFile({
+        path: "logs.txt",
+        data: console_store.logs,
+        directory: Directory.Cache,
+        encoding: Encoding.UTF8,
+    });
+
+    await Share.share({
+        url: uri,
+    });
+}
+
+const can_share = ref<boolean>(false);
+Share.canShare().then(res => (can_share.value = res.value));
+
 </script>
 
 <template>
@@ -156,6 +181,10 @@ async function clearAllData() {
                 <span>Debug Console</span>
                 <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
             </RouterLink>
+            <a v-if="platform !== 'web'" class="settings-option" @click="exportLogs()">
+                <span>Export Logs</span>
+                <img class="entrypoint ionicon" src="/assets/share-outline.svg" />
+            </a>
             <a v-if="!isWeb" class="settings-option" @click="forceUpdate()">
                 <span>Force Update Hymnals</span>
             </a>
