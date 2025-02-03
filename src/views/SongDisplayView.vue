@@ -22,6 +22,7 @@ const router = useRouter();
 
 const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
+const title = ref<string>("Unknown");
 const song_count = ref<number>(0);
 var isMobile = Capacitor.getPlatform() !== "web";
 const book_summary = ref<BookSummary>();
@@ -38,7 +39,6 @@ const is_bookmarked = computed(() => {
 
 const isConnected = ref<boolean>(false);
 const isLandscape = ref<boolean>(false);
-const window_height = () => window.innerHeight;
 
 async function toggleBookmark() {
     if (!is_bookmarked.value) {
@@ -145,6 +145,7 @@ onMounted(async () => {
 
     if (SONG_METADATA != null) {
         const song_data = SONG_METADATA[props.number];
+        title.value = song_data?.title ?? "Unknown";
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
 
@@ -396,6 +397,19 @@ function get_note_icon(note: string) {
     if (notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
     return bass_note_icons[modified_note];
 }
+
+import { Share } from "@capacitor/share";
+
+async function shareSong() {
+    await Share.share({
+        title: `${title.value}`,
+        text: `#${props.number} from ${book_summary.value?.name.medium} available online now!`,
+        url: `https://acchymns.app/display/${props.book}/${props.number}`,
+    });
+}
+
+const can_share = ref<boolean>(false);
+Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
@@ -420,29 +434,27 @@ function get_note_icon(note: string) {
     </div>
 
     <!-- Buttons -->
-    <div
-        class="page-button-container left"
-        v-if="panel.height < 0.7 || !panel.visible"
-        :style="{ transform: 'translateY(' + (panel.visible ? -panel.height * window_height() + 'px' : '0') + ')' }"
-    >
+    <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible">
         <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }">
             <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
-    <div
-        class="page-button-container right"
-        v-if="panel.height < 0.7 || !panel.visible"
-        :style="{ transform: `translateY(${panel.visible ? -panel.height * window_height() : 0}px)` }"
-    >
+    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible">
         <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }">
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div class="broadcast-button-container" v-if="broadcast_api.is_authorized" v-show="!is_broadcast_menu_open">
-        <div class="broadcast-button" :class="{ 'arrow-hidden-right': !menu_bar_visible }">
+    <div class="broadcast-button-container right" v-if="broadcast_api.is_authorized" v-show="!is_broadcast_menu_open">
+        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible }">
             <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg" />
         </div>
     </div>
+    <div class="page-button-container middle" v-if="panel.height < 0.7 || !panel.visible">
+        <div class="page-button" :class="{ 'arrow-hidden-down': !menu_bar_visible || !can_share }">
+            <img @click="shareSong()" class="ionicon" src="/assets/share-outline.svg" />
+        </div>
+    </div>
+
     <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()">
         <h1>Broadcast</h1>
         <div class="close-button">
@@ -598,11 +610,7 @@ function get_note_icon(note: string) {
                     toggleMenu();
             }
         "
-        @touchmove="
-            e => {
-                hideMedia();
-            }
-        "
+        @touchmove="hideMedia()"
     >
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
@@ -652,28 +660,6 @@ function get_note_icon(note: string) {
     opacity: 1;
     text-align: center;
     padding: 15px;
-}
-
-.broadcast-button-container {
-    position: fixed;
-    top: calc(61.16px + env(safe-area-inset-top) + 15px);
-    z-index: 1;
-}
-
-.broadcast-button {
-    height: 10vw;
-    width: 10vw;
-    max-height: 50px;
-    max-width: 50px;
-    background-color: var(--button-color);
-    border-radius: 50px;
-    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    margin: 0 5vw;
-    transition: transform 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
 }
 
 * {
@@ -866,32 +852,6 @@ function get_note_icon(note: string) {
     margin: 0 auto;
     cursor: pointer;
 }
-.page-button-container {
-    position: fixed;
-    bottom: 5vh;
-    z-index: 1;
-}
-.page-button {
-    height: 10vw;
-    width: 10vw;
-    max-height: 50px;
-    max-width: 50px;
-    background-color: var(--button-color);
-    border-radius: 50px;
-    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    transition: transform 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.left {
-    left: 15px;
-}
-.right {
-    right: 15px;
-}
 
 .media-type-title {
     margin: 0px 0px;
@@ -978,11 +938,55 @@ function get_note_icon(note: string) {
     visibility: hidden;
 }
 
+.broadcast-button-container {
+    position: fixed;
+    right: 15px;
+    top: calc(61.16px + env(safe-area-inset-top) + 15px);
+    z-index: 1;
+}
+
+.page-button-container {
+    position: fixed;
+    bottom: 15px;
+    z-index: 1;
+}
+
+.page-button {
+    height: 10vw;
+    width: 10vw;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: var(--button-color);
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.left {
+    left: 15px;
+}
+.right {
+    right: 15px;
+}
+
+.middle {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .menu-hidden {
     transform: translateY(-100%);
 }
+
 .arrow-hidden-left {
     transform: translateX(-200%);
+}
+.arrow-hidden-down {
+    transform: translateY(200%);
 }
 .arrow-hidden-right {
     transform: translateX(200%);
