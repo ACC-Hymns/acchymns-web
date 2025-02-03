@@ -187,6 +187,17 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         text: "Successfully deleted hymnal!",
     });
 }
+
+import { Keyboard } from "@capacitor/keyboard";
+
+const hide_footer = ref<boolean>(false);
+
+Keyboard.addListener("keyboardDidShow", () => {
+    hide_footer.value = true;
+});
+Keyboard.addListener("keyboardDidHide", () => {
+    hide_footer.value = false;
+});
 </script>
 
 <template>
@@ -264,7 +275,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <div style="padding-bottom: 200px"></div>
     </div>
 
-    <NavigationBar current_page="settings" />
+    <NavigationBar current_page="settings" v-if="!hide_footer" />
 </template>
 
 <style>
