@@ -221,7 +221,9 @@ let elapsed_timer: number = -1;
 let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
+
 const dropdown_open = ref<boolean>(false);
+const dropdown_animation = ref<boolean>(false);
 let time_dropdown_closed = 0;
 
 function open_dropdown() {
@@ -229,11 +231,16 @@ function open_dropdown() {
     let diff = now - time_dropdown_closed;
     if(diff <= 1) return;
     dropdown_open.value = true;
+    dropdown_animation.value = true;
 }
 function reset_dropdown() {
-    if(dropdown_open.value == false) return;
-    dropdown_open.value = false;
+    if(!dropdown_open.value) return;
     time_dropdown_closed = Date.now();
+
+    dropdown_animation.value = false;
+    setTimeout(() => {
+        dropdown_open.value = false;
+    }, 200);
 }
 
 function close_broadcast_menu() {
@@ -432,7 +439,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
-    <div class="dark" v-if="dropdown_open"></div>
+    <div class="full" :class="{'dark': dropdown_animation}"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
@@ -448,40 +455,40 @@ Share.canShare().then(res => (can_share.value = res.value));
                 </template>
 
                 <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg"/>
-                <div class="dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="reset_dropdown">
-                    <div class="dropdown-content" :class="{'dropdown-content-active': dropdown_open}" >
+                <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="reset_dropdown">
+                    <div class="_dropdown-content" :class="{'_dropdown-content-active': dropdown_animation}" >
                         <a>
-                            <div class="dropdown-content-item" @click="() => {
+                            <div class="_dropdown-content-item" @click="() => {
                                 toggleBookmark();
                                 reset_dropdown();
                             }">
-                                <div class="dropdown-content-text">Bookmark</div>
+                                <div class="_dropdown-content-text">Bookmark</div>
                                 <img
-                                    class="ionicon dropdown-content-icon"
+                                    class="ionicon _dropdown-content-icon"
                                     :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
                                 />
                             </div>
                         </a>
                         <a v-if="can_share">
-                            <div class="dropdown-content-item" @click="() => {
+                            <div class="_dropdown-content-item" @click="() => {
                                 shareSong();
                                 reset_dropdown();
                             }">
-                                <div class="dropdown-content-text">Share</div>
+                                <div class="_dropdown-content-text">Share</div>
                                 <img
-                                    class="ionicon dropdown-content-icon"
+                                    class="ionicon _dropdown-content-icon"
                                     src="/assets/share-outline.svg"
                                 />
                             </div>
                         </a>
                         <a v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"> 
-                            <div class="dropdown-content-item " @click="() => {
+                            <div class="_dropdown-content-item " @click="() => {
                                 is_broadcast_menu_open = true
                                 reset_dropdown();
                             }">
-                                <div class="dropdown-content-text">Broadcast</div>
+                                <div class="_dropdown-content-text">Broadcast</div>
                                 <img
-                                    class="ionicon dropdown-content-icon"
+                                    class="ionicon _dropdown-content-icon"
                                     src="/assets/radio-outline.svg"
                                 />
                             </div>
@@ -666,19 +673,48 @@ Share.canShare().then(res => (can_share.value = res.value));
 </template>
 
 <style>
-.dark {
+.full {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
+    transition: opacity 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.125);
+    visibility: hidden;
+    opacity: 0;
+}
+.dark {
+    opacity: 1;
+    visibility: visible;
 }
 
-.dropdown-content {
-    display: none;
+@keyframes fadeIn {
+    from {
+        visibility: visible;
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+        visibility: visible;
+    }
 }
 
-.dropdown-content-wrapper {
+@keyframes fadeOut {
+    from {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-15px);
+        visibility: hidden;
+    }
+}
+
+._dropdown-content-wrapper {
     position: absolute;
     transition: all 0.2s ease;
     top: 40px;
@@ -686,19 +722,21 @@ Share.canShare().then(res => (can_share.value = res.value));
     z-index: 2;
 }
 
-.dropdown-content {
+._dropdown-content {
     position: relative;
-    display: inline-block;
     background-color: var(--button-color);
     color: var(--color);
     border-radius: 15px;
     min-width: 160px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
     margin-top: 10px;
-    transition: all 0.2s ease;
+    animation-name: fadeOut;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
 }
 
-.dropdown-content-top-item {
+._dropdown-content-top-item {
     cursor: pointer;
     border-bottom: var(--border-color);
     padding: 0px 15px;
@@ -707,24 +745,32 @@ Share.canShare().then(res => (can_share.value = res.value));
     align-items: center;
 }
 
-.dropdown-content-active {
-    transform: translateY(0px);
+._dropdown-content-active {
     visibility: visible;
-    opacity: 1;
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
 }
 
-.dropdown-content-item {
+._dropdown-content-item {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+._dropdown-content-item:active, ._dropdown-content-item:hover {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--button-active-color);
+    border-radius: 15px;
+}
 
-.dropdown-content-text {
+._dropdown-content-text {
     padding: 15px;
     font-size: small;
 }
-.dropdown-content-icon {
+._dropdown-content-icon {
     padding: 15px;
 }
 

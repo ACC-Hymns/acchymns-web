@@ -103,12 +103,21 @@ onMounted(async () => {
 });
 
 const is_open = ref<boolean>(false);
+const dropdown_animation = ref<boolean>(false);
 
 function resetDropdown() {
-    is_open.value = false;
+    dropdown_animation.value = false;
+    setTimeout(() => {
+        is_open.value = false;
+    }, 200);
 }
 function toggleDropdown() {
-    is_open.value = !is_open.value;
+    if(is_open.value) {
+        resetDropdown();
+    } else {
+        is_open.value = true;
+        dropdown_animation.value = true;
+    }
 }
 
 let book_filters = ref<Element[]>([]);
@@ -174,7 +183,7 @@ Keyboard.addListener("keyboardDidHide", () => {
             <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
         </a>
         <div class="dropdown-content-wrapper" v-show="is_open">
-            <div class="dropdown-content">
+            <div class="dropdown-content" :class="{'dropdown-content-active' : dropdown_animation}">
                 <a>
                     <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
@@ -229,14 +238,6 @@ Keyboard.addListener("keyboardDidHide", () => {
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
 
-.dropdown-content {
-    display: none;
-}
-
-.dropdown-content.dropdown-content-active {
-    display: inline;
-}
-
 .dropdown-content-wrapper {
     padding-bottom: 100px;
     z-index: 1;
@@ -244,9 +245,34 @@ Keyboard.addListener("keyboardDidHide", () => {
     transition: all 0.2s ease;
 }
 
+@keyframes fadeIn {
+    from {
+        visibility: visible;
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-15px);
+        visibility: hidden;
+    }
+}
+
 .dropdown-content {
     position: relative;
-    display: inline-block;
     background-color: var(--button-color);
     color: var(--color);
     border-radius: 15px;
@@ -254,6 +280,10 @@ Keyboard.addListener("keyboardDidHide", () => {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     z-index: 1;
     margin-top: 10px;
+    padding-bottom: 5px;
+    animation-name: fadeOut;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
 }
 
 .dropdown-content-top-item {
@@ -266,9 +296,9 @@ Keyboard.addListener("keyboardDidHide", () => {
 }
 
 .dropdown-content-active {
-    transform: translateY(0px);
     visibility: visible;
-    opacity: 1;
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
 }
 
 .dropdown-content-item {
