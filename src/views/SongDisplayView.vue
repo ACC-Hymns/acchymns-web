@@ -717,7 +717,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 ._dropdown-content-wrapper {
     position: absolute;
     transition: all 0.2s ease;
-    top: 40px;
+    top: calc(40px + env(safe-area-inset-top));
     right: 15px;
     z-index: 2;
 }
