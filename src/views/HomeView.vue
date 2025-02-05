@@ -340,7 +340,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
 .update-button {
     width: 50px;
     height: 20px;
-    background-color: gray;
+    background-color: var(--cancel-button-color);
     color: white;
     padding: 15px;
     border-radius: 15px;

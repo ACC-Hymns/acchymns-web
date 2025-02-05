@@ -513,25 +513,19 @@ Share.canShare().then(res => (can_share.value = res.value));
 
     <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()" v-on-click-outside="close_broadcast_menu">
         <h1>Broadcast</h1>
-        <div class="close-button">
-            <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
-        </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br />
         <h3>Verses</h3>
-        <a
-            class="verse"
-            :class="{ 'verse-selected': verses[0] == -2 }"
-            @click="
-                () => {
-                    if (verses[0] == -2) verses = [];
-                    else verses = [-2];
-                }
-            "
-        >
+        <div class="verse-list">
+            <div></div>
+            <a class="verse" :class="{ 'verse-selected': verses[0] == -2}" @click="(e) => {
+                verses = [];
+                verses.push(-2);
+            }">
             All
-        </a>
-        <br />
+            </a>
+            <div></div>
+        </div>
         <div class="verse-list">
             <a
                 v-for="verse in 12"
@@ -550,7 +544,10 @@ Share.canShare().then(res => (can_share.value = res.value));
                 {{ verse }}
             </a>
         </div>
-        <button class="send-button" @click="broadcast()">Send</button>
+        <div>
+            <button class="cancel-button" @click="close_broadcast_menu()">Cancel</button>
+            <button class="send-button" @click="broadcast()">Send</button>
+        </div>
     </div>
 
     <div
@@ -771,6 +768,16 @@ Share.canShare().then(res => (can_share.value = res.value));
 }
 ._dropdown-content-icon {
     padding: 15px;
+}
+
+.cancel-button {
+    background-color: var(--cancel-button-color);;
+    color: white;
+    border-radius: 15px;
+    padding: 6px 20px;
+    height: 30px;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    margin: 20px;
 }
 
 .send-button {

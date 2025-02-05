@@ -1,5 +1,5 @@
 h2 {
-    margin: 20px 20px 0px 30px;
+    margin: 30px 20px 0px 30px;
     font-size: 20px;
 }
 
@@ -47,7 +47,7 @@ input {
 }
 
 .settings {
-    background: var(--div-color);
+    background: var(--option-color);
     margin: 15px 20px;
     border-radius: 15px;
     display: flex;

@@ -328,7 +328,7 @@ type ReorderEvent = {
                                 </div>
                                 <div class="booktext--right">
                                     <div class="song__number">#{{ (element.data as SongSearchInfo).number }}</div>
-                                    <img class="ionicon handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
+                                    <img class="ionicon handle" src="/assets/drag-handle.svg" />
                                 </div>
                             </div>
                             <div v-if="element.type == PositionType.FOLDER" class="folder-container" style="margin-bottom: 10px">
@@ -336,10 +336,10 @@ type ReorderEvent = {
                                     <div>
                                         <div class="song-title">
                                             <input class="edit-text" v-model="((element.data as Folder).title)" />
-                                            <img class="ionicon trash-icon" @click="deleting_folder = (element.data as Folder)" style="filter: invert(100%)" src="/assets/trash-outline.svg" />
+                                            <img class="ionicon trash-icon" @click="deleting_folder = (element.data as Folder)" src="/assets/trash-outline.svg" />
                                         </div>
                                     </div>
-                                    <img class="ionicon handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
+                                    <img class="ionicon handle" style="filter: invert(70%)" src="/assets/drag-handle.svg" />
                                 </div>
                                 <div class="wrapper" :class="{ 'wrapper-active': true }">
                                     <draggable
@@ -371,7 +371,7 @@ type ReorderEvent = {
                                                 </div>
                                                 <div class="booktext--right">
                                                     <div class="song__number">#{{ song.data.number }}</div>
-                                                    <img class="ionicon handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
+                                                    <img class="ionicon handle" src="/assets/drag-handle.svg" />
                                                 </div>
                                             </div>
                                         </template>
@@ -516,6 +516,7 @@ type ReorderEvent = {
     border-radius: 15px;
     margin: 0 0 0 15px;
     cursor: pointer;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
 }
 .modal-button-red {
     width: 100px;
@@ -526,6 +527,7 @@ type ReorderEvent = {
     border-radius: 15px;
     margin: 0 0 0 15px;
     cursor: pointer;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
 }
 .modal-button-blue-disabled {
     background-color: var(--blue-disabled);
@@ -535,11 +537,12 @@ type ReorderEvent = {
 .modal-button {
     width: 50px;
     height: 20px;
-    background-color: gray;
+    background-color: var(--cancel-button-color);
     color: white;
     padding: 15px;
     border-radius: 15px;
     cursor: pointer;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
 }
 
 .bookmark-toolbar {
@@ -564,6 +567,7 @@ type ReorderEvent = {
     width: 30px;
     height: 30px;
     cursor: pointer;
+    filter: invert(100%)
 }
 
 .edit-text {
