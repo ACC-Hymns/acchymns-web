@@ -198,11 +198,7 @@ type ReorderEvent = {
                                         <img class="ionicon edit-text-icon" style="filter: invert(100%)" src="/assets/pencil.svg" /></div>
                                     <div class="item-count">{{ (element.data as Folder).items.length }} item{{ ((element.data as Folder).items.length == 1) ? "" : "s" }}</div>
                                 </div>
-                                <img
-                                    class="ionicon nav__icon dropdown-icon"
-                                    src="/assets/chevron-back-outline.svg"
-                                    :class="{ 'dropdown-icon-active': true }"
-                                />
+                                <img class="ionicon handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
                             </div>
                             <div class="wrapper" :class="{ 'wrapper-active': true }">
                                 <draggable
@@ -441,7 +437,7 @@ type ReorderEvent = {
 }
 
 .topic-song {
-    width: 90%;
+    width: 100%;
     margin: 5px 0 !important;
 }
 </style>
