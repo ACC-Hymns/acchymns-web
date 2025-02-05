@@ -10,7 +10,6 @@ import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 import { stripSearchText } from "@/scripts/search";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { vOnClickOutside } from "@vueuse/components";
-import { Keyboard } from "@capacitor/keyboard";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -144,15 +143,6 @@ function calculateIconFilter(color: string) {
     const result = solver.solve();
     return result.filter;
 }
-
-const hide_footer = ref<boolean>(false);
-
-Keyboard.addListener("keyboardDidShow", () => {
-    hide_footer.value = true;
-});
-Keyboard.addListener("keyboardDidHide", () => {
-    hide_footer.value = false;
-});
 </script>
 
 <template>
@@ -222,7 +212,7 @@ Keyboard.addListener("keyboardDidHide", () => {
         </div>
     </div>
 
-    <NavigationBar current_page="search" v-if="!hide_footer" />
+    <NavigationBar current_page="search" />
 </template>
 
 <style>

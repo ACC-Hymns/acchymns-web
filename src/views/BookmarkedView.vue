@@ -6,7 +6,6 @@ import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
 import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import NavigationBar from "@/components/NavigationBar.vue";
-import { Keyboard } from "@capacitor/keyboard";
 
 let search_query = ref("");
 let stripped_query = computed(() => {
@@ -46,15 +45,6 @@ onMounted(async () => {
         } as SongSearchInfo);
     }
 });
-
-const hide_footer = ref<boolean>(false);
-
-Keyboard.addListener("keyboardDidShow", () => {
-    hide_footer.value = true;
-});
-Keyboard.addListener("keyboardDidHide", () => {
-    hide_footer.value = false;
-});
 </script>
 
 <template>
@@ -90,7 +80,7 @@ Keyboard.addListener("keyboardDidHide", () => {
         </RouterLink>
     </div>
 
-    <NavigationBar current_page="bookmarks" v-if="!hide_footer" />
+    <NavigationBar current_page="bookmarks" />
 </template>
 
 <style>
