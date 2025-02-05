@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
+import { ref } from "vue";
+import { Keyboard } from "@capacitor/keyboard";
+import { Capacitor } from "@capacitor/core";
 
 defineProps<{
     current_page: string;
 }>();
+
+const hide_footer = ref<boolean>(false);
+
+if (Capacitor.getPlatform() !== "web") {
+    Keyboard.addListener("keyboardWillShow", () => {
+        hide_footer.value = true;
+    });
+    Keyboard.addListener("keyboardWillHide", () => {
+        hide_footer.value = false;
+    });
+}
 </script>
 <template>
-    <nav class="nav">
+    <nav class="nav" v-show="!hide_footer">
         <RouterLink to="/" class="nav__link" :class="{ 'nav__link--active': current_page == 'home' }">
             <img v-if="current_page == 'home'" class="ionicon nav__icon" src="/assets/home.svg" />
             <img v-else class="ionicon nav__icon" src="/assets/home-outline.svg" />
