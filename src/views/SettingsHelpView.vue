@@ -160,7 +160,9 @@ Share.canShare().then(res => (can_share.value = res.value));
         <div class="menu">
             <div class="title">
                 <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-                <h1 class="title--center">Help</h1>
+                <div class="title--center">
+                    <h1>Help</h1>
+                </div>
             </div>
         </div>
 

@@ -193,7 +193,9 @@ async function deleteBook(book_to_delete: BookDataSummary) {
     <div class="menu">
         <div class="title">
             <img @click="$router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Import Hymnals</h1>
+            <div class="title--center">
+                <h1>Import Hymnals</h1>
+            </div>
         </div>
     </div>
 

@@ -15,6 +15,7 @@ import { Network } from "@capacitor/network";
 import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
+import { vOnClickOutside } from "@vueuse/components";
 
 const props = defineProps<SongReference>();
 
@@ -221,6 +222,31 @@ let media_is_scrubbing = ref<boolean>(false);
 let large_timeline = ref();
 let mini_timeline = ref();
 
+const dropdown_open = ref<boolean>(false);
+const dropdown_animation = ref<boolean>(false);
+let time_dropdown_closed = 0;
+
+function open_dropdown() {
+    const now = Date.now();
+    let diff = now - time_dropdown_closed;
+    if(diff <= 1) return;
+    dropdown_open.value = true;
+    dropdown_animation.value = true;
+}
+function reset_dropdown() {
+    if(!dropdown_open.value) return;
+    time_dropdown_closed = Date.now();
+
+    dropdown_animation.value = false;
+    setTimeout(() => {
+        dropdown_open.value = false;
+    }, 200);
+}
+
+function close_broadcast_menu() {
+    is_broadcast_menu_open.value = false;
+}
+
 async function broadcast() {
     if (broadcast_api.church_id.value == null) return;
 
@@ -233,7 +259,7 @@ async function broadcast() {
         book_summary.value?.primaryColor || "#000000",
     );
 
-    is_broadcast_menu_open.value = false;
+    close_broadcast_menu();
 }
 
 const updateTime = async () => {
@@ -413,6 +439,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
+    <div class="full" :class="{'dark': dropdown_animation}"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
@@ -427,8 +454,47 @@ Share.canShare().then(res => (can_share.value = res.value));
                     <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img v-if="is_bookmarked" @click="toggleBookmark()" class="ionicon" src="/assets/bookmark.svg" />
-                <img v-else @click="toggleBookmark()" class="ionicon" src="/assets/bookmark-outline.svg" />
+                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg"/>
+                <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="reset_dropdown">
+                    <div class="_dropdown-content" :class="{'_dropdown-content-active': dropdown_animation}" >
+                        <a>
+                            <div class="_dropdown-content-item" @click="() => {
+                                toggleBookmark();
+                                reset_dropdown();
+                            }">
+                                <div class="_dropdown-content-text">Bookmark</div>
+                                <img
+                                    class="ionicon _dropdown-content-icon"
+                                    :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
+                                />
+                            </div>
+                        </a>
+                        <a v-if="can_share">
+                            <div class="_dropdown-content-item" @click="() => {
+                                shareSong();
+                                reset_dropdown();
+                            }">
+                                <div class="_dropdown-content-text">Share</div>
+                                <img
+                                    class="ionicon _dropdown-content-icon"
+                                    src="/assets/share-outline.svg"
+                                />
+                            </div>
+                        </a>
+                        <a v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"> 
+                            <div class="_dropdown-content-item " @click="() => {
+                                is_broadcast_menu_open = true
+                                reset_dropdown();
+                            }">
+                                <div class="_dropdown-content-text">Broadcast</div>
+                                <img
+                                    class="ionicon _dropdown-content-icon"
+                                    src="/assets/radio-outline.svg"
+                                />
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -444,21 +510,11 @@ Share.canShare().then(res => (can_share.value = res.value));
             <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
-    <div class="broadcast-button-container right" v-if="broadcast_api.is_authorized" v-show="!is_broadcast_menu_open">
-        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible }">
-            <img @click="is_broadcast_menu_open = true" class="ionicon" src="/assets/radio-outline.svg" />
-        </div>
-    </div>
-    <div class="page-button-container middle" v-if="panel.height < 0.7 || !panel.visible">
-        <div class="page-button" :class="{ 'arrow-hidden-down': !menu_bar_visible || !can_share }">
-            <img @click="shareSong()" class="ionicon" src="/assets/share-outline.svg" />
-        </div>
-    </div>
 
-    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()">
+    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()" v-on-click-outside="close_broadcast_menu">
         <h1>Broadcast</h1>
         <div class="close-button">
-            <img @click="is_broadcast_menu_open = false" class="ionicon" src="/assets/close.svg" />
+            <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br />
@@ -617,6 +673,106 @@ Share.canShare().then(res => (can_share.value = res.value));
 </template>
 
 <style>
+.full {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    background-color: rgba(0, 0, 0, 0.125);
+    opacity: 0;
+    visibility: hidden;
+}
+.dark {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes fadeIn {
+    from {
+        visibility: visible;
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-15px);
+        visibility: hidden;
+    }
+}
+
+._dropdown-content-wrapper {
+    position: absolute;
+    transition: all 0.2s ease;
+    top: calc(40px + env(safe-area-inset-top));
+    right: 15px;
+    z-index: 2;
+}
+
+._dropdown-content {
+    position: relative;
+    background-color: var(--button-color);
+    color: var(--color);
+    border-radius: 15px;
+    min-width: 160px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 10px;
+    animation-name: fadeOut;
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+}
+
+._dropdown-content-top-item {
+    cursor: pointer;
+    border-bottom: var(--border-color);
+    padding: 0px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+._dropdown-content-active {
+    visibility: visible;
+    animation-name: fadeIn;
+    animation-duration: 0.2s;
+}
+
+._dropdown-content-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+._dropdown-content-item:active, ._dropdown-content-item:hover {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--button-active-color);
+    border-radius: 15px;
+}
+
+._dropdown-content-text {
+    padding: 15px;
+}
+._dropdown-content-icon {
+    padding: 15px;
+}
+
 .send-button {
     background-color: var(--blue);
     color: white;
@@ -652,7 +808,7 @@ Share.canShare().then(res => (can_share.value = res.value));
     top: 50%;
     left: 50%;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-    z-index: 1;
+    z-index: 2;
     transform: translate(-50%, -50%);
     transition:
         opacity 0.5s,
