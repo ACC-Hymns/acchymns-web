@@ -301,7 +301,9 @@ function get_lock_icon() {
     <div class="menu">
         <div class="title">
             <img @click="back_button()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">{{ bibleReading ? "Bible Reading" : "Broadcast" }}</h1>
+            <div class="title--center">
+                <h1>{{ bibleReading ? "Bible Reading" : (songNumber ? "Song Number" : "Broadcast") }}</h1>
+            </div>
         </div>
     </div>
     <div v-if="status == UserStatus.Unauthorized" class="login-container">
