@@ -207,7 +207,6 @@ h1, h2, h3, h4, h5 {
 }
 
 .title {
-    font-size: 12px;
     display: flex;
     height: 61.16px;
     justify-content: space-between;
@@ -229,6 +228,7 @@ h1, h2, h3, h4, h5 {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    font-size: 12px;
 }
 
 .title--right {

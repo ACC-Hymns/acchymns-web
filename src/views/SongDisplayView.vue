@@ -678,10 +678,10 @@ Share.canShare().then(res => (can_share.value = res.value));
     width: 100%;
     height: 100%;
     z-index: 1;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
     background-color: rgba(0, 0, 0, 0.125);
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
 }
 .dark {
     opacity: 1;
@@ -768,7 +768,6 @@ Share.canShare().then(res => (can_share.value = res.value));
 
 ._dropdown-content-text {
     padding: 15px;
-    font-size: small;
 }
 ._dropdown-content-icon {
     padding: 15px;

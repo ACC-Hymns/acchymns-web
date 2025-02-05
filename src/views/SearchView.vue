@@ -190,16 +190,19 @@ Keyboard.addListener("keyboardDidHide", () => {
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
-                    <div class="dropdown-content-item">
-                        <img
-                            class="ionicon"
-                            :src="checkmarked(search_params.bookFilters.includes(book.name.short))"
-                            :style="calculateIconFilter(book.primaryColor)"
-                        />
-                        <div class="dropdown-content-text">{{ book.name.medium }}</div>
-                    </div>
-                </a>
+                <div :class="{'dropdown-content-organizer': available_books.length > 6}">
+                    <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
+                        <div class="dropdown-content-item">
+                            <img
+                                class="ionicon"
+                                :src="checkmarked(search_params.bookFilters.includes(book.name.short))"
+                                :style="calculateIconFilter(book.primaryColor)"
+                            />
+                            <div class="dropdown-content-text">{{ book.name.medium }}</div>
+                        </div>
+                    </a>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -225,7 +228,7 @@ Keyboard.addListener("keyboardDidHide", () => {
             v-if="limited_search_results.length < search_results.length"
             @click="display_limit += increment"
             class="song"
-            style="background: var(--blue); justify-content: center"
+            style="background: var(--blue); justify-content: center; cursor: pointer;"
         >
             <div class="song__title">Show more</div>
         </div>
@@ -237,13 +240,6 @@ Keyboard.addListener("keyboardDidHide", () => {
 <style>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
-
-.dropdown-content-wrapper {
-    padding-bottom: 100px;
-    z-index: 1;
-    position: absolute;
-    transition: all 0.2s ease;
-}
 
 @keyframes fadeIn {
     from {
@@ -271,6 +267,13 @@ Keyboard.addListener("keyboardDidHide", () => {
     }
 }
 
+.dropdown-content-wrapper {
+    padding-bottom: 100px;
+    z-index: 1;
+    position: absolute;
+    transition: all 0.2s ease;
+}
+
 .dropdown-content {
     position: relative;
     background-color: var(--button-color);
@@ -284,6 +287,15 @@ Keyboard.addListener("keyboardDidHide", () => {
     animation-name: fadeOut;
     animation-duration: 0.2s;
     animation-fill-mode: both;
+}
+
+.dropdown-content-organizer {
+    display: grid;
+    grid-template-columns: 45vw 45vw;
+
+    @media (min-width:641px)  {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .dropdown-content-top-item {
@@ -310,7 +322,10 @@ Keyboard.addListener("keyboardDidHide", () => {
 }
 
 .dropdown-content-text {
-    padding: 15px;
+    padding: 15px 0px 15px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dropdown {
