@@ -229,12 +229,12 @@ let time_dropdown_closed = 0;
 function open_dropdown() {
     const now = Date.now();
     let diff = now - time_dropdown_closed;
-    if(diff <= 1) return;
+    if (diff <= 1) return;
     dropdown_open.value = true;
     dropdown_animation.value = true;
 }
 function reset_dropdown() {
-    if(!dropdown_open.value) return;
+    if (!dropdown_open.value) return;
     time_dropdown_closed = Date.now();
 
     dropdown_animation.value = false;
@@ -439,7 +439,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
-    <div class="full" :class="{'dark': dropdown_animation}"></div>
+    <div class="full" :class="{ dark: dropdown_animation }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
@@ -454,14 +454,19 @@ Share.canShare().then(res => (can_share.value = res.value));
                     <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg"/>
+                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
                 <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="reset_dropdown">
-                    <div class="_dropdown-content" :class="{'_dropdown-content-active': dropdown_animation}" >
+                    <div class="_dropdown-content" :class="{ '_dropdown-content-active': dropdown_animation }">
                         <a>
-                            <div class="_dropdown-content-item" @click="() => {
-                                toggleBookmark();
-                                reset_dropdown();
-                            }">
+                            <div
+                                class="_dropdown-content-item"
+                                @click="
+                                    () => {
+                                        toggleBookmark();
+                                        reset_dropdown();
+                                    }
+                                "
+                            >
                                 <div class="_dropdown-content-text">Bookmark</div>
                                 <img
                                     class="ionicon _dropdown-content-icon"
@@ -470,27 +475,31 @@ Share.canShare().then(res => (can_share.value = res.value));
                             </div>
                         </a>
                         <a v-if="can_share">
-                            <div class="_dropdown-content-item" @click="() => {
-                                shareSong();
-                                reset_dropdown();
-                            }">
+                            <div
+                                class="_dropdown-content-item"
+                                @click="
+                                    () => {
+                                        shareSong();
+                                        reset_dropdown();
+                                    }
+                                "
+                            >
                                 <div class="_dropdown-content-text">Share</div>
-                                <img
-                                    class="ionicon _dropdown-content-icon"
-                                    src="/assets/share-outline.svg"
-                                />
+                                <img class="ionicon _dropdown-content-icon" src="/assets/share-outline.svg" />
                             </div>
                         </a>
-                        <a v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"> 
-                            <div class="_dropdown-content-item " @click="() => {
-                                is_broadcast_menu_open = true
-                                reset_dropdown();
-                            }">
+                        <a v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open">
+                            <div
+                                class="_dropdown-content-item"
+                                @click="
+                                    () => {
+                                        is_broadcast_menu_open = true;
+                                        reset_dropdown();
+                                    }
+                                "
+                            >
                                 <div class="_dropdown-content-text">Broadcast</div>
-                                <img
-                                    class="ionicon _dropdown-content-icon"
-                                    src="/assets/radio-outline.svg"
-                                />
+                                <img class="ionicon _dropdown-content-icon" src="/assets/radio-outline.svg" />
                             </div>
                         </a>
                     </div>
@@ -511,7 +520,12 @@ Share.canShare().then(res => (can_share.value = res.value));
         </div>
     </div>
 
-    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()" v-on-click-outside="close_broadcast_menu">
+    <div
+        class="broadcast-container"
+        v-if="broadcast_api.is_authorized && is_broadcast_menu_open"
+        @touchmove="e => e.preventDefault()"
+        v-on-click-outside="close_broadcast_menu"
+    >
         <h1>Broadcast</h1>
         <div class="close-button">
             <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
@@ -678,7 +692,9 @@ Share.canShare().then(res => (can_share.value = res.value));
     width: 100%;
     height: 100%;
     z-index: 1;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
     background-color: rgba(0, 0, 0, 0.125);
     opacity: 0;
     visibility: hidden;
@@ -757,7 +773,8 @@ Share.canShare().then(res => (can_share.value = res.value));
     justify-content: space-between;
     align-items: center;
 }
-._dropdown-content-item:active, ._dropdown-content-item:hover {
+._dropdown-content-item:active,
+._dropdown-content-item:hover {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
