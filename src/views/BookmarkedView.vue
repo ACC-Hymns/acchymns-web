@@ -2,13 +2,14 @@
 import { RouterLink } from "vue-router";
 import { getAllSongMetaData, getAllBookMetaData } from "@/scripts/book_import";
 import { computed, ref, onMounted } from "vue";
-import type { SongReference, SongSearchInfo, Song } from "@/scripts/types";
+import type { SongReference, SongSearchInfo, Song, BookSummary, SongList } from "@/scripts/types";
 import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { Keyboard } from "@capacitor/keyboard";
 import draggable from "vuedraggable";
 import { Color, Solver } from "@/scripts/color";
+import { Preferences } from "@capacitor/preferences";
 
 let search_query = ref("");
 let stripped_query = computed(() => {
@@ -28,7 +29,8 @@ let search_results = computed(() => {
         .sort((a, b) => a.title.localeCompare(b.title));
 });
 
-const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+const old_bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+let bookmarks: BookmarkItem[] = [];
 
 type Folder = {
     title: string;
@@ -43,12 +45,11 @@ enum PositionType {
 
 type BookmarkItem = {
     type: PositionType;
-    data: SongSearchInfo | Folder;
+    data: SongReference | Folder | SongSearchInfo;
 };
 
 let positions = ref<BookmarkItem[]>([]);
 let editting = ref(false);
-let holdTimeout = ref<number | null>(null);
 
 async function move_item(e: ReorderEvent) {
     console.log(JSON.parse(JSON.stringify(positions.value)));
@@ -72,7 +73,6 @@ function create_folder() {
         data: folder,
     });
     latest_folder.value = folder;
-    console.log(positions.value);
 }
 
 function delete_folder(folder: Folder) {
@@ -85,38 +85,109 @@ function delete_folder(folder: Folder) {
     if (deleting_folder.value == folder) {
         deleting_folder.value = null;
     }
+    save_bookmarks();
+}
+
+async function save_bookmarks() {
+    // strip unnecessary data back to SongReference
+    let temp_bookmarks = JSON.parse(JSON.stringify(positions.value)) as BookmarkItem[];
+    for(const bookmark of temp_bookmarks) {
+        if(bookmark.type == PositionType.SONG) {
+            bookmark.data = {
+                book: (bookmark.data as SongSearchInfo).book.name.short,
+                number: (bookmark.data as SongSearchInfo).number,
+            } as SongReference;
+        }
+        else if(bookmark.type == PositionType.FOLDER) {
+            for(const item of (bookmark.data as Folder).items) {
+                if(item.type == PositionType.SONG) {
+                    item.data = {
+                        book: (item.data as SongSearchInfo).book.name.short,
+                        number: (item.data as SongSearchInfo).number,
+                    } as SongReference;
+                }
+            }
+        }
+    }
+    
+    console.log(temp_bookmarks);
+    await Preferences.set({ key: "bookmark_data", value: JSON.stringify(temp_bookmarks) });
+}
+async function save_migrated_bookmarks() {
+    await Preferences.set({ key: "bookmark_data", value: JSON.stringify(bookmarks) });
+}
+
+
+let BOOK_METADATA: {[k: string]: BookSummary;};
+let SONG_METADATA: {[k: string]: SongList;};
+
+function fetch_song_data({ book, number }: SongReference): SongSearchInfo {
+    if (SONG_METADATA[book] == undefined)
+        return {
+            title: "Song not found",
+            number: number,
+            book: BOOK_METADATA[book],
+            stripped_title: "",
+            stripped_first_line: "",
+        };  
+
+    const song = SONG_METADATA[book][number];
+    return ({
+        title: song.title ?? "",
+        number: number,
+        book: BOOK_METADATA[book],
+        stripped_title: stripSearchText(song.title ?? ""),
+        stripped_first_line: stripSearchText(song.first_line ?? ""),
+    } as SongSearchInfo);
 }
 
 onMounted(async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    const SONG_METADATA = await getAllSongMetaData();
+    BOOK_METADATA = await getAllBookMetaData();
+    SONG_METADATA = await getAllSongMetaData();
+    bookmarks = JSON.parse((await Preferences.get({ key: "bookmark_data" })).value ?? "[]") as BookmarkItem[];
 
-    for (const bookmark of bookmarks.value) {
-        if (SONG_METADATA[bookmark.book] == undefined) {
-            continue;
+    // migrate old bookmarks
+    if (old_bookmarks.value.length > 0) {
+        for (const bookmark of old_bookmarks.value) {
+            bookmarks.push({
+                type: PositionType.SONG,
+                data: {
+                    book: bookmark.book,
+                    number: bookmark.number,
+                }
+            });
         }
-        const song: Song = SONG_METADATA[bookmark.book][bookmark.number];
-        available_songs.value.push({
-            title: song.title ?? "",
-            number: bookmark.number,
-            book: BOOK_METADATA[bookmark.book],
-            stripped_title: stripSearchText(song.title ?? ""),
-            stripped_first_line: stripSearchText(song.first_line ?? ""),
-        } as SongSearchInfo);
-    }
-    for(const song of available_songs.value) {
-        positions.value.push({
-            type: PositionType.SONG,
-            data: song,
-        });
+        old_bookmarks.value = [];
+        await save_migrated_bookmarks();
     }
 
-    
-    let rgb = new Color(255,50,50);
-    const solver = new Solver(rgb);
-    const result = solver.solve();
-    console.log(result.filter);
+    // fetch data and replace
+    for(const bookmark of bookmarks) {
+        if(bookmark.type == PositionType.SONG) {
+            const song = fetch_song_data(bookmark.data as SongReference);
+            bookmark.data = song;
+        }
+        else if(bookmark.type == PositionType.FOLDER) {
+            for(const item of (bookmark.data as Folder).items) {
+                if(item.type == PositionType.SONG) {
+                    const song = fetch_song_data(item.data as SongReference);
+                    item.data = song;
+                }
+            }
+        }
+    }
 
+    for (const bookmark of bookmarks) {
+        if(bookmark.type == PositionType.FOLDER) {
+            for(const item of (bookmark.data as Folder).items) {
+                available_songs.value.push(item.data as SongSearchInfo);
+            }
+        } else {
+            available_songs.value.push(bookmark.data as SongSearchInfo);
+        }
+    }
+
+    positions.value = bookmarks;
 });
 
 const hide_footer = ref<boolean>(false);
@@ -165,6 +236,8 @@ type ReorderEvent = {
                         return;
                     if(latest_folder?.title.length > 0)
                         latest_folder = null;
+                    
+                    save_bookmarks();
                 }">Confirm</a>
             </div>
         </div>
@@ -210,10 +283,13 @@ type ReorderEvent = {
                 <a v-if="!editting" @click="create_folder" class="confirm-text-container">
                     <img class="ionicon" src="/assets/folder-open-outline.svg" />
                 </a>
-                <a v-if="!editting" @click="editting = !editting" class="confirm-text-container">
+                <a v-if="!editting" @click="editting = true" class="confirm-text-container">
                     <img class="ionicon" src="/assets/create-outline.svg" />
                 </a>
-                <a v-else @click="editting = !editting" class="confirm-text-container">
+                <a v-else @click="() => {
+                    editting = false;
+                    save_bookmarks();
+                }" class="confirm-text-container">
                     <h3 class="confirm-text">Confirm</h3>
                     <img class="ionicon" src="/assets/checkmark-circle-outline.svg" />
                 </a>
@@ -310,7 +386,7 @@ type ReorderEvent = {
                     </template>
                 </draggable>
             </div>
-            <div v-else v-for="item in positions" :key="item.data.title">
+            <div v-else v-for="item in positions" :key="(item.data as any).title">
                 <div v-if="item.type == PositionType.FOLDER" class="folder-container">
                     <div class="folder-title-container" @click="(item.data as Folder).open = !(item.data as Folder).open">
                         <div>
@@ -367,7 +443,9 @@ type ReorderEvent = {
             </div>
         </div>
         <div class="songlist" v-else>
-            <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px">Search Results ({{ search_results.length }})</h2>
+            <div class="bookmark-toolbar" v-if="search_results.length > 0">
+                <h2 class="status-text">Search Results ({{ search_results.length }})</h2>
+            </div>
             <RouterLink
                 v-for="song in search_results"
                 :key="song.book.name.short + song.number"
@@ -491,8 +569,8 @@ type ReorderEvent = {
 .edit-text {
     cursor: pointer;
     background-color: var(--button-tap);
-    border-radius: 5px;
-    padding: 8px 8px 10px 8px;
+    border-radius: 15px;
+    padding: 8px 8px 10px 12px;
     width: 70%;
     text-align: left;
 }
