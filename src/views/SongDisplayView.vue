@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { onMounted, ref, computed, onUnmounted } from "vue";
+import { onMounted, ref, computed, onUnmounted, watch } from "vue";
 import { getSongMetaData, getAllBookMetaData, handle_missing_book } from "@/scripts/book_import";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { useRouter } from "vue-router";
@@ -11,39 +11,30 @@ import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { interpolate } from "polymorph-js";
 import { Capacitor } from "@capacitor/core";
-import { Network } from "@capacitor/network";
-import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
+import { useMediaControls } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
 
 const router = useRouter();
 
-const { player, isPlaying } = useNotes();
 const notes = ref<string[]>([]);
 const title = ref<string>("Unknown");
 const song_count = ref<number>(0);
-var isMobile = Capacitor.getPlatform() !== "web";
 const book_summary = ref<BookSummary>();
 
+// Bookmarks
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
-let is_broadcast_menu_open = ref<boolean>(false);
-let verses = ref<number[]>([]);
-
-const broadcast_api = useBroadcastAPI();
 
 const is_bookmarked = computed(() => {
     return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
 });
 
-const isConnected = ref<boolean>(false);
-const isLandscape = ref<boolean>(false);
-
 async function toggleBookmark() {
     if (!is_bookmarked.value) {
-        bookmarks.value.push(props as SongReference);
+        bookmarks.value.push({ ...props } as SongReference);
         await Toast.show({
             text: `#${props.number} added to Bookmarks`,
         });
@@ -55,6 +46,13 @@ async function toggleBookmark() {
         });
     }
 }
+
+const { isLandscape } = useScreenOrientation();
+watch(isLandscape, () => {
+    if (!media_starting_notes.value) panel.value.height = isLandscape.value ? 0.2 : 0.1;
+    else panel.value.height = isLandscape.value ? 0.8 : 0.4;
+});
+
 class DraggablePanel {
     start: number;
     previous: number;
@@ -88,7 +86,7 @@ class DraggablePanel {
         }
 
         if (this.height < (isLandscape.value ? 0.2 : 0.1) || isNaN(this.height)) {
-            if (!(media_starting_notes.value && !media_is_playing.value)) this.height = isLandscape.value ? 0.2 : 0.1;
+            if (!(media_starting_notes.value && !audio.playing.value)) this.height = isLandscape.value ? 0.2 : 0.1;
         }
         if (this.height <= 0.01 || isNaN(this.height)) {
             this.height = 0.005;
@@ -98,7 +96,7 @@ class DraggablePanel {
         e.preventDefault();
         if (this.height > (isLandscape.value ? 0.4 : 0.2)) this.height = isLandscape.value ? 0.8 : 0.4;
         else {
-            if (media_starting_notes.value && media_is_playing.value == false) {
+            if (media_starting_notes.value && audio.playing.value == false) {
                 this.height = 0.005;
                 setTimeout(() => {
                     this.visible = false;
@@ -119,27 +117,10 @@ type Coordinate = {
     y: number;
 };
 
-let panel = ref<DraggablePanel>(new DraggablePanel());
-let audio_source = ref<HTMLAudioElement>();
-let audio_source_exists = ref<boolean>(false);
-let previous_orientation: OrientationType | undefined;
-
-function setup_audiosource(audio_source: HTMLAudioElement) {
-    audio_source.addEventListener("loadedmetadata", () => {
-        console.log("Audio Loaded!");
-        audio_source_exists.value = true;
-        media_timestamp_end.value = audio_source?.duration || 0;
-
-        setMediaType(null, false);
-    });
-    audio_source.addEventListener("error", () => {
-        console.error("Error loading audio");
-        audio_source_exists.value = false;
-        setMediaType(null, true);
-    });
-}
+const panel = ref<DraggablePanel>(new DraggablePanel());
 
 onMounted(async () => {
+    console.log("onMounted");
     const SONG_METADATA = await getSongMetaData(props.book);
     const BOOK_METADATA = await getAllBookMetaData();
     book_summary.value = BOOK_METADATA[props.book];
@@ -149,92 +130,29 @@ onMounted(async () => {
         title.value = song_data?.title ?? "Unknown";
         notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
         song_count.value = Object.keys(SONG_METADATA).length;
-
-        isConnected.value = (await Network.getStatus()).connected;
-        if (!isConnected.value) {
-            audio_source_exists.value = false;
-            audio_source.value = new Audio();
-        } else {
-            audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-            audio_source.value.preload = "metadata";
-            setup_audiosource(audio_source.value);
-        }
-
-        setMediaType(null, true);
-
-        Network.addListener("networkStatusChange", async details => {
-            isConnected.value = details.connected;
-            if (!isConnected.value) {
-                audio_source.value?.pause();
-                morph();
-                media_is_playing.value = false;
-                audio_source_exists.value = false;
-                audio_source.value = new Audio();
-                setMediaType(null, true);
-            } else {
-                audio_source.value = new Audio(`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`);
-                audio_source.value.preload = "metadata";
-                setup_audiosource(audio_source.value);
-                audio_source.value?.load();
-            }
-        });
     } else {
         console.log("book doesn't exist");
         await handle_missing_book(props.book);
     }
-
-    previous_orientation = (await ScreenOrientation.orientation()).type;
-    if ((await ScreenOrientation.orientation()).type == "portrait-primary") {
-        isLandscape.value = false;
-    } else if ((await ScreenOrientation.orientation()).type.includes("landscape")) {
-        isLandscape.value = true;
-    }
-    ScreenOrientation.addListener("screenOrientationChange", async () => {
-        if (previous_orientation == (await ScreenOrientation.orientation()).type) return;
-
-        if ((await ScreenOrientation.orientation()).type == "portrait-primary") {
-            isLandscape.value = false;
-            previous_orientation = (await ScreenOrientation.orientation()).type;
-        } else if ((await ScreenOrientation.orientation()).type.includes("landscape")) {
-            isLandscape.value = true;
-            previous_orientation = (await ScreenOrientation.orientation()).type;
-        }
-
-        if (!media_starting_notes.value) panel.value.height = isLandscape.value ? 0.2 : 0.1;
-        else panel.value.height = isLandscape.value ? 0.8 : 0.4;
-    });
 });
 
-onUnmounted(() => {
-    player.stop();
-    audio_source.value?.pause();
-    audio_source.value = undefined;
-});
-
-let menu_bar_visible = ref<boolean>(true);
-let hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
-let media_starting_notes = ref<boolean>(false);
-let media_is_playing = ref<boolean>(false);
-let media_timestamp_elapsed = ref<number>(0);
-let media_timestamp_end = ref<number>(0);
-let elapsed_timer: number = -1;
-let media_is_scrubbing = ref<boolean>(false);
-let large_timeline = ref();
-let mini_timeline = ref();
+const menu_bar_visible = ref<boolean>(true);
+const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
+const media_starting_notes = ref<boolean>(true);
 
 const dropdown_open = ref<boolean>(false);
 const dropdown_animation = ref<boolean>(false);
 let time_dropdown_closed = 0;
 
-function open_dropdown() {
+function openDropdown() {
     const now = Date.now();
     let diff = now - time_dropdown_closed;
-    if(diff <= 1) return;
+    if (diff <= 1) return;
     dropdown_open.value = true;
     dropdown_animation.value = true;
 }
-function reset_dropdown() {
-    if(!dropdown_open.value) return;
+function closeDropdown() {
+    if (!dropdown_open.value) return;
     time_dropdown_closed = Date.now();
 
     dropdown_animation.value = false;
@@ -243,60 +161,31 @@ function reset_dropdown() {
     }, 200);
 }
 
-function close_broadcast_menu() {
-    is_broadcast_menu_open.value = false;
-}
-
-async function broadcast() {
-    if (broadcast_api.church_id.value == null) return;
-
-    await set(
-        request_client(),
-        broadcast_api.church_id.value,
-        props.number,
-        book_summary.value?.name.medium || props.book,
-        verses.value,
-        book_summary.value?.primaryColor || "#000000",
-    );
-
-    close_broadcast_menu();
-}
-
-const updateTime = async () => {
-    media_timestamp_elapsed.value = audio_source.value?.currentTime || 0;
-
-    if (audio_source.value == undefined) return;
-    let lt = large_timeline.value as HTMLInputElement;
-    let mt = mini_timeline.value as HTMLInputElement;
-    let percentage = (audio_source.value.currentTime / audio_source.value.duration) * 100;
-    if (lt)
-        lt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
-    if (mt)
-        mt.style.background = `linear-gradient(to right, var(--color) 0%, var(--color) ${percentage}%, var(--slider-base) ${percentage}%, var(--slider-base) 100%)`;
-
-    if (audio_source.value.ended && media_is_scrubbing.value == false) {
-        morph();
-        media_is_playing.value = false;
-        clearInterval(elapsed_timer);
-    }
-};
+// Notes
+const { player } = useNotes();
+onUnmounted(() => {
+    player.stop();
+    audio.playing.value = false;
+});
 
 async function play_all_notes() {
-    if (media_is_playing.value) {
-        playMedia();
-    }
-
+    audio.playing.value = false;
     player.stop();
     player.play(notes);
 }
 async function play_note(note: string) {
-    if (media_is_playing.value) {
-        playMedia();
-    }
+    audio.playing.value = false;
     player.stop();
     player.play([note]);
 }
 
+function get_note_icon(note: string) {
+    const modified_note = note.replace("#", "").replace("b", "");
+    if (notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
+    return bass_note_icons[modified_note];
+}
+
+// Media Panel
 async function toggle_media_panel() {
     panel.value.visible = !panel.value.visible;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
@@ -305,23 +194,26 @@ async function toggle_media_panel() {
 async function close_media_panel() {
     panel.value.visible = false;
     panel.value.height = isLandscape.value ? 0.8 : 0.4;
-    audio_source.value?.pause();
-
-    morph();
-    media_is_playing.value = false;
+    audio.playing.value = false;
 }
 
-function setMediaType(event: any, value: boolean) {
-    if (event) event.preventDefault();
-    media_starting_notes.value = value;
-    isPlaying.value = !panel.value.visible;
-}
+// Media Playing
+const audio_source = ref<HTMLAudioElement>();
+const audio = useMediaControls(audio_source);
+const audio_source_exists = ref<boolean>(true);
+audio.onSourceError(() => {
+    console.error("Error loading audio");
+    audio_source_exists.value = false;
+});
+const audio_percentage = computed(() => {
+    return `${(audio.currentTime.value / audio.duration.value) * 100}%`;
+});
 
-let morphed_path = ref<string>(play_path);
+const morphed_path = ref<string>(play_path);
 
-function morph() {
-    let path_order = media_is_playing.value ? [pause_path, play_path] : [play_path, pause_path];
-    let interpolator = interpolate(path_order, {
+watch(audio.playing, () => {
+    const path_order = audio.playing.value ? [play_path, pause_path] : [pause_path, play_path];
+    const interpolator = interpolate(path_order, {
         addPoints: 0,
         origin: { x: 0, y: 0 },
         optimize: "fill",
@@ -330,43 +222,7 @@ function morph() {
     animate(path => {
         morphed_path.value = path;
     }, interpolator);
-}
-
-async function playMedia() {
-    morph();
-
-    // Play the media
-    if (!media_is_playing.value) {
-        audio_source.value?.play();
-        updateTime();
-        elapsed_timer = setInterval(
-            () => {
-                updateTime();
-            },
-            1000,
-            0,
-        );
-    } else {
-        audio_source.value?.pause();
-        clearInterval(elapsed_timer);
-    }
-
-    media_is_playing.value = !media_is_playing.value;
-}
-
-function release_audio_position() {
-    media_is_scrubbing.value = false;
-    if (media_is_playing.value && audio_source.value?.paused && !audio_source.value?.ended) audio_source.value?.play();
-}
-
-function set_audio_position(percentage: number) {
-    media_is_scrubbing.value = true;
-    let source = audio_source.value;
-    if (source == undefined) return;
-    source.currentTime = (source.duration * percentage) / 100;
-
-    updateTime();
-}
+});
 
 function secondsToTimestamp(seconds: number) {
     let minutes = Math.floor(seconds / 60);
@@ -396,7 +252,8 @@ function hideMedia() {
     }, 250);
 }
 
-async function traverse_song(dir: number) {
+// Song Traversal
+async function traverseToAdjacentSong(dir: number) {
     const SONG_METADATA = await getSongMetaData(props.book);
 
     if (SONG_METADATA == null) {
@@ -417,14 +274,9 @@ async function traverse_song(dir: number) {
     await router.replace(`/display/${props.book}/${song_numbers[index + dir]}`);
 }
 
-function get_note_icon(note: string) {
-    let modified_note = note.replace("#", "").replace("b", "");
-
-    if (notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
-    return bass_note_icons[modified_note];
-}
-
+// Sharing
 import { Share } from "@capacitor/share";
+import { useScreenOrientation } from "@/composables/screen_orientation";
 
 async function shareSong() {
     await Share.share({
@@ -436,10 +288,47 @@ async function shareSong() {
 
 const can_share = ref<boolean>(false);
 Share.canShare().then(res => (can_share.value = res.value));
+
+// Broadcast
+const is_broadcast_menu_open = ref<boolean>(false);
+const verses = ref<number[]>([]);
+const broadcast_api = useBroadcastAPI();
+
+function toggleVerse(verse: number) {
+    if (verses.value[0] == -2) verses.value = [];
+
+    if (verses.value.includes(verse)) verses.value.splice(verses.value.indexOf(verse), 1);
+    else verses.value.push(verse);
+}
+
+function toggleAllVerses() {
+    if (verses.value[0] == -2) verses.value = [];
+    else verses.value = [-2];
+}
+
+function close_broadcast_menu() {
+    is_broadcast_menu_open.value = false;
+}
+
+async function broadcast() {
+    if (broadcast_api.church_id.value == null) return;
+
+    await set(
+        request_client(),
+        broadcast_api.church_id.value,
+        props.number,
+        book_summary.value?.name.medium || props.book,
+        verses.value,
+        book_summary.value?.primaryColor || "#000000",
+    );
+
+    close_broadcast_menu();
+}
 </script>
 
 <template>
-    <div class="full" :class="{'dark': dropdown_animation}"></div>
+    <audio ref="audio_source" :src="`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`"></audio>
+    <div class="full" :class="{ dark: dropdown_animation }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
@@ -449,50 +338,49 @@ Share.canShare().then(res => (can_share.value = res.value));
                 <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
-                <template v-if="notes.length != 0">
+                <template v-if="notes.length != 0 || audio_source_exists">
                     <img v-if="!panel.visible" @click="toggle_media_panel()" class="ionicon" src="/assets/musical-notes-outline.svg" />
                     <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg"/>
-                <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="reset_dropdown">
-                    <div class="_dropdown-content" :class="{'_dropdown-content-active': dropdown_animation}" >
-                        <a>
-                            <div class="_dropdown-content-item" @click="() => {
+                <img class="ionicon" @click="openDropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="closeDropdown">
+                    <div class="_dropdown-content" :class="{ '_dropdown-content-active': dropdown_animation }">
+                        <div
+                            class="_dropdown-content-item"
+                            @click="
                                 toggleBookmark();
-                                reset_dropdown();
-                            }">
-                                <div class="_dropdown-content-text">Bookmark</div>
-                                <img
-                                    class="ionicon _dropdown-content-icon"
-                                    :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
-                                />
-                            </div>
-                        </a>
-                        <a v-if="can_share">
-                            <div class="_dropdown-content-item" @click="() => {
+                                closeDropdown();
+                            "
+                        >
+                            <div class="_dropdown-content-text">Bookmark</div>
+                            <img
+                                class="ionicon _dropdown-content-icon"
+                                :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
+                            />
+                        </div>
+                        <div
+                            v-if="can_share"
+                            class="_dropdown-content-item"
+                            @click="
                                 shareSong();
-                                reset_dropdown();
-                            }">
-                                <div class="_dropdown-content-text">Share</div>
-                                <img
-                                    class="ionicon _dropdown-content-icon"
-                                    src="/assets/share-outline.svg"
-                                />
-                            </div>
-                        </a>
-                        <a v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"> 
-                            <div class="_dropdown-content-item " @click="() => {
-                                is_broadcast_menu_open = true
-                                reset_dropdown();
-                            }">
-                                <div class="_dropdown-content-text">Broadcast</div>
-                                <img
-                                    class="ionicon _dropdown-content-icon"
-                                    src="/assets/radio-outline.svg"
-                                />
-                            </div>
-                        </a>
+                                closeDropdown();
+                            "
+                        >
+                            <div class="_dropdown-content-text">Share</div>
+                            <img class="ionicon _dropdown-content-icon" src="/assets/share-outline.svg" />
+                        </div>
+                        <div
+                            v-if="broadcast_api.is_authorized.value"
+                            class="_dropdown-content-item"
+                            @click="
+                                is_broadcast_menu_open = true;
+                                closeDropdown();
+                            "
+                        >
+                            <div class="_dropdown-content-text">Broadcast</div>
+                            <img class="ionicon _dropdown-content-icon" src="/assets/radio-outline.svg" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -502,16 +390,22 @@ Share.canShare().then(res => (can_share.value = res.value));
     <!-- Buttons -->
     <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible">
         <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }">
-            <img @click="traverse_song(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+            <img @click="traverseToAdjacentSong(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
     <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible">
         <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }">
-            <img @click="traverse_song(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
+            <img @click="traverseToAdjacentSong(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
 
-    <div class="broadcast-container" v-if="broadcast_api.is_authorized && is_broadcast_menu_open" @touchmove="e => e.preventDefault()" v-on-click-outside="close_broadcast_menu">
+    <!-- Broadcast Popup -->
+    <div
+        class="broadcast-container"
+        v-if="broadcast_api.is_authorized && is_broadcast_menu_open"
+        @touchmove="e => e.preventDefault()"
+        v-on-click-outside="close_broadcast_menu"
+    >
         <h1>Broadcast</h1>
         <div class="close-button">
             <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
@@ -519,34 +413,10 @@ Share.canShare().then(res => (can_share.value = res.value));
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
         <br />
         <h3>Verses</h3>
-        <a
-            class="verse"
-            :class="{ 'verse-selected': verses[0] == -2 }"
-            @click="
-                () => {
-                    if (verses[0] == -2) verses = [];
-                    else verses = [-2];
-                }
-            "
-        >
-            All
-        </a>
+        <a class="verse" :class="{ 'verse-selected': verses[0] == -2 }" @click="toggleAllVerses()"> All </a>
         <br />
         <div class="verse-list">
-            <a
-                v-for="verse in 12"
-                :key="verse"
-                class="verse"
-                :class="{ 'verse-selected': verses.includes(verse) }"
-                @click="
-                    () => {
-                        if (verses[0] == -2) verses = [];
-
-                        if (verses.includes(verse)) verses.splice(verses.indexOf(verse), 1);
-                        else verses.push(verse);
-                    }
-                "
-            >
+            <a v-for="verse in 12" :key="verse" class="verse" :class="{ 'verse-selected': verses.includes(verse) }" @click="toggleVerse(verse)">
                 {{ verse }}
             </a>
         </div>
@@ -561,7 +431,7 @@ Share.canShare().then(res => (can_share.value = res.value));
         <div class="media-panel-blur"></div>
         <div
             class="handle-bar-container"
-            v-if="isMobile"
+            v-if="Capacitor.getPlatform() !== 'web'"
             @touchstart="e => panel.dragStart(e, e.touches[0].pageY)"
             @touchmove="e => panel.drag(e, e.touches[0].pageY)"
             @touchend="e => panel.dragEnd(e)"
@@ -576,63 +446,43 @@ Share.canShare().then(res => (can_share.value = res.value));
             class="mini-playback-container"
             :style="{ opacity: panel.height <= (isLandscape ? 0.2 : 0.1) ? '1' : '0' }"
         >
-            <p class="timestamp-left">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
+            <p class="timestamp-left">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
             <div class="progress-bar">
-                <input
-                    type="range"
-                    ref="mini_timeline"
-                    class="media-timeline"
-                    :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
-                    :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
-                    @change="release_audio_position()"
-                    :style="{
-                        background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
-                            (media_timestamp_elapsed / media_timestamp_end) * 100
-                        }%, var(--slider-base) ${(media_timestamp_elapsed / media_timestamp_end) * 100}%, var(--slider-base) 100%)`,
-                    }"
-                />
+                <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="1" v-model="audio.currentTime.value" />
             </div>
-            <p class="timestamp-right">{{ secondsToTimestamp(media_timestamp_end) }}</p>
-            <svg @click="playMedia()" class="mini-play-button" viewBox="0 0 512 512">
+            <p class="timestamp-right">{{ secondsToTimestamp(audio.duration.value) }}</p>
+            <svg @click="audio.playing.value = !audio.playing.value" class="mini-play-button" viewBox="0 0 512 512">
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: panel.height < (isLandscape ? 0.4 : 0.2) ? '0' : '1' }">
             <div
-                v-if="audio_source_exists && isConnected"
+                v-if="audio_source_exists"
                 :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
-                @click="e => setMediaType(e, false)"
+                @click="media_starting_notes = !media_starting_notes"
             >
                 <p class="media-type-title">Piano</p>
             </div>
-            <div :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'" @click="e => setMediaType(e, true)">
+            <div
+                v-if="notes.length != 0"
+                :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                @click="media_starting_notes = !media_starting_notes"
+            >
                 <p class="media-type-title">Starting Notes</p>
             </div>
         </div>
         <div v-if="!media_starting_notes && panel.visible" class="media-controls">
             <div class="playback-container" :style="{ opacity: panel.height < (isLandscape ? 0.5 : 0.25) ? '0' : '1' }">
-                <svg @click="playMedia()" class="play-button" viewBox="0 0 512 512">
+                <svg @click="audio.playing.value = !audio.playing.value" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
             <div class="timeline" :style="{ opacity: panel.height < (isLandscape ? 0.8 : 0.4) ? '0' : '1' }">
-                <p class="timestamp">{{ secondsToTimestamp(media_timestamp_elapsed) }}</p>
+                <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
                 <div class="progress-bar-large">
-                    <input
-                        type="range"
-                        ref="large_timeline"
-                        class="media-timeline"
-                        :value="(media_timestamp_elapsed / media_timestamp_end) * 100"
-                        :onInput="e => set_audio_position(Number((e.target as HTMLInputElement).value))"
-                        @change="release_audio_position()"
-                        :style="{
-                            background: `linear-gradient(to right, var(--color) 0%, var(--color) ${
-                                (media_timestamp_elapsed / media_timestamp_end) * 100
-                            }%, var(--slider-base) ${(media_timestamp_elapsed / media_timestamp_end) * 100}%, var(--slider-base) 100%)`,
-                        }"
-                    />
+                    <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="1" v-model="audio.currentTime.value" />
                 </div>
-                <p class="timestamp">{{ secondsToTimestamp(media_timestamp_end) }}</p>
+                <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
             </div>
         </div>
         <div v-if="media_starting_notes" class="starting-notes-container">
@@ -678,7 +528,9 @@ Share.canShare().then(res => (can_share.value = res.value));
     width: 100%;
     height: 100%;
     z-index: 1;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
     background-color: rgba(0, 0, 0, 0.125);
     opacity: 0;
     visibility: hidden;
@@ -757,7 +609,8 @@ Share.canShare().then(res => (can_share.value = res.value));
     justify-content: space-between;
     align-items: center;
 }
-._dropdown-content-item:active, ._dropdown-content-item:hover {
+._dropdown-content-item:active,
+._dropdown-content-item:hover {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -837,7 +690,13 @@ Share.canShare().then(res => (can_share.value = res.value));
     outline: none;
     border-radius: 15px;
     height: 2px;
-    background: var(--slider-base);
+    background: linear-gradient(
+        to right,
+        var(--color) 0%,
+        var(--color) v-bind(audio_percentage),
+        var(--slider-base) v-bind(audio_percentage),
+        var(--slider-base) 100%
+    );
     cursor: pointer;
 }
 .media-timeline::-webkit-slider-thumb {
