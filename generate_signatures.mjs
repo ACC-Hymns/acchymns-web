@@ -1,4 +1,4 @@
-import { promises as fs} from "node:fs";
+import { promises as fs } from "node:fs";
 import { hashElement } from "folder-hash";
 
 const options = {
