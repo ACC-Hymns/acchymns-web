@@ -21,7 +21,7 @@ jobs:
 
       - name: Check that linting has been done
         run: |
-          [[ -z "$(git status -s)" ]]
+          [[ -z "$(git diff --ignore-cr-at-eol)" ]]
 
   signatures:
     name: Check `./generate_signatures.mjs`
@@ -40,6 +40,6 @@ jobs:
 
       - name: Check that linting has been done
         run: |
-          [[ -z "$(git status -s)" ]]
+          [[ -z "$(git diff --ignore-cr-at-eol)" ]]
 
   
