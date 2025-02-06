@@ -40,6 +40,7 @@ jobs:
 
       - name: Check that linting has been done
         run: |
+          git diff --ignore-cr-at-eol
           [[ -z "$(git diff --ignore-cr-at-eol)" ]]
 
   
