@@ -302,7 +302,7 @@ function get_lock_icon() {
         <div class="title">
             <img @click="back_button()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
             <div class="title--center">
-                <h1>{{ bibleReading ? "Bible Reading" : (songNumber ? "Song Number" : "Broadcast") }}</h1>
+                <h1>{{ bibleReading ? "Bible Reading" : songNumber ? "Song Number" : "Broadcast" }}</h1>
             </div>
         </div>
     </div>
