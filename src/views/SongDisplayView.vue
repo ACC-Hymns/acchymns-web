@@ -41,75 +41,13 @@ async function toggleBookmark() {
 
 const media_starting_notes = ref<boolean>(true);
 const { isLandscape } = useScreenOrientation();
-watch(isLandscape, () => {
-    panel.value.height = isLandscape.value ? 0.8 : 0.4;
-});
-
-class DraggablePanel {
-    start: number;
-    previous: number;
-    height: number;
-    visible: boolean;
-    elastic: boolean;
-
-    constructor() {
-        this.start = 0;
-        this.previous = 0;
-        this.visible = false;
-        this.elastic = false;
-        this.height = screen.orientation.type.includes("landscape") ? 0.8 : 0.4;
-    }
-    dragFallOff(x: number) {
-        var result = (Math.log(x + 0.368) + 1) / 4;
-        return result;
-    }
-    dragStart(e: Event, pageY: number) {
-        e.preventDefault();
-        this.previous = this.height;
-        this.start = 1 - pageY / window.innerHeight;
-    }
-    drag(e: Event, pageY: number) {
-        e.preventDefault();
-
-        if (isLandscape.value) {
-            this.height = 1 - pageY / window.innerHeight - this.start + this.previous;
-        } else {
-            this.height = this.dragFallOff(1 - pageY / window.innerHeight - this.start) + this.previous;
-        }
-
-        if (this.height < (isLandscape.value ? 0.2 : 0.1) || isNaN(this.height)) {
-            if (!(media_starting_notes.value && !audio.playing.value)) this.height = isLandscape.value ? 0.2 : 0.1;
-        }
-        if (this.height <= 0.01 || isNaN(this.height)) {
-            this.height = 0.005;
-        }
-    }
-    dragEnd(e: Event) {
-        e.preventDefault();
-        if (this.height > (isLandscape.value ? 0.4 : 0.2)) this.height = isLandscape.value ? 0.8 : 0.4;
-        else {
-            if (media_starting_notes.value && audio.playing.value == false) {
-                this.height = 0.005;
-                setTimeout(() => {
-                    this.visible = false;
-                }, 250);
-            } else {
-                this.height = isLandscape.value ? 0.2 : 0.1;
-            }
-        }
-        this.elastic = true;
-        setTimeout(() => {
-            this.elastic = false;
-        }, 250);
-    }
-}
 
 type Coordinate = {
     x: number;
     y: number;
 };
 
-const panel = ref<DraggablePanel>(new DraggablePanel());
+const panel = ref<{ visible: boolean}>({ visible: false });
 
 import { useAllBookSummaries, useBookSongMetaData } from "@/composables/book_metadata";
 
@@ -213,22 +151,6 @@ function secondsToTimestamp(seconds: number) {
 
 function toggleMenu() {
     menu_bar_visible.value = !menu_bar_visible.value;
-}
-
-function hideMedia() {
-    if (!audio_source_exists.value) {
-        panel.value.elastic = true;
-        setTimeout(() => {
-            panel.value.elastic = false;
-            panel.value.visible = false;
-        }, 250);
-        return;
-    }
-
-    panel.value.elastic = true;
-    setTimeout(() => {
-        panel.value.elastic = false;
-    }, 250);
 }
 
 // Song Traversal
@@ -362,13 +284,13 @@ async function broadcast() {
     </div>
 
     <!-- Buttons -->
-    <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible">
-        <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }" @click="traverseToAdjacentSong(-1)">
+    <div class="page-button-container left">
+        <div class="page-button" :class="{ 'arrow-hidden-left': panel.visible || !menu_bar_visible || Number(props.number) == 1 }" @click="traverseToAdjacentSong(-1)">
             <img class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
-    <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible">
-        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }"  @click="traverseToAdjacentSong(1)">
+    <div class="page-button-container right">
+        <div class="page-button" :class="{ 'arrow-hidden-right': panel.visible || !menu_bar_visible || Number(props.number) == song_count }"  @click="traverseToAdjacentSong(1)">
             <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
@@ -381,7 +303,7 @@ async function broadcast() {
         v-on-click-outside="close_broadcast_menu"
     >
         <h1>Broadcast</h1>
-        <div class="close-button">
+        <div class="broadcast-close-button">
             <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
@@ -399,25 +321,12 @@ async function broadcast() {
 
     <div
         class="media-panel-content"
-        :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic }"
+        :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible }"
     >
         <div class="media-panel-blur"></div>
-        <div
-            class="handle-bar-container"
-            v-if="Capacitor.getPlatform() !== 'web'"
-            @touchstart="e => panel.dragStart(e, e.touches[0].pageY)"
-            @touchmove="e => panel.drag(e, e.touches[0].pageY)"
-            @touchend="e => panel.dragEnd(e)"
-        >
-            <div class="handle-bar"></div>
-        </div>
-        <div class="close-button" :style="{ opacity: panel.height < (isLandscape ? 0.3 : 0.15) ? '0' : '1' }">
-            <img @click="toggleMediaPanel()" class="ionicon" src="/assets/close.svg" />
-        </div>
-        <div
-            v-if="panel.height <= (isLandscape ? 0.3 : 0.15) && panel.visible && audio_source_exists"
+        <!-- <div
+            v-if=isLandscape && panel.visible && audio.playing.value"
             class="mini-playback-container"
-            :style="{ opacity: panel.height <= (isLandscape ? 0.2 : 0.1) ? '1' : '0' }"
         >
             <p class="timestamp-left">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
             <div class="progress-bar">
@@ -427,32 +336,39 @@ async function broadcast() {
             <svg @click="audio.playing.value = !audio.playing.value" class="mini-play-button" viewBox="0 0 512 512">
                 <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
             </svg>
-        </div>
-        <div class="media-type" :style="{ opacity: panel.height < (isLandscape ? 0.4 : 0.2) ? '0' : '1' }">
-            <!-- Piano shows if it is available & media_starting_notes = false -->
-            <div
-                v-if="audio_source_exists"
-                :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
-                @click="media_starting_notes = false"
-            >
-                <p class="media-type-title">Piano</p>
+        </div> -->
+        <div class="media-panel-top-row">
+            <div></div>
+            <div class="media-type">
+                <!-- Piano shows if it is available & media_starting_notes = false -->
+                <div
+                    v-if="audio_source_exists"
+                    :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                    @click="media_starting_notes = false"
+                >
+                    <p class="media-type-title">Piano</p>
+                </div>
+                <!-- Piano shows if it is available & media_starting_notes = true -->
+                <div
+                    v-if="song_notes.length != 0"
+                    :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                    @click="media_starting_notes = true"
+                >
+                    <p class="media-type-title">Starting Notes</p>
+                </div>
             </div>
-            <!-- Piano shows if it is available & media_starting_notes = true -->
-            <div
-                v-if="song_notes.length != 0"
-                :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
-                @click="media_starting_notes = true"
-            >
-                <p class="media-type-title">Starting Notes</p>
+            <div>
+                <img @click="toggleMediaPanel()" class="ionicon" src="/assets/close.svg" />
             </div>
         </div>
-        <div v-if="!media_starting_notes && panel.visible" class="media-controls">
-            <div class="playback-container" :style="{ opacity: panel.height < (isLandscape ? 0.5 : 0.25) ? '0' : '1' }">
+
+        <div v-if="!media_starting_notes">
+            <div class="playback-container">
                 <svg @click="audio.playing.value = !audio.playing.value" class="play-button" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
-            <div class="timeline" :style="{ opacity: panel.height < (isLandscape ? 0.8 : 0.4) ? '0' : '1' }">
+            <div class="timeline">
                 <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
                 <div class="progress-bar-large">
                     <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="1" v-model="audio.currentTime.value" />
@@ -491,7 +407,6 @@ async function broadcast() {
                     toggleMenu();
             }
         "
-        @touchmove="hideMedia()"
     >
         <SongContainer :book="props.book" :number="props.number"></SongContainer>
     </div>
@@ -705,7 +620,7 @@ async function broadcast() {
     box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
-.close-button {
+.broadcast-close-button {
     position: absolute;
     right: 0;
     top: 0;
@@ -822,13 +737,11 @@ async function broadcast() {
     width: 100%;
     justify-content: center;
     display: flex;
-    transition: opacity 0.25s ease-in;
 }
 .playback-container {
     width: 100%;
     justify-content: center;
     display: flex;
-    transition: opacity 0.25s ease-in;
 }
 .play-button-path {
     fill: var(--color);
@@ -839,8 +752,38 @@ async function broadcast() {
     max-height: 75px;
     width: 20vw;
     height: 20vw;
-    margin: 0 auto;
+    padding: 0px;
     cursor: pointer;
+}
+.media-panel-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.media-type {
+    background-color: var(--media-type);
+    /* margin: 0px auto; */
+    height: 35px;
+    border-radius: 25px;
+    display: flex;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.media-panel-top-row > :last-child,
+.media-panel-top-row > :first-child {
+   flex-grow: 1;
+   flex-basis: 0;
+}
+.media-panel-top-row > :last-child {
+    display: flex;
+    justify-content: flex-end;
+}
+.media-panel-top-row > :last-child > img {
+    cursor: pointer;
+    margin-right: 5px;
 }
 
 .media-type-title {
@@ -867,36 +810,9 @@ async function broadcast() {
     align-items: center;
     padding: 0px 25px;
 }
-.media-type {
-    background-color: var(--media-type);
-    width: max-content;
-    height: 35px;
-    border-radius: 25px;
-    margin: 45px auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 1px;
-    transition: opacity 0.25s ease-in;
-    cursor: pointer;
-}
-.handle-bar-container {
-    width: 100%;
-    height: 40px;
-    position: absolute;
-    transform: translateY(-2vh);
-}
-.handle-bar {
-    background-color: #818181;
-    width: 50px;
-    height: 2px;
-    border-radius: 15px;
-    margin: 10px auto;
-    transform: translateY(2vh);
-}
 .media-panel-content {
     width: 100%;
-    height: v-bind('panel.height * 100 + "%"');
+    padding-bottom: 20px;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -921,9 +837,7 @@ async function broadcast() {
     border-radius: 15px 15px 0px 0px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
 }
-.elastic {
-    transition: height 0.0625s ease-out;
-}
+
 .hidden-panel {
     opacity: 0;
     visibility: hidden;
