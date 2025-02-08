@@ -111,7 +111,7 @@ function resetDropdown() {
     }, 200);
 }
 function toggleDropdown() {
-    if(is_open.value) {
+    if (is_open.value) {
         resetDropdown();
     } else {
         is_open.value = true;
@@ -173,14 +173,14 @@ function calculateIconFilter(color: string) {
             <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
         </a>
         <div class="dropdown-content-wrapper" v-show="is_open">
-            <div class="dropdown-content" :class="{'dropdown-content-active' : dropdown_animation}">
+            <div class="dropdown-content" :class="{ 'dropdown-content-active': dropdown_animation }">
                 <a>
                     <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <div :class="{'dropdown-content-organizer': available_books.length > 6}">
+                <div :class="{ 'dropdown-content-organizer': available_books.length > 6 }">
                     <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                         <div class="dropdown-content-item">
                             <img
@@ -192,7 +192,6 @@ function calculateIconFilter(color: string) {
                         </div>
                     </a>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -218,7 +217,7 @@ function calculateIconFilter(color: string) {
             v-if="limited_search_results.length < search_results.length"
             @click="display_limit += increment"
             class="song"
-            style="background: var(--blue); justify-content: center; cursor: pointer;"
+            style="background: var(--blue); justify-content: center; cursor: pointer"
         >
             <div class="song__title">Show more</div>
         </div>
@@ -283,7 +282,7 @@ function calculateIconFilter(color: string) {
     display: grid;
     grid-template-columns: 45vw 45vw;
 
-    @media (min-width:641px)  {
+    @media (min-width: 641px) {
         grid-template-columns: 1fr 1fr;
     }
 }
