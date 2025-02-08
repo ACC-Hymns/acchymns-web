@@ -9,7 +9,6 @@ import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { interpolate } from "polymorph-js";
-import { Capacitor } from "@capacitor/core";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
@@ -40,14 +39,13 @@ async function toggleBookmark() {
 }
 
 const media_starting_notes = ref<boolean>(true);
-const { isLandscape } = useScreenOrientation();
 
 type Coordinate = {
     x: number;
     y: number;
 };
 
-const panel = ref<{ visible: boolean}>({ visible: false });
+const panel = ref<{ visible: boolean }>({ visible: false });
 
 import { useAllBookSummaries, useBookSongMetaData } from "@/composables/book_metadata";
 
@@ -128,7 +126,7 @@ const audio_percentage = computed(() => {
 
 watch([song_notes, audio_source_exists], () => {
     if (song_notes.value.length == 0 && audio_source_exists.value) media_starting_notes.value = false;
-})
+});
 
 const morphed_path = ref<string>(play_path);
 
@@ -140,7 +138,7 @@ watch(audio.playing, () => {
         optimize: "fill",
         precision: 0,
     });
-    animate(path => morphed_path.value = path, interpolator);
+    animate(path => (morphed_path.value = path), interpolator);
 });
 
 function secondsToTimestamp(seconds: number) {
@@ -172,7 +170,6 @@ async function traverseToAdjacentSong(dir: number) {
 
 // Sharing
 import { Share } from "@capacitor/share";
-import { useScreenOrientation } from "@/composables/screen_orientation";
 
 async function shareSong() {
     await Share.share({
@@ -319,24 +316,8 @@ async function broadcast() {
         <button class="send-button" @click="broadcast()">Send</button>
     </div>
 
-    <div
-        class="media-panel-content"
-        :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible }"
-    >
+    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible }">
         <div class="media-panel-blur"></div>
-        <!-- <div
-            v-if=isLandscape && panel.visible && audio.playing.value"
-            class="mini-playback-container"
-        >
-            <p class="timestamp-left">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
-            <div class="progress-bar">
-                <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="1" v-model="audio.currentTime.value" />
-            </div>
-            <p class="timestamp-right">{{ secondsToTimestamp(audio.duration.value) }}</p>
-            <svg @click="audio.playing.value = !audio.playing.value" class="mini-play-button" viewBox="0 0 512 512">
-                <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
-            </svg>
-        </div> -->
         <div class="media-panel-top-row">
             <div></div>
             <div class="media-type">
@@ -774,8 +755,8 @@ async function broadcast() {
 
 .media-panel-top-row > :last-child,
 .media-panel-top-row > :first-child {
-   flex-grow: 1;
-   flex-basis: 0;
+    flex-grow: 1;
+    flex-basis: 0;
 }
 .media-panel-top-row > :last-child {
     display: flex;
@@ -817,12 +798,11 @@ async function broadcast() {
     left: 0;
     bottom: 0;
     z-index: 1;
-    transition:
-        opacity 0.125s ease-in,
-        visibility 0.125s ease;
-    opacity: 1;
-    visibility: visible;
-    overflow: visible;
+    transition: transform 0.125s ease;
+    transform: translateY(0%);
+}
+.hidden-panel {
+    transform: translateY(100%);
 }
 .media-panel-blur {
     backdrop-filter: blur(8px);
@@ -836,11 +816,6 @@ async function broadcast() {
     background-color: var(--menu-color);
     border-radius: 15px 15px 0px 0px;
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
-}
-
-.hidden-panel {
-    opacity: 0;
-    visibility: hidden;
 }
 
 .broadcast-button-container {
