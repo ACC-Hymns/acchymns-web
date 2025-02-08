@@ -1,0 +1,46 @@
+name: Check mandatory scripts
+
+on:
+  push:
+
+jobs:
+  lint:
+    name: Check `npm run lint`
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: npm install
+      - run: npm run lint
+
+      - name: Check that linting has been done
+        run: |
+          [[ -z "$(git diff --ignore-cr-at-eol)" ]]
+
+  signatures:
+    name: Check `./generate_signatures.mjs`
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          
+      - run: npm install
+      - run: node ./generate_signatures.mjs
+
+      - name: Check that linting has been done
+        run: |
+          git diff --ignore-cr-at-eol
+          [[ -z "$(git diff --ignore-cr-at-eol)" ]]
+
+  

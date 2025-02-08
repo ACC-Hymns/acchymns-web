@@ -34,7 +34,7 @@
     "@vueuse/core": "^9.13.0",
     "axios": "^1.6.8",
     "capacitor-plugin-ios-webview-configurator": "^0.4.0",
-    "folder-hash": "^4.0.4",
+    "folder-hash": "^4.1.1",
     "panzoom": "^9.4.3",
     "pdfjs-dist": "^4.9.155",
     "pinia": "^2.1.6",
