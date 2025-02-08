@@ -107,6 +107,8 @@ function get_note_icon(note: string) {
 }
 
 // Media Panel
+import { useScreenOrientation } from "@/composables/screen_orientation";
+const { isLandscape } = useScreenOrientation();
 async function toggleMediaPanel() {
     panel.value.visible = !panel.value.visible;
     if (!panel.value.visible) audio.playing.value = false;
@@ -343,34 +345,64 @@ async function broadcast() {
             </div>
         </div>
 
-        <div v-if="!media_starting_notes">
-            <div class="playback-container">
-                <svg @click="audio.playing.value = !audio.playing.value" class="play-button" viewBox="0 0 512 512">
+        <!-- Landscape mode gets a mini-player and mini notes -->
+        <template v-if="isLandscape">
+            <!-- Mini Piano Player -->
+            <div v-if="!media_starting_notes && audio_source_exists" class="timeline">
+                <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
+                <div class="progress-bar">
+                    <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="0.1" v-model="audio.currentTime.value" />
+                </div>
+                <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
+                <svg @click="audio.playing.value = !audio.playing.value" class="play-button small" viewBox="0 0 512 512">
                     <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
                 </svg>
             </div>
-            <div class="timeline">
-                <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
-                <div class="progress-bar-large">
-                    <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="1" v-model="audio.currentTime.value" />
+            <!-- Starting Notes -->
+            <div v-if="media_starting_notes && song_notes.length != 0" class="starting-notes-container">
+                <div class="note-button small" @click="play_all_notes()">
+                    <p>All</p>
                 </div>
-                <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
+                <template v-for="note in song_notes" :key="note">
+                    <div class="note-button small" @click="play_note(note)">
+                        <p>{{ note }}</p>
+                    </div>
+                </template>
             </div>
-        </div>
-        <div v-if="media_starting_notes && song_notes.length != 0" class="starting-notes-container">
-            <div class="note-container">
-                <div class="note-button" @click="play_all_notes()">
-                    <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
+        </template>
+        <!-- Portrait mode has the full player -->
+        <template v-else>
+            <!-- Piano Player -->
+            <div v-if="!media_starting_notes && audio_source_exists">
+                <div class="playback-container">
+                    <svg @click="audio.playing.value = !audio.playing.value" class="play-button" viewBox="0 0 512 512">
+                        <path id="svg_content" class="play-button-path" :d="morphed_path"></path>
+                    </svg>
                 </div>
-                <p class="note-name">All</p>
-            </div>
-            <div v-for="note in song_notes" :key="note" class="note-container" @click="play_note(note)">
-                <div class="note-button">
-                    <img class="ionicon starting-note-icon" :src="get_note_icon(note)" />
+                <div class="timeline">
+                    <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
+                    <div class="progress-bar">
+                        <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="0.1" v-model="audio.currentTime.value" />
+                    </div>
+                    <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
                 </div>
-                <p class="note-name">{{ note }}</p>
             </div>
-        </div>
+            <!-- Starting Notes Player -->
+            <div v-if="media_starting_notes && song_notes.length != 0" class="starting-notes-container">
+                <div class="note-container">
+                    <div class="note-button" @click="play_all_notes()">
+                        <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
+                    </div>
+                    <p>All</p>
+                </div>
+                <div v-for="note in song_notes" :key="note" class="note-container" @click="play_note(note)">
+                    <div class="note-button">
+                        <img class="ionicon starting-note-icon" :src="get_note_icon(note)" />
+                    </div>
+                    <p>{{ note }}</p>
+                </div>
+            </div>
+        </template>
     </div>
     <div
         class="w-100"
@@ -606,7 +638,6 @@ async function broadcast() {
     right: 0;
     top: 0;
     margin: 15px;
-    transition: opacity 0.25s ease-in;
     cursor: pointer;
 }
 .timeline {
@@ -614,7 +645,6 @@ async function broadcast() {
     justify-content: center;
     display: flex;
     align-items: center;
-    transition: opacity 0.25s ease-in;
 }
 .timestamp {
     font-size: small;
@@ -640,39 +670,21 @@ async function broadcast() {
     border-radius: 15px;
 }
 .progress-bar {
-    width: 50%;
-    margin: 0 10px;
-    align-items: center;
-    display: flex;
-    overflow: visible;
-}
-.progress-bar-large {
     width: 60%;
     margin: 0 10px;
     align-items: center;
     display: flex;
     overflow: visible;
 }
-.mini-playback-container {
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    transition: opacity 0.25s ease-in;
-    margin: 15px 0;
-}
-.mini-play-button {
+.play-button.small {
     max-width: 50px;
     max-height: 50px;
     width: 10vw;
     height: 10vw;
-    margin-right: 15px;
-    cursor: pointer;
-}
-.note-name {
-    color: var(--color);
+    margin: 0px 10px;
 }
 .note-container {
+    color: var(--color);
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -707,8 +719,11 @@ async function broadcast() {
     max-width: 75px;
     max-height: 75px;
     cursor: pointer;
-    transition: background-color 0.1s ease-out;
-    transition: border 0.1s ease-out;
+}
+.note-button.small {
+    margin: 0px 5px;
+    max-width: 60px;
+    max-height: 40px;
 }
 .note-button:active {
     background-color: var(--button-tap);
@@ -745,7 +760,6 @@ async function broadcast() {
 
 .media-type {
     background-color: var(--media-type);
-    /* margin: 0px auto; */
     height: 35px;
     border-radius: 25px;
     display: flex;
@@ -793,12 +807,12 @@ async function broadcast() {
 }
 .media-panel-content {
     width: 100%;
-    padding-bottom: 20px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
     position: fixed;
     left: 0;
     bottom: 0;
     z-index: 1;
-    transition: transform 0.125s ease;
+    transition: transform 0.3s ease;
     transform: translateY(0%);
 }
 .hidden-panel {
