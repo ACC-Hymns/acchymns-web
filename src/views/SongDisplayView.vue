@@ -201,7 +201,7 @@ function toggleAllVerses() {
     else verses.value = [-2];
 }
 
-function close_broadcast_menu() {
+function closeBroadcastMenu() {
     is_broadcast_menu_open.value = false;
 }
 
@@ -217,7 +217,7 @@ async function broadcast() {
         book_summary.value?.primaryColor || "#000000",
     );
 
-    close_broadcast_menu();
+    closeBroadcastMenu();
 }
 </script>
 
@@ -243,10 +243,7 @@ async function broadcast() {
                     <div class="_dropdown-content" :class="{ '_dropdown-content-active': dropdown_animation }">
                         <div
                             class="_dropdown-content-item"
-                            @click="
-                                toggleBookmark();
-                                closeDropdown();
-                            "
+                            @click="toggleBookmark()"
                         >
                             <div class="_dropdown-content-text">Bookmark</div>
                             <img
@@ -299,14 +296,13 @@ async function broadcast() {
         class="broadcast-container"
         v-if="broadcast_api.is_authorized && is_broadcast_menu_open"
         @touchmove="e => e.preventDefault()"
-        v-on-click-outside="close_broadcast_menu"
+        v-on-click-outside="closeBroadcastMenu"
     >
         <h1>Broadcast</h1>
         <div class="broadcast-close-button">
-            <img @click="close_broadcast_menu" class="ionicon" src="/assets/close.svg" />
+            <img @click="closeBroadcastMenu" class="ionicon" src="/assets/close.svg" />
         </div>
         <h3>{{ book_summary?.name.medium || props.book }} - #{{ props.number }}</h3>
-        <br />
         <h3>Verses</h3>
         <a class="verse" :class="{ 'verse-selected': verses[0] == -2 }" @click="toggleAllVerses()"> All </a>
         <br />
