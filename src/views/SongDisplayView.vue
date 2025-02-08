@@ -241,10 +241,7 @@ async function broadcast() {
                 <img class="ionicon" @click="openDropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
                 <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="closeDropdown">
                     <div class="_dropdown-content" :class="{ '_dropdown-content-active': dropdown_animation }">
-                        <div
-                            class="_dropdown-content-item"
-                            @click="toggleBookmark()"
-                        >
+                        <div class="_dropdown-content-item" @click="toggleBookmark()">
                             <div class="_dropdown-content-text">Bookmark</div>
                             <img
                                 class="ionicon _dropdown-content-icon"
@@ -281,12 +278,20 @@ async function broadcast() {
 
     <!-- Buttons -->
     <div class="page-button-container left">
-        <div class="page-button" :class="{ 'arrow-hidden-left': panel.visible || !menu_bar_visible || Number(props.number) == 1 }" @click="traverseToAdjacentSong(-1)">
+        <div
+            class="page-button"
+            :class="{ 'arrow-hidden-left': panel.visible || !menu_bar_visible || Number(props.number) == 1 }"
+            @click="traverseToAdjacentSong(-1)"
+        >
             <img class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
     <div class="page-button-container right">
-        <div class="page-button" :class="{ 'arrow-hidden-right': panel.visible || !menu_bar_visible || Number(props.number) == song_count }"  @click="traverseToAdjacentSong(1)">
+        <div
+            class="page-button"
+            :class="{ 'arrow-hidden-right': panel.visible || !menu_bar_visible || Number(props.number) == song_count }"
+            @click="traverseToAdjacentSong(1)"
+        >
             <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
@@ -380,7 +385,14 @@ async function broadcast() {
                 <div class="timeline">
                     <p class="timestamp">{{ secondsToTimestamp(audio.currentTime.value) }}</p>
                     <div class="progress-bar">
-                        <input type="range" class="media-timeline" :min="0" :max="audio.duration.value" step="0.1" v-model="audio.currentTime.value" />
+                        <input
+                            type="range"
+                            class="media-timeline"
+                            :min="0"
+                            :max="audio.duration.value"
+                            step="0.1"
+                            v-model="audio.currentTime.value"
+                        />
                     </div>
                     <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
                 </div>

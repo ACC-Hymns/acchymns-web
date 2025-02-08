@@ -19,9 +19,9 @@ export function useBookSummary(url: string, options: UseCachedFetchOptions) {
 }
 
 export function useAllBookSummaries() {
-    const result = ref<{[k: string]: BookSummary}>({});
+    const result = ref<{ [k: string]: BookSummary }>({});
     const is_ready = ref(false);
-    
+
     async function execute() {
         result.value = await getAllBookMetaData();
         is_ready.value = true;
@@ -33,7 +33,7 @@ export function useAllBookSummaries() {
 
 export function useBookSongMetaData(book_id: string) {
     const result = ref<SongList>({});
-    
+
     async function execute() {
         const temp = await getSongMetaData(book_id);
         if (temp == null) {
