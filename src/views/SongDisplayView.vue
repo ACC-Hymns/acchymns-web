@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { onMounted, ref, computed, onUnmounted, watch } from "vue";
-import { getSongMetaData, getAllBookMetaData, handle_missing_book } from "@/scripts/book_import";
-import { animate, pause_path, play_path } from "@/scripts/morph";
+import { ref, computed, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import type { BookSummary, SongReference } from "@/scripts/types";
+import { animate, pause_path, play_path } from "@/scripts/morph";
+import { type BookSummary, type SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -14,16 +13,9 @@ import { Capacitor } from "@capacitor/core";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
-import { useMediaControls } from "@vueuse/core";
+import { useEventListener, useMediaControls } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
-
-const router = useRouter();
-
-const notes = ref<string[]>([]);
-const title = ref<string>("Unknown");
-const song_count = ref<number>(0);
-const book_summary = ref<BookSummary>();
 
 // Bookmarks
 const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
@@ -47,10 +39,10 @@ async function toggleBookmark() {
     }
 }
 
+const media_starting_notes = ref<boolean>(true);
 const { isLandscape } = useScreenOrientation();
 watch(isLandscape, () => {
-    if (!media_starting_notes.value) panel.value.height = isLandscape.value ? 0.2 : 0.1;
-    else panel.value.height = isLandscape.value ? 0.8 : 0.4;
+    panel.value.height = isLandscape.value ? 0.8 : 0.4;
 });
 
 class DraggablePanel {
@@ -119,26 +111,18 @@ type Coordinate = {
 
 const panel = ref<DraggablePanel>(new DraggablePanel());
 
-onMounted(async () => {
-    console.log("onMounted");
-    const SONG_METADATA = await getSongMetaData(props.book);
-    const BOOK_METADATA = await getAllBookMetaData();
-    book_summary.value = BOOK_METADATA[props.book];
+import { useAllBookSummaries, useBookSongMetaData } from "@/composables/book_metadata";
 
-    if (SONG_METADATA != null) {
-        const song_data = SONG_METADATA[props.number];
-        title.value = song_data?.title ?? "Unknown";
-        notes.value = (song_data?.notes ?? []).reverse(); // Reverse as we want bass -> soprano
-        song_count.value = Object.keys(SONG_METADATA).length;
-    } else {
-        console.log("book doesn't exist");
-        await handle_missing_book(props.book);
-    }
-});
+const BOOK_METADATA = useAllBookSummaries();
+const book_summary = computed<BookSummary | undefined>(() => BOOK_METADATA.result.value[props.book]);
+
+const SONG_METADATA = useBookSongMetaData(props.book);
+const title = computed(() => SONG_METADATA.result.value[props.number]?.title ?? "Unknown");
+const song_notes = computed(() => [...(SONG_METADATA.result.value[props.number]?.notes ?? [])].reverse()); // Reverse as we want bass -> soprano
+const song_count = computed(() => Object.keys(SONG_METADATA.result.value).length);
 
 const menu_bar_visible = ref<boolean>(true);
 const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
-const media_starting_notes = ref<boolean>(true);
 
 const dropdown_open = ref<boolean>(false);
 const dropdown_animation = ref<boolean>(false);
@@ -151,6 +135,7 @@ function openDropdown() {
     dropdown_open.value = true;
     dropdown_animation.value = true;
 }
+
 function closeDropdown() {
     if (!dropdown_open.value) return;
     time_dropdown_closed = Date.now();
@@ -171,7 +156,7 @@ onUnmounted(() => {
 async function play_all_notes() {
     audio.playing.value = false;
     player.stop();
-    player.play(notes);
+    player.play(song_notes.value);
 }
 async function play_note(note: string) {
     audio.playing.value = false;
@@ -181,33 +166,31 @@ async function play_note(note: string) {
 
 function get_note_icon(note: string) {
     const modified_note = note.replace("#", "").replace("b", "");
-    if (notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
+    if (song_notes.value.indexOf(note) > 1 || !Object.keys(bass_note_icons).includes(modified_note)) return treble_note_icons[modified_note];
     return bass_note_icons[modified_note];
 }
 
 // Media Panel
-async function toggle_media_panel() {
+async function toggleMediaPanel() {
     panel.value.visible = !panel.value.visible;
-    panel.value.height = isLandscape.value ? 0.8 : 0.4;
-}
-
-async function close_media_panel() {
-    panel.value.visible = false;
-    panel.value.height = isLandscape.value ? 0.8 : 0.4;
-    audio.playing.value = false;
+    if (!panel.value.visible) audio.playing.value = false;
 }
 
 // Media Playing
 const audio_source = ref<HTMLAudioElement>();
 const audio = useMediaControls(audio_source);
 const audio_source_exists = ref<boolean>(true);
-audio.onSourceError(() => {
+useEventListener(audio_source, "error", () => {
     console.error("Error loading audio");
     audio_source_exists.value = false;
 });
 const audio_percentage = computed(() => {
     return `${(audio.currentTime.value / audio.duration.value) * 100}%`;
 });
+
+watch([song_notes, audio_source_exists], () => {
+    if (song_notes.value.length == 0 && audio_source_exists.value) media_starting_notes.value = false;
+})
 
 const morphed_path = ref<string>(play_path);
 
@@ -219,9 +202,7 @@ watch(audio.playing, () => {
         optimize: "fill",
         precision: 0,
     });
-    animate(path => {
-        morphed_path.value = path;
-    }, interpolator);
+    animate(path => morphed_path.value = path, interpolator);
 });
 
 function secondsToTimestamp(seconds: number) {
@@ -235,8 +216,7 @@ function toggleMenu() {
 }
 
 function hideMedia() {
-    if (audio_source_exists.value == false) {
-        panel.value.height = 0.005;
+    if (!audio_source_exists.value) {
         panel.value.elastic = true;
         setTimeout(() => {
             panel.value.elastic = false;
@@ -245,7 +225,6 @@ function hideMedia() {
         return;
     }
 
-    panel.value.height = isLandscape.value ? 0.2 : 0.1;
     panel.value.elastic = true;
     setTimeout(() => {
         panel.value.elastic = false;
@@ -253,15 +232,10 @@ function hideMedia() {
 }
 
 // Song Traversal
+const router = useRouter();
+
 async function traverseToAdjacentSong(dir: number) {
-    const SONG_METADATA = await getSongMetaData(props.book);
-
-    if (SONG_METADATA == null) {
-        console.error("Error loading song metadata. Cannot traverse song.");
-        return;
-    }
-
-    const song_numbers = Object.keys(SONG_METADATA).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
+    const song_numbers = Object.keys(SONG_METADATA.result.value).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
     const index = song_numbers.findIndex(song => song == props.number);
     if (index == -1) {
         console.error("Error finding song in metadata. Cannot traverse song.");
@@ -338,9 +312,9 @@ async function broadcast() {
                 <h1>#{{ props.number }}</h1>
             </div>
             <div class="title--right">
-                <template v-if="notes.length != 0 || audio_source_exists">
-                    <img v-if="!panel.visible" @click="toggle_media_panel()" class="ionicon" src="/assets/musical-notes-outline.svg" />
-                    <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
+                <template v-if="song_notes.length != 0 || audio_source_exists">
+                    <img v-if="!panel.visible" @click="toggleMediaPanel()" class="ionicon" src="/assets/musical-notes-outline.svg" />
+                    <img v-else class="ionicon" @click="toggleMediaPanel()" src="/assets/musical-notes.svg" />
                 </template>
 
                 <img class="ionicon" @click="openDropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
@@ -389,13 +363,13 @@ async function broadcast() {
 
     <!-- Buttons -->
     <div class="page-button-container left" v-if="panel.height < 0.7 || !panel.visible">
-        <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }">
-            <img @click="traverseToAdjacentSong(-1)" class="ionicon" src="/assets/chevron-back-outline.svg" />
+        <div class="page-button" :class="{ 'arrow-hidden-left': !menu_bar_visible || Number(props.number) == 1 }" @click="traverseToAdjacentSong(-1)">
+            <img class="ionicon" src="/assets/chevron-back-outline.svg" />
         </div>
     </div>
     <div class="page-button-container right" v-if="panel.height < 0.7 || !panel.visible">
-        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }">
-            <img @click="traverseToAdjacentSong(1)" class="ionicon" src="/assets/chevron-forward-outline.svg" />
+        <div class="page-button" :class="{ 'arrow-hidden-right': !menu_bar_visible || Number(props.number) == song_count }"  @click="traverseToAdjacentSong(1)">
+            <img class="ionicon" src="/assets/chevron-forward-outline.svg" />
         </div>
     </div>
 
@@ -426,7 +400,6 @@ async function broadcast() {
     <div
         class="media-panel-content"
         :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, elastic: panel.elastic }"
-        :style="'height:' + panel.height * 100 + '%'"
     >
         <div class="media-panel-blur"></div>
         <div
@@ -439,7 +412,7 @@ async function broadcast() {
             <div class="handle-bar"></div>
         </div>
         <div class="close-button" :style="{ opacity: panel.height < (isLandscape ? 0.3 : 0.15) ? '0' : '1' }">
-            <img @click="close_media_panel()" class="ionicon" src="/assets/close.svg" />
+            <img @click="toggleMediaPanel()" class="ionicon" src="/assets/close.svg" />
         </div>
         <div
             v-if="panel.height <= (isLandscape ? 0.3 : 0.15) && panel.visible && audio_source_exists"
@@ -456,17 +429,19 @@ async function broadcast() {
             </svg>
         </div>
         <div class="media-type" :style="{ opacity: panel.height < (isLandscape ? 0.4 : 0.2) ? '0' : '1' }">
+            <!-- Piano shows if it is available & media_starting_notes = false -->
             <div
                 v-if="audio_source_exists"
                 :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
-                @click="media_starting_notes = !media_starting_notes"
+                @click="media_starting_notes = false"
             >
                 <p class="media-type-title">Piano</p>
             </div>
+            <!-- Piano shows if it is available & media_starting_notes = true -->
             <div
-                v-if="notes.length != 0"
+                v-if="song_notes.length != 0"
                 :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
-                @click="media_starting_notes = !media_starting_notes"
+                @click="media_starting_notes = true"
             >
                 <p class="media-type-title">Starting Notes</p>
             </div>
@@ -485,14 +460,14 @@ async function broadcast() {
                 <p class="timestamp">{{ secondsToTimestamp(audio.duration.value) }}</p>
             </div>
         </div>
-        <div v-if="media_starting_notes" class="starting-notes-container">
+        <div v-if="media_starting_notes && song_notes.length != 0" class="starting-notes-container">
             <div class="note-container">
                 <div class="note-button" @click="play_all_notes()">
                     <img class="ionicon starting-note-icon-all" src="/assets/musical-notes.svg" />
                 </div>
                 <p class="note-name">All</p>
             </div>
-            <div v-for="note in notes" :key="note" class="note-container" @click="play_note(note)">
+            <div v-for="note in song_notes" :key="note" class="note-container" @click="play_note(note)">
                 <div class="note-button">
                     <img class="ionicon starting-note-icon" :src="get_note_icon(note)" />
                 </div>
@@ -921,6 +896,7 @@ async function broadcast() {
 }
 .media-panel-content {
     width: 100%;
+    height: v-bind('panel.height * 100 + "%"');
     position: fixed;
     left: 0;
     bottom: 0;
