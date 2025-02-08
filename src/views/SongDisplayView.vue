@@ -326,7 +326,8 @@ async function broadcast() {
                 <!-- Piano shows if it is available & media_starting_notes = false -->
                 <div
                     v-if="audio_source_exists"
-                    :class="!media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                    class="media-type-indicator"
+                    :class="{ active: !media_starting_notes }"
                     @click="media_starting_notes = false"
                 >
                     <p class="media-type-title">Piano</p>
@@ -334,7 +335,8 @@ async function broadcast() {
                 <!-- Piano shows if it is available & media_starting_notes = true -->
                 <div
                     v-if="song_notes.length != 0"
-                    :class="media_starting_notes ? 'media-type-indicator-active' : 'media-type-indicator'"
+                    class="media-type-indicator"
+                    :class="{ active: media_starting_notes }"
                     @click="media_starting_notes = true"
                 >
                     <p class="media-type-title">Starting Notes</p>
@@ -755,16 +757,7 @@ async function broadcast() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-}
-
-.media-type {
-    background-color: var(--media-type);
-    height: 35px;
-    border-radius: 25px;
-    display: flex;
-    flex-shrink: 0;
-    cursor: pointer;
+    padding: 20px 15px 15px;
 }
 
 .media-panel-top-row > :last-child,
@@ -781,13 +774,23 @@ async function broadcast() {
     margin-right: 5px;
 }
 
+/* Media type indicator */
+.media-type {
+    background-color: var(--media-type);
+    height: 33px;
+    border-radius: 25px;
+    display: flex;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
 .media-type-title {
-    margin: 0px 0px;
     color: var(--color);
     font-weight: bold;
     font-size: small;
-    line-height: 35px;
+    line-height: 33px;
 }
+
 .media-type-indicator {
     height: 33px;
     border-radius: 50px;
@@ -796,18 +799,15 @@ async function broadcast() {
     align-items: center;
     padding: 0px 15px;
 }
-.media-type-indicator-active {
+
+.media-type-indicator.active {
     background-color: var(--media-type-active);
-    height: 33px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 0px 25px;
 }
+
 .media-panel-content {
     width: 100%;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     position: fixed;
     left: 0;
     bottom: 0;
