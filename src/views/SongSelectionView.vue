@@ -80,7 +80,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         "
                     >
                         <div>Numerical</div>
-                        <img class="ionicon" src="/assets/book-outline.svg" />
+                        <img class="ionicon" src="/assets/num.svg" />
                     </div>
                     <div
                         @click="
