@@ -435,7 +435,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
-    <div class="full" :class="{ dark: !dropdown_open }"></div>
+    <div class="full" :class="{ dark: dropdown_open }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
