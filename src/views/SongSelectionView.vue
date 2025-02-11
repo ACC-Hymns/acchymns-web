@@ -13,9 +13,8 @@ const router = useRouter();
 
 const error_active = ref(false);
 
-let book_name = ref("");
-let index_available = ref(false);
-let button_color = ref("#000000");
+const book_name = ref("");
+const index_available = ref(false);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -29,7 +28,6 @@ onMounted(async () => {
     }
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
-    button_color.value = BOOK_METADATA[props.book].primaryColor;
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
 });
 
@@ -86,21 +84,22 @@ Share.canShare().then(res => (can_share.value = res.value));
                     </div>
                     <div
                         @click="
-                            router.replace(`/selection/${props.book}/topical`);
-                            reset_dropdown();
-                        "
-                    >
-                        <div>Topical</div>
-                        <img class="ionicon" src="/assets/book-outline.svg" />
-                    </div>
-                    <div
-                        @click="
                             router.replace(`/selection/${props.book}/alphabetical`);
                             reset_dropdown();
                         "
                     >
                         <div>Alphabetical</div>
                         <img class="ionicon" src="/assets/text.svg" />
+                    </div>
+                    <div
+                        v-if="index_available"
+                        @click="
+                            router.replace(`/selection/${props.book}/topical`);
+                            reset_dropdown();
+                        "
+                    >
+                        <div>Topical</div>
+                        <img class="ionicon" src="/assets/book-outline.svg" />
                     </div>
                     <div
                         v-if="can_share"
