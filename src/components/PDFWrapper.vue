@@ -16,8 +16,9 @@ const emit = defineEmits<{
 let root = ref<HTMLDivElement>();
 
 watch(
-    [props],
+    props,
     async () => {
+        const og_src = props.src;
         // If this is a "page turn", clear the current page
         if (root.value && root.value.hasChildNodes()) {
             root.value.innerHTML = "";
@@ -59,6 +60,10 @@ watch(
                 const img = document.createElement("img");
                 img.classList.add("song-img");
                 img.src = page_url;
+                if (og_src !== props.src) {
+                    console.log("Page turn detected, aborting render");
+                    return;
+                }
                 root.value?.appendChild(img);
             } catch {
                 emit("error");
@@ -71,7 +76,7 @@ watch(
 </script>
 
 <template>
-    <div ref="root" class="container" />
+    <div ref="root" class="container"></div>
 </template>
 
 <style>
