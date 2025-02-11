@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps} from "vue";
 const props = defineProps<{
     dropdown_open: boolean;
 }>();
@@ -23,8 +22,8 @@ const props = defineProps<{
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
-  transform: translateY(-15px);
+    opacity: 0;
+    transform: translateY(-15px);
 }
 
 .dropdown-content-wrapper {

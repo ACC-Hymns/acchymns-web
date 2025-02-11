@@ -1,36 +1,21 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
-import { RouterLink, useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
+import { useRouter } from "vue-router";
+import DropdownMenu from "@/components/DropdownMenu.vue";
 import NavigationBar from "@/components/NavigationBar.vue";
+import { vOnClickOutside } from "@vueuse/components";
 
 const props = defineProps<{
     book: string;
 }>();
 const router = useRouter();
-const route = useRoute();
-
-// Saving position in book
-onBeforeRouteLeave((_, from) => {
-    saveScrollPosition(from.fullPath);
-    if (!_.fullPath.includes("/display")) {
-        removeGroupOpened(from.fullPath);
-        removeScrollPosition(from.fullPath);
-    }
-});
 
 const error_active = ref(false);
 
-const song_numbers = ref<string[]>([]);
 let book_name = ref("");
 let index_available = ref(false);
 let button_color = ref("#000000");
-let song_number_groups = ref<string[][]>([]);
-let song_number_groups_active = ref<string[][]>([]);
-let song_group_elements = ref<any[]>();
-let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -42,63 +27,40 @@ onMounted(async () => {
         error_active.value = true;
         return;
     }
-    song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
-
-    let song_count = song_numbers.value.length;
-    let num_groups = Math.ceil(song_count / 100);
-
-    // Dividing songs into groups of 100
-    for (let i = 0; i < num_groups; i++) {
-        const re = new RegExp(/[a-z]/, "i");
-        song_number_groups.value?.push(
-            song_numbers.value.filter(song => {
-                let song_num = song.replace(re, "");
-
-                return i * 100 < Number(song_num) && Number(song_num) <= (i + 1) * 100;
-            }),
-        );
-    }
 
     book_name.value = BOOK_METADATA[props.book].name.medium;
     button_color.value = BOOK_METADATA[props.book].primaryColor;
     index_available.value = BOOK_METADATA[props.book].indexAvailable;
-
-    useSessionStorage<boolean>("isAlphabetical", false).value = false;
-
-    let group_ids = getGroupOpened(route.fullPath);
-    if (group_ids != undefined) {
-        group_ids.forEach(id => {
-            song_number_groups_active.value.push(song_number_groups.value[id]);
-        });
-    }
-
-    // Restoring position in book
-    await nextTick();
-    // The v-for for song buttons now should be active, so we can scroll to the saved position
-    restoreScrollPosition(route.fullPath);
 });
 
-function toggleDropdown(group: string[]) {
-    if (song_number_groups_active.value.includes(group)) {
-        song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(group), 1);
-    } else {
-        song_number_groups_active.value.push(group);
-    }
-    let ids: number[] = [];
-    song_number_groups_active.value.forEach(group_id => {
-        var index = song_number_groups.value.indexOf(group_id);
-        ids.push(index);
-    });
-    saveGroupOpened(route.fullPath, ids);
+const dropdown_open = ref<boolean>(false);
+let time_dropdown_closed = 0;
+
+function open_dropdown() {
+    const now = Date.now();
+    let diff = now - time_dropdown_closed;
+    if (diff <= 1) return;
+    dropdown_open.value = true;
+}
+function reset_dropdown() {
+    if (!dropdown_open.value) return;
+    time_dropdown_closed = Date.now();
+
+    dropdown_open.value = false;
 }
 
-function getRangeString(start: string, end: string) {
-    if (start == end) {
-        return start;
-    } else {
-        return `${start} - ${end}`;
-    }
+import { Share } from "@capacitor/share";
+
+async function shareSong() {
+    await Share.share({
+        // title: `${title.value}`,
+        // text: `#${props.number} from ${book_summary.value?.name.medium} available online now!`,
+        url: `https://acchymns.app/selection/${props.book}`,
+    });
 }
+
+const can_share = ref<boolean>(false);
+Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
@@ -111,140 +73,58 @@ function getRangeString(start: string, end: string) {
                 <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
-                <div>
-                    <RouterLink v-if="index_available" :to="`/topical/${props.book}`">
+                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="reset_dropdown">
+                    <div
+                        @click="
+                            router.replace(`/selection/${props.book}`);
+                            reset_dropdown();
+                        "
+                    >
+                        <div>Numerical</div>
                         <img class="ionicon" src="/assets/book-outline.svg" />
-                    </RouterLink>
-                </div>
+                    </div>
+                    <div
+                        @click="
+                            router.replace(`/selection/${props.book}/topical`);
+                            reset_dropdown();
+                        "
+                    >
+                        <div>Topical</div>
+                        <img class="ionicon" src="/assets/book-outline.svg" />
+                    </div>
+                    <div
+                        @click="
+                            router.replace(`/selection/${props.book}/alphabetical`);
+                            reset_dropdown();
+                        "
+                    >
+                        <div>Alphabetical</div>
+                        <img class="ionicon" src="/assets/text.svg" />
+                    </div>
+                    <div
+                        v-if="can_share"
+                        @click="
+                            shareSong();
+                            reset_dropdown();
+                        "
+                    >
+                        <div>Share</div>
+                        <img class="ionicon" src="/assets/share-outline.svg" />
+                    </div>
+                </DropdownMenu>
             </div>
         </div>
     </div>
     <div v-if="error_active" class="fallback-container">
         <img class="wifi-fallback" src="/assets/wifi_off.svg" />
     </div>
-    <div v-else class="songs main-content">
-        <!-- Buttons with song grouping disabled -->
-        <div v-if="!song_group_enabled" class="song-button-container">
-            <RouterLink
-                v-for="song_num in song_numbers"
-                :key="song_num"
-                :to="`/display/${props.book}/${song_num}`"
-                class="song-btn"
-                :style="{ background: button_color }"
-            >
-                {{ song_num }}
-            </RouterLink>
-        </div>
-        <!-- Buttons with song grouping enabled -->
-        <div v-else v-for="(group, index) in song_number_groups" :key="index" class="song-group-container" ref="song_group_elements">
-            <div>
-                <div class="song-group-title-container" @click="toggleDropdown(group)">
-                    <div class="song-title">{{ getRangeString(group[0], group[group.length - 1]) }}</div>
-                    <img
-                        class="ionicon nav__icon dropdown-icon"
-                        src="/assets/chevron-back-outline.svg"
-                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(group) }"
-                    />
-                </div>
-                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(group) }">
-                    <div class="song-button-container" :class="{ 'song-button-container-active': song_number_groups_active.includes(group) }">
-                        <RouterLink
-                            v-for="song_num in group"
-                            :key="song_num"
-                            :to="`/display/${props.book}/${song_num}`"
-                            class="song-btn"
-                            :style="{ background: button_color }"
-                        >
-                            {{ song_num }}
-                        </RouterLink>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <RouterView v-else class="main-content"></RouterView>
 
     <NavigationBar current_page="home" />
 </template>
 
 <style scoped>
-.songs {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0px 10px 50px 10px;
-}
-
-.song-group-container {
-    /*border: 1px solid #bebebe;*/
-    box-shadow: var(--thin-shadow);
-    background-color: var(--button-color);
-    border-radius: 15px;
-}
-
-.song-group-title-container {
-    margin: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.song-title {
-    text-decoration: none;
-    color: var(--color);
-    font-weight: 400;
-}
-
-.dropdown-icon {
-    transition: rotate ease-out 0.4s;
-    transform: translateX(-3px);
-    rotate: calc(-90deg);
-}
-
-.dropdown-icon-active {
-    transition: rotate ease-out 0.4s;
-    transform: translateX(3px);
-    rotate: calc(90deg);
-}
-
-.wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s;
-}
-
-.wrapper-active {
-    grid-template-rows: 1fr;
-}
-
-.song-button-container {
-    padding-left: 10px;
-    padding-right: 10px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.song-button-container-active {
-    padding-bottom: 20px;
-}
-
-.song-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    color: #fff;
-    font-weight: 900;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px;
-}
-
 .wifi-fallback {
     filter: var(--svg-back-filter);
     display: block;
@@ -257,5 +137,10 @@ function getRangeString(start: string, end: string) {
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.dropdown-menu {
+    top: calc(40px + env(safe-area-inset-top));
+    right: 15px;
 }
 </style>

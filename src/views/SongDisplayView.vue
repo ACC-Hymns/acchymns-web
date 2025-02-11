@@ -223,7 +223,6 @@ let large_timeline = ref();
 let mini_timeline = ref();
 
 const dropdown_open = ref<boolean>(false);
-const dropdown_animation = ref<boolean>(false);
 let time_dropdown_closed = 0;
 
 function open_dropdown() {
@@ -231,7 +230,6 @@ function open_dropdown() {
     let diff = now - time_dropdown_closed;
     if (diff <= 1) return;
     dropdown_open.value = true;
-    dropdown_animation.value = true;
 }
 function reset_dropdown() {
     if (!dropdown_open.value) return;
@@ -437,7 +435,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 </script>
 
 <template>
-    <div class="full" :class="{ dark: dropdown_animation }"></div>
+    <div class="full" :class="{ dark: !dropdown_open }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
@@ -453,7 +451,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                 </template>
 
                 <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
-                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" :dropdown_animation="dropdown_animation" v-on-click-outside="reset_dropdown">
+                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="reset_dropdown">
                     <div
                         @click="
                             () => {
@@ -463,10 +461,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         "
                     >
                         <div>Bookmark</div>
-                        <img
-                            class="ionicon"
-                            :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
-                        />
+                        <img class="ionicon" :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'" />
                     </div>
                     <div
                         v-if="can_share"
