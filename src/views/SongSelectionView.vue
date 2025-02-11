@@ -51,8 +51,8 @@ import { Share } from "@capacitor/share";
 
 async function shareSong() {
     await Share.share({
-        // title: `${title.value}`,
-        // text: `#${props.number} from ${book_summary.value?.name.medium} available online now!`,
+        title: `${book_name.value}`,
+        text: `${book_name.value} available online now!`,
         url: `https://acchymns.app/selection/${props.book}`,
     });
 }
