@@ -34,10 +34,7 @@ onMounted(async () => {
 
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);
-const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [
-    _ => dropdown_open.value = false,
-    { ignore: [dropdown_button] },
-];
+const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
 
 import { Share } from "@capacitor/share";
 
@@ -63,7 +60,12 @@ Share.canShare().then(res => (can_share.value = res.value));
                 <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
-                <img class="ionicon" ref="dropdown_button" @click="dropdown_open = !dropdown_open" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <img
+                    class="ionicon"
+                    ref="dropdown_button"
+                    @click="dropdown_open = !dropdown_open"
+                    src="/assets/ellipsis-horizontal-circle-outline.svg"
+                />
                 <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
                     <div
                         @click="
@@ -97,7 +99,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         v-if="can_share"
                         @click="
                             shareSong();
-                            reset_dropdown();
+                            dropdown_open = false;
                         "
                     >
                         <div>Share</div>

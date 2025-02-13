@@ -225,10 +225,7 @@ let mini_timeline = ref();
 
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);
-const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [
-    _ => dropdown_open.value = false,
-    { ignore: [dropdown_button] },
-];
+const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
 
 function close_broadcast_menu() {
     is_broadcast_menu_open.value = false;
@@ -442,7 +439,12 @@ Share.canShare().then(res => (can_share.value = res.value));
                     <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img class="ionicon" ref="dropdown_button" @click="dropdown_open = !dropdown_open" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <img
+                    class="ionicon"
+                    ref="dropdown_button"
+                    @click="dropdown_open = !dropdown_open"
+                    src="/assets/ellipsis-horizontal-circle-outline.svg"
+                />
                 <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
                     <div
                         @click="
