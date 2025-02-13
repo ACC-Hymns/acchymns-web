@@ -12,7 +12,7 @@ import { interpolate } from "polymorph-js";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
-import { useEventListener, useMediaControls } from "@vueuse/core";
+import { useEventListener, useMediaControls, type OnClickOutsideOptions } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
 
@@ -61,26 +61,8 @@ const menu_bar_visible = ref<boolean>(true);
 const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
 
 const dropdown_open = ref<boolean>(false);
-const dropdown_animation = ref<boolean>(false);
-let time_dropdown_closed = 0;
-
-function openDropdown() {
-    const now = Date.now();
-    let diff = now - time_dropdown_closed;
-    if (diff <= 1) return;
-    dropdown_open.value = true;
-    dropdown_animation.value = true;
-}
-
-function closeDropdown() {
-    if (!dropdown_open.value) return;
-    time_dropdown_closed = Date.now();
-
-    dropdown_animation.value = false;
-    setTimeout(() => {
-        dropdown_open.value = false;
-    }, 200);
-}
+const dropdown_button = ref<HTMLElement | null>(null);
+const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
 
 // Notes
 const { player } = useNotes();
@@ -238,40 +220,43 @@ async function broadcast() {
                     <img v-else class="ionicon" @click="toggleMediaPanel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img class="ionicon" @click="openDropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
-                <div class="_dropdown-content-wrapper" v-show="dropdown_open" v-on-click-outside="closeDropdown">
-                    <div class="_dropdown-content" :class="{ '_dropdown-content-active': dropdown_animation }">
-                        <div class="_dropdown-content-item" @click="toggleBookmark()">
-                            <div class="_dropdown-content-text">Bookmark</div>
-                            <img
-                                class="ionicon _dropdown-content-icon"
-                                :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'"
-                            />
-                        </div>
-                        <div
-                            v-if="can_share"
-                            class="_dropdown-content-item"
-                            @click="
-                                shareSong();
-                                closeDropdown();
-                            "
-                        >
-                            <div class="_dropdown-content-text">Share</div>
-                            <img class="ionicon _dropdown-content-icon" src="/assets/share-outline.svg" />
-                        </div>
-                        <div
-                            v-if="broadcast_api.is_authorized.value"
-                            class="_dropdown-content-item"
-                            @click="
-                                is_broadcast_menu_open = true;
-                                closeDropdown();
-                            "
-                        >
-                            <div class="_dropdown-content-text">Broadcast</div>
-                            <img class="ionicon _dropdown-content-icon" src="/assets/radio-outline.svg" />
-                        </div>
+                <img
+                    class="ionicon"
+                    ref="dropdown_button"
+                    @click="dropdown_open = !dropdown_open"
+                    src="/assets/ellipsis-horizontal-circle-outline.svg"
+                />
+                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
+                    <div
+                        @click="
+                                toggleBookmark();
+                                dropdown_open = false;
+                        "
+                    >
+                        <div>Bookmark</div>
+                        <img class="ionicon" :src="is_bookmarked ? '/assets/bookmark.svg' : '/assets/bookmark-outline.svg'" />
                     </div>
-                </div>
+                    <div
+                        v-if="can_share"
+                        @click="
+                                shareSong();
+                                dropdown_open = false;
+                        "
+                    >
+                        <div>Share</div>
+                        <img class="ionicon" src="/assets/share-outline.svg" />
+                    </div>
+                    <div
+                        v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"
+                        @click="
+                                is_broadcast_menu_open = true;
+                                dropdown_open = false;
+                        "
+                    >
+                        <div>Broadcast</div>
+                        <img class="ionicon" src="/assets/radio-outline.svg" />
+                    </div>
+                </DropdownMenu>
             </div>
         </div>
     </div>
@@ -453,90 +438,9 @@ async function broadcast() {
     visibility: visible;
 }
 
-@keyframes fadeIn {
-    from {
-        visibility: visible;
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0px);
-        visibility: visible;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        visibility: visible;
-        opacity: 1;
-        transform: translateY(0px);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-15px);
-        visibility: hidden;
-    }
-}
-
-._dropdown-content-wrapper {
-    position: absolute;
-    transition: all 0.2s ease;
+.dropdown-menu {
     top: calc(40px + env(safe-area-inset-top));
     right: 15px;
-    z-index: 2;
-}
-
-._dropdown-content {
-    position: relative;
-    background-color: var(--button-color);
-    color: var(--color);
-    border-radius: 15px;
-    min-width: 160px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    margin-top: 10px;
-    animation-name: fadeOut;
-    animation-duration: 0.2s;
-    animation-fill-mode: both;
-}
-
-._dropdown-content-top-item {
-    cursor: pointer;
-    border-bottom: var(--border-color);
-    padding: 0px 15px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-._dropdown-content-active {
-    visibility: visible;
-    animation-name: fadeIn;
-    animation-duration: 0.2s;
-}
-
-._dropdown-content-item {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-._dropdown-content-item:active,
-._dropdown-content-item:hover {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--button-active-color);
-    border-radius: 15px;
-}
-
-._dropdown-content-text {
-    padding: 15px;
-}
-._dropdown-content-icon {
-    padding: 15px;
 }
 
 .send-button {
