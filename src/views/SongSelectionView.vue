@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { vOnClickOutside } from "@vueuse/components";
+import type { OnClickOutsideOptions } from "@vueuse/core";
 
 const props = defineProps<{
     book: string;
@@ -32,20 +33,11 @@ onMounted(async () => {
 });
 
 const dropdown_open = ref<boolean>(false);
-let time_dropdown_closed = 0;
-
-function open_dropdown() {
-    const now = Date.now();
-    let diff = now - time_dropdown_closed;
-    if (diff <= 1) return;
-    dropdown_open.value = true;
-}
-function reset_dropdown() {
-    if (!dropdown_open.value) return;
-    time_dropdown_closed = Date.now();
-
-    dropdown_open.value = false;
-}
+const dropdown_button = ref<HTMLElement | null>(null);
+const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [
+    _ => dropdown_open.value = false,
+    { ignore: [dropdown_button] },
+];
 
 import { Share } from "@capacitor/share";
 
@@ -71,12 +63,12 @@ Share.canShare().then(res => (can_share.value = res.value));
                 <h1>{{ error_active ? "Unavailable" : book_name }}</h1>
             </div>
             <div class="title--right">
-                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
-                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="reset_dropdown">
+                <img class="ionicon" ref="dropdown_button" @click="dropdown_open = !dropdown_open" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
                     <div
                         @click="
                             router.replace(`/selection/${props.book}`);
-                            reset_dropdown();
+                            dropdown_open = false;
                         "
                     >
                         <div>Numerical</div>
@@ -85,7 +77,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                     <div
                         @click="
                             router.replace(`/selection/${props.book}/alphabetical`);
-                            reset_dropdown();
+                            dropdown_open = false;
                         "
                     >
                         <div>Alphabetical</div>
@@ -95,7 +87,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         v-if="index_available"
                         @click="
                             router.replace(`/selection/${props.book}/topical`);
-                            reset_dropdown();
+                            dropdown_open = false;
                         "
                     >
                         <div>Topical</div>

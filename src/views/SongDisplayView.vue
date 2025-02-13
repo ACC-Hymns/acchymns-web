@@ -16,6 +16,7 @@ import { ScreenOrientation } from "@capacitor/screen-orientation";
 import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
+import type { OnClickOutsideOptions } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
 
@@ -223,20 +224,11 @@ let large_timeline = ref();
 let mini_timeline = ref();
 
 const dropdown_open = ref<boolean>(false);
-let time_dropdown_closed = 0;
-
-function open_dropdown() {
-    const now = Date.now();
-    let diff = now - time_dropdown_closed;
-    if (diff <= 1) return;
-    dropdown_open.value = true;
-}
-function reset_dropdown() {
-    if (!dropdown_open.value) return;
-    time_dropdown_closed = Date.now();
-
-    dropdown_open.value = false;
-}
+const dropdown_button = ref<HTMLElement | null>(null);
+const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [
+    _ => dropdown_open.value = false,
+    { ignore: [dropdown_button] },
+];
 
 function close_broadcast_menu() {
     is_broadcast_menu_open.value = false;
@@ -450,13 +442,13 @@ Share.canShare().then(res => (can_share.value = res.value));
                     <img v-else class="ionicon" @click="toggle_media_panel()" src="/assets/musical-notes.svg" />
                 </template>
 
-                <img class="ionicon" @click="open_dropdown()" src="/assets/ellipsis-horizontal-circle-outline.svg" />
-                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="reset_dropdown">
+                <img class="ionicon" ref="dropdown_button" @click="dropdown_open = !dropdown_open" src="/assets/ellipsis-horizontal-circle-outline.svg" />
+                <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
                     <div
                         @click="
                             () => {
                                 toggleBookmark();
-                                reset_dropdown();
+                                dropdown_open = false;
                             }
                         "
                     >
@@ -468,7 +460,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         @click="
                             () => {
                                 shareSong();
-                                reset_dropdown();
+                                dropdown_open = false;
                             }
                         "
                     >
@@ -480,7 +472,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                         @click="
                             () => {
                                 is_broadcast_menu_open = true;
-                                reset_dropdown();
+                                dropdown_open = false;
                             }
                         "
                     >
