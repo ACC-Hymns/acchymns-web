@@ -27,17 +27,21 @@ const router = createRouter({
             path: "/selection/:book",
             props: true,
             component: () => import("../views/SongSelectionView.vue"),
+            children: [
+                {
+                    path: "",
+                    component: () => import("../views/selection/NumericalView.vue"),
+                },
+                {
+                    path: "alphabetical",
+                    component: () => import("../views/selection/AlphabeticalView.vue"),
+                },
+                {
+                    path: "topical",
+                    component: () => import("../views/selection/TopicalView.vue"),
+                },
+            ],
         },
-        {
-            path: "/topical/:book",
-            props: true,
-            component: () => import("../views/TopicalIndexView.vue"),
-        },
-        // {
-        //     path: "/alphabetical/:book",
-        //     props: true,
-        //     component: () => import("../views/AlphabeticalIndexView.vue"),
-        // },
         {
             path: "/display/:book/:number",
             props: true,

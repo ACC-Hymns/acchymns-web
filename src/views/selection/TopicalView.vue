@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref, computed, nextTick } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import { getAllBookMetaData, getSongMetaData, getBookIndex } from "@/scripts/book_import";
-import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
 import type { Song } from "@/scripts/types";
-import { useSessionStorage } from "@vueuse/core";
 import { saveScrollPosition, restoreScrollPosition, saveGroupOpened, getGroupOpened, removeGroupOpened, removeScrollPosition } from "@/router/scroll";
-import NavigationBar from "@/components/NavigationBar.vue";
 
-const props = defineProps<{
-    book: string;
-}>();
-const router = useRouter();
+const route = useRoute();
+const props = { book: route.params.book as string };
 
 const error_active = ref(false);
 
@@ -18,20 +14,9 @@ let book_ref = ref("");
 let primary_color = ref("#FFFFFF");
 let secondary_color = ref("#000000");
 let topical_index = ref<{ [topic: string]: Song[] }>({});
-let active_topic = ref<string>("");
 
 let BOOK_SONG_METADATA: any = null;
 let BOOK_METADATA: any = null;
-const songs_to_display = computed(() => {
-    if (isAlphabetical.value) {
-        return alphabeticalSongs.value;
-    } else {
-        if (active_topic.value in topical_index.value) {
-            return topical_index.value[active_topic.value];
-        }
-    }
-    return [];
-});
 
 onBeforeRouteLeave((_, from) => {
     saveScrollPosition(from.fullPath);
@@ -66,27 +51,6 @@ onMounted(async () => {
         );
     }
     song_number_groups.value = Object.keys(topical_index.value);
-    for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
-        let song: Song = BOOK_SONG_METADATA[song_number];
-        alphabeticalSongs.value.push({
-            title: song?.title ?? "",
-            number: song_number,
-            notes: song?.notes,
-            first_line: song?.first_line,
-        });
-    }
-    alphabeticalSongs.value.sort((a, b) =>
-        a.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "").localeCompare(b.title.replace(/[.,/#!$%^&*;:{}=\-_'"`~()]/g, "")),
-    );
-
-    if (isAlphabetical.value) {
-        title.value = "Alphabetical Index";
-        icon.value = import.meta.env.BASE_URL + "assets/list-bulleted.svg";
-    } else {
-        title.value = "Topical Index";
-        icon.value = import.meta.env.BASE_URL + "assets/text.svg";
-    }
-
     let group_ids = getGroupOpened(route.fullPath);
     if (group_ids != undefined) {
         group_ids.forEach(id => {
@@ -100,30 +64,8 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-let isAlphabetical = useSessionStorage<boolean>("isAlphabetical", false);
-const alphabeticalSongs = ref<Song[]>([]);
-let title = ref("Topical Index");
-let icon = ref(import.meta.env.BASE_URL + "assets/text.svg");
-function toggleAlphabetical() {
-    isAlphabetical.value = !isAlphabetical.value;
-    if (isAlphabetical.value) {
-        title.value = "Alphabetical Index";
-        icon.value = import.meta.env.BASE_URL + "assets/list-bulleted.svg";
-    } else {
-        title.value = "Topical Index";
-        icon.value = import.meta.env.BASE_URL + "assets/text.svg";
-    }
-    setTimeout(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }, 10);
-}
-
 let song_number_groups = ref<string[]>([]);
 let song_number_groups_active = ref<string[]>([]);
-const route = useRoute();
 function toggleDropdown(topic: string) {
     if (song_number_groups_active.value.includes(topic)) {
         song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(topic), 1);
@@ -141,71 +83,37 @@ function toggleDropdown(topic: string) {
 </script>
 
 <template>
-    <div class="menu">
-        <div class="title">
-            <img @click="router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">{{ title }}</h1>
-            <img @click="toggleAlphabetical()" class="ionicon title--right" :src="icon" />
-        </div>
-    </div>
-
-    <div v-if="error_active" class="fallback-container">
-        <img class="wifi-fallback" src="/assets/wifi_off.svg" />
-    </div>
-    <div v-else class="main-content">
+    <div>
         <!-- Each Topical Section -->
-        <div v-if="!isAlphabetical">
-            <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
-                <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
-                    <div class="song-title">{{ topic }}</div>
-                    <img
-                        class="ionicon nav__icon dropdown-icon"
-                        src="/assets/chevron-back-outline.svg"
-                        :class="{ 'dropdown-icon-active': song_number_groups_active.includes(topic.toString()) }"
-                    />
-                </div>
-                <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(topic.toString()) }">
-                    <div
-                        class="song-button-container"
-                        :class="{ 'song-button-container-active': song_number_groups_active.includes(topic.toString()) }"
+        <div v-for="(_topic_songs, topic) in topical_index" :key="topic" class="song-group-container" ref="song_group_elements">
+            <div class="song-group-title-container" @click="toggleDropdown(topic.toString())">
+                <div class="song-title">{{ topic }}</div>
+                <img
+                    class="ionicon nav__icon dropdown-icon"
+                    src="/assets/chevron-back-outline.svg"
+                    :class="{ 'dropdown-icon-active': song_number_groups_active.includes(topic.toString()) }"
+                />
+            </div>
+            <div class="wrapper" :class="{ 'wrapper-active': song_number_groups_active.includes(topic.toString()) }">
+                <div class="song-button-container" :class="{ 'song-button-container-active': song_number_groups_active.includes(topic.toString()) }">
+                    <RouterLink
+                        v-for="song in topical_index[topic]"
+                        :key="song.title + song.number"
+                        :to="`/display/${book_ref}/${song.number}`"
+                        class="song topic-song"
+                        :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
                     >
-                        <RouterLink
-                            v-for="song in topical_index[topic]"
-                            :key="song.title + song.number"
-                            :to="`/display/${book_ref}/${song.number}`"
-                            class="song topic-song"
-                            :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
-                        >
-                            <div>
-                                <div class="song__title">{{ song.title }}</div>
-                            </div>
-                            <div class="booktext--right">
-                                <div class="song__number">#{{ song.number }}</div>
-                            </div>
-                        </RouterLink>
-                    </div>
+                        <div>
+                            <div class="song__title">{{ song.title }}</div>
+                        </div>
+                        <div class="booktext--right">
+                            <div class="song__number">#{{ song.number }}</div>
+                        </div>
+                    </RouterLink>
                 </div>
             </div>
         </div>
-        <div class="song-list" v-else>
-            <RouterLink
-                v-for="song in songs_to_display"
-                :key="song.title + song.number"
-                :to="`/display/${book_ref}/${song.number}`"
-                class="song"
-                :style="`background: linear-gradient(135deg, ${primary_color}, ${secondary_color})`"
-            >
-                <div>
-                    <div class="song__title">{{ song.title }}</div>
-                </div>
-                <div class="booktext--right">
-                    <div class="song__number">#{{ song.number }}</div>
-                </div>
-            </RouterLink>
-        </div>
     </div>
-
-    <NavigationBar current_page="home" />
 </template>
 
 <style>
