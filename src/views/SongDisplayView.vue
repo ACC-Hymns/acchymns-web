@@ -205,7 +205,7 @@ async function broadcast() {
 
 <template>
     <audio ref="audio_source" :src="`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`"></audio>
-    <div class="full" :class="{ dark: dropdown_animation }"></div>
+    <div class="full" :class="{ dark: dropdown_open }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
             <div class="title--left">
