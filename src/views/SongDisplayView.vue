@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SongContainer from "@/components/SongContainer.vue";
+import DropdownMenu from "@/components/DropdownMenu.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
 import { ref, computed, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -229,8 +230,8 @@ async function broadcast() {
                 <DropdownMenu class="dropdown-menu" :dropdown_open="dropdown_open" v-on-click-outside="closeDropdown">
                     <div
                         @click="
-                                toggleBookmark();
-                                dropdown_open = false;
+                            toggleBookmark();
+                            dropdown_open = false;
                         "
                     >
                         <div>Bookmark</div>
@@ -239,8 +240,8 @@ async function broadcast() {
                     <div
                         v-if="can_share"
                         @click="
-                                shareSong();
-                                dropdown_open = false;
+                            shareSong();
+                            dropdown_open = false;
                         "
                     >
                         <div>Share</div>
@@ -249,8 +250,8 @@ async function broadcast() {
                     <div
                         v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"
                         @click="
-                                is_broadcast_menu_open = true;
-                                dropdown_open = false;
+                            is_broadcast_menu_open = true;
+                            dropdown_open = false;
                         "
                     >
                         <div>Broadcast</div>
