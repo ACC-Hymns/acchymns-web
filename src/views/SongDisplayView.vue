@@ -422,7 +422,12 @@ async function shareSong() {
 
 async function reportSong() {
     let reportAPI = useReportAPI();
-    reportAPI.report(props);
+    let result = await reportAPI.report(props);
+    if (!result) return;
+
+    await Toast.show({
+        text: `Issue reported successfully`,
+    });
 }
 
 const can_share = ref<boolean>(false);

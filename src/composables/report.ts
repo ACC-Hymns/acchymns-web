@@ -18,13 +18,13 @@ export function useReportAPI() {
             const data: PutItemCommandInput = {
                 TableName: "ACC_HYMNS_SONG_ISSUES",
                 Item: {
-                    "SONG_BOOK": {
+                    SONG_BOOK: {
                         S: song.book,
                     },
-                    "SONG_NUMBER": {
+                    SONG_NUMBER: {
                         S: song.number,
                     },
-                }
+                },
             };
             const command = new PutItemCommand(data);
             const response = await client.value.send(command);
