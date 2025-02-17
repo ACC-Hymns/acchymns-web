@@ -21,9 +21,15 @@ const { back } = useNavigator();
             <ul style="margin-top: 5px">
                 <li class="change">Bug fixes</li>
                 <li class="change">Performance improvements</li>
-                <li class="change">Added song sharing</li>
+                <li class="change">Added song & book sharing</li>
+                <li class="change">Improved starting notes & audio display</li>
+                <li class="change">Added previews when sharing</li>
+                <li class="change">Added quick reporting of song issues</li>
                 <li class="change">Added German Zion's Harp audio</li>
-                <li class="change">Added song previews when sharing</li>
+                <li class="change">Added Beerdigungslieder</li>
+                <li class="change">Added Lobet den Herrn</li>
+                <li class="change">Added Evangeliumssänger</li>
+                <li class="change">Added Mappe Öhringen</li>
             </ul>
         </a>
         <a class="changelog">
