@@ -410,6 +410,7 @@ function get_note_icon(note: string) {
 
 import { Share } from "@capacitor/share";
 import DropdownMenu from "@/components/DropdownMenu.vue";
+import { useReportAPI } from "@/composables/report";
 
 async function shareSong() {
     await Share.share({
@@ -417,6 +418,11 @@ async function shareSong() {
         text: `#${props.number} from ${book_summary.value?.name.medium} available online now!`,
         url: `https://acchymns.app/display/${props.book}/${props.number}`,
     });
+}
+
+async function reportSong() {
+    let reportAPI = useReportAPI();
+    reportAPI.report(props);
 }
 
 const can_share = ref<boolean>(false);
@@ -468,6 +474,17 @@ Share.canShare().then(res => (can_share.value = res.value));
                     >
                         <div>Share</div>
                         <img class="ionicon" src="/assets/share-outline.svg" />
+                    </div>
+                    <div
+                        @click="
+                            () => {
+                                reportSong();
+                                dropdown_open = false;
+                            }
+                        "
+                    >
+                        <div>Report Issue</div>
+                        <img class="ionicon" src="/assets/flag-outline.svg" />
                     </div>
                     <div
                         v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"
