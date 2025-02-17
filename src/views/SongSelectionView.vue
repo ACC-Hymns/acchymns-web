@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { getAllBookMetaData, getSongMetaData, handle_missing_book } from "@/scripts/book_import";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { vOnClickOutside } from "@vueuse/components";
 import type { OnClickOutsideOptions } from "@vueuse/core";
+import { useAllBookSummaries } from "@/composables/book_metadata";
 
 const props = defineProps<{
     book: string;
@@ -14,23 +14,9 @@ const router = useRouter();
 
 const error_active = ref(false);
 
-const book_name = ref("");
-const index_available = ref(false);
-
-onMounted(async () => {
-    const BOOK_METADATA = await getAllBookMetaData();
-    const songs = await getSongMetaData(props.book);
-
-    if (songs == null) {
-        await handle_missing_book(props.book);
-
-        error_active.value = true;
-        return;
-    }
-
-    book_name.value = BOOK_METADATA[props.book].name.medium;
-    index_available.value = BOOK_METADATA[props.book].indexAvailable;
-});
+const BOOK_METADATA = useAllBookSummaries();
+const book_name = computed<string>(() => BOOK_METADATA.result.value[props.book]?.name?.medium ?? "");
+const index_available = computed<boolean>(() => BOOK_METADATA.result.value[props.book]?.indexAvailable ?? false);
 
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);

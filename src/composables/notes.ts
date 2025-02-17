@@ -58,7 +58,7 @@ const isPlaying = ref(false);
 const timeouts: NodeJS.Timeout[] = [];
 
 const player = {
-    async play(notes: MaybeRef<string[]>) {
+    async play(notes: string[]) {
         // Only play notes if notes are not already playing
         if (isPlaying.value) return;
         isPlaying.value = true;
@@ -76,7 +76,7 @@ const player = {
         }
 
         console.log("attempting to start notes");
-        console.log(...unref(notes));
+        console.log(notes);
         await Tone.loaded();
 
         let end_time: number;
@@ -84,7 +84,7 @@ const player = {
         let count: number = 0;
         if (staggered.value) {
             // Schedule all the notes
-            for (const [index, note] of unref(notes).entries()) {
+            for (const [index, note] of notes.entries()) {
                 const timeout = setTimeout(
                     () => {
                         sampler.triggerAttack(note);
@@ -96,7 +96,7 @@ const player = {
             }
 
             // Notes play for each note * `interval` + additional `duration`;
-            end_time = duration.value + interval.value * unref(notes).length;
+            end_time = duration.value + interval.value * notes.length;
         } else {
             sampler.triggerAttack(unref(notes));
             end_time = duration.value; // Notes play for `duration` length when playing as a chord
