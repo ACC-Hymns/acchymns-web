@@ -155,12 +155,23 @@ async function traverseToAdjacentSong(dir: number) {
 
 // Sharing
 import { Share } from "@capacitor/share";
+import { useReportAPI } from "@/composables/report";
 
 async function shareSong() {
     await Share.share({
         title: `${title.value}`,
         text: `#${props.number} from ${book_summary.value?.name.medium} available online now!`,
         url: `https://acchymns.app/display/${props.book}/${props.number}`,
+    });
+}
+
+async function reportSong() {
+    let reportAPI = useReportAPI();
+    let result = await reportAPI.report(props);
+    if (!result) return;
+
+    await Toast.show({
+        text: `Issue reported successfully`,
     });
 }
 
@@ -246,6 +257,17 @@ async function broadcast() {
                     >
                         <div>Share</div>
                         <img class="ionicon" src="/assets/share-outline.svg" />
+                    </div>
+                    <div
+                        @click="
+                            () => {
+                                reportSong();
+                                dropdown_open = false;
+                            }
+                        "
+                    >
+                        <div>Report Issue</div>
+                        <img class="ionicon" src="/assets/flag-outline.svg" />
                     </div>
                     <div
                         v-if="broadcast_api.is_authorized.value && !is_broadcast_menu_open"
