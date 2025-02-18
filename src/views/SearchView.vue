@@ -280,7 +280,7 @@ function calculateIconFilter(color: string) {
 .dropdown-content-organizer {
     display: grid;
     grid-template-columns: 45vw 45vw;
-    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
 
     @media (min-width: 641px) {
