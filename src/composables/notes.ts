@@ -1,4 +1,4 @@
-import { useLocalStorage, type MaybeRef } from "@vueuse/core";
+import { useLocalStorage } from "@vueuse/core";
 import * as Tone from "tone";
 import { ref, unref } from "vue";
 

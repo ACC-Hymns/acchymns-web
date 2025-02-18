@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { request_client } from "@/scripts/broadcast";
-import { DynamoDBClient, PutItemCommand, UpdateItemCommand, type PutItemCommandInput, type UpdateItemCommandInput } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, PutItemCommand, type PutItemCommandInput } from "@aws-sdk/client-dynamodb";
 import type { SongReference } from "@/scripts/types";
 
 export function useReportAPI() {
