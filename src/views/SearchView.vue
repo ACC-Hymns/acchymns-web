@@ -257,7 +257,6 @@ function calculateIconFilter(color: string) {
 }
 
 .dropdown-content-wrapper {
-    padding-bottom: 100px;
     z-index: 1;
     position: absolute;
     transition: all 0.2s ease;
@@ -281,6 +280,8 @@ function calculateIconFilter(color: string) {
 .dropdown-content-organizer {
     display: grid;
     grid-template-columns: 45vw 45vw;
+    height: 300px;
+    overflow-y: auto;
 
     @media (min-width: 641px) {
         grid-template-columns: 1fr 1fr;
