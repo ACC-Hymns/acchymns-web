@@ -226,7 +226,7 @@ function calculateIconFilter(color: string) {
     <NavigationBar current_page="search" />
 </template>
 
-<style>
+<style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
 
