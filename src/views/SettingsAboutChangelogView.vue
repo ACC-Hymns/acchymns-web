@@ -16,6 +16,17 @@ const { back } = useNavigator();
 
     <div class="settings main-content">
         <a class="changelog">
+            <h3 class="release" style="margin-bottom: 0px">[v3.1]</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2025-02-21</h5>
+            <ul style="margin-top: 5px">
+                <li class="change">Bug fixes</li>
+                <li class="change">Performance improvements</li>
+                <li class="change">Added song sharing</li>
+                <li class="change">Added German Zion's Harp audio</li>
+                <li class="change">Added song previews when sharing</li>
+            </ul>
+        </a>
+        <a class="changelog">
             <h3 class="release" style="margin-bottom: 0px">[v3.0]</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2024-07-01</h5>
             <ul style="margin-top: 5px">

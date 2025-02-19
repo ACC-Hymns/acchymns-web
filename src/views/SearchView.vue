@@ -10,7 +10,6 @@ import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 import { stripSearchText } from "@/scripts/search";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { vOnClickOutside } from "@vueuse/components";
-import { Keyboard } from "@capacitor/keyboard";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -112,7 +111,7 @@ function resetDropdown() {
     }, 200);
 }
 function toggleDropdown() {
-    if(is_open.value) {
+    if (is_open.value) {
         resetDropdown();
     } else {
         is_open.value = true;
@@ -153,15 +152,6 @@ function calculateIconFilter(color: string) {
     const result = solver.solve();
     return result.filter;
 }
-
-const hide_footer = ref<boolean>(false);
-
-Keyboard.addListener("keyboardDidShow", () => {
-    hide_footer.value = true;
-});
-Keyboard.addListener("keyboardDidHide", () => {
-    hide_footer.value = false;
-});
 </script>
 
 <template>
@@ -183,14 +173,14 @@ Keyboard.addListener("keyboardDidHide", () => {
             <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
         </a>
         <div class="dropdown-content-wrapper" v-show="is_open">
-            <div class="dropdown-content" :class="{'dropdown-content-active' : dropdown_animation}">
+            <div class="dropdown-content" :class="{ 'dropdown-content-active': dropdown_animation }">
                 <a>
                     <div class="dropdown-content-top-item" @click="clearFilters">
                         <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
                         <div class="dropdown-content-text">All Hymnals</div>
                     </div>
                 </a>
-                <div :class="{'dropdown-content-organizer': available_books.length > 6}">
+                <div :class="{ 'dropdown-content-organizer': available_books.length > 6 }">
                     <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
                         <div class="dropdown-content-item">
                             <img
@@ -202,7 +192,6 @@ Keyboard.addListener("keyboardDidHide", () => {
                         </div>
                     </a>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -228,16 +217,16 @@ Keyboard.addListener("keyboardDidHide", () => {
             v-if="limited_search_results.length < search_results.length"
             @click="display_limit += increment"
             class="song"
-            style="background: var(--blue); justify-content: center; cursor: pointer;"
+            style="background: var(--blue); justify-content: center; cursor: pointer"
         >
             <div class="song__title">Show more</div>
         </div>
     </div>
 
-    <NavigationBar current_page="search" v-if="!hide_footer" />
+    <NavigationBar current_page="search" />
 </template>
 
-<style>
+<style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
 
@@ -268,7 +257,6 @@ Keyboard.addListener("keyboardDidHide", () => {
 }
 
 .dropdown-content-wrapper {
-    padding-bottom: 100px;
     z-index: 1;
     position: absolute;
     transition: all 0.2s ease;
@@ -292,8 +280,10 @@ Keyboard.addListener("keyboardDidHide", () => {
 .dropdown-content-organizer {
     display: grid;
     grid-template-columns: 45vw 45vw;
+    max-height: 300px;
+    overflow-y: auto;
 
-    @media (min-width:641px)  {
+    @media (min-width: 641px) {
         grid-template-columns: 1fr 1fr;
     }
 }

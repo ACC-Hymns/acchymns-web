@@ -464,7 +464,7 @@ type ReorderEvent = {
         </div>
     </div>
 
-    <NavigationBar current_page="bookmarks" v-if="!hide_footer" />
+    <NavigationBar current_page="bookmarks" />
 </template>
 
 <style>

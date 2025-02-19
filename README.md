@@ -60,6 +60,18 @@ npx cap run android
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+## Style Guide
+
+```ts
+const snake_case: string = "Lorem ipsum";
+type PascalCase = {
+    snake_case: string;
+};
+function doSomething(snake_case: PascalCase): void {
+    console.log(snake_case.snake_case);
+}
+```
+
 ## Developers
 
 - Christopher Weinhardt

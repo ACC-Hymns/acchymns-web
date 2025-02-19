@@ -118,7 +118,6 @@ async function exportLogs() {
 
 const can_share = ref<boolean>(false);
 Share.canShare().then(res => (can_share.value = res.value));
-
 </script>
 
 <template>

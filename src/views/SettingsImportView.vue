@@ -171,6 +171,7 @@ async function removeImportedURL(book_to_remove: BookDataSummary) {
         text: "Successfully removed hymnal!",
     });
 }
+
 async function deleteBook(book_to_delete: BookDataSummary) {
     book_to_delete.status = BookSourceType.IMPORTED;
     book_to_delete.src = known_references[book_to_delete.id as keyof typeof known_references];
@@ -202,9 +203,9 @@ async function deleteBook(book_to_delete: BookDataSummary) {
     <div class="main-content">
         <div class="input-option reference-option">
             <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Book Code" />
-            <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
+            <button @click="addImportedBookByCode(reference_input)" class="reference-button">
                 <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
-            </a>
+            </button>
         </div>
 
         <!-- Publicly available, but not imported books -->
@@ -323,10 +324,12 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 }
 
 .enter-button-icon {
-    translate: -2px 4px;
+    translate: -2px;
 }
 
 .reference-button {
+    display: inline-flex;
+    align-items: center;
     background-color: var(--div-color);
     border-radius: 15px;
     padding: 5px 10px;
