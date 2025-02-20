@@ -56,6 +56,7 @@ a, img {
     --media-type: var(--slider-base);
     --button-tap: #e4e4e4;
     --blue: #2196f3;
+    --blue-highlight: #cee9ff;
     --blue-disabled: #7ebdf1;
 }
 
@@ -90,6 +91,7 @@ a, img {
     --media-type: var(--menu-color);
     --button-tap: #575757;
     --blue: #2196f3;
+    --blue-highlight: #324b5e;
     --blue-disabled: #7ebdf1;
 }
 

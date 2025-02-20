@@ -99,6 +99,10 @@ const router = createRouter({
             path: "/broadcast",
             component: () => import("../views/BroadcastView.vue"),
         },
+        {
+            path: "/draggable",
+            component: () => import("../views/DraggableTest.vue"),
+        },
     ],
 });
 

@@ -101,6 +101,39 @@ type Bible = {
     books: BibleBook[];
 };
 
+type Folder = {
+    title: string;
+    open: boolean;
+    uuid: string;
+    items: BookmarkItem[];
+};
+
+enum PositionType {
+    SONG = "song",
+    FOLDER = "folder",
+    BLANK = "blank",
+}
+
+type BlankData = {
+    height: number;
+};
+
+type BookmarkItem = {
+    type: PositionType;
+    data: SongReference | Folder | SongSearchInfo | BlankData;
+    drag_data?: BookmarkDragData;
+};
+
+type BookmarkDragData = {
+    dragging: boolean;
+    folder_hover: boolean;
+    element: HTMLElement | null;
+    offset_x: number;
+    offset_y: number;
+    x: number;
+    y: number;
+}
+
 export type {
     BookSummary,
     Song,
@@ -117,5 +150,9 @@ export type {
     UpdatePackage,
     DownloadPromise,
     BookDataSummary,
+    Folder,
+    BookmarkItem,
+    BookmarkDragData,
+    BlankData,
 };
-export { BookSourceType };
+export { BookSourceType, PositionType };

@@ -2,10 +2,10 @@
 import SongContainer from "@/components/SongContainer.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { ref, computed, onUnmounted, watch } from "vue";
+import { ref, computed, onUnmounted, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { animate, pause_path, play_path } from "@/scripts/morph";
-import { type BookSummary, type SongReference } from "@/scripts/types";
+import { type BookSummary, type Folder, type SongReference } from "@/scripts/types";
 import { useNotes } from "@/composables/notes";
 import { Toast } from "@capacitor/toast";
 import { useCapacitorPreferences } from "@/composables/preferences";
@@ -16,28 +16,6 @@ import { vOnClickOutside } from "@vueuse/components";
 import { useEventListener, useMediaControls, type OnClickOutsideOptions } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
-
-// Bookmarks
-const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
-
-const is_bookmarked = computed(() => {
-    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
-});
-
-async function toggleBookmark() {
-    if (!is_bookmarked.value) {
-        bookmarks.value.push({ ...props } as SongReference);
-        await Toast.show({
-            text: `#${props.number} added to Bookmarks`,
-        });
-    } else {
-        const index = bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
-        bookmarks.value.splice(index, 1); // Remove the bookmarked song
-        await Toast.show({
-            text: `#${props.number} removed from Bookmarks`,
-        });
-    }
-}
 
 const media_starting_notes = ref<boolean>(true);
 
@@ -64,6 +42,12 @@ const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);
 const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
+
+onMounted(async () => {
+    folders.value = await get_folders();
+    folder_contains_song.value = await Promise.all(folders.value.map(folder => folder_has_song(folder.uuid, { book: props.book, number: props.number })));
+    all_bookmarks_contains_song.value = await all_bookmarks_has_song({ book: props.book, number: props.number });
+});
 
 // Notes
 const { player } = useNotes();
@@ -153,6 +137,31 @@ async function traverseToAdjacentSong(dir: number) {
     await router.replace(`/display/${props.book}/${song_numbers[index + dir]}`);
 }
 
+// Bookmarking
+
+import { add_song, add_song_to_folder, all_bookmarks_has_song, folder_has_song, get_folders } from "@/scripts/bookmarks";
+// Bookmarks
+const bookmarks = useCapacitorPreferences<SongReference[]>("bookmarks", []);
+let bookmark_panel = ref<boolean>(false);
+let folders = ref<Folder[]>([]);
+let folder_contains_song = ref<boolean[]>([]);
+let all_bookmarks_contains_song = ref<boolean>(false);
+const is_bookmarked = computed(() => {
+    return -1 != bookmarks.value.findIndex(bookmark => bookmark.book == props.book && bookmark.number == props.number);
+});
+
+async function toggleBookmark() {
+    folder_contains_song.value = await Promise.all(folders.value.map(folder => folder_has_song(folder.uuid, { book: props.book, number: props.number })));
+    if(folders.value.length > 0)
+        bookmark_panel.value = true;
+    else {
+        add_song({
+            book: props.book,
+            number: props.number
+        });
+    }
+}
+
 // Sharing
 import { Share } from "@capacitor/share";
 import { useReportAPI } from "@/composables/report";
@@ -217,6 +226,52 @@ async function broadcast() {
 
 <template>
     <audio ref="audio_source" :src="`https://acchymnsmedia.s3.us-east-2.amazonaws.com/${props.book}/${props.number}.mp3`"></audio>
+    <div class="modals" v-if="bookmark_panel">
+        <div class="screen-blur"></div>
+        <div class="modal-panel"  v-on-click-outside="() => bookmark_panel = false">
+            <h2 style="margin: 10px 0;">Bookmark</h2>
+            <div class="dropdown-content-wrapper">
+                <div class="dropdown-content" :class="{'dropdown-content-active' : true}">
+                    <a>
+                        <div :class="{'dropdown-content-top-item': folders.length > 0, 'dropdown-content-item': folders.length == 0}" @click="() => {
+                            add_song({
+                                book: props.book,
+                                number: props.number
+                            });
+                            bookmark_panel = false;
+                        }">
+                            <div class="dropdown-content-item-organizer">
+                                <div class="dropdown-content-text">All Bookmarks</div>
+                                <img v-if="all_bookmarks_contains_song" class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
+                            </div>
+                        </div>
+                    </a>
+                    <div>
+                        <a v-for="folder in folders" :key="folder.title" @click="() => {
+                            add_song_to_folder(folder.uuid, { 
+                                book: props.book, 
+                                number: props.number 
+                            });
+                            bookmark_panel = false;
+                        }" ref="book_filters">
+                            <div class="dropdown-content-item">
+                                <div class="dropdown-content-item-organizer">
+                                    <img class="ionicon checkmark-icon" src="/assets/folder-open-outline.svg" />
+                                    <div class="dropdown-content-text">{{ folder.title }}</div>
+                                    <img v-if="folder_contains_song[folders.indexOf(folder)]" class="ionicon checkmark-icon" src="/assets/checkmark-circle.svg" />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="modal-panel-buttons">
+                <button class="cancel-button" @click="bookmark_panel = false">Cancel</button>
+            </div>
+        </div>
+    </div>
     <div class="full" :class="{ dark: dropdown_open }"></div>
     <div class="menu" :class="{ 'menu-hidden': !menu_bar_visible }">
         <div class="title">
@@ -452,6 +507,95 @@ async function broadcast() {
 </template>
 
 <style>
+
+.dropdown-content-wrapper {
+    z-index: 1;
+    transition: all 0.2s ease;
+}
+
+.dropdown-content {
+    position: relative;
+    background-color: var(--button-color);
+    color: var(--color);
+    border-radius: 15px;
+    min-width: 160px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 30px;
+}
+
+.dropdown-content-organizer {
+    display: grid;
+    grid-template-columns: 45vw 45vw;
+
+    @media (min-width:641px)  {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.dropdown-content-top-item {
+    cursor: pointer;
+    border-bottom: var(--border-color);
+    padding: 0px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dropdown-content-item-organizer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.dropdown-content-item {
+    cursor: pointer;
+    padding: 0px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-content-text {
+    padding: 15px 0px 15px 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: left;
+}
+
+.screen-blur {
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(1px);
+    background-color: var(--overlay-color);
+    position: fixed;
+    z-index: 5;
+    opacity: 1;
+}
+
+.modal-panel {
+    width: 70vw;
+    min-height: max-content;
+    background-color: var(--div-color);
+    border-radius: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
+    z-index: 6;
+    transform: translate(-50%, -50%);
+    transition:
+        opacity 0.5s,
+        visibility 0.5s ease;
+    opacity: 1;
+    text-align: center;
+    padding: 15px;
+    color: var(--color);
+}
+
 .full {
     position: fixed;
     width: 100%;

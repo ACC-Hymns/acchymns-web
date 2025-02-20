@@ -361,6 +361,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
     z-index: 5;
     opacity: 1;
     transition: opacity 0.5s;
+    transform: translateY(-55px);
 }
 
 .modal-open {
@@ -370,7 +371,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
 }
 
 .update-panel {
-    width: 35vh;
+    width: 70vw;
     min-height: max-content;
     background-color: var(--div-color);
     border-radius: 15px;

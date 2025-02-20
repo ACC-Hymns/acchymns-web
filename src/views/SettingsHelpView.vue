@@ -269,7 +269,7 @@ Share.canShare().then(res => (can_share.value = res.value));
 }
 
 .update-panel {
-    width: 35vh;
+    width: 70vw;
     min-height: max-content;
     background-color: var(--div-color);
     border-radius: 15px;
