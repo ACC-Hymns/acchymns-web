@@ -451,7 +451,7 @@ function get_lock_icon() {
                 <div class="book-selector" :class="{'hide-scrollbar': platform !== 'web'}">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(e,i - 1)" class="biblebook"
+                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(e,i - 1)" class="biblebook white-text"
                         :class="{'selected': selected_hymnal == i - 1}" :style="{'background-color': book_sources[i - 1].primaryColor}">{{ book_sources[i - 1].name?.medium }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
@@ -600,6 +600,10 @@ label {
 }
 :root {
     --key-size: 8vh;
+}
+
+.white-text {
+    color: white;
 }
 
 .hexinput {
