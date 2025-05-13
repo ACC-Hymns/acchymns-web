@@ -7,13 +7,13 @@ import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-let search_query = ref("");
-let stripped_query = computed(() => {
+const search_query = ref("");
+const stripped_query = computed(() => {
     return stripSearchText(search_query.value);
 });
-let available_songs = ref<SongSearchInfo[]>([]);
+const available_songs = ref<SongSearchInfo[]>([]);
 
-let search_results = computed(() => {
+const search_results = computed(() => {
     return available_songs.value
         .filter(s => {
             return (
@@ -61,7 +61,11 @@ onMounted(async () => {
         </button>
     </div>
 
-    <h2>Bookmarked Songs</h2>
+    <h2 v-if="search_results.length > 0">Bookmarked Songs</h2>
+    <div v-if="available_songs.length == 0" class="warning-label-container">
+        <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
+        <h5 class="warning-label">Your bookmarked songs will appear here</h5>
+    </div>
     <div class="songlist">
         <RouterLink
             v-for="song in search_results"
@@ -83,7 +87,25 @@ onMounted(async () => {
     <NavigationBar current_page="bookmarks" />
 </template>
 
-<style>
+<style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
+
+.warning-icon {
+    width: 20px;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+.warning-label-container {
+    margin: 10px 30px;
+    display: flex;
+    justify-content: left;
+    text-align: left;
+}
+.warning-label {
+    color: var(--toolbar-text);
+    display: inline-block;
+    margin: 0 0;
+    line-height: 25px;
+}
 </style>

@@ -14,7 +14,6 @@ import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
 import NavigationBar from "@/components/NavigationBar.vue";
-import { useReportAPI } from "@/composables/report";
 
 let is_connected = ref<boolean>(false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
@@ -424,7 +423,6 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
     justify-content: left;
     text-align: left;
 }
-
 .warning-label {
     color: var(--toolbar-text);
     display: inline-block;

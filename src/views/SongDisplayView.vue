@@ -56,7 +56,7 @@ const book_summary = computed<BookSummary | undefined>(() => BOOK_METADATA.resul
 const SONG_METADATA = useBookSongMetaData(props.book);
 const title = computed(() => SONG_METADATA.result.value[props.number]?.title ?? "Unknown");
 const song_notes = computed(() => [...(SONG_METADATA.result.value[props.number]?.notes ?? [])].reverse()); // Reverse as we want bass -> soprano
-const song_count = computed(() => Object.keys(SONG_METADATA.result.value).length);
+const song_count = computed(() => Object.keys(SONG_METADATA.result.value).length); // This doesn't work
 
 const menu_bar_visible = ref<boolean>(true);
 const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
@@ -423,8 +423,7 @@ async function broadcast() {
         </template>
     </div>
     <div
-        class="w-100"
-        style="height: 100vh"
+        style="height: 100vh; width: 100%; overflow: hidden"
         @mousedown="e => (hide_touch_pos = { x: e.screenX, y: e.screenY })"
         @mouseup="
             e => {

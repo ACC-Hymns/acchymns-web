@@ -117,6 +117,12 @@ function compute_dark_mode(s1: string, s2: string, dark_mode: boolean) {
 
 <style scoped>
 @import "@/assets/css/song.css";
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
 .bottom-container {
     padding-bottom: 30px;
     display: flex;

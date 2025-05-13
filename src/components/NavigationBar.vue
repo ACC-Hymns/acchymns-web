@@ -19,6 +19,7 @@ if (Capacitor.getPlatform() !== "web") {
     });
 }
 </script>
+
 <template>
     <nav class="nav" v-show="!hide_footer">
         <RouterLink to="/" class="nav__link" :class="{ 'nav__link--active': current_page == 'home' }">
@@ -43,3 +44,60 @@ if (Capacitor.getPlatform() !== "web") {
         </RouterLink>
     </nav>
 </template>
+
+<style scoped>
+.nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    min-height: 55px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--toolbar);
+    padding-top: 5px;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5px);
+    display: flex;
+    z-index: 1;
+}
+
+.nav > * {
+    flex: 1;
+}
+
+.nav__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: var(--toolbar-text);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 10px;
+}
+
+.nav__link--active {
+    color: var(--toolbar-text-active);
+}
+
+.nav__text {
+    padding-top: 3px;
+    font-family: 'Lato', sans-serif;
+}
+
+.nav__icon {
+    font-size: 23px;
+    margin-bottom: 3px;
+    width: 23px;
+}
+.nav__icon--active {
+    font-size: 25px;
+    margin-bottom: 3px;
+    width: 25px;
+    filter: var(--svg-color);
+}
+</style>

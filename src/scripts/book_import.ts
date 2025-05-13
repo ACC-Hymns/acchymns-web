@@ -21,6 +21,7 @@ import router from "@/router";
 async function getBookUrls() {
     const book_sources_raw = await Preferences.get({ key: "bookSources" });
     const book_sources: BookDataSummary[] = JSON.parse(book_sources_raw.value ?? "[]");
+    console.log("Book Sources:", book_sources);
     return book_sources.filter(b => b.status != BookSourceType.PREVIEW && b.status != BookSourceType.HIDDEN).map(b => b.src);
 }
 
