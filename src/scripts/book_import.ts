@@ -420,6 +420,9 @@ async function delete_import_summary(book: BookDataSummary) {
 }
 
 async function download_import_summary(book: BookDataSummary) {
+    if (Capacitor.getPlatform() === 'android') {
+        await Filesystem.requestPermissions();
+    }
     // setup folder structure
     try {
         await Filesystem.stat({
@@ -471,6 +474,10 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
         let songs: SongList | null = await getSongMetaData(book.id);
         let num_of_songs = Object.entries(songs as any).length;
     
+        if (Capacitor.getPlatform() === 'android') {
+            await Filesystem.requestPermissions();
+        }
+
         // setup folder structure
         try {
             await Filesystem.stat({
