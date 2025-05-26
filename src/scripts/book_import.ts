@@ -58,18 +58,18 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             })
         }
 
         let book_dir = await Filesystem.readdir({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: "Hymnals/"
         });
         
@@ -83,7 +83,7 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
                 continue;
 
             let signature_blob = await Filesystem.readFile({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${file.name}/.signature`
             })
             let signature_data = JSON.parse(atob(signature_blob.data.toString()));
@@ -148,18 +148,18 @@ async function loadBookSources() {
     if(Capacitor.getPlatform() !== "web") {
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             })
         }
 
         let book_dir = await Filesystem.readdir({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: "Hymnals/"
         });
         
@@ -174,7 +174,7 @@ async function loadBookSources() {
 
             try {
                 await Filesystem.stat({
-                    directory: Directory.Documents,
+                    directory: Directory.Data,
                     path: `Hymnals/${file.name}/summary.json`
                 });
             } catch (e) {
@@ -219,7 +219,7 @@ async function loadBookSources() {
                     let source_path = "";
                     try {
                         let result = await Filesystem.stat({
-                            directory: Directory.Documents,
+                            directory: Directory.Data,
                             path: `Imports/${book}`
                         })
                         source_path = result.uri;
@@ -395,7 +395,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         let path = update.paths[i];
         console.log(`Downloading (${update.book_short}/${path})`);
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${update.book_short}/${path}`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/${path}`
@@ -403,7 +403,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         progress_callback((i + 1)/update.paths.length);
     }
     await Filesystem.downloadFile({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Hymnals/${update.book_short}/.signature`,
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/.signature`
@@ -413,7 +413,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
 
 async function delete_import_summary(book: BookDataSummary) {
     await Filesystem.rmdir({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Imports/${book.id}`,
         recursive: true
     })
@@ -426,30 +426,30 @@ async function download_import_summary(book: BookDataSummary) {
     // setup folder structure
     try {
         await Filesystem.stat({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: "Imports/"
         });
     } catch (e) {
         await Filesystem.mkdir({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: "Imports/"
         })
     }
 
     try {
         await Filesystem.stat({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Imports/${book.id}`
         })
     } catch (e) {
         await Filesystem.mkdir({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Imports/${book.id}`
         })
     }
 
     let result = await Filesystem.downloadFile({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Imports/${book.id}/summary.json`,
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`
@@ -460,7 +460,7 @@ async function download_import_summary(book: BookDataSummary) {
 
 async function clean_up_cancel(book: BookDataSummary) {
     await Filesystem.rmdir({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Hymnals/${book.id}`,
         recursive: true
     })
@@ -481,42 +481,42 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
         // setup folder structure
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: "Hymnals/"
             })
         }
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}`
             })
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}`
             })
         }
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/songs`
             })
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/songs`
             })
         }
     
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${book.id}/songs.json`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs.json`
@@ -529,7 +529,7 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
 
         // Download book signature for updates
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${book.id}/.signature`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/.signature`
@@ -542,7 +542,7 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
         
         if(book_summary?.indexAvailable) {
             await Filesystem.downloadFile({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/index.json`,
                 progress: false,
                 url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/index.json`
@@ -576,7 +576,7 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
         for(let song_number in songs) {
             let url = `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs/${song_number}.${ext}`
             Filesystem.downloadFile({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/songs/${song_number}.${ext}`,
                 progress: false,
                 url: url
@@ -603,7 +603,7 @@ function download_book(book: BookDataSummary, progress_callback: (book: BookData
             if(i/num_of_songs >= 1) {
 
                 Filesystem.downloadFile({
-                    directory: Directory.Documents,
+                    directory: Directory.Data,
                     path: `Hymnals/${book.id}/summary.json`,
                     progress: false,
                     url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`
