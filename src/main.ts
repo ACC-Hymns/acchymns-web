@@ -10,6 +10,7 @@ import "@/assets/css/fonts.css";
 import "@/scripts/dark_mode";
 
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
+import { Posthog } from '@capawesome/capacitor-posthog';
 defineCustomElements(window);
 
 const app = createApp(App);
@@ -25,6 +26,11 @@ import { migrate } from "@/scripts/migrate";
 async function load() {
     await loadBookSources();
     await migrate();
+
+    await Posthog.setup({
+        apiKey: 'phc_2ykxG0dZyno8rUEmVrwfsV2YvKjhMJH1jBMy4J8o3cg',
+        host: 'https://us.i.posthog.com',
+    });
 
     app.mount("#app");
 }

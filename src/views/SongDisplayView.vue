@@ -2,7 +2,7 @@
 import SongContainer from "@/components/SongContainer.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { ref, computed, onUnmounted, watch } from "vue";
+import { ref, computed, onUnmounted, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { type BookSummary, type SongReference } from "@/scripts/types";
@@ -14,6 +14,7 @@ import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
 import { useEventListener, useMediaControls, type OnClickOutsideOptions } from "@vueuse/core";
+import { usePostHog } from '@/composables/usePostHog'
 
 const props = defineProps<SongReference>();
 
@@ -64,6 +65,21 @@ const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);
 const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
+
+const { posthog } = usePostHog();
+
+// Log title when loaded
+watch(title, (newTitle) => {
+    if (newTitle && newTitle !== 'Unknown') {
+        posthog.capture('hymn_viewed', {
+            hymnal_id: props.book,
+            hymnal_name: book_summary.value?.name.medium,
+            song_id: props.number,
+            song_name: newTitle,
+        });
+    }
+})
+
 
 // Notes
 const { player } = useNotes();
