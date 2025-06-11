@@ -74,7 +74,7 @@ function doSomething(snake_case: PascalCase): void {
 
 ## Developers
 
-- Christopher Weinhardt
+- Bro. Christopher Weinhardt
 - Timothy Weinhardt
 - Dallas Hart
 - Sis. Ruth Oldja
