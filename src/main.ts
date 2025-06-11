@@ -27,7 +27,6 @@ async function load() {
     await loadBookSources();
     await migrate();
 
-    console.log("apikey: " + import.meta.env.VITE_POSTHOG_KEY)
     await Posthog.setup({
         apiKey: import.meta.env.VITE_POSTHOG_KEY,
         host: "https://us.i.posthog.com",
