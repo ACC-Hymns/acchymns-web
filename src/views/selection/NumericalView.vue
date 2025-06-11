@@ -40,6 +40,8 @@ onMounted(async () => {
     }
     song_numbers.value = Object.keys(songs).sort((a, b) => a.localeCompare(b, "en", { numeric: true }));
 
+    // 400 songs? 5 groups
+    // 1-99, 100-199, 200-299, 300-399, 400
     let song_count = song_numbers.value.length;
     let num_groups = Math.ceil(song_count / 100);
 
@@ -49,8 +51,12 @@ onMounted(async () => {
         song_number_groups.value?.push(
             song_numbers.value.filter(song => {
                 let song_num = song.replace(re, "");
-
-                return i * 100 < Number(song_num) && Number(song_num) <= (i + 1) * 100;
+                let start = i * 100;
+                let end = (i + 1) * 100 - 1;
+                if (i === num_groups - 1 && song_count === end + 1) {
+                    return start <= Number(song_num);
+                }
+                return start <= Number(song_num) && Number(song_num) <= end;
             }),
         );
     }

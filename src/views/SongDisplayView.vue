@@ -344,7 +344,7 @@ async function broadcast() {
 
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, 'media-panel-content-landscape': isLandscape }">
         <div class="media-panel-blur"></div>
-        <div class="media-panel-top-row">
+        <div class='media-panel-top-row' :style="{'padding': isLandscape ? '20px 15px 15px 15px' : '20px 15px 35px 15px'}">
             <div></div>
             <div class="media-type">
                 <!-- Piano shows if it is available & media_starting_notes = false -->
@@ -707,7 +707,7 @@ async function broadcast() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 15px 15px;
+    padding: 20px 15px 35px 15px;
 }
 
 .media-panel-top-row > :last-child,
@@ -771,7 +771,7 @@ async function broadcast() {
     z-index: 1;
     transition: transform 0.3s ease;
     transform: translateY(0%);
-    min-height: 200px;
+    min-height: 250px;
 }
 .media-panel-content-landscape {
     min-height: 150px;
@@ -802,7 +802,7 @@ async function broadcast() {
 
 .page-button-container {
     position: fixed;
-    bottom: 15px;
+    bottom: 5vh;
     z-index: 1;
 }
 
