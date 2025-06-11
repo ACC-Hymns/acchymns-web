@@ -15,6 +15,7 @@ const public_references = {
     HG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HG`,
     CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
     HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HZ`,
+    HSZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HSZ`,
     ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZG`,
     XC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/XC`,
     ZGE: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZGE`,
@@ -35,7 +36,6 @@ const known_references = {
     ...public_references,
     ARF: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ARF`,
     ARFR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ARFR`,
-    HSZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HSZ`,
 } as const;
 
 export { prepackaged_books, prepackaged_book_urls, public_references, branch, known_references };

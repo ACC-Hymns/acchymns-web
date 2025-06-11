@@ -178,7 +178,7 @@ Share.canShare().then(res => (can_share.value = res.value));
                 <span>Privacy Policy</span>
                 <img class="ionicon" src="/assets/link-outline.svg" />
             </a>
-            <RouterLink v-if="is_prerelease" to="/settings/help/console" class="settings-option">
+            <RouterLink to="/settings/help/console" class="settings-option">
                 <span>Debug Console</span>
                 <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
             </RouterLink>

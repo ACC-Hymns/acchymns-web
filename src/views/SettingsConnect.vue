@@ -203,8 +203,12 @@ function set_selected_hymnal(id: number) {
 
 async function broadcast_song_number() {
     let book = book_sources.value[selected_hymnal.value];
-    if (!book) return book;
-    await set(request_client(), selected_church.value, song_number.value, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
+    if(!book)
+        return book;
+
+    let number = song_number.value.replace(/^0+/, '');
+
+    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
 }
 
 let old_testament = ref<BibleBook[]>([]);
@@ -461,15 +465,8 @@ function get_lock_icon() {
                 <div class="book-selector" :class="{ 'hide-scrollbar': platform !== 'web' }">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a
-                        v-for="i in book_sources.length"
-                        :key="i"
-                        @click="set_selected_hymnal(i - 1)"
-                        class="biblebook"
-                        :class="{ selected: selected_hymnal == i - 1 }"
-                        :style="{ 'background-color': book_sources[i - 1].primaryColor }"
-                        >{{ book_sources[i - 1].name?.medium }}</a
-                    >
+                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(i - 1)" class="white-text biblebook"
+                        :class="{'selected': selected_hymnal == i - 1}" :style="{'background-color': book_sources[i - 1].primaryColor}">{{ book_sources[i - 1].name?.medium }}</a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -610,6 +607,10 @@ label {
 }
 :root {
     --key-size: 8vh;
+}
+
+.white-text {
+    color: white !important;
 }
 
 .hexinput {
