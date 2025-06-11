@@ -15,6 +15,7 @@ const public_references = {
     HG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HG`,
     CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
     HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HZ`,
+    HSZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HSZ`,
     ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZG`,
     XC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/XC`,
     ZGE: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZGE`,

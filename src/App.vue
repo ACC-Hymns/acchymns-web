@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import SplashScreen from "@/components/SplashScreen.vue";
+//import SplashScreen from "@/components/SplashScreen.vue";
 import { RouterView } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
+//import { useLocalStorage } from "@vueuse/core";
 
-let landing_complete = useLocalStorage<boolean>("update3showcase", false);
+//let landing_complete = useLocalStorage<boolean>("update3showcase", false);
 </script>
 
 <template>
-    <SplashScreen v-if="!landing_complete" />
-    <RouterView v-else />
+    <!-- <SplashScreen v-if="!landing_complete" /> -->
+    <RouterView/>
 </template>
 
 <style>

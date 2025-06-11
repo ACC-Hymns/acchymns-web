@@ -342,7 +342,7 @@ async function broadcast() {
         <button class="send-button" @click="broadcast()">Send</button>
     </div>
 
-    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible }">
+    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, 'media-panel-content-landscape': isLandscape }">
         <div class="media-panel-blur"></div>
         <div class="media-panel-top-row">
             <div></div>
@@ -727,10 +727,12 @@ async function broadcast() {
 /* Media type indicator */
 .media-type {
     background-color: var(--media-type);
-    height: 33px;
+    height: 35px;
     border-radius: 25px;
     display: flex;
-    flex-shrink: 0;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0px 1px;
     cursor: pointer;
 }
 
@@ -753,17 +755,26 @@ async function broadcast() {
 .media-type-indicator.active {
     background-color: var(--media-type-active);
     padding: 0px 25px;
+    height: 33px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 25px;
 }
 
 .media-panel-content {
     width: 100%;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
     position: fixed;
     left: 0;
     bottom: 0;
     z-index: 1;
     transition: transform 0.3s ease;
     transform: translateY(0%);
+    min-height: 200px;
+}
+.media-panel-content-landscape {
+    min-height: 150px;
 }
 .hidden-panel {
     transform: translateY(100%);
