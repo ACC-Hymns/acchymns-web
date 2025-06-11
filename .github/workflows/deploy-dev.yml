@@ -11,6 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

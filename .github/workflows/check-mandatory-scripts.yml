@@ -7,6 +7,10 @@ jobs:
   lint:
     name: Check `npm run lint`
     runs-on: ubuntu-latest
+    
+    env:
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -25,7 +29,12 @@ jobs:
 
   signatures:
     name: Check `./generate_signatures.mjs`
+
     runs-on: ubuntu-latest
+
+    env:
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4

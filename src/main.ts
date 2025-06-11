@@ -28,7 +28,7 @@ async function load() {
     await migrate();
 
     await Posthog.setup({
-        apiKey: 'phc_2ykxG0dZyno8rUEmVrwfsV2YvKjhMJH1jBMy4J8o3cg',
+        apiKey: import.meta.env.VITE_POSTHOG_KEY,
         host: 'https://us.i.posthog.com',
     });
 

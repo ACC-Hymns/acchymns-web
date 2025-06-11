@@ -21,6 +21,9 @@ jobs:
     needs: wait
     runs-on: ubuntu-latest
 
+    env:
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4

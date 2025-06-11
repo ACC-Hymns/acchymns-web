@@ -35,3 +35,4 @@ resources/android/**/*
 joined
 cropped
 PDFAnalyzer/songs
+.env
