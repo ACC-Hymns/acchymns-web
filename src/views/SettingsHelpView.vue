@@ -98,6 +98,8 @@ async function clearAllData() {
 import { Share } from "@capacitor/share";
 import { useConsoleStore } from "@/stores/console";
 import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
+import { useLocalStorage } from "@vueuse/core";
+import { usePostHog } from "@/composables/usePostHog";
 
 const platform = ref<string>(Capacitor.getPlatform());
 const console_store = useConsoleStore();
@@ -118,6 +120,30 @@ async function exportLogs() {
 
 const can_share = ref<boolean>(false);
 Share.canShare().then(res => (can_share.value = res.value));
+
+let opt_out_data_collection = useLocalStorage("ACCOptions.optOutDataCollection", false);
+
+const { posthog } = usePostHog();
+
+async function toggleDataCollection() {
+    if (opt_out_data_collection.value) {
+        opt_out_data_collection.value = false;
+        posthog.opt_in_capturing();
+        return;
+    }
+
+    const confirmed = await Dialog.confirm({
+        title: "Opt-Out of Data Collection",
+        message: "Are you sure you want to opt-out of data collection?",
+        okButtonTitle: "Yes",
+        cancelButtonTitle: "No",
+    });
+
+    if (confirmed.value) {
+        opt_out_data_collection.value = true;
+        posthog.opt_out_capturing();
+    }
+}
 </script>
 
 <template>
@@ -188,6 +214,9 @@ Share.canShare().then(res => (can_share.value = res.value));
             </a>
             <a v-if="!isWeb" class="settings-option" @click="forceUpdate()">
                 <span>Force Update Hymnals</span>
+            </a>
+            <a class="settings-option" @click="toggleDataCollection()">
+                <span>{{ opt_out_data_collection ? "Opt-In to Data Collection" : "Opt-Out of Data Collection" }}</span>
             </a>
             <a class="settings-option" @click="clearFetchCache()">
                 <span>Clear Cache</span>

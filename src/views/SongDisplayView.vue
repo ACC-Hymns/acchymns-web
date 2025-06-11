@@ -2,7 +2,7 @@
 import SongContainer from "@/components/SongContainer.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { ref, computed, onUnmounted, watch } from "vue";
+import { ref, computed, onUnmounted, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { type BookSummary, type SongReference } from "@/scripts/types";
@@ -14,6 +14,7 @@ import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
 import { useEventListener, useMediaControls, type OnClickOutsideOptions } from "@vueuse/core";
+import { usePostHog } from "@/composables/usePostHog";
 
 const props = defineProps<SongReference>();
 
@@ -64,6 +65,20 @@ const hide_touch_pos = ref<Coordinate>({ x: 0, y: 0 });
 const dropdown_open = ref<boolean>(false);
 const dropdown_button = ref<HTMLElement | null>(null);
 const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown_open.value = false), { ignore: [dropdown_button] }];
+
+const { posthog } = usePostHog();
+
+// Log title when loaded
+watch(title, newTitle => {
+    if (newTitle && newTitle !== "Unknown") {
+        posthog.capture("hymn_viewed", {
+            hymnal_id: props.book,
+            hymnal_name: book_summary.value?.name.medium,
+            song_id: props.number,
+            song_name: newTitle,
+        });
+    }
+});
 
 // Notes
 const { player } = useNotes();
@@ -327,9 +342,9 @@ async function broadcast() {
         <button class="send-button" @click="broadcast()">Send</button>
     </div>
 
-    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible }">
+    <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, 'media-panel-content-landscape': isLandscape }">
         <div class="media-panel-blur"></div>
-        <div class="media-panel-top-row">
+        <div class='media-panel-top-row' :style="{'padding': isLandscape ? '20px 15px 15px 15px' : '20px 15px 35px 15px'}">
             <div></div>
             <div class="media-type">
                 <!-- Piano shows if it is available & media_starting_notes = false -->
@@ -692,7 +707,7 @@ async function broadcast() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 15px 15px;
+    padding: 20px 15px 35px 15px;
 }
 
 .media-panel-top-row > :last-child,
@@ -712,10 +727,12 @@ async function broadcast() {
 /* Media type indicator */
 .media-type {
     background-color: var(--media-type);
-    height: 33px;
+    height: 35px;
     border-radius: 25px;
     display: flex;
-    flex-shrink: 0;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0px 1px;
     cursor: pointer;
 }
 
@@ -738,17 +755,26 @@ async function broadcast() {
 .media-type-indicator.active {
     background-color: var(--media-type-active);
     padding: 0px 25px;
+    height: 33px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 25px;
 }
 
 .media-panel-content {
     width: 100%;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
     position: fixed;
     left: 0;
     bottom: 0;
     z-index: 1;
     transition: transform 0.3s ease;
     transform: translateY(0%);
+    min-height: 250px;
+}
+.media-panel-content-landscape {
+    min-height: 150px;
 }
 .hidden-panel {
     transform: translateY(100%);
@@ -776,7 +802,7 @@ async function broadcast() {
 
 .page-button-container {
     position: fixed;
-    bottom: 15px;
+    bottom: 5vh;
     z-index: 1;
 }
 
