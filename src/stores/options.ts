@@ -39,6 +39,6 @@ export function resetOptions() {
             localStorage.removeItem(key);
         }
     }
-    Preferences.remove({ 'key': "bookOrder"});
-    Preferences.remove({ 'key': "broadcasting_auth_token"});
+    Preferences.remove({ key: "bookOrder" });
+    Preferences.remove({ key: "broadcasting_auth_token" });
 }

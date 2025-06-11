@@ -13,12 +13,14 @@ jobs:
       
       - name: Build
         run: |
-          echo "VITE_BASE_URL=/" > .env
+          export VITE_BASE_URL="/"
+          export SEO_URL="https://acchymns.app"
           npm i
           npm run deploy-check
           npm run build
           npx cap copy web # This runs our helper script to compress the song book info
           cp dist/index.html dist/404.html # This is to avoid 404 errors on reload (Ugly fix but okay I guess)
+          node ./seo/seo-deployment.mjs
           touch dist/.nojekyll
       
       - name: Upload Github Pages Artifact

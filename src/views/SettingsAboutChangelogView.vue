@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import NavigationBar from "@/components/NavigationBar.vue";
 import { useNavigator } from "@/router/navigator";
 const { back } = useNavigator();
 </script>
@@ -8,11 +8,24 @@ const { back } = useNavigator();
     <div class="menu">
         <div class="title">
             <img @click="back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Changelog</h1>
+            <div class="title--center">
+                <h1>Changelog</h1>
+            </div>
         </div>
     </div>
 
     <div class="settings main-content">
+        <a class="changelog">
+            <h3 class="release" style="margin-bottom: 0px">[v3.1]</h3>
+            <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2025-02-21</h5>
+            <ul style="margin-top: 5px">
+                <li class="change">Bug fixes</li>
+                <li class="change">Performance improvements</li>
+                <li class="change">Added song sharing</li>
+                <li class="change">Added German Zion's Harp audio</li>
+                <li class="change">Added song previews when sharing</li>
+            </ul>
+        </a>
         <a class="changelog">
             <h3 class="release" style="margin-bottom: 0px">[v3.0]</h3>
             <h5 class="releaseDate" style="color: rgb(200, 200, 200)">2024-07-01</h5>
@@ -74,24 +87,7 @@ const { back } = useNavigator();
         </a>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>

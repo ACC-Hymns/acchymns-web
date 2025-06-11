@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, onUnmounted, onUpdated, ref } from "vue";
+import { computed, onBeforeUnmount, onUpdated, ref } from "vue";
 import { Toast } from "@capacitor/toast";
-import { Network } from '@capacitor/network';
+import { Network } from "@capacitor/network";
 import { Capacitor } from "@capacitor/core";
-import { RouterLink, onBeforeRouteLeave } from "vue-router";
-import { useNavigator } from "@/router/navigator";
-const { back } = useNavigator();
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { known_references, public_references } from "@/scripts/constants";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import { useLocalStorage } from "@vueuse/core";
-import router from "@/router";
-import { download_book, loadBookSources, checkForUpdates, delete_import_summary, download_import_summary } from "@/scripts/book_import";
+import { download_book, loadBookSources, delete_import_summary, download_import_summary } from "@/scripts/book_import";
 import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/scripts/types";
 import { Directory, Filesystem } from "@capacitor/filesystem";
+import NavigationBar from "@/components/NavigationBar.vue";
 
 let downloadProgress = ref(new Map<string, number>());
 let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
@@ -22,7 +19,7 @@ onBeforeUnmount(async () => {
     downloads.value.forEach(async (value, key) => {
         await value.cancel();
         downloadProgress.value.delete(key);
-    }) 
+    });
 });
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
@@ -30,36 +27,33 @@ let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
-    let books = book_sources.value.filter((book) => book.status == BookSourceType.PREVIEW);
+    let books = book_sources.value.filter(book => book.status == BookSourceType.PREVIEW);
     return books;
 });
 
 // Imported books
 const imported_books = computed(() => {
-    return book_sources.value.filter((book) => book.status == BookSourceType.IMPORTED);
+    return book_sources.value.filter(book => book.status == BookSourceType.IMPORTED);
 });
 
 // Downloaded books
 const downloaded_books = computed(() => {
-    return book_sources.value.filter((book) => book.status == BookSourceType.DOWNLOADED);
+    return book_sources.value.filter(book => book.status == BookSourceType.DOWNLOADED);
 });
 
 const reference_input = ref("");
 
 async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
     let book = book_sources.value.find(b => b.id == input_book.id);
-    if(book == undefined)
-        return false;
+    if (book == undefined) return false;
 
-    let connection = (await Network.getStatus()).connected
-    if(connection) {
-        if(Capacitor.getPlatform() !== 'web')
-            await download_import_summary(book);
-    }
-    else {
+    let connection = (await Network.getStatus()).connected;
+    if (connection) {
+        if (Capacitor.getPlatform() !== "web") await download_import_summary(book);
+    } else {
         await Toast.show({
-            text: "No internet connection."
-        })
+            text: "No internet connection.",
+        });
         return false;
     }
 
@@ -111,8 +105,7 @@ async function addImportedBookByCode(short_book_name: string) {
     short_book_name = short_book_name.toUpperCase();
     if (short_book_name in known_references) {
         const to_import = book_sources.value.find(b => b.id == short_book_name);
-        if(to_import == undefined)
-            return;
+        if (to_import == undefined) return;
 
         // Check for duplicate url
         if (to_import.status == BookSourceType.IMPORTED || to_import.status == BookSourceType.DOWNLOADED) {
@@ -135,13 +128,17 @@ async function addImportedBookByCode(short_book_name: string) {
 }
 
 async function download(book_to_download: BookDataSummary) {
-    if((await Network.getStatus()).connected) {
-        let d: DownloadPromise = download_book(book_to_download, (book, progress) => download_progress(book, progress), (book, url: string) => download_finish(book, url))
+    if ((await Network.getStatus()).connected) {
+        let d: DownloadPromise = download_book(
+            book_to_download,
+            (book, progress) => download_progress(book, progress),
+            (book, url: string) => download_finish(book, url),
+        );
         downloads.value.set(book_to_download.id, d);
     } else {
         await Toast.show({
-            text: "No internet connection."
-        })
+            text: "No internet connection.",
+        });
     }
     console.log("Downloads:", downloads.value);
 }
@@ -152,8 +149,8 @@ async function download_finish(book: BookDataSummary, new_url: string) {
     book.src = new_url;
     book.status = BookSourceType.DOWNLOADED;
     await Toast.show({
-        text: "Successfully downloaded hymnal!"
-    })
+        text: "Successfully downloaded hymnal!",
+    });
 }
 
 onUpdated(() => {
@@ -161,53 +158,54 @@ onUpdated(() => {
 });
 
 async function removeImportedURL(book_to_remove: BookDataSummary) {
-    book_to_remove.status = (Object.keys(public_references).includes(book_to_remove.id)) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
+    book_to_remove.status = Object.keys(public_references).includes(book_to_remove.id) ? BookSourceType.PREVIEW : BookSourceType.HIDDEN;
 
-    if(downloads.value.has(book_to_remove.id)) {
+    if (downloads.value.has(book_to_remove.id)) {
         downloads.value.get(book_to_remove.id)?.cancel();
         downloadProgress.value.delete(book_to_remove.id);
     }
 
-    if(Capacitor.getPlatform() !== 'web')
-        await delete_import_summary(book_to_remove);
+    if (Capacitor.getPlatform() !== "web") await delete_import_summary(book_to_remove);
 
     await Toast.show({
-        text: "Successfully removed hymnal!"
-    })
+        text: "Successfully removed hymnal!",
+    });
 }
+
 async function deleteBook(book_to_delete: BookDataSummary) {
     book_to_delete.status = BookSourceType.IMPORTED;
     book_to_delete.src = known_references[book_to_delete.id as keyof typeof known_references];
     await Filesystem.rmdir({
         directory: Directory.Data,
         path: `Hymnals/${book_to_delete.id}`,
-        recursive: true
-    })
+        recursive: true,
+    });
 
     downloadProgress.value.delete(book_to_delete.id);
 
     loadBookSources();
     await Toast.show({
-        text: "Successfully deleted hymnal!"
-    })
+        text: "Successfully deleted hymnal!",
+    });
 }
-
 </script>
 
 <template>
     <div class="menu">
         <div class="title">
             <img @click="$router.back()" class="ionicon title--left" src="/assets/chevron-back-outline.svg" />
-            <h1 class="title--center">Import Hymnals</h1>
+            <div class="title--center">
+                <h1>Import Hymnals</h1>
+            </div>
         </div>
     </div>
 
     <div class="main-content">
         <div class="input-option reference-option">
             <input v-model.trim="reference_input" type="text" class="search-bar" placeholder="Book Code" />
-            <a :disabled="reference_input.length === 0" @click="addImportedBookByCode(reference_input)" class="reference-button">
+            <button @click="addImportedBookByCode(reference_input)" class="reference-button">
                 <img class="ionicon enter-button-icon" src="/assets/enter-outline.svg" />
-            </a>
+            </button>
         </div>
 
         <!-- Publicly available, but not imported books -->
@@ -236,18 +234,23 @@ async function deleteBook(book_to_delete: BookDataSummary) {
                     <button v-if="(downloadProgress.get(book.id) || 0) < 1 && Capacitor.getPlatform() !== 'web'" @click="download(book)">
                         <img class="ionicon ionicon-custom add-button-icon" src="/assets/arrow-down-circle-outline.svg" />
                     </button>
-                    <ProgressBar v-if="
-                        (downloadProgress.get(book.id || '') || 0) >= 1 &&
-                        (downloadProgress.get(book.id || '') || 0) < 100 && 
-                        Capacitor.getPlatform() !== 'web'" 
-                     :radius="15" :progress="(downloadProgress.get(book.id || '') || 0)" :stroke="3" :transform="'rotate(-90) translate(-25 -8)'"></ProgressBar>
+                    <ProgressBar
+                        v-if="
+                            (downloadProgress.get(book.id || '') || 0) >= 1 &&
+                            (downloadProgress.get(book.id || '') || 0) < 100 &&
+                            Capacitor.getPlatform() !== 'web'
+                        "
+                        :radius="15"
+                        :progress="downloadProgress.get(book.id || '') || 0"
+                        :stroke="3"
+                        :transform="'rotate(-90) translate(-25 -8)'"
+                    ></ProgressBar>
                     <button @click="removeImportedURL(book)">
                         <img class="ionicon ionicon-custom add-button-icon" src="/assets/close.svg" />
                     </button>
                 </div>
             </HomeBookBox>
         </div>
-
 
         <!-- Downloaded Books -->
         <h2 v-if="downloaded_books.length != 0">Downloaded Hymnals</h2>
@@ -264,24 +267,7 @@ async function deleteBook(book_to_delete: BookDataSummary) {
         <div style="padding-bottom: 200px"></div>
     </div>
 
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/home-outline.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/settings.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar current_page="settings" />
 </template>
 
 <style>
@@ -338,10 +324,12 @@ async function deleteBook(book_to_delete: BookDataSummary) {
 }
 
 .enter-button-icon {
-    translate: -2px 4px;
+    translate: -2px;
 }
 
 .reference-button {
+    display: inline-flex;
+    align-items: center;
     background-color: var(--div-color);
     border-radius: 15px;
     padding: 5px 10px;

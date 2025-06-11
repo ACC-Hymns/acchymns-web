@@ -60,6 +60,18 @@ npx cap run android
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+## Style Guide
+
+```ts
+const snake_case: string = "Lorem ipsum";
+type PascalCase = {
+    snake_case: string;
+};
+function doSomething(snake_case: PascalCase): void {
+    console.log(snake_case.snake_case);
+}
+```
+
 ## Developers
 
 - Christopher Weinhardt
@@ -73,10 +85,12 @@ Thanks for supplying PDFs, scans, advice, or assistance.
 
 - Bro. Ceda Bekic
 - Bro. Peter Denzinger
+- Bro. Zoltan Dobosi
 - Sis. Rosina Stefan
-- Seby Nitz
+- Bro. Seby Nitz
+- Elias Prohaszka
 - Joey Nitz
-- Susie Nitz
+- Susan Nitz
 - Neven Jokic
 - Alyssa Nenadov
 - Riley Nenadov
