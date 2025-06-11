@@ -68,19 +68,19 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
-                path: "Hymnals/",
+                directory: Directory.Data,
+                path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
-                path: "Hymnals/",
-            });
+                directory: Directory.Data,
+                path: "Hymnals/"
+            })
         }
 
-        const book_dir = await Filesystem.readdir({
-            directory: Directory.Documents,
-            path: "Hymnals/",
+        let book_dir = await Filesystem.readdir({
+            directory: Directory.Data,
+            path: "Hymnals/"
         });
 
         for (const f in book_dir.files) {
@@ -88,15 +88,14 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
 
             if (file.type != "directory") continue;
 
-            if (!prepackaged_books.concat(Object.keys(known_references)).includes(file.name)) continue;
-
-            const signature_blob = await Filesystem.readFile({
-                directory: Directory.Documents,
-                path: `Hymnals/${file.name}/.signature`,
-            });
-            const signature_data = JSON.parse(atob(signature_blob.data.toString()));
-            const updated_signature_data = book_signature.find(sig => sig.name == signature_data.name);
-            if (updated_signature_data == undefined) continue;
+            let signature_blob = await Filesystem.readFile({
+                directory: Directory.Data,
+                path: `Hymnals/${file.name}/.signature`
+            })
+            let signature_data = JSON.parse(atob(signature_blob.data.toString()));
+            let updated_signature_data = book_signature.find(sig => sig.name == signature_data.name);
+            if(updated_signature_data == undefined)
+                continue;
 
             console.log(`Verification Results (${signature_data.name})`);
             const verification_error = verifySignatures(signature_data, updated_signature_data);
@@ -153,19 +152,19 @@ async function loadBookSources() {
     if (Capacitor.getPlatform() !== "web") {
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
-                path: "Hymnals/",
+                directory: Directory.Data,
+                path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
-                path: "Hymnals/",
-            });
+                directory: Directory.Data,
+                path: "Hymnals/"
+            })
         }
 
-        const book_dir = await Filesystem.readdir({
-            directory: Directory.Documents,
-            path: "Hymnals/",
+        let book_dir = await Filesystem.readdir({
+            directory: Directory.Data,
+            path: "Hymnals/"
         });
 
         for (const f in book_dir.files) {
@@ -177,8 +176,8 @@ async function loadBookSources() {
 
             try {
                 await Filesystem.stat({
-                    directory: Directory.Documents,
-                    path: `Hymnals/${file.name}/summary.json`,
+                    directory: Directory.Data,
+                    path: `Hymnals/${file.name}/summary.json`
                 });
             } catch (e) {
                 continue;
@@ -221,10 +220,10 @@ async function loadBookSources() {
 
                     let source_path = "";
                     try {
-                        const result = await Filesystem.stat({
-                            directory: Directory.Documents,
-                            path: `Imports/${book}`,
-                        });
+                        let result = await Filesystem.stat({
+                            directory: Directory.Data,
+                            path: `Imports/${book}`
+                        })
                         source_path = result.uri;
                     } catch (e) {
                         if ((await Network.getStatus()).connected) {
@@ -389,7 +388,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         const path = update.paths[i];
         console.log(`Downloading (${update.book_short}/${path})`);
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${update.book_short}/${path}`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/${path}`,
@@ -397,7 +396,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         progress_callback((i + 1) / update.paths.length);
     }
     await Filesystem.downloadFile({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Hymnals/${update.book_short}/.signature`,
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/.signature`,
@@ -407,40 +406,43 @@ async function download_update_package(update: UpdatePackage, progress_callback:
 
 async function delete_import_summary(book: BookDataSummary) {
     await Filesystem.rmdir({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Imports/${book.id}`,
         recursive: true,
     });
 }
 
 async function download_import_summary(book: BookDataSummary) {
+    if (Capacitor.getPlatform() === 'android') {
+        await Filesystem.requestPermissions();
+    }
     // setup folder structure
     try {
         await Filesystem.stat({
-            directory: Directory.Documents,
-            path: "Imports/",
+            directory: Directory.Data,
+            path: "Imports/"
         });
     } catch (e) {
         await Filesystem.mkdir({
-            directory: Directory.Documents,
-            path: "Imports/",
-        });
+            directory: Directory.Data,
+            path: "Imports/"
+        })
     }
 
     try {
         await Filesystem.stat({
-            directory: Directory.Documents,
-            path: `Imports/${book.id}`,
-        });
+            directory: Directory.Data,
+            path: `Imports/${book.id}`
+        })
     } catch (e) {
         await Filesystem.mkdir({
-            directory: Directory.Documents,
-            path: `Imports/${book.id}`,
-        });
+            directory: Directory.Data,
+            path: `Imports/${book.id}`
+        })
     }
 
-    const result = await Filesystem.downloadFile({
-        directory: Directory.Documents,
+    let result = await Filesystem.downloadFile({
+        directory: Directory.Data,
         path: `Imports/${book.id}/summary.json`,
         progress: false,
         url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`,
@@ -451,7 +453,7 @@ async function download_import_summary(book: BookDataSummary) {
 
 async function clean_up_cancel(book: BookDataSummary) {
     await Filesystem.rmdir({
-        directory: Directory.Documents,
+        directory: Directory.Data,
         path: `Hymnals/${book.id}`,
         recursive: true,
     });
@@ -463,55 +465,55 @@ function download_book(
     finish_callback: (book: BookDataSummary, url: string) => void,
 ): DownloadPromise {
     let cancel_download = false;
-    async function async_download_book(
-        book: BookDataSummary,
-        progress_callback: (book: BookDataSummary, progress: number) => void,
-        finish_callback: (book: BookDataSummary, url: string) => void,
-    ) {
-        const book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`);
-        const ext = book_summary?.fileExtension;
-        const songs: SongList | null = await getSongMetaData(book.id);
-        const num_of_songs = Object.entries(songs as any).length;
+    async function async_download_book(book: BookDataSummary, progress_callback: (book: BookDataSummary, progress: number) => void, finish_callback: (book: BookDataSummary, url: string) => void) {    
+        let book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`)
+        let ext = book_summary?.fileExtension;
+        let songs: SongList | null = await getSongMetaData(book.id);
+        let num_of_songs = Object.entries(songs as any).length;
+    
+        if (Capacitor.getPlatform() === 'android') {
+            await Filesystem.requestPermissions();
+        }
 
         // setup folder structure
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
-                path: "Hymnals/",
+                directory: Directory.Data,
+                path: "Hymnals/"
             });
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
-                path: "Hymnals/",
-            });
+                directory: Directory.Data,
+                path: "Hymnals/"
+            })
         }
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
-                path: `Hymnals/${book.id}`,
-            });
+                directory: Directory.Data,
+                path: `Hymnals/${book.id}`
+            })
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
-                path: `Hymnals/${book.id}`,
-            });
+                directory: Directory.Data,
+                path: `Hymnals/${book.id}`
+            })
         }
 
         try {
             await Filesystem.stat({
-                directory: Directory.Documents,
-                path: `Hymnals/${book.id}/songs`,
-            });
+                directory: Directory.Data,
+                path: `Hymnals/${book.id}/songs`
+            })
         } catch (e) {
             await Filesystem.mkdir({
-                directory: Directory.Documents,
-                path: `Hymnals/${book.id}/songs`,
-            });
+                directory: Directory.Data,
+                path: `Hymnals/${book.id}/songs`
+            })
         }
 
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${book.id}/songs.json`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs.json`,
@@ -524,7 +526,7 @@ function download_book(
 
         // Download book signature for updates
         await Filesystem.downloadFile({
-            directory: Directory.Documents,
+            directory: Directory.Data,
             path: `Hymnals/${book.id}/.signature`,
             progress: false,
             url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/.signature`,
@@ -537,7 +539,7 @@ function download_book(
 
         if (book_summary?.indexAvailable) {
             await Filesystem.downloadFile({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/index.json`,
                 progress: false,
                 url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/index.json`,
@@ -571,7 +573,7 @@ function download_book(
         for (const song_number in songs) {
             const url = `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs/${song_number}.${ext}`;
             Filesystem.downloadFile({
-                directory: Directory.Documents,
+                directory: Directory.Data,
                 path: `Hymnals/${book.id}/songs/${song_number}.${ext}`,
                 progress: false,
                 url: url,
@@ -595,7 +597,7 @@ function download_book(
             // check for final song
             if (i / num_of_songs >= 1) {
                 Filesystem.downloadFile({
-                    directory: Directory.Documents,
+                    directory: Directory.Data,
                     path: `Hymnals/${book.id}/summary.json`,
                     progress: false,
                     url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`,
