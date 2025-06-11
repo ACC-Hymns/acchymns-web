@@ -14,7 +14,7 @@ import { request_client, set } from "@/scripts/broadcast";
 import { useBroadcastAPI } from "@/composables/broadcast";
 import { vOnClickOutside } from "@vueuse/components";
 import { useEventListener, useMediaControls, type OnClickOutsideOptions } from "@vueuse/core";
-import { usePostHog } from '@/composables/usePostHog'
+import { usePostHog } from "@/composables/usePostHog";
 
 const props = defineProps<SongReference>();
 
@@ -69,17 +69,16 @@ const closeDropdown: [(_: any) => void, OnClickOutsideOptions] = [_ => (dropdown
 const { posthog } = usePostHog();
 
 // Log title when loaded
-watch(title, (newTitle) => {
-    if (newTitle && newTitle !== 'Unknown') {
-        posthog.capture('hymn_viewed', {
+watch(title, newTitle => {
+    if (newTitle && newTitle !== "Unknown") {
+        posthog.capture("hymn_viewed", {
             hymnal_id: props.book,
             hymnal_name: book_summary.value?.name.medium,
             song_id: props.number,
             song_name: newTitle,
         });
     }
-})
-
+});
 
 // Notes
 const { player } = useNotes();

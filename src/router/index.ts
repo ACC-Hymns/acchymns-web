@@ -3,7 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import { App } from "@capacitor/app";
 import type { URLOpenListenerEvent } from "@capacitor/app";
 
-import { usePostHog } from '@/composables/usePostHog'
+import { usePostHog } from "@/composables/usePostHog";
 
 const { posthog } = usePostHog();
 

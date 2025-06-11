@@ -10,7 +10,7 @@ import "@/assets/css/fonts.css";
 import "@/scripts/dark_mode";
 
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
-import { Posthog } from '@capawesome/capacitor-posthog';
+import { Posthog } from "@capawesome/capacitor-posthog";
 defineCustomElements(window);
 
 const app = createApp(App);
@@ -29,7 +29,7 @@ async function load() {
 
     await Posthog.setup({
         apiKey: import.meta.env.VITE_POSTHOG_KEY,
-        host: 'https://us.i.posthog.com',
+        host: "https://us.i.posthog.com",
     });
 
     app.mount("#app");

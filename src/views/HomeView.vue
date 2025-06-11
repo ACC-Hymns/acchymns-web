@@ -154,10 +154,11 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
         book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED || (hasConnection && book.status == BookSourceType.IMPORTED)
     );
 }
+let updated_privacy_policy = useLocalStorage<boolean>("updated_privacy_policy", false);
 </script>
 
 <template>
-    <div :class="{ 'modal-open': update_packages.length > 0 && update_reminder <= Date.now() }">
+    <div :class="{ 'modal-open': (update_packages.length > 0 && update_reminder <= Date.now()) || !updated_privacy_policy }">
         <div v-if="update_packages.length > 0 && update_reminder <= Date.now()" class="update-section">
             <div class="background-blur" ref="update_background_element"></div>
             <div class="update-panel" ref="update_panel_element">
@@ -187,6 +188,26 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
                             :transform="'rotate(-90) translate(-24, 0)'"
                         ></ProgressBar>
                         <span v-else>Update</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="!updated_privacy_policy" class="update-section">
+            <div class="background-blur" ref="update_background_element"></div>
+            <div class="update-panel" ref="update_panel_element">
+                <h2>Notice</h2>
+                <p>
+                    We've recently updated our
+                    <a href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA" class="privacy-policy-link"
+                        >Privacy Policy</a
+                    >.<br /><br />
+                    We encourage you to review the changes. By clicking "I Understand", you agree to the new privacy policy.
+                </p>
+
+                <div class="update-button-layout">
+                    <a class="confirm-button-blue" @click="updated_privacy_policy = true">
+                        <span>I Understand</span>
                     </a>
                 </div>
             </div>
@@ -264,11 +285,14 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
             </template>
         </div>
     </div>
-
-    <NavigationBar current_page="home" />
+    <NavigationBar v-if="updated_privacy_policy" current_page="home" />
 </template>
 
 <style scoped>
+.privacy-policy-link {
+    color: var(--blue);
+    text-decoration: underline;
+}
 .sortable-fallback {
     opacity: 1 !important;
 }
@@ -337,7 +361,16 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
     border-radius: 15px;
     margin: 0 0 0 15px;
 }
-
+.confirm-button-blue {
+    width: 120px;
+    height: 30px;
+    background-color: var(--blue);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 30px;
+}
 .update-button {
     width: 50px;
     height: 20px;
