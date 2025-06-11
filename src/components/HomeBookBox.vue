@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { useBookSummary } from "@/composables/book_metadata";
 import { getBookDataSummary } from "@/scripts/book_import";
-import router from "@/router";
-import { BookSourceType, type BookDataSummary, type BookSummary } from "@/scripts/types";
-import { Capacitor } from "@capacitor/core";
+import { type BookDataSummary } from "@/scripts/types";
 import { onMounted, ref } from "vue";
 
 const props = withDefaults(
@@ -13,7 +11,7 @@ const props = withDefaults(
     }>(),
     {
         withLink: true,
-    }
+    },
 );
 
 const {
@@ -29,13 +27,17 @@ const book_data_summary = ref<BookDataSummary>();
 
 onMounted(async () => {
     book_data_summary.value = await getBookDataSummary(book.value);
-})
-
+});
 </script>
 <template>
     <!-- Book has been successfully loaded -->
     <template v-if="isFinished && book != null">
-        <component :is="withLink ? 'RouterLink' : 'div'" :to="`selection/${book.name.short}`" class="book" :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`">
+        <component
+            :is="withLink ? 'RouterLink' : 'div'"
+            :to="`selection/${book.name.short}`"
+            class="book"
+            :style="`background: linear-gradient(135deg, ${book.primaryColor}, ${book.secondaryColor})`"
+        >
             <div class="book_title">{{ book.name.medium }}</div>
             <!-- Allow a consumer to insert whatever they'd like -->
             <slot></slot>

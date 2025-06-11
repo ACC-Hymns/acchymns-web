@@ -3,6 +3,10 @@ import HomeView from "@/views/HomeView.vue";
 import { App } from "@capacitor/app";
 import type { URLOpenListenerEvent } from "@capacitor/app";
 
+import { usePostHog } from "@/composables/usePostHog";
+
+const { posthog } = usePostHog();
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     scrollBehavior(to, _, savedPosition) {
@@ -27,17 +31,21 @@ const router = createRouter({
             path: "/selection/:book",
             props: true,
             component: () => import("../views/SongSelectionView.vue"),
+            children: [
+                {
+                    path: "",
+                    component: () => import("../views/selection/NumericalView.vue"),
+                },
+                {
+                    path: "alphabetical",
+                    component: () => import("../views/selection/AlphabeticalView.vue"),
+                },
+                {
+                    path: "topical",
+                    component: () => import("../views/selection/TopicalView.vue"),
+                },
+            ],
         },
-        {
-            path: "/topical/:book",
-            props: true,
-            component: () => import("../views/TopicalIndexView.vue"),
-        },
-        // {
-        //     path: "/alphabetical/:book",
-        //     props: true,
-        //     component: () => import("../views/AlphabeticalIndexView.vue"),
-        // },
         {
             path: "/display/:book/:number",
             props: true,
@@ -94,7 +102,7 @@ const router = createRouter({
         {
             path: "/broadcast",
             component: () => import("../views/BroadcastView.vue"),
-        }
+        },
     ],
 });
 
@@ -103,6 +111,7 @@ const router = createRouter({
 App.addListener("appUrlOpen", (event: URLOpenListenerEvent) => {
     // Example url: https://acchymns.app/tabs/tabs2
     // slug = /tabs/tabs2
+    console.log("[Deep Linking] Navigating to:", event.url);
     const slug = event.url.split(".app").pop();
 
     // We only push to the route if there is a slug present

@@ -1,23 +1,29 @@
 PODS:
-  - Capacitor (6.0.0):
+  - Capacitor (7.0.1):
     - CapacitorCordova
-  - CapacitorApp (6.0.0):
+  - CapacitorApp (7.0.0):
     - Capacitor
-  - CapacitorCordova (6.0.0)
-  - CapacitorDialog (6.0.0):
+  - CapacitorCordova (7.0.1)
+  - CapacitorDialog (7.0.0):
     - Capacitor
-  - CapacitorFilesystem (6.0.0):
+  - CapacitorFilesystem (7.0.0):
     - Capacitor
-  - CapacitorNetwork (6.0.0):
+  - CapacitorKeyboard (7.0.0):
     - Capacitor
-  - CapacitorPluginIosWebviewConfigurator (0.0.1):
+  - CapacitorNetwork (7.0.0):
     - Capacitor
-  - CapacitorPreferences (6.0.0):
+  - CapacitorPreferences (7.0.0):
     - Capacitor
-  - CapacitorScreenOrientation (6.0.0):
+  - CapacitorScreenOrientation (7.0.0):
     - Capacitor
-  - CapacitorToast (6.0.0):
+  - CapacitorShare (7.0.0):
     - Capacitor
+  - CapacitorToast (7.0.0):
+    - Capacitor
+  - CapawesomeCapacitorPosthog (7.1.0):
+    - Capacitor
+    - PostHog (~> 3.19.1)
+  - PostHog (3.19.9)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -25,11 +31,17 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorDialog (from `../../node_modules/@capacitor/dialog`)"
   - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
-  - CapacitorPluginIosWebviewConfigurator (from `../../node_modules/capacitor-plugin-ios-webview-configurator`)
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - "CapacitorScreenOrientation (from `../../node_modules/@capacitor/screen-orientation`)"
+  - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
+  - "CapawesomeCapacitorPosthog (from `../../node_modules/@capawesome/capacitor-posthog`)"
+
+SPEC REPOS:
+  trunk:
+    - PostHog
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -42,29 +54,36 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/dialog"
   CapacitorFilesystem:
     :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
   CapacitorNetwork:
     :path: "../../node_modules/@capacitor/network"
-  CapacitorPluginIosWebviewConfigurator:
-    :path: "../../node_modules/capacitor-plugin-ios-webview-configurator"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
   CapacitorScreenOrientation:
     :path: "../../node_modules/@capacitor/screen-orientation"
+  CapacitorShare:
+    :path: "../../node_modules/@capacitor/share"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
+  CapawesomeCapacitorPosthog:
+    :path: "../../node_modules/@capawesome/capacitor-posthog"
 
 SPEC CHECKSUMS:
-  Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
-  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorCordova: 8c4bfdf69368512e85b1d8b724dd7546abeb30af
-  CapacitorDialog: 64aa82840ee5e9c066f9e1a49c1e186afd3f24d2
-  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
-  CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
-  CapacitorPluginIosWebviewConfigurator: 4090b21ed635a5676718436bbbf386191d077271
-  CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
-  CapacitorScreenOrientation: d78ce2b710bfcd1c32d3a090d32b6686c1c95e4f
-  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
+  Capacitor: 23fff43571a4d1e3ee7d67b5a3588c6e757c2913
+  CapacitorApp: 45cb7cbef4aa380b9236fd6980033eb5cde6fcd2
+  CapacitorCordova: 63d476958d5022d76f197031e8b7ea3519988c64
+  CapacitorDialog: 0c8fcf2de9464df5f28c070c02d5aa0dfd80047a
+  CapacitorFilesystem: 2881ad012b5c8d0ffbfed1216aadfc2cca16d5b5
+  CapacitorKeyboard: 2c26c6fccde35023c579fc37d4cae6326d5e6343
+  CapacitorNetwork: cd17b98182841055ff58629213242a1f22f4a76b
+  CapacitorPreferences: e24a50a936f0e4f54a6b43be6121f923b4d91c27
+  CapacitorScreenOrientation: 4b2778087f4b4b138705cdabe431de0829116974
+  CapacitorShare: 2fcf1758cd07e0558f6aed40d7437bf8a3a42297
+  CapacitorToast: f400a9ac64a8864dc9d47b50e9bbb050db270eb9
+  CapawesomeCapacitorPosthog: 0b45d854823d7e6ab024baeb32349e59a7cf4797
+  PostHog: 49247855f4cfdc1d2750b4247e6f6c0ff921e142
 
-PODFILE CHECKSUM: 7803bc90412ff56fd93167c678078196e4877553
+PODFILE CHECKSUM: c866822b0af13cade9c4245480ba41c64ff3cc1c
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.16.2

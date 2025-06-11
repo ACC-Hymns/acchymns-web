@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import { RouterLink, onBeforeRouteLeave, useRoute } from "vue-router";
-import { checkForUpdates, download_update_package, fetchBookSummary, getBookFromId, getBookUrls, loadBookSources } from "@/scripts/book_import";
+import { checkForUpdates, download_update_package, getBookFromId, loadBookSources } from "@/scripts/book_import";
 import { Capacitor } from "@capacitor/core";
 import HomeBookBox from "@/components/HomeBookBox.vue";
 import ProgressBar from "@/components/ProgressBar.vue";
 import { computed, nextTick, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import { BookSourceType, type BookDataSummary, type BookSummary, type UpdatePackage } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type SongReference, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
-import draggable from 'vuedraggable'
+import draggable from "vuedraggable";
 import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
+import NavigationBar from "@/components/NavigationBar.vue";
+import { useReportAPI } from "@/composables/report";
 
-var hasConnection = ref<boolean>(false);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
+let is_connected = ref<boolean>(false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
-let tooltip = ref<Element>();
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);
 let update_background_element = ref();
 let update_panel_element = ref();
-let editting_order = ref<boolean>(false);
+let is_editing_order = ref<boolean>(false);
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -43,24 +43,27 @@ let dragOptions = computed(() => {
         ghostClass: "ghost",
         direction: getDirection(),
     };
-})
+});
 
 const book_sources = ref<BookDataSummary[]>([]);
 let customized_books = ref<BookDataSummary[]>([]);
 
 async function sort_books() {
-    let book_order = JSON.parse((await Preferences.get({key: "bookOrder"})).value || "[]") as string[];
-    let available_books = book_sources.value.filter((book) => filter_book(book, hasConnection.value));
+    let book_order = JSON.parse((await Preferences.get({ key: "bookOrder" })).value || "[]") as string[];
+    let available_books = book_sources.value.filter(book => filter_book(book, is_connected.value));
     let temp_books: BookDataSummary[] = [];
-    for(let id of book_order) {
-        if(available_books.find(book => book.id == id)) {
-            temp_books.push(available_books.find(book => book.id == id) as BookDataSummary)
-            available_books.splice(available_books.findIndex(book => book.id == id), 1);
+    for (let id of book_order) {
+        if (available_books.find(book => book.id == id)) {
+            temp_books.push(available_books.find(book => book.id == id) as BookDataSummary);
+            available_books.splice(
+                available_books.findIndex(book => book.id == id),
+                1,
+            );
         }
     }
     temp_books = temp_books.concat(available_books);
-    temp_books.forEach(async (book) => {
-        let summary = book_sources.value.find((source) => source.id == book.id);
+    temp_books.forEach(async book => {
+        let summary = book_sources.value.find(source => source.id == book.id);
         book.primaryColor = summary?.primaryColor;
         book.secondaryColor = summary?.secondaryColor;
         book.name = summary?.name;
@@ -70,28 +73,27 @@ async function sort_books() {
 }
 
 onMounted(async () => {
-    hasConnection.value = (await Network.getStatus()).connected;
-    console.log("Connected to the internet: " + hasConnection.value);
+    is_connected.value = (await Network.getStatus()).connected;
+    console.log("Connected to the internet: " + is_connected.value);
 
     book_sources.value = await loadBookSources();
     await sort_books();
 
-    if(hasConnection && update_reminder.value <= Date.now()) {
+    if (is_connected && update_reminder.value <= Date.now()) {
         let update_results: UpdatePackage[] = await checkForUpdates();
-        for(let update of update_results) {
+        for (let update of update_results) {
             update.book_summary = await getBookFromId(update.book_short);
         }
         update_packages.value = update_results;
     }
 
-    Network.addListener('networkStatusChange', async () => {
-        hasConnection.value = (await Network.getStatus()).connected;
-        console.log("Connected to the internet: " + hasConnection.value);
+    Network.addListener("networkStatusChange", async () => {
+        is_connected.value = (await Network.getStatus()).connected;
+        console.log("Connected to the internet: " + is_connected.value);
 
         book_sources.value = await loadBookSources();
         await sort_books();
-
-    })
+    });
 
     // Restoring position in book
     await nextTick();
@@ -101,94 +103,111 @@ onMounted(async () => {
 
 type BookOrderEvent = {
     moved: {
-        element: BookDataSummary,
-        newIndex: number,
-        oldIndex: number
-    }
-}
+        element: BookDataSummary;
+        newIndex: number;
+        oldIndex: number;
+    };
+};
 async function move_book(e: BookOrderEvent) {
     let book_order = customized_books.value.map(book => book.id);
     let moved_book = e.moved.element;
     book_order.splice(e.moved.oldIndex, 1);
     book_order.splice(e.moved.newIndex, 0, moved_book.id);
-    Preferences.set({key: "bookOrder", value: JSON.stringify(book_order)});
+    Preferences.set({ key: "bookOrder", value: JSON.stringify(book_order) });
     await sort_books();
 }
 
 function delayUpdate() {
+    if (update_progress.value > 0) return;
 
-    if(update_progress.value > 0)
-        return;
-
-    (update_background_element.value as unknown as HTMLElement).style.opacity = '0.0';
-    (update_panel_element.value as unknown as HTMLElement).style.opacity = '0.0';
+    (update_background_element.value as unknown as HTMLElement).style.opacity = "0.0";
+    (update_panel_element.value as unknown as HTMLElement).style.opacity = "0.0";
     setTimeout(() => {
         update_reminder.value = Date.now() + 86400000;
     }, 500);
 }
 
 async function startUpdate() {
-    if(update_progress.value > 0)
-        return;
+    if (update_progress.value > 0) return;
 
     var progresses: number[] = [update_packages.value.length];
-    for(let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
+    for (let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
         let pkg = update_packages.value[pkg_id];
-        await download_update_package(pkg, (progress: number) => {
-            progresses[pkg_id] = progress;
-            update_progress.value = progresses.reduce((partialSum, a) => partialSum + a, 0)/update_packages.value.length
-        }, () => {
-            update_progress.value = 0;
-            update_packages.value = [];
-        })
+        await download_update_package(
+            pkg,
+            (progress: number) => {
+                progresses[pkg_id] = progress;
+                update_progress.value = progresses.reduce((partialSum, a) => partialSum + a, 0) / update_packages.value.length;
+            },
+            () => {
+                update_progress.value = 0;
+                update_packages.value = [];
+            },
+        );
     }
-    
+
     clearCache();
 }
 
 function filter_book(book: BookDataSummary, hasConnection: boolean) {
-    if(hasConnection) {
-        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.IMPORTED || book.status == BookSourceType.DOWNLOADED;
-    } else {
-        return book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED;
-    }
+    return (
+        book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED || (hasConnection && book.status == BookSourceType.IMPORTED)
+    );
 }
-
-function hideTooltip() {
-    tooltip.value?.classList.add("tooltiphidden");
-    tooltip.value?.classList.add("tooltip");
-    setTimeout(() => {
-        import_books_tooltip_status.value = true;
-    }, 1000);
-}
-
-function tooltipVisible(visible: boolean) {
-    return visible ? "padding-top: 50px;" : "";
-}
-
+let updated_privacy_policy = useLocalStorage<boolean>("updated_privacy_policy", false);
 </script>
 
 <template>
-    <div :class="{'modal-open': update_packages.length > 0 && update_reminder <= Date.now()}">
+    <div :class="{ 'modal-open': (update_packages.length > 0 && update_reminder <= Date.now()) || !updated_privacy_policy }">
         <div v-if="update_packages.length > 0 && update_reminder <= Date.now()" class="update-section">
-            <div class="background-blur" ref="update_background_element">
-            </div>
+            <div class="background-blur" ref="update_background_element"></div>
             <div class="update-panel" ref="update_panel_element">
                 <h2>Hymnal Updates</h2>
                 <p>Updates found for:</p>
                 <div>
                     <div v-for="(update, update_index) in update_packages" :key="update.book_short">
-                        <HomeBookBox v-if="update_index < 5" :src="update.book_summary?.srcUrl || ''" class="update-book-list-entry" :with-link="false"></HomeBookBox>
+                        <HomeBookBox
+                            v-if="update_index < 5"
+                            :src="update.book_summary?.srcUrl || ''"
+                            class="update-book-list-entry"
+                            :with-link="false"
+                        ></HomeBookBox>
                         <div v-else-if="update_index == 5" class="update-book-list-entry more-update">
                             <h4>{{ update_packages.length - 5 }} more...</h4>
                         </div>
                     </div>
                 </div>
                 <div class="update-button-layout">
-                    <a class="update-button" @click="delayUpdate" :style="{opacity: update_progress > 0 ? 0.3 : 1}">Later</a>
+                    <a class="update-button" @click="delayUpdate" :style="{ opacity: update_progress > 0 ? 0.3 : 1 }">Later</a>
                     <a class="update-button-blue" @click="startUpdate">
-                        <ProgressBar v-if="update_progress > 0" :radius="15" :progress="update_progress*100" :stroke="3" :transform="'rotate(-90) translate(-24, 0)'"></ProgressBar>
+                        <ProgressBar
+                            v-if="update_progress > 0"
+                            :radius="15"
+                            :progress="update_progress * 100"
+                            :stroke="3"
+                            :transform="'rotate(-90) translate(-24, 0)'"
+                        ></ProgressBar>
                         <span v-else>Update</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="!updated_privacy_policy" class="update-section">
+            <div class="background-blur" ref="update_background_element"></div>
+            <div class="update-panel" ref="update_panel_element">
+                <h2>Notice</h2>
+                <p>
+                    We've recently updated our
+                    <a href="https://docs.google.com/document/d/1zWztUrFOr_6ksqDDm4EbQ0jk7trwofaVeeSybcD5PcA" class="privacy-policy-link"
+                        >Privacy Policy</a
+                    >.<br /><br />
+                    We encourage you to review the changes. By clicking "I Understand", you agree to the new privacy policy.
+                </p>
+
+                <div class="update-button-layout">
+                    <a class="confirm-button-blue" @click="updated_privacy_policy = true">
+                        <span>I Understand</span>
                     </a>
                 </div>
             </div>
@@ -196,61 +215,62 @@ function tooltipVisible(visible: boolean) {
 
         <div class="page-heading">
             <h1>Home</h1>
-            <a v-if="!editting_order" @click="editting_order = !editting_order" class="confirm-text-container">
+            <a v-if="!is_editing_order" @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <img class="ionicon" src="/assets/create-outline.svg" />
             </a>
-            <a v-else @click="editting_order = !editting_order" class="confirm-text-container">
+            <a v-else @click="is_editing_order = !is_editing_order" class="confirm-text-container">
                 <h3 class="confirm-text">Confirm</h3>
                 <img class="ionicon" src="/assets/checkmark-circle-outline.svg" />
             </a>
         </div>
         <div id="appsection">
-
-            <div v-if="editting_order">
-                <draggable 
-                    :list="customized_books.filter(book => filter_book(book, hasConnection))" 
+            <div v-if="is_editing_order">
+                <draggable
+                    :list="customized_books.filter(book => filter_book(book, is_connected))"
                     :component-data="{
                         tag: 'div',
                         type: 'transition-group',
-                        name: 'flip-list'
+                        name: 'flip-list',
                     }"
                     v-bind="dragOptions"
-                    :key="customized_books.filter(book => filter_book(book, hasConnection)).length" 
-                    @change="(e: BookOrderEvent) => move_book(e)" 
-                    item-key="book" 
+                    :key="customized_books.filter(book => filter_book(book, is_connected)).length"
+                    @change="(e: BookOrderEvent) => move_book(e)"
+                    item-key="book"
                     handle=".handle"
                     :scroll="false"
                     :scrollSensitivity="0"
-                    :forceFallback="true">
-                    
-                    
+                    :forceFallback="true"
+                >
                     <template #item="{ element }">
                         <BaseBookBox :summary="element">
-                            <img 
-                                class="ionicon booktext--right handle "
-                                style="filter: invert(100%)"
-                                src="/assets/drag-handle.svg"
-                            />
+                            <img class="ionicon booktext--right handle" style="filter: invert(100%)" src="/assets/drag-handle.svg" />
                         </BaseBookBox>
                     </template>
                 </draggable>
             </div>
             <div v-else>
-                <HomeBookBox v-for="book in customized_books.filter(book => filter_book(book, hasConnection))" :key="book.id" :src="book.src"></HomeBookBox>
+                <HomeBookBox
+                    v-for="book in customized_books.filter(book => filter_book(book, is_connected))"
+                    :key="book.id"
+                    :src="book.src"
+                ></HomeBookBox>
             </div>
-            
 
-
-            <div v-if="!hasConnection">
+            <div v-if="!is_connected">
                 <div v-if="book_sources.filter(book => book.status == BookSourceType.IMPORTED).length > 0" class="warning-label-container">
                     <img class="ionicon warning-icon" src="/assets/alert-circle-outline.svg" />
                     <h5 class="warning-label">The hymnals below require an internet connection</h5>
                 </div>
-                <BaseBookBox v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)" :summary="book" :isEnabled="false"></BaseBookBox>
+                <BaseBookBox
+                    v-for="book in book_sources.filter(book => book.status == BookSourceType.IMPORTED)"
+                    :key="book.id"
+                    :summary="book"
+                    :isEnabled="false"
+                ></BaseBookBox>
             </div>
 
             <div>
-                <RouterLink to="/settings/import" v-if="hasConnection">
+                <RouterLink to="/settings/import" v-if="is_connected">
                     <img class="ionicon import-books-button" src="/assets/add-circle-outline.svg" />
                 </RouterLink>
             </div>
@@ -265,36 +285,23 @@ function tooltipVisible(visible: boolean) {
             </template>
         </div>
     </div>
-    <nav class="nav">
-        <RouterLink to="/" class="nav__link nav__link--active">
-            <img class="ionicon nav__icon--active" src="/assets/home.svg" />
-            <span class="nav__text">Home</span>
-        </RouterLink>
-        <RouterLink to="/search" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/search-outline.svg" />
-            <span class="nav__text">Search</span>
-        </RouterLink>
-        <RouterLink to="/bookmarks" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
-            <span class="nav__text">Bookmarks</span>
-        </RouterLink>
-        <RouterLink to="/settings" class="nav__link">
-            <img class="ionicon nav__icon" src="/assets/settings-outline.svg" />
-            <span class="nav__text">Settings</span>
-        </RouterLink>
-    </nav>
+    <NavigationBar v-if="updated_privacy_policy" current_page="home" />
 </template>
 
 <style scoped>
+.privacy-policy-link {
+    color: var(--blue);
+    text-decoration: underline;
+}
 .sortable-fallback {
-    opacity: 1 !important;   
+    opacity: 1 !important;
 }
 
 .ghost {
     opacity: 0;
 }
 .flip-list-move {
-  transition: transform 0.5s;
+    transition: transform 0.5s;
 }
 .confirm-text-container {
     display: flex;
@@ -321,13 +328,13 @@ function tooltipVisible(visible: boolean) {
 }
 
 .handle {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
 .update-section {
-    opacity: 1.0;
+    opacity: 1;
     transition: opacity 0.5s;
 }
 
@@ -345,21 +352,30 @@ function tooltipVisible(visible: boolean) {
     display: flex;
     justify-content: center;
 }
-.update-button-blue{
+.update-button-blue {
     width: 50px;
     height: 20px;
     background-color: var(--blue);
-    color:white;
+    color: white;
     padding: 15px;
     border-radius: 15px;
     margin: 0 0 0 15px;
 }
-
+.confirm-button-blue {
+    width: 120px;
+    height: 30px;
+    background-color: var(--blue);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 30px;
+}
 .update-button {
     width: 50px;
     height: 20px;
     background-color: gray;
-    color:white;
+    color: white;
     padding: 15px;
     border-radius: 15px;
 }
@@ -374,7 +390,7 @@ function tooltipVisible(visible: boolean) {
     height: 100vh;
     backdrop-filter: blur(1px);
     background-color: var(--overlay-color);
-    position: fixed;    
+    position: fixed;
     z-index: 5;
     opacity: 1;
     transition: opacity 0.5s;
@@ -397,11 +413,13 @@ function tooltipVisible(visible: boolean) {
     box-shadow: 0 0 8px rgb(0, 0, 0, 0.15);
     z-index: 6;
     transform: translate(-50%, -50%);
-    transition: opacity 0.5s, visibility 0.5s ease;
+    transition:
+        opacity 0.5s,
+        visibility 0.5s ease;
     opacity: 1;
     text-align: center;
     padding: 15px;
-    color: var(--color)
+    color: var(--color);
 }
 
 .app-button {
@@ -446,7 +464,6 @@ function tooltipVisible(visible: boolean) {
     margin: 0 0;
     line-height: 25px;
 }
-
 </style>
 
 <style>

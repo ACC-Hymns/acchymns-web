@@ -11,6 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -26,11 +30,13 @@ jobs:
       - name: Build
         run: |
           cd build
-          echo "VITE_BASE_URL=/acchymns-dev/" > .env # We deploy to github.io/acchyms-dev, which we serve on the root
+          export VITE_BASE_URL="/acchymns-dev/"
+          export SEO_URL="https://acc-hymns.github.io"
           npm i
           npm run deploy-check
           npm run build
           npx cap copy web # This runs our helper script to compress the song book info
+          node ./seo/seo-deployment.mjs
           cd ..
       
       - name: Checkout Dev Target
