@@ -55,6 +55,7 @@ a, img {
     --button-tap: #CCCCCC;
     --blue: #2196f3;
     --blue-disabled: #7ebdf1;
+    --pill-color: #DFDEDE;
 }
 
 :root[data-theme="dark"] {
@@ -87,6 +88,7 @@ a, img {
     --button-tap: #575757;
     --blue: #2196f3;
     --blue-disabled: #7ebdf1;
+    --pill-color: #202020;
 }
 
 h1, h2, h3, h4, h5 {
