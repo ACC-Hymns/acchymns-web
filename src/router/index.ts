@@ -60,6 +60,10 @@ const router = createRouter({
             component: () => import("../views/BookmarkedView.vue"),
         },
         {
+            path: "/discover",
+            component: () => import("../views/DiscoverView.vue"),
+        },
+        {
             path: "/settings",
             component: () => import("../views/SettingsView.vue"),
         },
