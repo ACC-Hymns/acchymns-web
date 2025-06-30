@@ -7,6 +7,7 @@ import { hexToRgb, Color, Solver } from "@/scripts/color";
 const props = defineProps<{
   books: BookSummary[];
   selectedBooks: string[];
+  dropdownAbove?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -68,7 +69,7 @@ function calculateIconFilter(color: string) {
       <p class="dropdown-text">Filters</p>
       <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
     </a>
-    <div class="dropdown-content-wrapper" v-show="is_open">
+    <div class="dropdown-content-wrapper" :class="{ 'dropdown-above' : dropdownAbove}" v-show="is_open">
       <div class="dropdown-content" :class="{ 'dropdown-content-active': dropdown_animation }">
         <a>
           <div class="dropdown-content-top-item" @click="clearFilters">
@@ -127,6 +128,10 @@ function calculateIconFilter(color: string) {
     z-index: 1;
     position: absolute;
     transition: all 0.2s ease;
+}
+
+.dropdown-above {
+    bottom: 100%;
 }
 
 .dropdown-content {
@@ -191,8 +196,7 @@ function calculateIconFilter(color: string) {
     color: var(--color);
     padding: 10px 15px;
     border-radius: 30px;
-    border-width: 2px;
-    box-shadow: var(--thin-shadow);
+    border: var(--border-color);
     display: flex;
     justify-content: center;
     margin-top: 5px;

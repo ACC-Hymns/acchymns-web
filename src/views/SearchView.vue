@@ -118,6 +118,7 @@ onMounted(async () => {
         </button>
     </div>
     <BookFilter
+        class="book-filter"
         :books="available_books"
         :selected-books="search_params.bookFilters"
         @update:selectedBooks="search_params.bookFilters = $event"
@@ -156,4 +157,8 @@ onMounted(async () => {
 <style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
+
+.book-filter {
+    padding: 0px 20px 20px 20px;
+}
 </style>
