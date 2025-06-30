@@ -10,6 +10,7 @@ import { saveScrollPosition, restoreScrollPosition } from "@/router/scroll";
 import { stripSearchText } from "@/scripts/search";
 import NavigationBar from "@/components/NavigationBar.vue";
 import { vOnClickOutside } from "@vueuse/components";
+import BookFilter from "@/components/BookFilter.vue";
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -101,57 +102,6 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-const is_open = ref<boolean>(false);
-const dropdown_animation = ref<boolean>(false);
-
-function resetDropdown() {
-    dropdown_animation.value = false;
-    setTimeout(() => {
-        is_open.value = false;
-    }, 200);
-}
-function toggleDropdown() {
-    if (is_open.value) {
-        resetDropdown();
-    } else {
-        is_open.value = true;
-        dropdown_animation.value = true;
-    }
-}
-
-let book_filters = ref<Element[]>([]);
-
-function filterBook(short_book_name: string) {
-    is_open.value = true;
-    if (search_params.value.bookFilters.includes(short_book_name)) {
-        let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
-        search_params.value.bookFilters.splice(index, 1);
-    } else {
-        search_params.value.bookFilters.push(short_book_name);
-    }
-}
-
-function clearFilters() {
-    search_params.value.bookFilters = [];
-}
-
-function checkmarked(selected: boolean) {
-    if (selected) {
-        return "./assets/checkmark-circle.svg";
-    } else {
-        return "./assets/ellipse-outline.svg";
-    }
-}
-
-function calculateIconFilter(color: string) {
-    const rgb = hexToRgb(color ?? "#000000");
-    if (rgb?.length !== 3) {
-        return "";
-    }
-    const solver = new Solver(new Color(rgb[0], rgb[1], rgb[2]));
-    const result = solver.solve();
-    return result.filter;
-}
 </script>
 
 <template>
@@ -167,34 +117,11 @@ function calculateIconFilter(color: string) {
             </svg>
         </button>
     </div>
-    <div class="filters" v-on-click-outside="resetDropdown">
-        <a @click="toggleDropdown()" class="dropdown">
-            <p class="dropdown-text">Filters</p>
-            <img class="ionicon filter-icon" src="/assets/filter-outline.svg" />
-        </a>
-        <div class="dropdown-content-wrapper" v-show="is_open">
-            <div class="dropdown-content" :class="{ 'dropdown-content-active': dropdown_animation }">
-                <a>
-                    <div class="dropdown-content-top-item" @click="clearFilters">
-                        <img class="ionicon checkmark-icon" :src="checkmarked(search_params.bookFilters.length == 0)" />
-                        <div class="dropdown-content-text">All Hymnals</div>
-                    </div>
-                </a>
-                <div :class="{ 'dropdown-content-organizer': available_books.length > 6 }">
-                    <a v-for="book in available_books" :key="book.name.medium" @click="filterBook(book.name.short)" ref="book_filters">
-                        <div class="dropdown-content-item">
-                            <img
-                                class="ionicon"
-                                :src="checkmarked(search_params.bookFilters.includes(book.name.short))"
-                                :style="calculateIconFilter(book.primaryColor)"
-                            />
-                            <div class="dropdown-content-text">{{ book.name.medium }}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <BookFilter
+        :books="available_books"
+        :selected-books="search_params.bookFilters"
+        @update:selectedBooks="search_params.bookFilters = $event"
+    />
 
     <h2 v-if="search_results.length > 0" style="margin-top: 10px; margin-bottom: 10px">Search Results ({{ search_results.length }})</h2>
     <div class="songlist">
@@ -229,125 +156,4 @@ function calculateIconFilter(color: string) {
 <style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
-
-@keyframes fadeIn {
-    from {
-        visibility: visible;
-        opacity: 0;
-        transform: translateY(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0px);
-        visibility: visible;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        visibility: visible;
-        opacity: 1;
-        transform: translateY(0px);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-15px);
-        visibility: hidden;
-    }
-}
-
-.dropdown-content-wrapper {
-    z-index: 1;
-    position: absolute;
-    transition: all 0.2s ease;
-}
-
-.dropdown-content {
-    position: relative;
-    background-color: var(--button-color);
-    color: var(--color);
-    border-radius: 15px;
-    min-width: 160px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    margin-top: 10px;
-    padding-bottom: 5px;
-    animation-name: fadeOut;
-    animation-duration: 0.2s;
-    animation-fill-mode: both;
-}
-
-.dropdown-content-organizer {
-    display: grid;
-    grid-template-columns: 45vw 45vw;
-    max-height: 300px;
-    overflow-y: auto;
-
-    @media (min-width: 641px) {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.dropdown-content-top-item {
-    cursor: pointer;
-    border-bottom: var(--border-color);
-    padding: 0px 15px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.dropdown-content-active {
-    visibility: visible;
-    animation-name: fadeIn;
-    animation-duration: 0.2s;
-}
-
-.dropdown-content-item {
-    cursor: pointer;
-    padding: 0px 15px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.dropdown-content-text {
-    padding: 15px 0px 15px 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dropdown {
-    cursor: pointer;
-    background-color: var(--button-color);
-    color: var(--color);
-    padding: 10px 15px;
-    border-radius: 30px;
-    border-width: 2px;
-    box-shadow: var(--thin-shadow);
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-right: 10px;
-    z-index: 1;
-}
-
-.dropdown-text {
-    margin: 0;
-    height: 25px;
-    line-height: 25px;
-}
-
-.filter-icon {
-    filter: var(--change-svg-filter);
-    display: inline-block;
-    position: relative;
-    margin: auto auto;
-    padding-left: 15px;
-}
-
-.checkmark-icon {
-    filter: var(--svg-color);
-}
 </style>
