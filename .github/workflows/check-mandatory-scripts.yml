@@ -10,6 +10,7 @@ jobs:
     
     env:
       VITE_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+      VITE_ACC_HYMNS_KEY: ${{ secrets.ACCHYMNS_KEY }}
 
     steps:
       - name: Checkout source
