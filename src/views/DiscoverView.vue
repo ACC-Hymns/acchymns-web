@@ -122,7 +122,7 @@ onMounted(async () => {
 	<span v-if="error" style="margin-left: 30px; color: salmon">{{ error }}</span>
 	<div v-if="result_data && !loading" class="songlist" style="margin-bottom: 160px">
 		<RouterLink v-for="song in result_data.top_matches" :key="song.hymn_number + song.hymnal_id"
-			:to="`/display/${song.hymnal_id}/${song.hymn_number}`" class="song"
+			:to="`/display/${song.hymnal_id}/${song.hymn_number}`" class="song fade-in"
 			:style="`background: linear-gradient(135deg, ${available_books.find(b => b.name.short === song.hymnal_id)?.primaryColor}, ${available_books.find(b => b.name.short === song.hymnal_id)?.secondaryColor})`">
 			<div>
 				<div class="song__title">{{available_songs.find(s => s.number === song.hymn_number && s.book.name.short
@@ -135,15 +135,6 @@ onMounted(async () => {
 			</div>
 		</RouterLink>
 	</div>
-	<div v-else-if="loading" class="lds-ring-container">
-		<!--Loading Ring-->
-		<div class="lds-ring">
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-	</div>
 	<div class="content-footer" :style="{ marginBottom: 80 + keyboard_height + 'px' }">
 		<div v-if="search_query.length == 0 && !result_data" class="suggestions-wrapper"
 			:class="{ 'hide-scrollbar': platform !== 'web' }">
@@ -152,18 +143,18 @@ onMounted(async () => {
 				{{ suggestion }}
 			</button>
 		</div>
-		<div class="prompt-input-wrapper" :class="{ 'prompt-input-wrapper-outline': search_query.length > 0 }">
+		<div class="prompt-input-wrapper" :class="{ 'prompt-input-wrapper-outline': search_query.length > 0, 'fast-loading': loading }">
 			<div class="prompt-input">
 				<img class="sparkles-icon" src="/assets/sparkles.svg" />
 				<input v-model="search_query" placeholder="Enter any topic, theme or lyrics..."
-					aria-label="Discover site content" @keypress.enter="handleSubmit" />
+					aria-label="Discover site content" @keypress.enter="handleSubmit" :disabled="loading"/>
 			</div>
 			<div class="prompt-menu">
 				<BookFilter class="book-filter"
 					:books="available_books.filter(b => SUPPORTED_BOOKS.includes(b.name.short))"
 					:selected-books="search_params.bookFilters" :dropdown-above="true"
 					@update:selectedBooks="(e) => search_params.bookFilters = e" />
-				<button v-if="search_query.length > 0" :disabled="loading" class="submit-prompt"
+				<button v-if="search_query.length > 0 && !loading" :disabled="loading" class="submit-prompt"
 					@click="handleSubmit()">
 					<img class="ionicon-md arrow-icon" src="/assets/arrow-up-outline.svg" />
 				</button>
@@ -177,76 +168,6 @@ onMounted(async () => {
 <style scoped>
 @import "@/assets/css/search.css";
 @import "@/assets/css/song.css";
-
-@keyframes fade-in-1s-delay {
-	0% {
-		opacity: 0%;
-	}
-
-	100% {
-		opacity: 100%;
-	}
-}
-
-.lds-ring-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: calc(50vh - 61.16px);
-	margin-top: 61.16px;
-	animation: 1s fade-in-1s-delay;
-}
-
-.lds-ring {
-	/* change color here */
-	color: var(--back-color);
-}
-
-.lds-ring,
-.lds-ring div {
-	box-sizing: border-box;
-}
-
-.lds-ring {
-	display: inline-block;
-	position: relative;
-	width: 64px;
-	height: 64px;
-}
-
-.lds-ring div {
-	box-sizing: border-box;
-	display: block;
-	position: absolute;
-	width: 64px;
-	height: 64px;
-	border: 6px solid currentColor;
-	border-radius: 50%;
-	animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-	border-color: currentColor transparent transparent transparent;
-}
-
-.lds-ring div:nth-child(1) {
-	animation-delay: -0.45s;
-}
-
-.lds-ring div:nth-child(2) {
-	animation-delay: -0.3s;
-}
-
-.lds-ring div:nth-child(3) {
-	animation-delay: -0.15s;
-}
-
-@keyframes lds-ring {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
 
 .content-footer {
 	justify-self: center;
@@ -285,6 +206,25 @@ onMounted(async () => {
 	animation: rotate 10s linear infinite;
 	background-origin: border-box;
 	background-clip: padding-box, border-box;
+}
+
+.fast-loading {
+	animation: rotate 1s linear infinite;
+}
+
+.fade-in {
+  animation: fadeInSlide 0.4s ease;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes rotate {
@@ -382,7 +322,7 @@ onMounted(async () => {
 }
 
 .suggestions-wrapper::-webkit-scrollbar-thumb {
-	background: linear-gradient(90deg, #C95EFF 0%, #94ABFF 100%);
+	background: var(--back-color);
 	border-radius: 8px;
 }
 
