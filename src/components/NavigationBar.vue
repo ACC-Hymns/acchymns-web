@@ -36,6 +36,11 @@ if (Capacitor.getPlatform() !== "web") {
             <img v-else class="ionicon nav__icon" src="/assets/telescope-outline.svg" />
             <span class="nav__text">Discover</span>
         </RouterLink>
+        <RouterLink to="/bookmarks" class="nav__link" :class="{ 'nav__link--active': current_page == 'bookmarks' }">
+            <img v-if="current_page == 'bookmarks'" class="ionicon nav__icon--active" src="/assets/bookmark.svg" />
+            <img v-else class="ionicon nav__icon" src="/assets/bookmark-outline.svg" />
+            <span class="nav__text">Bookmarks</span>
+        </RouterLink>
         <RouterLink to="/settings" class="nav__link" :class="{ 'nav__link--active': current_page == 'settings' }">
             <img v-if="current_page == 'settings'" class="ionicon nav__icon--active" src="/assets/settings.svg" />
             <img v-else class="ionicon nav__icon" src="/assets/settings-outline.svg" />

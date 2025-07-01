@@ -123,7 +123,7 @@ h1, h2, h3, h4, h5 {
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    min-width: 90px;
+    min-width: 40px;
     overflow: hidden;
     white-space: nowrap;
     font-family: sans-serif;
