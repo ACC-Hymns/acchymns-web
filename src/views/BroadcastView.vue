@@ -25,8 +25,8 @@ function clock() {
 
     // 12 hour format
     let am_pm = h >= 12 ? "PM" : "AM";
+    h = h > 0 ? h : 12; // the hour '0' should be '12'
     let hrs = h % 12;
-    hrs = h ? h : 12; // the hour '0' should be '12'
     digital_time.value = `${hrs}:${m < 10 ? "0" + m : m} ${am_pm}`;
 }
 
