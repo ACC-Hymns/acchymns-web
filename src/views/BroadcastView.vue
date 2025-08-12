@@ -78,7 +78,7 @@ async function set_data() {
         } else {
             data.VERSES.NS.sort((a, b) => a - b);
             verses.value = data.VERSES.NS.join(", ");
-            verses_font_size.value = verses.value.length > 30 ? "8rem" : "10rem";
+            verses_font_size.value = verses.value.length > 30 ? "8rem" : "12rem";
             verses_visible.value = true;
         }
         color.value = data.BOOK_COLOR.S;
@@ -101,7 +101,7 @@ setInterval(set_data, 1000);
             <h1 class="song-number">{{ song_number }}</h1>
             <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
             <h2 class="verses" ref="verses_text">{{ verses }}</h2>
-            <h2 class="book-name" :style="{ color: color }">{{ book_name }}</h2>
+            <h2 class="book-name">{{ book_name }}</h2>
             <h2 v-if="song_number.length > 0" class="digital-clock">{{ digital_time }}</h2>
         </div>
 
