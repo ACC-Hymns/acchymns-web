@@ -7,6 +7,7 @@ import type { ChurchData } from "@/scripts/broadcast";
 export function useBroadcastAPI() {
     const is_authorized = ref<boolean>(false);
     const church_id = ref<string>("");
+    const show_clock = ref<boolean>(false);
     const client = ref<DynamoDBClient | null>(null);
     const is_ready = computed(() => is_authorized.value && church_id.value != "" && client.value != null);
 
@@ -16,6 +17,11 @@ export function useBroadcastAPI() {
         is_authorized.value = response.status == 200;
         church_id.value = (response.data as TokenAuthResponse).church_id;
         client.value = request_client();
+
+        const data = await getCurrentBroadcast();
+        if(!data)
+            return;
+        show_clock.value = data.SHOW_CLOCK.BOOL;
     }
 
     execute();
@@ -27,5 +33,5 @@ export function useBroadcastAPI() {
         return null;
     }
 
-    return { is_authorized, church_id, client, is_ready, getCurrentBroadcast };
+    return { is_authorized, church_id, client, is_ready, show_clock, getCurrentBroadcast };
 }

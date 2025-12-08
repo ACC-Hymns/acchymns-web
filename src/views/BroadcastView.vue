@@ -43,6 +43,7 @@ function clockNumberPosition(index: number) {
 
 setInterval(clock, 100);
 
+const show_clock = ref<boolean>(false);
 const song_number = ref<string>("");
 const verses = ref<string>("");
 const verses_font_size = ref<string>("10rem");
@@ -63,6 +64,7 @@ async function set_data() {
 
     let data: ChurchData = (await broadcast_api.getCurrentBroadcast()) as ChurchData;
     is_bible_reading.value = data.BOOK_ID.S == "BIBLE";
+    show_clock.value = data.SHOW_CLOCK.BOOL;
 
     if (is_bible_reading.value) {
         top_text.value = data.SONG_NUMBER.S;
@@ -95,17 +97,17 @@ setInterval(set_data, 1000);
         <div v-if="is_bible_reading" class="song-info">
             <h2 ref="top_text_element" class="top-text">{{ top_text }}</h2>
             <h2 class="bottom-text">{{ bottom_text }}</h2>
-            <h2 class="digital-clock">{{ digital_time }}</h2>
+            <h2 v-if="show_clock" class="digital-clock">{{ digital_time }}</h2>
         </div>
         <div v-else class="song-info">
             <h1 class="song-number">{{ song_number }}</h1>
             <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
             <h2 class="verses" ref="verses_text">{{ verses }}</h2>
             <h2 class="book-name">{{ book_name }}</h2>
-            <h2 v-if="song_number.length > 0" class="digital-clock">{{ digital_time }}</h2>
+            <h2 v-if="song_number.length > 0 && show_clock" class="digital-clock">{{ digital_time }}</h2>
         </div>
 
-        <div v-if="song_number.length == 0 && !is_bible_reading" class="clock">
+        <div v-if="song_number.length == 0 && !is_bible_reading && show_clock" class="clock">
             <div class="dot"></div>
             <div>
                 <div class="hour-hand" :style="{ transform: hours }"></div>
