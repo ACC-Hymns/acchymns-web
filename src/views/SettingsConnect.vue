@@ -14,6 +14,7 @@ import {
     type AuthResponse,
     set_bg_color,
     get,
+    set_show_clock,
 } from "@/scripts/broadcast";
 import { Preferences } from "@capacitor/preferences";
 import { type Bible, type BibleBook, type BibleChapter, type BibleVerse, type BookDataSummary, BookSourceType } from "@/scripts/types";
@@ -28,6 +29,7 @@ let platform = ref<string>(Capacitor.getPlatform());
 let login_error = ref<boolean>(false);
 let selected_church = ref("LOADING");
 let hexinput = ref<HTMLInputElement>();
+let show_clock = ref<boolean>(false);
 let churches = ref<ChurchData[]>([]);
 let bible = ref<Bible>();
 let touched_pin = ref<number>(0);
@@ -63,10 +65,11 @@ async function populate_bg_color() {
     if (hexinput.value) {
         hexinput.value.value = church_data.BG_COLOR.S;
     }
+    show_clock.value = church_data.SHOW_CLOCK.BOOL;
 }
 
 async function clear() {
-    await set(request_client(), selected_church.value, "", "", [-1], "");
+    await set(request_client(), selected_church.value, "", "", [-1], "", show_clock.value);
 }
 
 async function signout() {
@@ -106,6 +109,10 @@ async function set_bg() {
     if (value[0] != "#") return;
 
     await set_bg_color(request_client(), selected_church.value, value);
+}
+
+async function set_clock() {
+    await set_show_clock(request_client(), selected_church.value, show_clock.value);
 }
 
 async function handle_tap(index: number) {
@@ -187,7 +194,7 @@ async function broadcast_reading() {
         }, ${chapter_end.value}:1-${verse_end.value}`;
     }
 
-    await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text);
+    await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text, show_clock.value);
 }
 
 let bibleReading = ref<boolean>(false);
@@ -208,7 +215,7 @@ async function broadcast_song_number() {
 
     let number = song_number.value.replace(/^0+/, '');
 
-    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000");
+    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000", show_clock.value);
 }
 
 let old_testament = ref<BibleBook[]>([]);
@@ -538,6 +545,15 @@ function get_lock_icon() {
                 <a @click="bibleReading = true" class="settings-option">
                     <span>Set Bible Reading</span>
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
+                </a>
+                <a class="settings-option">
+                    <span>
+                        Show Clock
+                    </span>
+                    <label class="switch">
+                    <input v-model="show_clock" type="checkbox" @change="set_clock"/>
+                        <span class="slider round"></span>
+                    </label>
                 </a>
                 <a @click="set_bg()" class="settings-option">
                     <span>

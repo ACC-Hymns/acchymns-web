@@ -224,6 +224,7 @@ async function broadcast() {
         book_summary.value?.name.medium || props.book,
         verses.value,
         book_summary.value?.primaryColor || "#000000",
+        broadcast_api.show_clock.value
     );
 
     closeBroadcastMenu();
