@@ -65,6 +65,7 @@ async function populate_bg_color() {
     if (hexinput.value) {
         hexinput.value.value = church_data.BG_COLOR.S;
     }
+    show_clock.value = church_data.SHOW_CLOCK.BOOL;
 }
 
 async function clear() {
