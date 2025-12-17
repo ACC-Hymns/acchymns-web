@@ -8,6 +8,7 @@ export function useBroadcastAPI() {
     const is_authorized = ref<boolean>(false);
     const church_id = ref<string>("");
     const show_clock = ref<boolean>(false);
+    const show_book = ref<boolean>(false);
     const client = ref<DynamoDBClient | null>(null);
     const is_ready = computed(() => is_authorized.value && church_id.value != "" && client.value != null);
 
@@ -22,6 +23,7 @@ export function useBroadcastAPI() {
         if(!data)
             return;
         show_clock.value = data.SHOW_CLOCK.BOOL;
+        show_book.value = data.SHOW_BOOK.BOOL;
     }
 
     execute();
@@ -33,5 +35,5 @@ export function useBroadcastAPI() {
         return null;
     }
 
-    return { is_authorized, church_id, client, is_ready, show_clock, getCurrentBroadcast };
+    return { is_authorized, church_id, client, is_ready, show_clock, show_book, getCurrentBroadcast };
 }
