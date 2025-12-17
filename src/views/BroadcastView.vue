@@ -44,6 +44,7 @@ function clockNumberPosition(index: number) {
 setInterval(clock, 100);
 
 const show_clock = ref<boolean>(false);
+const show_hymnal = ref<boolean>(false);
 const song_number = ref<string>("");
 const verses = ref<string>("");
 const verses_font_size = ref<string>("10rem");
@@ -65,6 +66,7 @@ async function set_data() {
     let data: ChurchData = (await broadcast_api.getCurrentBroadcast()) as ChurchData;
     is_bible_reading.value = data.BOOK_ID.S == "BIBLE";
     show_clock.value = data.SHOW_CLOCK.BOOL;
+    show_hymnal.value = data.SHOW_BOOK.BOOL;
 
     if (is_bible_reading.value) {
         top_text.value = data.SONG_NUMBER.S;
@@ -103,7 +105,7 @@ setInterval(set_data, 1000);
             <h1 class="song-number">{{ song_number }}</h1>
             <h3 class="verses-label" v-if="verses_visible">Verses:</h3>
             <h2 class="verses" ref="verses_text">{{ verses }}</h2>
-            <h2 class="book-name">{{ book_name }}</h2>
+            <h2 v-if="show_hymnal" class="book-name">{{ book_name }}</h2>
             <h2 v-if="song_number.length > 0 && show_clock" class="digital-clock">{{ digital_time }}</h2>
         </div>
 
