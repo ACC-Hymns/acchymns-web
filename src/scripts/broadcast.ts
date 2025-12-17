@@ -24,6 +24,9 @@ export type ChurchData = {
     SHOW_CLOCK: {
         BOOL: boolean;
     };
+    SHOW_BOOK: {
+        BOOL: boolean;
+    };
 };
 
 export enum UserStatus {
@@ -75,7 +78,7 @@ export async function scan(client: DynamoDBClient) {
     return response.Items as unknown as Items;
 }
 
-export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[], color: string, show_clock: boolean) {
+export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[], color: string, show_clock: boolean, show_book: boolean) {
     if (verses.length == 0) {
         verses = [-1];
     }
@@ -86,7 +89,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
                 S: church_id,
             },
         },
-        UpdateExpression: "SET #B = :book_id, #S = :song_number, #V = :verses, #C = :book_color, #D = :show_clock",
+        UpdateExpression: "SET #B = :book_id, #S = :song_number, #V = :verses, #C = :book_color, #D = :show_clock, #E = :show_book",
         ExpressionAttributeValues: {
             ":book_id": {
                 S: book,
@@ -102,6 +105,9 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
             },
             ":show_clock": {
                 BOOL: show_clock,
+            },
+            ":show_book": {
+                BOOL: show_book,
             }
         },
         ExpressionAttributeNames: {
@@ -109,7 +115,8 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
             "#S": "SONG_NUMBER",
             "#V": "VERSES",
             "#C": "BOOK_COLOR",
-            "#D": "SHOW_CLOCK"
+            "#D": "SHOW_CLOCK",
+            "#E": "SHOW_BOOK"
         },
         ReturnValues: "ALL_NEW",
     };
@@ -158,6 +165,29 @@ export async function set_show_clock(client: DynamoDBClient, church_id: string, 
         },
         ExpressionAttributeNames: {
             "#C": "SHOW_CLOCK",
+        },
+        ReturnValues: "ALL_NEW",
+    };
+    const command = new UpdateItemCommand(data as unknown as UpdateItemCommandInput);
+    const response = await client.send(command);
+    return response;
+}
+export async function set_show_book(client: DynamoDBClient, church_id: string, show_book: boolean) {
+    const data = {
+        TableName: "ACCHYMNS_DISPLAY_DATA",
+        Key: {
+            CHURCH_ID: {
+                S: church_id,
+            },
+        },
+        UpdateExpression: "SET #C = :show_book",
+        ExpressionAttributeValues: {
+            ":show_book": {
+                BOOL: show_book,
+            },
+        },
+        ExpressionAttributeNames: {
+            "#C": "SHOW_BOOK",
         },
         ReturnValues: "ALL_NEW",
     };
