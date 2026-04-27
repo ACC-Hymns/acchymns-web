@@ -28,7 +28,7 @@ jobs:
           touch dist/.nojekyll
       
       - name: Upload Github Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
