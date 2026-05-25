@@ -7,7 +7,9 @@
             "namespace": "android_app",
             "package_name": "com.ChristopherW.acchmns",
             "sha256_cert_fingerprints": [
-                "BA:76:90:E0:62:1C:A7:8C:13:11:AC:C7:27:4C:C9:93:86:45:7E:E3:A6:81:6D:B9:02:4C:FA:9C:BB:5E:9D:B4"
+                "BA:76:90:E0:62:1C:A7:8C:13:11:AC:C7:27:4C:C9:93:86:45:7E:E3:A6:81:6D:B9:02:4C:FA:9C:BB:5E:9D:B4",
+                "1C:9F:0C:88:67:27:22:42:DE:B8:4B:8B:56:4B:D7:0F:54:A4:A8:A0:96:09:63:32:85:79:A0:9A:CA:F9:F8:4F",
+                "4D:DC:B8:59:A6:DE:0C:5A:CB:89:40:75:6D:74:E6:54:4D:CE:61:74:CD:C1:F4:1C:57:6C:D6:2B:13:7F:38:90"
             ]
         }
     }
