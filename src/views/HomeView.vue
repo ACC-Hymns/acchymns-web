@@ -7,14 +7,13 @@ import ProgressBar from "@/components/ProgressBar.vue";
 import { computed, nextTick, onMounted, ref } from "vue";
 import { Network } from "@capacitor/network";
 import { useLocalStorage } from "@vueuse/core";
-import { BookSourceType, type BookDataSummary, type SongReference, type UpdatePackage } from "@/scripts/types";
+import { BookSourceType, type BookDataSummary, type UpdatePackage } from "@/scripts/types";
 import BaseBookBox from "@/components/BaseBookBox.vue";
 import draggable from "vuedraggable";
 import { Preferences } from "@capacitor/preferences";
 import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
 import NavigationBar from "@/components/NavigationBar.vue";
-import { useReportAPI } from "@/composables/report";
 
 let is_connected = ref<boolean>(false);
 let update_reminder = useLocalStorage<number>("update_reminder", Date.now());

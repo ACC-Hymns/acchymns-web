@@ -15,8 +15,6 @@ import { Capacitor } from "@capacitor/core";
 import NavigationBar from "@/components/NavigationBar.vue";
 
 // This is retrieved from the package.json
-const version: string = import.meta.env.VITE_FULL_PROGRAM_VERSION;
-const is_prerelease = version.includes("Beta") || version.includes("Alpha");
 const isWeb = Capacitor.getPlatform() === "web";
 let update_packages = ref<UpdatePackage[]>([]);
 let update_progress = ref<number>(0);

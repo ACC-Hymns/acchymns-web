@@ -217,12 +217,20 @@ function set_selected_hymnal(id: number) {
 
 async function broadcast_song_number() {
     let book = book_sources.value[selected_hymnal.value];
-    if(!book)
-        return book;
+    if (!book) return book;
 
-    let number = song_number.value.replace(/^0+/, '');
+    let number = song_number.value.replace(/^0+/, "");
 
-    await set(request_client(), selected_church.value, number, book.name?.medium || "", verses.value, book.primaryColor || "#000000", show_clock.value, show_book.value);
+    await set(
+        request_client(),
+        selected_church.value,
+        number,
+        book.name?.medium || "",
+        verses.value,
+        book.primaryColor || "#000000",
+        show_clock.value,
+        show_book.value,
+    );
 }
 
 let old_testament = ref<BibleBook[]>([]);
@@ -479,8 +487,15 @@ function get_lock_icon() {
                 <div class="book-selector" :class="{ 'hide-scrollbar': platform !== 'web' }">
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
-                    <a v-for="i in book_sources.length" @click="(e) => set_selected_hymnal(i - 1)" class="white-text biblebook"
-                        :class="{'selected': selected_hymnal == i - 1}" :style="{'background-color': book_sources[i - 1].primaryColor}">{{ book_sources[i - 1].name?.medium }}</a>
+                    <a
+                        v-for="i in book_sources.length"
+                        :key="book_sources[i - 1].id"
+                        @click="set_selected_hymnal(i - 1)"
+                        class="white-text biblebook"
+                        :class="{ selected: selected_hymnal == i - 1 }"
+                        :style="{ 'background-color': book_sources[i - 1].primaryColor }"
+                        >{{ book_sources[i - 1].name?.medium }}</a
+                    >
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                     <a v-if="platform !== 'web'" class="biblebook space"></a>
                 </div>
@@ -554,20 +569,16 @@ function get_lock_icon() {
                     <img class="entrypoint ionicon" src="/assets/chevron-forward-outline.svg" />
                 </a>
                 <a class="settings-option">
-                    <span>
-                        Show Clock
-                    </span>
+                    <span> Show Clock </span>
                     <label class="switch">
-                    <input v-model="show_clock" type="checkbox" @change="set_clock"/>
+                        <input v-model="show_clock" type="checkbox" @change="set_clock" />
                         <span class="slider round"></span>
                     </label>
                 </a>
                 <a class="settings-option">
-                    <span>
-                        Show Hymnal
-                    </span>
+                    <span> Show Hymnal </span>
                     <label class="switch">
-                    <input v-model="show_book" type="checkbox" @change="set_book"/>
+                        <input v-model="show_book" type="checkbox" @change="set_book" />
                         <span class="slider round"></span>
                     </label>
                 </a>
