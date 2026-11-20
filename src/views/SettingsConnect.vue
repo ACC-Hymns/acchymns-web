@@ -26,30 +26,30 @@ const { back } = useNavigator();
 const unlocked = ref<boolean>(false);
 const input = ref<string>("");
 const status = ref<UserStatus>(UserStatus.None);
-let platform = ref<string>(Capacitor.getPlatform());
-let login_error = ref<boolean>(false);
-let selected_church = ref("LOADING");
-let hexinput = ref<HTMLInputElement>();
-let show_clock = ref<boolean>(false);
-let show_book = ref<boolean>(false);
-let churches = ref<ChurchData[]>([]);
-let bible = ref<Bible>();
-let touched_pin = ref<number>(0);
-let book_sources = ref<BookDataSummary[]>([]);
+const platform = ref<string>(Capacitor.getPlatform());
+const login_error = ref<boolean>(false);
+const selected_church = ref("LOADING");
+const hexinput = ref<HTMLInputElement>();
+const show_clock = ref<boolean>(false);
+const show_book = ref<boolean>(false);
+const churches = ref<ChurchData[]>([]);
+const bible = ref<Bible>();
+const touched_pin = ref<number>(0);
+const book_sources = ref<BookDataSummary[]>([]);
 
 async function check_code(code: string) {
-    let response = await axios.post("https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/", {
+    const response = await axios.post("https://iahifuumb7zasmzuv5xqpmi7fu0pwtkt.lambda-url.us-east-2.on.aws/", {
         code: code,
     });
     return response;
 }
 async function authorize(response: AxiosResponse<any, any>) {
-    let auth = response.data as AuthResponse;
+    const auth = response.data as AuthResponse;
     if (response.status == 200) {
         await Preferences.set({ key: "broadcasting_auth_token", value: auth.token });
         status.value = UserStatus.Authorized;
 
-        let data = await scan(request_client());
+        const data = await scan(request_client());
         churches.value = Object.values(data);
         selected_church.value = auth.church_id;
         await populate_bg_color();
@@ -63,7 +63,7 @@ async function authorize(response: AxiosResponse<any, any>) {
 }
 
 async function populate_bg_color() {
-    let church_data: ChurchData = (await get(request_client(), selected_church.value)).Item as unknown as ChurchData;
+    const church_data: ChurchData = (await get(request_client(), selected_church.value)).Item as unknown as ChurchData;
     if (hexinput.value) {
         hexinput.value.value = church_data.BG_COLOR.S;
     }
@@ -138,7 +138,7 @@ async function handle_tap(index: number) {
     if (input.value.length > 4) return;
 
     if (input.value.length == 4) {
-        let response = await check_code(input.value);
+        const response = await check_code(input.value);
         unlocked.value = response.status == 200;
         if (!unlocked.value) login_error.value = true;
 
@@ -152,14 +152,14 @@ onMounted(async () => {
     selected_church.value = "...";
     bible.value = ((await (await fetch(import.meta.env.BASE_URL + "NKJV.bible.json", {})).json()) as Bible) || { version: "", books: [] };
 
-    let temp = await loadBookSources();
+    const temp = await loadBookSources();
     book_sources.value = temp.filter(
         b => b.status == BookSourceType.DOWNLOADED || b.status == BookSourceType.IMPORTED || b.status == BookSourceType.BUNDLED,
     );
     console.log(book_sources.value);
-    let broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token" });
+    const broadcasting_auth_token = await Preferences.get({ key: "broadcasting_auth_token" });
 
-    for (let [index, book] of bible.value.books.entries()) {
+    for (const [index, book] of bible.value.books.entries()) {
         if (index > 38) new_testament.value.push(book);
         else old_testament.value.push(book);
     }
@@ -167,12 +167,12 @@ onMounted(async () => {
     fix_verse_range();
 
     if (broadcasting_auth_token.value != "" && broadcasting_auth_token.value != undefined) {
-        let token_response = await validate_token(broadcasting_auth_token.value);
+        const token_response = await validate_token(broadcasting_auth_token.value);
         if (token_response.status != 200) return signout();
-        let token_response_data = token_response.data as TokenAuthResponse;
+        const token_response_data = token_response.data as TokenAuthResponse;
 
         status.value = UserStatus.Authorized;
-        let data = await scan(request_client());
+        const data = await scan(request_client());
         churches.value = Object.values(data);
 
         selected_church.value = token_response_data.church_id;
@@ -204,22 +204,22 @@ async function broadcast_reading() {
     await set(request_client(), selected_church.value, top_text, "BIBLE", [], bottom_text, show_clock.value, show_book.value);
 }
 
-let bibleReading = ref<boolean>(false);
-let songNumber = ref<boolean>(false);
+const bibleReading = ref<boolean>(false);
+const songNumber = ref<boolean>(false);
 
-let selected_hymnal = ref<number>(0);
-let song_number = ref<string>("");
-let verses = ref<number[]>([]);
+const selected_hymnal = ref<number>(0);
+const song_number = ref<string>("");
+const verses = ref<number[]>([]);
 
 function set_selected_hymnal(id: number) {
     selected_hymnal.value = id;
 }
 
 async function broadcast_song_number() {
-    let book = book_sources.value[selected_hymnal.value];
+    const book = book_sources.value[selected_hymnal.value];
     if (!book) return book;
 
-    let number = song_number.value.replace(/^0+/, "");
+    const number = song_number.value.replace(/^0+/, "");
 
     await set(
         request_client(),
@@ -233,14 +233,14 @@ async function broadcast_song_number() {
     );
 }
 
-let old_testament = ref<BibleBook[]>([]);
-let new_testament = ref<BibleBook[]>([]);
-let book = ref("Genesis");
-let chapter_start = ref(1);
-let chapter_end = ref(1);
-let verse_start = ref(1);
-let verse_end = ref(1);
-let read_type = ref(1);
+const old_testament = ref<BibleBook[]>([]);
+const new_testament = ref<BibleBook[]>([]);
+const book = ref("Genesis");
+const chapter_start = ref(1);
+const chapter_end = ref(1);
+const verse_start = ref(1);
+const verse_end = ref(1);
+const read_type = ref(1);
 
 function fix_chapter_range() {
     if (chapter_start.value > get_chapter_start_list(book.value).length) {
@@ -284,13 +284,13 @@ function read_type_changed(e: Event, id: number) {
 }
 
 function get_chapter_start_list(book: string) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    const b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
     return b.chapters;
 }
 
 function get_chapter_end_list(book: string) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
-    let chapter_end_list: BibleChapter[] = [];
+    const b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    const chapter_end_list: BibleChapter[] = [];
     if (chapter_start.value > 0) {
         for (let i = chapter_start.value + 1; i <= b?.chapters.length; i++) {
             chapter_end_list.push(b.chapters[i - 1]);
@@ -301,14 +301,14 @@ function get_chapter_end_list(book: string) {
 }
 
 function get_verse_start_list(book: string, chapter: number) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
-    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
+    const b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    const c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
     return c.verses;
 }
 function get_verse_end_list(book: string, chapter: number) {
-    let b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
-    let c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
-    let verse_end_list: BibleVerse[] = [];
+    const b: BibleBook = bible.value?.books.find(b => b.name == book) || { name: "", chapters: [] };
+    const c: BibleChapter = b.chapters.find(c => c.num == chapter) || { num: 0, verses: [] };
+    const verse_end_list: BibleVerse[] = [];
     if (verse_start.value > 0) {
         for (let i = read_type.value == 3 ? 1 : verse_start.value; i <= c?.verses.length; i++) {
             verse_end_list.push(c.verses[i - 1]);

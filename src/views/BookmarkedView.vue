@@ -7,13 +7,13 @@ import { stripSearchText } from "@/scripts/search";
 import { useCapacitorPreferences } from "@/composables/preferences";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-let search_query = ref("");
-let stripped_query = computed(() => {
+const search_query = ref("");
+const stripped_query = computed(() => {
     return stripSearchText(search_query.value);
 });
-let available_songs = ref<SongSearchInfo[]>([]);
+const available_songs = ref<SongSearchInfo[]>([]);
 
-let search_results = computed(() => {
+const search_results = computed(() => {
     return available_songs.value
         .filter(s => {
             return (

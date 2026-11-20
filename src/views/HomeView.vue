@@ -15,13 +15,13 @@ import { restoreScrollPosition, saveScrollPosition } from "@/router/scroll";
 import { clearCache } from "@/composables/cached_fetch";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-let is_connected = ref<boolean>(false);
-let update_reminder = useLocalStorage<number>("update_reminder", Date.now());
-let update_packages = ref<UpdatePackage[]>([]);
-let update_progress = ref<number>(0);
-let update_background_element = ref();
-let update_panel_element = ref();
-let is_editing_order = ref<boolean>(false);
+const is_connected = ref<boolean>(false);
+const update_reminder = useLocalStorage<number>("update_reminder", Date.now());
+const update_packages = ref<UpdatePackage[]>([]);
+const update_progress = ref<number>(0);
+const update_background_element = ref();
+const update_panel_element = ref();
+const is_editing_order = ref<boolean>(false);
 
 // Saving position in book
 onBeforeRouteLeave((_, from) => {
@@ -34,7 +34,7 @@ function getDirection() {
     return "vertical";
 }
 
-let dragOptions = computed(() => {
+const dragOptions = computed(() => {
     return {
         animation: 200,
         group: "description",
@@ -45,13 +45,13 @@ let dragOptions = computed(() => {
 });
 
 const book_sources = ref<BookDataSummary[]>([]);
-let customized_books = ref<BookDataSummary[]>([]);
+const customized_books = ref<BookDataSummary[]>([]);
 
 async function sort_books() {
-    let book_order = JSON.parse((await Preferences.get({ key: "bookOrder" })).value || "[]") as string[];
-    let available_books = book_sources.value.filter(book => filter_book(book, is_connected.value));
+    const book_order = JSON.parse((await Preferences.get({ key: "bookOrder" })).value || "[]") as string[];
+    const available_books = book_sources.value.filter(book => filter_book(book, is_connected.value));
     let temp_books: BookDataSummary[] = [];
-    for (let id of book_order) {
+    for (const id of book_order) {
         if (available_books.find(book => book.id == id)) {
             temp_books.push(available_books.find(book => book.id == id) as BookDataSummary);
             available_books.splice(
@@ -62,7 +62,7 @@ async function sort_books() {
     }
     temp_books = temp_books.concat(available_books);
     temp_books.forEach(async book => {
-        let summary = book_sources.value.find(source => source.id == book.id);
+        const summary = book_sources.value.find(source => source.id == book.id);
         book.primaryColor = summary?.primaryColor;
         book.secondaryColor = summary?.secondaryColor;
         book.name = summary?.name;
@@ -78,9 +78,9 @@ onMounted(async () => {
     book_sources.value = await loadBookSources();
     await sort_books();
 
-    if (is_connected && update_reminder.value <= Date.now()) {
-        let update_results: UpdatePackage[] = await checkForUpdates();
-        for (let update of update_results) {
+    if (is_connected.value && update_reminder.value <= Date.now()) {
+        const update_results: UpdatePackage[] = await checkForUpdates();
+        for (const update of update_results) {
             update.book_summary = await getBookFromId(update.book_short);
         }
         update_packages.value = update_results;
@@ -108,8 +108,8 @@ type BookOrderEvent = {
     };
 };
 async function move_book(e: BookOrderEvent) {
-    let book_order = customized_books.value.map(book => book.id);
-    let moved_book = e.moved.element;
+    const book_order = customized_books.value.map(book => book.id);
+    const moved_book = e.moved.element;
     book_order.splice(e.moved.oldIndex, 1);
     book_order.splice(e.moved.newIndex, 0, moved_book.id);
     Preferences.set({ key: "bookOrder", value: JSON.stringify(book_order) });
@@ -129,9 +129,9 @@ function delayUpdate() {
 async function startUpdate() {
     if (update_progress.value > 0) return;
 
-    var progresses: number[] = [update_packages.value.length];
+    const progresses: number[] = [update_packages.value.length];
     for (let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
-        let pkg = update_packages.value[pkg_id];
+        const pkg = update_packages.value[pkg_id];
         await download_update_package(
             pkg,
             (progress: number) => {
@@ -153,7 +153,7 @@ function filter_book(book: BookDataSummary, hasConnection: boolean) {
         book.status == BookSourceType.BUNDLED || book.status == BookSourceType.DOWNLOADED || (hasConnection && book.status == BookSourceType.IMPORTED)
     );
 }
-let updated_privacy_policy = useLocalStorage<boolean>("updated_privacy_policy", false);
+const updated_privacy_policy = useLocalStorage<boolean>("updated_privacy_policy", false);
 </script>
 
 <template>

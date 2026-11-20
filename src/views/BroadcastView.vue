@@ -10,23 +10,23 @@ const minutes = ref<string>("");
 const seconds = ref<string>("");
 const digital_time = ref<string>("");
 function clock() {
-    let d = new Date();
+    const d = new Date();
     let h = d.getHours();
-    let m = d.getMinutes();
-    let s = d.getSeconds();
+    const m = d.getMinutes();
+    const s = d.getSeconds();
 
-    let hDeg = h * 30 + m * (360 / 720);
-    let mDeg = m * 6 + s * (360 / 3600);
-    let sDeg = s * 6;
+    const hDeg = h * 30 + m * (360 / 720);
+    const mDeg = m * 6 + s * (360 / 3600);
+    const sDeg = s * 6;
 
     hours.value = `rotate(${hDeg}deg)`;
     minutes.value = `rotate(${mDeg}deg)`;
     seconds.value = `rotate(${sDeg}deg)`;
 
     // 12 hour format
-    let am_pm = h >= 12 ? "PM" : "AM";
+    const am_pm = h >= 12 ? "PM" : "AM";
     h = h > 0 ? h : 12; // the hour '0' should be '12'
-    let hrs = h % 12;
+    const hrs = h % 12;
     digital_time.value = `${hrs}:${m < 10 ? "0" + m : m} ${am_pm}`;
 }
 
@@ -63,7 +63,7 @@ async function set_data() {
         return;
     }
 
-    let data: ChurchData = (await broadcast_api.getCurrentBroadcast()) as ChurchData;
+    const data: ChurchData = (await broadcast_api.getCurrentBroadcast()) as ChurchData;
     is_bible_reading.value = data.BOOK_ID.S == "BIBLE";
     show_clock.value = data.SHOW_CLOCK.BOOL;
     show_hymnal.value = data.SHOW_BOOK.BOOL;

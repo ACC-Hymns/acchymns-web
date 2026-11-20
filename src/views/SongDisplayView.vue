@@ -142,8 +142,8 @@ watch(audio.playing, () => {
 });
 
 function secondsToTimestamp(seconds: number) {
-    let minutes = Math.floor(seconds / 60);
-    let remaining_seconds = Math.floor(seconds % 60);
+    const minutes = Math.floor(seconds / 60);
+    const remaining_seconds = Math.floor(seconds % 60);
     return `${minutes}:${remaining_seconds < 10 ? "0" : ""}${remaining_seconds}`;
 }
 
@@ -181,8 +181,8 @@ async function shareSong() {
 }
 
 async function reportSong() {
-    let reportAPI = useReportAPI();
-    let result = await reportAPI.report(props);
+    const reportAPI = useReportAPI();
+    const result = await reportAPI.report(props);
     if (!result) return;
 
     await Toast.show({

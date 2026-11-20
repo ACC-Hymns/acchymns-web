@@ -55,7 +55,7 @@ const duration = useLocalStorage<number>("ACCOptions.playbackDuration", 2.5);
 const staggered = useLocalStorage<boolean>("ACCOptions.staggered", true);
 
 const isPlaying = ref(false);
-const timeouts: NodeJS.Timeout[] = [];
+const timeouts: ReturnType<typeof setTimeout>[] = [];
 
 const player = {
     async play(notes: string[]) {

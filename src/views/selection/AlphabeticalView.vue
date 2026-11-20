@@ -8,9 +8,9 @@ import { saveScrollPosition, restoreScrollPosition, removeGroupOpened, removeScr
 const route = useRoute();
 const props = { book: route.params.book as string };
 
-let book_ref = ref("");
-let primary_color = ref("#FFFFFF");
-let secondary_color = ref("#000000");
+const book_ref = ref("");
+const primary_color = ref("#FFFFFF");
+const secondary_color = ref("#000000");
 
 let BOOK_SONG_METADATA: any = null;
 let BOOK_METADATA: any = null;
@@ -30,7 +30,7 @@ onMounted(async () => {
     primary_color.value = BOOK_METADATA[props.book].primaryColor;
     secondary_color.value = BOOK_METADATA[props.book].secondaryColor;
     for (const song_number of Object.keys(BOOK_SONG_METADATA)) {
-        let song: Song = BOOK_SONG_METADATA[song_number];
+        const song: Song = BOOK_SONG_METADATA[song_number];
         alphabeticalSongs.value.push({
             title: song?.title ?? "",
             number: song_number,

@@ -16,10 +16,10 @@ import NavigationBar from "@/components/NavigationBar.vue";
 
 // This is retrieved from the package.json
 const isWeb = Capacitor.getPlatform() === "web";
-let update_packages = ref<UpdatePackage[]>([]);
-let update_progress = ref<number>(0);
-let update_background_element = ref();
-let update_panel_element = ref();
+const update_packages = ref<UpdatePackage[]>([]);
+const update_progress = ref<number>(0);
+const update_background_element = ref();
+const update_panel_element = ref();
 
 async function clearFetchCache() {
     const confirmed = await Dialog.confirm({
@@ -38,8 +38,8 @@ async function clearFetchCache() {
 }
 
 async function forceUpdate() {
-    let updates = await generate_force_update_package();
-    for (let update of updates) {
+    const updates = await generate_force_update_package();
+    for (const update of updates) {
         update.book_summary = await getBookFromId(update.book_short);
     }
     update_packages.value = updates;
@@ -57,9 +57,9 @@ function delayUpdate() {
 async function startUpdate() {
     if (update_progress.value > 0) return;
 
-    var progresses: number[] = [update_packages.value.length];
+    const progresses: number[] = [update_packages.value.length];
     for (let pkg_id = 0; pkg_id < update_packages.value.length; pkg_id++) {
-        let pkg = update_packages.value[pkg_id];
+        const pkg = update_packages.value[pkg_id];
         await download_update_package(
             pkg,
             (progress: number) => {
@@ -119,7 +119,7 @@ async function exportLogs() {
 const can_share = ref<boolean>(false);
 Share.canShare().then(res => (can_share.value = res.value));
 
-let opt_out_data_collection = useLocalStorage("ACCOptions.optOutDataCollection", false);
+const opt_out_data_collection = useLocalStorage("ACCOptions.optOutDataCollection", false);
 
 const { posthog } = usePostHog();
 
