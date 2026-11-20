@@ -75,7 +75,7 @@ onMounted(async () => {
     available_books.value.push(...Object.values(BOOK_METADATA));
     for (const book of Object.keys(SONG_METADATA)) {
         for (const song_number of Object.keys(SONG_METADATA[book])) {
-            let song: Song = SONG_METADATA[book][song_number];
+            const song: Song = SONG_METADATA[book][song_number];
 
             if (song.title == undefined) song.title = "";
 
@@ -90,7 +90,7 @@ onMounted(async () => {
     }
 
     prepackaged_books.concat(Object.keys(known_references)).forEach(async book => {
-        let book_data: BookDataSummary | undefined = await getBookDataSummaryFromName(book);
+        const book_data: BookDataSummary | undefined = await getBookDataSummaryFromName(book);
         if (book_data == undefined) return;
         book_data_summaries.value.set(book, book_data);
     });
@@ -119,12 +119,12 @@ function toggleDropdown() {
     }
 }
 
-let book_filters = ref<Element[]>([]);
+const book_filters = ref<Element[]>([]);
 
 function filterBook(short_book_name: string) {
     is_open.value = true;
     if (search_params.value.bookFilters.includes(short_book_name)) {
-        let index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
+        const index = search_params.value.bookFilters.findIndex(b => b == short_book_name);
         search_params.value.bookFilters.splice(index, 1);
     } else {
         search_params.value.bookFilters.push(short_book_name);

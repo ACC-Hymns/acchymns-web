@@ -13,8 +13,8 @@ import { BookSourceType, type BookDataSummary, type DownloadPromise } from "@/sc
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import NavigationBar from "@/components/NavigationBar.vue";
 
-let downloadProgress = ref(new Map<string, number>());
-let downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
+const downloadProgress = ref(new Map<string, number>());
+const downloads = ref<Map<string, DownloadPromise>>(new Map<string, DownloadPromise>());
 onBeforeUnmount(async () => {
     downloads.value.forEach(async (value, key) => {
         await value.cancel();
@@ -23,11 +23,11 @@ onBeforeUnmount(async () => {
 });
 
 const book_sources = useCapacitorPreferences<BookDataSummary[]>("bookSources", []);
-let import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
+const import_books_tooltip_status = useLocalStorage<boolean>("import_books_tooltip_complete", false);
 
 // Preview books are books that haven't been imported, and are publicly available
 const preview_books = computed(() => {
-    let books = book_sources.value.filter(book => book.status == BookSourceType.PREVIEW);
+    const books = book_sources.value.filter(book => book.status == BookSourceType.PREVIEW);
     return books;
 });
 
@@ -44,10 +44,10 @@ const downloaded_books = computed(() => {
 const reference_input = ref("");
 
 async function addImportedURL(input_book: BookDataSummary, show_on_success: boolean = true): Promise<boolean> {
-    let book = book_sources.value.find(b => b.id == input_book.id);
+    const book = book_sources.value.find(b => b.id == input_book.id);
     if (book == undefined) return false;
 
-    let connection = (await Network.getStatus()).connected;
+    const connection = (await Network.getStatus()).connected;
     if (connection) {
         if (Capacitor.getPlatform() !== "web") await download_import_summary(book);
     } else {
@@ -129,7 +129,7 @@ async function addImportedBookByCode(short_book_name: string) {
 
 async function download(book_to_download: BookDataSummary) {
     if ((await Network.getStatus()).connected) {
-        let d: DownloadPromise = download_book(
+        const d: DownloadPromise = download_book(
             book_to_download,
             (book, progress) => download_progress(book, progress),
             (book, url: string) => download_finish(book, url),

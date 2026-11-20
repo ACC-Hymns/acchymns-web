@@ -78,7 +78,16 @@ export async function scan(client: DynamoDBClient) {
     return response.Items as unknown as Items;
 }
 
-export async function set(client: DynamoDBClient, church_id: string, song: string, book: string, verses: number[], color: string, show_clock: boolean, show_book: boolean) {
+export async function set(
+    client: DynamoDBClient,
+    church_id: string,
+    song: string,
+    book: string,
+    verses: number[],
+    color: string,
+    show_clock: boolean,
+    show_book: boolean,
+) {
     if (verses.length == 0) {
         verses = [-1];
     }
@@ -108,7 +117,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
             },
             ":show_book": {
                 BOOL: show_book,
-            }
+            },
         },
         ExpressionAttributeNames: {
             "#B": "BOOK_ID",
@@ -116,7 +125,7 @@ export async function set(client: DynamoDBClient, church_id: string, song: strin
             "#V": "VERSES",
             "#C": "BOOK_COLOR",
             "#D": "SHOW_CLOCK",
-            "#E": "SHOW_BOOK"
+            "#E": "SHOW_BOOK",
         },
         ReturnValues: "ALL_NEW",
     };

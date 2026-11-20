@@ -5,7 +5,7 @@ import type { URLOpenListenerEvent } from "@capacitor/app";
 
 import { usePostHog } from "@/composables/usePostHog";
 
-const { posthog } = usePostHog();
+usePostHog();
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

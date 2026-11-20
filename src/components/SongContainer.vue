@@ -10,8 +10,8 @@ import { useLocalStorage, useMediaQuery } from "@vueuse/core";
 
 const props = defineProps<SongReference>();
 
-let song_img_type = ref("");
-let panzoom_container = ref<HTMLDivElement>();
+const song_img_type = ref("");
+const panzoom_container = ref<HTMLDivElement>();
 
 function getSongSrc(bookShort: string, songNum: string, BOOK_METADATA: { [k: string]: BookSummary }): string {
     const fileName = songNum + "." + BOOK_METADATA[bookShort].fileExtension;
@@ -26,13 +26,13 @@ defineExpose({
     getZoom,
 });
 
-let song_img_src = ref("");
-let error_is_active = ref(false);
+const song_img_src = ref("");
+const error_is_active = ref(false);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
 const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
 const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
-let song_invert = useLocalStorage("ACCOptions.songInverted", false);
+const song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
     if (override_system_theme.value) {
@@ -112,7 +112,7 @@ class IntersectionObserverManager {
         }
     }
     refresh() {
-        for (let node of this._observedNodes) {
+        for (const node of this._observedNodes) {
             try {
                 this._observer.unobserve(node as Element);
                 this._observer.observe(node as Element);
@@ -127,8 +127,8 @@ const observer = new IntersectionObserverManager(
     new IntersectionObserver(
         (entries, _observer) => {
             for (const entry of entries) {
-                let rootRect = entry.boundingClientRect;
-                let visibleRect = entry.intersectionRect;
+                const rootRect = entry.boundingClientRect;
+                const visibleRect = entry.intersectionRect;
                 if (visibleRect.height < rootRect.height) panzoom.setVerticalPan(true);
                 else panzoom.setVerticalPan(false);
             }

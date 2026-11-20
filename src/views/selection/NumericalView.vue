@@ -20,13 +20,13 @@ onBeforeRouteLeave((_, from) => {
 const error_active = ref(false);
 
 const song_numbers = ref<string[]>([]);
-let book_name = ref("");
-let index_available = ref(false);
-let button_color = ref("#000000");
-let song_number_groups = ref<string[][]>([]);
-let song_number_groups_active = ref<string[][]>([]);
-let song_group_elements = ref<any[]>();
-let song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
+const book_name = ref("");
+const index_available = ref(false);
+const button_color = ref("#000000");
+const song_number_groups = ref<string[][]>([]);
+const song_number_groups_active = ref<string[][]>([]);
+const song_group_elements = ref<any[]>();
+const song_group_enabled = useLocalStorage<boolean>("ACCOptions.songGroupEnabled", true);
 
 onMounted(async () => {
     const BOOK_METADATA = await getAllBookMetaData();
@@ -42,17 +42,17 @@ onMounted(async () => {
 
     // 400 songs? 5 groups
     // 1-99, 100-199, 200-299, 300-399, 400
-    let song_count = song_numbers.value.length;
-    let num_groups = Math.ceil(song_count / 100);
+    const song_count = song_numbers.value.length;
+    const num_groups = Math.ceil(song_count / 100);
 
     // Dividing songs into groups of 100
     for (let i = 0; i < num_groups; i++) {
         const re = new RegExp(/[a-z]/, "i");
         song_number_groups.value?.push(
             song_numbers.value.filter(song => {
-                let song_num = song.replace(re, "");
-                let start = i * 100;
-                let end = (i + 1) * 100 - 1;
+                const song_num = song.replace(re, "");
+                const start = i * 100;
+                const end = (i + 1) * 100 - 1;
                 if (i === num_groups - 1 && song_count === end + 1) {
                     return start <= Number(song_num);
                 }
@@ -67,7 +67,7 @@ onMounted(async () => {
 
     useSessionStorage<boolean>("isAlphabetical", false).value = false;
 
-    let group_ids = getGroupOpened(route.fullPath);
+    const group_ids = getGroupOpened(route.fullPath);
     if (group_ids != undefined) {
         group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
@@ -86,9 +86,9 @@ function toggleDropdown(group: string[]) {
     } else {
         song_number_groups_active.value.push(group);
     }
-    let ids: number[] = [];
+    const ids: number[] = [];
     song_number_groups_active.value.forEach(group_id => {
-        var index = song_number_groups.value.indexOf(group_id);
+        const index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
     });
     saveGroupOpened(route.fullPath, ids);

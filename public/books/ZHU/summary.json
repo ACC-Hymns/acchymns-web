@@ -1,0 +1,12 @@
+{
+	"name": {
+		"short": "ZHU",
+		"medium": "Zion's Harp (Ukr.)",
+		"long": "Zion's Harp (Ukrainian)"
+	},
+	"primaryColor": "#FFD700",
+	"secondaryColor": "#0057B7",
+	"fileExtension": "pdf",
+	"addOn": true,
+	"indexAvailable": false
+}
