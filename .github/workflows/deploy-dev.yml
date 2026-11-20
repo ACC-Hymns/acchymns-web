@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: 'build'
 
@@ -40,7 +40,7 @@ jobs:
           cd ..
       
       - name: Checkout Dev Target
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ACC-Hymns/acchymns-dev
           path: 'deploy'
