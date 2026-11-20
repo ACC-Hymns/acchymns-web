@@ -1,42 +1,38 @@
 const prepackaged_books = ["ZH", "GH", "JH"];
-const prepackaged_book_urls: string[] = prepackaged_books.map(book_name => import.meta.env.BASE_URL + "books/" + book_name);
+const prepackaged_book_urls: string[] = [
+    `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZH`,
+    `https://raw.githubusercontent.com/ACC-Hymns/books/main/GH`,
+    `https://raw.githubusercontent.com/ACC-Hymns/books/main/JH`,
+]
 
 const branch: string = import.meta.env.VITE_GIT_BRANCH;
 
-// function calcUrl(book_name: string) {
-//     if (import.meta.env.DEV) {
-//         return import.meta.env.BASE_URL + "public/books/" + book_name;
-//     } else if (import.meta.env.MODE == "production") {
-//         return `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book_name}`;
-//     }
-// }
-
 const public_references = {
-    HG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HG`,
-    CH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/CH`,
-    HZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HZ`,
-    HSZ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HSZ`,
-    ZG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZG`,
-    XC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/XC`,
-    ZGE: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZGE`,
-    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHJ`,
-    ZHSP: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHSP`,
-    ZHG: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHG`,
-    BS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/BS`,
-    LDH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/LDH`,
-    ES: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ES`,
-    MO: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/MO`,
-    ZHH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHH`,
-    ZHR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHR`,
-    ZHU: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHU`,
-    HS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HS`,
-    PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/PC`,
+    HG: `https://raw.githubusercontent.com/ACC-Hymns/books/main/HG`,
+    CH: `https://raw.githubusercontent.com/ACC-Hymns/books/main/CH`,
+    HZ: `https://raw.githubusercontent.com/ACC-Hymns/books/main/HZ`,
+    HSZ: `https://raw.githubusercontent.com/ACC-Hymns/books/main/HSZ`,
+    ZG: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZG`,
+    XC: `https://raw.githubusercontent.com/ACC-Hymns/books/main/XC`,
+    ZGE: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZGE`,
+    ZHJ: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHJ`,
+    ZHSP: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHSP`,
+    ZHG: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHG`,
+    BS: `https://raw.githubusercontent.com/ACC-Hymns/books/main/BS`,
+    LDH: `https://raw.githubusercontent.com/ACC-Hymns/books/main/LDH`,
+    ES: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ES`,
+    MO: `https://raw.githubusercontent.com/ACC-Hymns/books/main/MO`,
+    ZHH: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHH`,
+    ZHR: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHR`,
+    ZHU: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ZHU`,
+    HS: `https://raw.githubusercontent.com/ACC-Hymns/books/main/HS`,
+    PC: `https://raw.githubusercontent.com/ACC-Hymns/books/main/PC`,
 } as const;
 
 const known_references = {
     ...public_references,
-    ARF: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ARF`,
-    ARFR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ARFR`,
+    ARF: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ARF`,
+    ARFR: `https://raw.githubusercontent.com/ACC-Hymns/books/main/ARFR`,
 } as const;
 
 export { prepackaged_books, prepackaged_book_urls, public_references, branch, known_references };

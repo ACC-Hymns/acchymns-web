@@ -62,7 +62,7 @@ async function checkForUpdates(): Promise<UpdatePackage[]> {
     console.log("Checking for updates...");
     if (Capacitor.getPlatform() !== "web") {
         const book_signature: BookSignature[] = await (
-            await fetch(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/book_signatures.json`)
+            await fetch(`https://raw.githubusercontent.com/book_signatures.json`)
         ).json();
         const return_packages: UpdatePackage[] = [];
 
@@ -390,7 +390,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
             directory: Directory.Data,
             path: `Hymnals/${update.book_short}/${path}`,
             progress: false,
-            url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/${path}`,
+            url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${update.book_short}/${path}`,
         });
         progress_callback((i + 1) / update.paths.length);
     }
@@ -398,7 +398,7 @@ async function download_update_package(update: UpdatePackage, progress_callback:
         directory: Directory.Data,
         path: `Hymnals/${update.book_short}/.signature`,
         progress: false,
-        url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${update.book_short}/.signature`,
+        url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${update.book_short}/.signature`,
     });
     finish_callback();
 }
@@ -444,7 +444,7 @@ async function download_import_summary(book: BookDataSummary) {
         directory: Directory.Data,
         path: `Imports/${book.id}/summary.json`,
         progress: false,
-        url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`,
+        url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/summary.json`,
     });
 
     return result;
@@ -469,7 +469,7 @@ function download_book(
         progress_callback: (book: BookDataSummary, progress: number) => void,
         finish_callback: (book: BookDataSummary, url: string) => void,
     ) {
-        const book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}`);
+        const book_summary = await fetchBookSummary(`https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}`);
         const ext = book_summary?.fileExtension;
         const songs: SongList | null = await getSongMetaData(book.id);
         const num_of_songs = Object.entries(songs as any).length;
@@ -519,7 +519,7 @@ function download_book(
             directory: Directory.Data,
             path: `Hymnals/${book.id}/songs.json`,
             progress: false,
-            url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs.json`,
+            url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/songs.json`,
         });
 
         if (cancel_download) {
@@ -532,7 +532,7 @@ function download_book(
             directory: Directory.Data,
             path: `Hymnals/${book.id}/.signature`,
             progress: false,
-            url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/.signature`,
+            url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/.signature`,
         });
 
         if (cancel_download) {
@@ -545,7 +545,7 @@ function download_book(
                 directory: Directory.Data,
                 path: `Hymnals/${book.id}/index.json`,
                 progress: false,
-                url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/index.json`,
+                url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/index.json`,
             });
         }
 
@@ -574,7 +574,7 @@ function download_book(
         }
 
         for (const song_number in songs) {
-            const url = `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/songs/${song_number}.${ext}`;
+            const url = `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/songs/${song_number}.${ext}`;
             Filesystem.downloadFile({
                 directory: Directory.Data,
                 path: `Hymnals/${book.id}/songs/${song_number}.${ext}`,
@@ -603,7 +603,7 @@ function download_book(
                     directory: Directory.Data,
                     path: `Hymnals/${book.id}/summary.json`,
                     progress: false,
-                    url: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/${book.id}/summary.json`,
+                    url: `https://raw.githubusercontent.com/ACC-Hymns/books/main/${book.id}/summary.json`,
                 }).then((new_result: DownloadFileResult) => {
                     console.log(`${book.id} has finished downloading.`);
                     let summary_path: string = new_result.path || "";
