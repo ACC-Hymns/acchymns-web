@@ -2,7 +2,7 @@
 import SongContainer from "@/components/SongContainer.vue";
 import DropdownMenu from "@/components/DropdownMenu.vue";
 import { bass_note_icons, treble_note_icons } from "@/composables/notes";
-import { ref, computed, onUnmounted, watch, onMounted } from "vue";
+import { ref, computed, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { animate, pause_path, play_path } from "@/scripts/morph";
 import { type BookSummary, type SongReference } from "@/scripts/types";
@@ -142,8 +142,8 @@ watch(audio.playing, () => {
 });
 
 function secondsToTimestamp(seconds: number) {
-    let minutes = Math.floor(seconds / 60);
-    let remaining_seconds = Math.floor(seconds % 60);
+    const minutes = Math.floor(seconds / 60);
+    const remaining_seconds = Math.floor(seconds % 60);
     return `${minutes}:${remaining_seconds < 10 ? "0" : ""}${remaining_seconds}`;
 }
 
@@ -181,8 +181,8 @@ async function shareSong() {
 }
 
 async function reportSong() {
-    let reportAPI = useReportAPI();
-    let result = await reportAPI.report(props);
+    const reportAPI = useReportAPI();
+    const result = await reportAPI.report(props);
     if (!result) return;
 
     await Toast.show({
@@ -225,7 +225,7 @@ async function broadcast() {
         verses.value,
         book_summary.value?.primaryColor || "#000000",
         broadcast_api.show_clock.value,
-        broadcast_api.show_book.value
+        broadcast_api.show_book.value,
     );
 
     closeBroadcastMenu();
@@ -346,7 +346,7 @@ async function broadcast() {
 
     <div class="media-panel-content" :class="{ 'hidden-panel': !panel.visible || !menu_bar_visible, 'media-panel-content-landscape': isLandscape }">
         <div class="media-panel-blur"></div>
-        <div class='media-panel-top-row' :style="{'padding': isLandscape ? '20px 15px 15px 15px' : '20px 15px 35px 15px'}">
+        <div class="media-panel-top-row" :style="{ padding: isLandscape ? '20px 15px 15px 15px' : '20px 15px 35px 15px' }">
             <div></div>
             <div class="media-type">
                 <!-- Piano shows if it is available & media_starting_notes = false -->
@@ -732,7 +732,7 @@ async function broadcast() {
     height: 35px;
     border-radius: 25px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 0px 1px;
     cursor: pointer;

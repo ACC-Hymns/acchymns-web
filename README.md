@@ -88,11 +88,11 @@ Thanks for supplying PDFs, scans, advice, or assistance.
 - Bro. Zoltan Dobosi
 - Sis. Rosina Stefan
 - Bro. Seby Nitz
+- Bro. Neven Jokic
+- Sis. Alyssa Nenadov
 - Elias Prohaszka
 - Joey Nitz
 - Susan Nitz
-- Neven Jokic
-- Alyssa Nenadov
 - Riley Nenadov
 - Joel Walter
 - Leah Walter

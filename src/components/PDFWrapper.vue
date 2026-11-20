@@ -13,7 +13,7 @@ const emit = defineEmits<{
     (e: "error"): void;
 }>();
 
-let root = ref<HTMLDivElement>();
+const root = ref<HTMLDivElement>();
 
 watch(
     props,
@@ -33,19 +33,19 @@ watch(
         }
         for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
             // Create canvas element to render PDF onto
-            let canvas = document.createElement("canvas");
+            const canvas = document.createElement("canvas");
 
             // Grab current page
-            let page = await pdfDoc.getPage(pageNum);
+            const page = await pdfDoc.getPage(pageNum);
 
             // We need a better way of picking the scale...
             const target_scale = Capacitor.getPlatform() == "web" ? 5 : window.devicePixelRatio;
-            let viewport = page.getViewport({ scale: target_scale });
+            const viewport = page.getViewport({ scale: target_scale });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
             // Render PDF page into canvas context
-            let ctx = canvas.getContext("2d"); // 3D faster then 2D?
+            const ctx = canvas.getContext("2d"); // 3D faster then 2D?
             if (ctx === null) {
                 emit("error");
                 return;

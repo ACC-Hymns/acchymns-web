@@ -20,8 +20,7 @@ export function useBroadcastAPI() {
         client.value = request_client();
 
         const data = await getCurrentBroadcast();
-        if(!data)
-            return;
+        if (!data) return;
         show_clock.value = data.SHOW_CLOCK.BOOL;
         show_book.value = data.SHOW_BOOK.BOOL;
     }

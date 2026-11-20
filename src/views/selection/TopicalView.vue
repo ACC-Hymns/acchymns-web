@@ -10,10 +10,10 @@ const props = { book: route.params.book as string };
 
 const error_active = ref(false);
 
-let book_ref = ref("");
-let primary_color = ref("#FFFFFF");
-let secondary_color = ref("#000000");
-let topical_index = ref<{ [topic: string]: Song[] }>({});
+const book_ref = ref("");
+const primary_color = ref("#FFFFFF");
+const secondary_color = ref("#000000");
+const topical_index = ref<{ [topic: string]: Song[] }>({});
 
 let BOOK_SONG_METADATA: any = null;
 let BOOK_METADATA: any = null;
@@ -37,9 +37,9 @@ onMounted(async () => {
         error_active.value = true;
         return;
     }
-    for (let [topic_name, numbers] of Object.entries(raw_index)) {
+    for (const [topic_name, numbers] of Object.entries(raw_index)) {
         topical_index.value[topic_name] = [];
-        for (let song_number of numbers) {
+        for (const song_number of numbers) {
             topical_index.value[topic_name].push({
                 number: song_number,
                 title: BOOK_SONG_METADATA[song_number].title,
@@ -51,7 +51,7 @@ onMounted(async () => {
         );
     }
     song_number_groups.value = Object.keys(topical_index.value);
-    let group_ids = getGroupOpened(route.fullPath);
+    const group_ids = getGroupOpened(route.fullPath);
     if (group_ids != undefined) {
         group_ids.forEach(id => {
             song_number_groups_active.value.push(song_number_groups.value[id]);
@@ -64,8 +64,8 @@ onMounted(async () => {
     restoreScrollPosition(route.fullPath);
 });
 
-let song_number_groups = ref<string[]>([]);
-let song_number_groups_active = ref<string[]>([]);
+const song_number_groups = ref<string[]>([]);
+const song_number_groups_active = ref<string[]>([]);
 function toggleDropdown(topic: string) {
     if (song_number_groups_active.value.includes(topic)) {
         song_number_groups_active.value.splice(song_number_groups_active.value.indexOf(topic), 1);
@@ -73,9 +73,9 @@ function toggleDropdown(topic: string) {
         song_number_groups_active.value.push(topic);
     }
 
-    let ids: number[] = [];
+    const ids: number[] = [];
     song_number_groups_active.value.forEach(group_id => {
-        var index = song_number_groups.value.indexOf(group_id);
+        const index = song_number_groups.value.indexOf(group_id);
         ids.push(index);
     });
     saveGroupOpened(route.fullPath, ids);

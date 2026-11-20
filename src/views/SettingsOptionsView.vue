@@ -5,15 +5,15 @@ import { useNavigator } from "@/router/navigator";
 import NavigationBar from "@/components/NavigationBar.vue";
 const { back } = useNavigator();
 
-let staggered_notes = useLocalStorage("ACCOptions.staggered", true);
-let playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
-let playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
-let song_group_enabled = useLocalStorage("ACCOptions.songGroupEnabled", true);
+const staggered_notes = useLocalStorage("ACCOptions.staggered", true);
+const playback_interval = useLocalStorage("ACCOptions.playbackInterval", 0.25);
+const playback_duration = useLocalStorage("ACCOptions.playbackDuration", 2.5);
+const song_group_enabled = useLocalStorage("ACCOptions.songGroupEnabled", true);
 
 const system_prefers_dark_mode = useMediaQuery("(prefers-color-scheme: dark)");
 const override_system_theme = useLocalStorage("ACCOptions.overrideSystemTheme", false);
 const user_prefers_dark_mode = useLocalStorage("ACCOptions.overrideDarkMode", false);
-let song_invert = useLocalStorage("ACCOptions.songInverted", false);
+const song_invert = useLocalStorage("ACCOptions.songInverted", false);
 
 const dark_mode = computed(() => {
     if (override_system_theme.value) {

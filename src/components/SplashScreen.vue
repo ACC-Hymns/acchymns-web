@@ -2,17 +2,17 @@
 import { useLocalStorage } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
-let landing_complete = useLocalStorage<boolean>("update3showcase", false);
+const landing_complete = useLocalStorage<boolean>("update3showcase", false);
 
-let is_scrolling = ref<boolean>(false);
-let scroll_index = ref<number>(0);
-let scroll_target = ref<HTMLElement>();
+const is_scrolling = ref<boolean>(false);
+const scroll_index = ref<number>(0);
+const scroll_target = ref<HTMLElement>();
 
 const isDarkMode = ref<boolean>(false);
 const BASE_URL = import.meta.env.BASE_URL;
 
-let change_headers = ref<string[]>(["Customization", "Download for Later", "Media Player"]);
-let change_details = ref<string[]>([
+const change_headers = ref<string[]>(["Customization", "Download for Later", "Media Player"]);
+const change_details = ref<string[]>([
     "Rearrange the home page to look the way you want it to.",
     "Download hymnals for later use without needing an internet connection.",
     "Sing along with the piano using the media player. Currently only available on certain hymnals.",
@@ -27,10 +27,10 @@ onMounted(() => {
 });
 
 function scrollHandler(e: Event) {
-    let target = e.target as HTMLElement;
-    let scroll_percentage = target.scrollLeft / target.offsetWidth;
-    let nearest_index = Math.round(scroll_percentage);
-    let distance = Math.min(Math.abs(nearest_index - scroll_percentage), 1);
+    const target = e.target as HTMLElement;
+    const scroll_percentage = target.scrollLeft / target.offsetWidth;
+    const nearest_index = Math.round(scroll_percentage);
+    const distance = Math.min(Math.abs(nearest_index - scroll_percentage), 1);
     is_scrolling.value = distance > 0.2;
     scroll_index.value = nearest_index;
 }

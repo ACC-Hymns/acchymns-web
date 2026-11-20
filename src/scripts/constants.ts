@@ -28,6 +28,7 @@ const public_references = {
     MO: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/MO`,
     ZHH: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHH`,
     ZHR: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHR`,
+    ZHU: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/ZHU`,
     HS: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/HS`,
     PC: `https://raw.githubusercontent.com/ACC-Hymns/acchymns-web/${branch}/public/books/PC`,
 } as const;

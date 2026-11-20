@@ -8,7 +8,7 @@ import { RouterView } from "vue-router";
 
 <template>
     <!-- <SplashScreen v-if="!landing_complete" /> -->
-    <RouterView/>
+    <RouterView />
 </template>
 
 <style>
